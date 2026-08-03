@@ -1,37 +1,3 @@
-"""
-프로젝트1 · 사이트 빌드
-site/data.json 을 인라인 임베드한 자체완결 HTML 대시보드(site/index.html) 생성.
-외부 리소스/네트워크 요청 없음 → 파일 하나로 열람 가능, Artifact 게시 가능.
-
-  python 01_member_channel_performance/build_site.py
-"""
-from __future__ import annotations
-
-import json
-from pathlib import Path
-
-HERE = Path(__file__).resolve().parent
-SITE = HERE / "site"
-
-
-def build():
-    data = json.loads((SITE / "data.json").read_text(encoding="utf-8"))
-    html = TEMPLATE.replace("/*__DATA__*/null", json.dumps(data, ensure_ascii=False))
-    (SITE / "index.html").write_text(html, encoding="utf-8")
-
-    # Artifact 게시용 fragment (플랫폼이 head/body를 감싸므로 wrapper 제거)
-    style = html[html.index("<style>"):html.index("</style>") + len("</style>")]
-    body_inner = html[html.index("<body>") + len("<body>"):html.index("</body>")]
-    (SITE / "artifact.html").write_text(style + "\n" + body_inner, encoding="utf-8")
-    print(f"사이트 -> {SITE / 'index.html'}  (+ artifact.html)")
-
-
-TEMPLATE = r"""<!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>StelLive 멤버 채널 성과 분석</title>
 <style>
 :root{
   --bg:#f9f9f7; --surface:#fcfcfb; --text:#0b0b0b; --text2:#52514e; --muted:#898781;
@@ -93,8 +59,7 @@ tbody tr:hover{background:color-mix(in srgb,var(--s1) 8%,transparent)}
   border-radius:999px;padding:5px 12px;font-size:12.5px;cursor:pointer}
 a{color:var(--s1)}
 </style>
-</head>
-<body>
+
 <div class="wrap">
 <button class="toggle" onclick="toggleTheme()">◐ 테마</button>
 <header>
@@ -142,7 +107,7 @@ a{color:var(--s1)}
 <div class="tip" id="tip"></div>
 
 <script>
-const DATA = /*__DATA__*/null;
+const DATA = {"meta": {"fetched_at": "2026-08-03T06:21:37.106755+00:00", "recent_per_channel": 50, "n_channels": 11, "n_videos": 550, "source": "YouTube Data API v3"}, "correlations": {"subs_vs_avgviews": 0.465, "cadence_vs_subs": -0.034, "cadence_vs_avgviews": 0.722, "engagement_vs_subs": -0.64, "reach_vs_subs": -0.39}, "members": [{"rank_subs": 1, "channel_id": "UCIVFv8AiQLqM9oLHTixrNYw", "name_ko": "강지", "name_en": "Kangji", "unit": "STELLIVE", "role": "founder", "handle": "gangzi1", "subscribers": 759000, "total_views": 926717257, "video_count": 2249, "created_at": "2014-11-11T22:36:14Z", "channel_age_years": 11.72, "recent_n": 50, "recent_avg_views": 246643.1, "recent_median_views": 197847.5, "recent_max_views": 902326, "recent_avg_engagement_rate": 0.02882, "recent_avg_like_rate": 0.02769, "uploads_per_week": 4.4, "uploads_per_month": 19.12, "shorts_share": 0.2, "reach_ratio": 0.325, "lifetime_views_per_sub": 1221.0, "lifetime_views_per_video": 412057.5}, {"rank_subs": 2, "channel_id": "UClbYIn9LDbbFZ9w2shX3K0g", "name_ko": "아야츠노 유니", "name_en": "Ayatsuno Yuni", "unit": "EVERYS", "role": "talent", "handle": "ayatsunoyuni", "subscribers": 357000, "total_views": 192178237, "video_count": 724, "created_at": "2022-12-20T18:25:09.738437Z", "channel_age_years": 3.62, "recent_n": 50, "recent_avg_views": 138621.2, "recent_median_views": 106482.5, "recent_max_views": 542806, "recent_avg_engagement_rate": 0.03949, "recent_avg_like_rate": 0.03679, "uploads_per_week": 2.72, "uploads_per_month": 11.84, "shorts_share": 0.22, "reach_ratio": 0.388, "lifetime_views_per_sub": 538.3, "lifetime_views_per_video": 265439.6}, {"rank_subs": 3, "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw", "name_ko": "아카네 리제", "name_en": "Akane Lize", "unit": "UNIVERSE", "role": "talent", "handle": "akanelize", "subscribers": 343000, "total_views": 281473044, "video_count": 577, "created_at": "2023-06-01T11:50:41.527518Z", "channel_age_years": 3.17, "recent_n": 50, "recent_avg_views": 253221.5, "recent_median_views": 126244.5, "recent_max_views": 1191713, "recent_avg_engagement_rate": 0.0422, "recent_avg_like_rate": 0.04036, "uploads_per_week": 5.91, "uploads_per_month": 25.72, "shorts_share": 0.44, "reach_ratio": 0.738, "lifetime_views_per_sub": 820.6, "lifetime_views_per_video": 487821.6}, {"rank_subs": 4, "channel_id": "UC1afpiIuBDcjYlmruAa0HiA", "name_ko": "시라유키 히나", "name_en": "Shirayuki Hina", "unit": "UNIVERSE", "role": "talent", "handle": "shirayukihina", "subscribers": 317000, "total_views": 182186449, "video_count": 600, "created_at": "2023-06-01T11:42:49.359854Z", "channel_age_years": 3.17, "recent_n": 50, "recent_avg_views": 224251.6, "recent_median_views": 110896.0, "recent_max_views": 1272574, "recent_avg_engagement_rate": 0.0357, "recent_avg_like_rate": 0.03344, "uploads_per_week": 3.85, "uploads_per_month": 16.76, "shorts_share": 0.32, "reach_ratio": 0.707, "lifetime_views_per_sub": 574.7, "lifetime_views_per_video": 303644.1}, {"rank_subs": 5, "channel_id": "UCQmcltnre6aG9SkDRYZqFIg", "name_ko": "아오쿠모 린", "name_en": "Aokumo Rin", "unit": "CLICHE", "role": "talent", "handle": "aokumorin", "subscribers": 273000, "total_views": 172744661, "video_count": 421, "created_at": "2024-05-14T10:09:58.99504Z", "channel_age_years": 2.22, "recent_n": 50, "recent_avg_views": 173474.9, "recent_median_views": 103266.5, "recent_max_views": 838026, "recent_avg_engagement_rate": 0.04154, "recent_avg_like_rate": 0.03951, "uploads_per_week": 5.12, "uploads_per_month": 22.26, "shorts_share": 0.26, "reach_ratio": 0.635, "lifetime_views_per_sub": 632.8, "lifetime_views_per_video": 410319.9}, {"rank_subs": 6, "channel_id": "UCAHVQ44O81aehLWfy9O6Elw", "name_ko": "아라하시 타비", "name_en": "Arahashi Tabi", "unit": "UNIVERSE", "role": "talent", "handle": "arahashitabi", "subscribers": 252000, "total_views": 175956215, "video_count": 767, "created_at": "2023-06-01T11:48:28.671861Z", "channel_age_years": 3.17, "recent_n": 50, "recent_avg_views": 177315.9, "recent_median_views": 107705.5, "recent_max_views": 863156, "recent_avg_engagement_rate": 0.03963, "recent_avg_like_rate": 0.03736, "uploads_per_week": 4.45, "uploads_per_month": 19.37, "shorts_share": 0.24, "reach_ratio": 0.704, "lifetime_views_per_sub": 698.2, "lifetime_views_per_video": 229408.4}, {"rank_subs": 7, "channel_id": "UCYxLMfeX1CbMBll9MsGlzmw", "name_ko": "텐코 시부키", "name_en": "Tenko Shibuki", "unit": "CLICHE", "role": "talent", "handle": "tenkoshibuki", "subscribers": 222000, "total_views": 182050006, "video_count": 589, "created_at": "2024-05-14T10:02:13.057547Z", "channel_age_years": 2.22, "recent_n": 50, "recent_avg_views": 202959.8, "recent_median_views": 137862.0, "recent_max_views": 965158, "recent_avg_engagement_rate": 0.04073, "recent_avg_like_rate": 0.03937, "uploads_per_week": 6.86, "uploads_per_month": 29.83, "shorts_share": 0.48, "reach_ratio": 0.914, "lifetime_views_per_sub": 820.0, "lifetime_views_per_video": 309083.2}, {"rank_subs": 8, "channel_id": "UCj0c1jUr91dTetIQP2pFeLA", "name_ko": "유즈하 리코", "name_en": "Yuzuha Riko", "unit": "CLICHE", "role": "talent", "handle": "yuzuhariko", "subscribers": 210000, "total_views": 162357103, "video_count": 546, "created_at": "2024-05-14T10:16:40.978487Z", "channel_age_years": 2.22, "recent_n": 50, "recent_avg_views": 258194.5, "recent_median_views": 132953.0, "recent_max_views": 2065569, "recent_avg_engagement_rate": 0.04105, "recent_avg_like_rate": 0.03915, "uploads_per_week": 6.02, "uploads_per_month": 26.17, "shorts_share": 0.4, "reach_ratio": 1.229, "lifetime_views_per_sub": 773.1, "lifetime_views_per_video": 297357.3}, {"rank_subs": 9, "channel_id": "UCcA21_PzN1EhNe7xS4MJGsQ", "name_ko": "하나코 나나", "name_en": "Hanako Nana", "unit": "CLICHE", "role": "talent", "handle": "hanako_nana", "subscribers": 199000, "total_views": 143302217, "video_count": 461, "created_at": "2024-05-14T10:18:50.368619Z", "channel_age_years": 2.22, "recent_n": 50, "recent_avg_views": 155407.1, "recent_median_views": 90386.5, "recent_max_views": 747300, "recent_avg_engagement_rate": 0.0481, "recent_avg_like_rate": 0.04597, "uploads_per_week": 4.57, "uploads_per_month": 19.89, "shorts_share": 0.44, "reach_ratio": 0.781, "lifetime_views_per_sub": 720.1, "lifetime_views_per_video": 310850.8}, {"rank_subs": 10, "channel_id": "UC_eeSpMBz8PG4ssdBPnP07g", "name_ko": "네네코 마시로", "name_en": "Neneko Mashiro", "unit": "UNIVERSE", "role": "talent", "handle": "neneko_mashiro", "subscribers": 179000, "total_views": 57375812, "video_count": 416, "created_at": "2023-06-01T11:33:30.823588Z", "channel_age_years": 3.17, "recent_n": 50, "recent_avg_views": 80354.8, "recent_median_views": 54559.0, "recent_max_views": 633655, "recent_avg_engagement_rate": 0.05037, "recent_avg_like_rate": 0.04745, "uploads_per_week": 2.01, "uploads_per_month": 8.72, "shorts_share": 0.08, "reach_ratio": 0.449, "lifetime_views_per_sub": 320.5, "lifetime_views_per_video": 137922.6}, {"rank_subs": 11, "channel_id": "UC0YQnenKBCu5sGb7H61n6HA", "name_ko": "사키하네 후야", "name_en": "Sakihane Huya", "unit": "EVERYS", "role": "talent", "handle": "sakihanechannel", "subscribers": 128000, "total_views": 48557626, "video_count": 315, "created_at": "2025-09-16T10:33:13.484328Z", "channel_age_years": 0.88, "recent_n": 50, "recent_avg_views": 109053.8, "recent_median_views": 79286.0, "recent_max_views": 415181, "recent_avg_engagement_rate": 0.04483, "recent_avg_like_rate": 0.04288, "uploads_per_week": 4.45, "uploads_per_month": 19.37, "shorts_share": 0.36, "reach_ratio": 0.852, "lifetime_views_per_sub": 379.4, "lifetime_views_per_video": 154151.2}], "top_videos": [{"name_ko": "유즈하 리코", "title": "클리셰 최강의 로봇... #vtuber #shorts #스텔라이브 #리코 #용사툰 #클리셰", "views": 2065569, "likes": 54386, "comments": 900.0, "published_at": "2026-07-08 06:00:22+00:00"}, {"name_ko": "시라유키 히나", "title": "스텔라이브 삼색 볼펜들의 오도루프!🎵 #오도루프 #oddoloop #オドループ #vtuber #shorts", "views": 1272574, "likes": 23033, "comments": 812.0, "published_at": "2026-05-21 05:00:27+00:00"}, {"name_ko": "유즈하 리코", "title": "클리셰 미역국 챌린지!  #vtuber #shorts #리코 #스텔라이브 #챌린지 #meme #클리셰 #3D #미역국 #미역국챌린지", "views": 1225571, "likes": 21199, "comments": 447.0, "published_at": "2026-06-11 08:01:28+00:00"}, {"name_ko": "아카네 리제", "title": "온라인도 오프라인도 모두 야르한 콘서트 되세요~ #vtuber #shorts", "views": 1191713, "likes": 33950, "comments": 600.0, "published_at": "2026-07-11 05:30:14+00:00"}, {"name_ko": "시라유키 히나", "title": "오냐 어디 한 번 죽어보자 #cartoon #comic #vtuber #shorts", "views": 1089798, "likes": 26604, "comments": 380.0, "published_at": "2026-06-07 06:00:28+00:00"}, {"name_ko": "텐코 시부키", "title": "143cm #shorts #vtuber", "views": 965158, "likes": 21908, "comments": 483.0, "published_at": "2026-07-09 08:20:42+00:00"}, {"name_ko": "강지", "title": "신호등 자매의 윙크 (｡•̀ ᴗ -)✧ #강지 #쇼츠 #밈", "views": 902326, "likes": 26448, "comments": 364.0, "published_at": "2026-06-02 05:00:07+00:00"}, {"name_ko": "강지", "title": "아빠가 누구야? #강지 #히나 #감자툰", "views": 901577, "likes": 31391, "comments": 358.0, "published_at": "2026-05-19 07:00:30+00:00"}, {"name_ko": "시라유키 히나", "title": "왜 나만 빼고 뽀뽀해???? #cartoon #comic #vtuber #shorts", "views": 871015, "likes": 25563, "comments": 335.0, "published_at": "2026-05-13 05:00:37+00:00"}, {"name_ko": "아라하시 타비", "title": "타비도 꿍싯꿍싯💕 #shorts #vtuber #타비", "views": 863156, "likes": 37935, "comments": 697.0, "published_at": "2026-07-15 04:00:40+00:00"}, {"name_ko": "텐코 시부키", "title": "나 후배 선배! #shorts #vtuber", "views": 849717, "likes": 21943, "comments": 257.0, "published_at": "2026-07-11 07:07:25+00:00"}, {"name_ko": "아오쿠모 린", "title": "물떼새(ヨルシカ - 千鳥) / 아오쿠모 린(Aokumo Rin) Cover", "views": 838026, "likes": 18799, "comments": 906.0, "published_at": "2026-06-28 08:00:06+00:00"}, {"name_ko": "아라하시 타비", "title": "요즘 유행하는 야르송에 신이난 야랄의 악마 #shorts #vtuber #타비", "views": 807051, "likes": 21650, "comments": 1013.0, "published_at": "2026-06-29 03:41:43+00:00"}, {"name_ko": "아카네 리제", "title": "예쁜 사랑하세요 #vtuber #shorts", "views": 804723, "likes": 20612, "comments": 215.0, "published_at": "2026-06-09 05:30:10+00:00"}, {"name_ko": "아카네 리제", "title": "엥나 대답, 아카네 리제 콘서트 대답 구호 안내! #vtuber #shorts", "views": 803084, "likes": 21666, "comments": 684.0, "published_at": "2026-07-10 05:36:06+00:00"}]};
 const SERIES=['--s1','--s2','--s3','--s4','--s5','--s6','--s7','--s8'];
 const cssv=v=>getComputedStyle(document.body).getPropertyValue(v).trim();
 const fmt=n=>n>=1e6?(n/1e6).toFixed(2)+'M':n>=1e3?(n/1e3).toFixed(0)+'K':(''+n);
@@ -308,10 +273,3 @@ function toggleTheme(){const r=document.documentElement;
 function drawAll(){drawTable();drawScatter();drawReach();drawEngage();}
 drawAll();
 </script>
-</body>
-</html>
-"""
-
-
-if __name__ == "__main__":
-    build()
