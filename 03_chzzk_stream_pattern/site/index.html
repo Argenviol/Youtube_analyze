@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StelLive 치지직 방송 패턴</title>
+<style>
+:root{
+  --bg:#f9f9f7; --surface:#fcfcfb; --text:#0b0b0b; --text2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --border:rgba(11,11,11,.10); --heat:74,58,167;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0d0d0d; --surface:#1a1a19; --text:#fff; --text2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --border:rgba(255,255,255,.10); --heat:144,133,233;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+}}
+:root[data-theme=dark]{
+  --bg:#0d0d0d; --surface:#1a1a19; --text:#fff; --text2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --border:rgba(255,255,255,.10); --heat:144,133,233;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+header h1{font-size:26px;margin:0 0 4px}
+header p{color:var(--text2);margin:0 0 6px}
+.tag{display:inline-block;font-size:12px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:2px 10px;margin-right:6px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:26px 0}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
+.kpi .v{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.kpi .l{font-size:12.5px;color:var(--text2);margin-top:3px}
+.kpi .s{font-size:12px;color:var(--muted);margin-top:2px}
+section{margin:34px 0}
+h2{font-size:18px;margin:0 0 4px}
+.sub{color:var(--text2);font-size:13.5px;margin:0 0 16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+th{color:var(--text2);font-weight:600;cursor:pointer;user-select:none;white-space:nowrap}
+th.active{color:var(--text)}
+tbody tr:hover{background:color-mix(in srgb,var(--s7) 8%,transparent)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.chart-svg{width:100%;height:auto;display:block;overflow:visible}
+.gridline{stroke:var(--grid);stroke-width:1}
+.mlabel{fill:var(--text2);font-size:12px}
+.blabel{fill:var(--text);font-size:11px;font-variant-numeric:tabular-nums}
+.axis text,.axis{fill:var(--muted);font-size:11px}
+.heat-cell{stroke:var(--surface);stroke-width:1.5}
+.tip{position:fixed;pointer-events:none;background:var(--text);color:var(--bg);font-size:12px;padding:6px 9px;border-radius:8px;opacity:0;transition:opacity .1s;z-index:10;white-space:nowrap}
+.foot{color:var(--muted);font-size:12px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px}
+.toggle{float:right;background:var(--surface);border:1px solid var(--border);color:var(--text2);border-radius:999px;padding:5px 12px;font-size:12.5px;cursor:pointer}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+.catbar{display:flex;flex-direction:column;gap:8px}
+.catrow{display:grid;grid-template-columns:130px 1fr 44px;align-items:center;gap:10px;font-size:13px}
+.catrow .bar{height:16px;border-radius:4px;background:var(--s1)}
+.catrow .n{text-align:right;color:var(--text2);font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="wrap">
+<button class="toggle" onclick="toggleTheme()">◐ 테마</button>
+<header>
+  <h1>StelLive 치지직 방송 패턴 분석</h1>
+  <p>스텔라이브 멤버들의 방송 빈도·길이·시간대·카테고리 (치지직 다시보기 기반)</p>
+  <div id="tags"></div>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<section>
+  <h2>방송 시작 시간 히트맵</h2>
+  <p class="sub">요일(세로) × 시각(가로, KST). 진할수록 그 시간대에 방송을 많이 시작. 셀에 마우스를 올리면 방송 수가 보입니다.</p>
+  <div class="card"><svg id="heatmap" class="chart-svg" viewBox="0 0 760 250"></svg></div>
+</section>
+
+<section>
+  <h2>멤버별 방송 패턴</h2>
+  <p class="sub">열 제목 클릭 시 정렬. 주간시간 = 수집 구간 기준 주당 방송 시간.</p>
+  <div class="card" style="overflow-x:auto"><table id="tbl"></table></div>
+</section>
+
+<section class="two">
+  <div>
+    <h2>인기 방송 카테고리</h2>
+    <p class="sub">전체 방송 수 기준 상위 카테고리.</p>
+    <div class="card"><div class="catbar" id="cats"></div></div>
+  </div>
+  <div>
+    <h2>방송 빈도 vs 길이</h2>
+    <p class="sub">버블=팔로워. 오른쪽=자주, 위쪽=길게.</p>
+    <div class="card"><svg id="scatter" class="chart-svg" viewBox="0 0 460 380"></svg></div>
+  </div>
+</section>
+
+<div class="foot" id="foot"></div>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const DATA = {"meta": {"fetched_at": "2026-08-04T03:39:38.461436+00:00", "n_members": 11, "n_streams": 2737, "max_items": 250, "source": "Chzzk 비공식 API (channels/videos)", "tz": "Asia/Seoul"}, "members": [{"rank": 1, "name_ko": "아라하시 타비", "name_en": "Arahashi Tabi", "unit": "UNIVERSE", "followers": 253699, "stream_count": 250, "span_days": 327, "streams_per_week": 5.35, "avg_duration_h": 7.41, "median_duration_h": 7.92, "total_hours": 1852.2, "hours_per_week": 39.6, "avg_start_hour": 6.8, "night_share": 0.64, "game_share": 0.496, "talk_share": 0.48, "top_category": "talk", "avg_vod_views": 5480}, {"rank": 2, "name_ko": "아야츠노 유니", "name_en": "Ayatsuno Yuni", "unit": "EVERYS", "followers": 299153, "stream_count": 250, "span_days": 292, "streams_per_week": 5.99, "avg_duration_h": 6.33, "median_duration_h": 6.16, "total_hours": 1583.3, "hours_per_week": 38.0, "avg_start_hour": 9.1, "night_share": 0.468, "game_share": 0.22, "talk_share": 0.544, "top_category": "talk", "avg_vod_views": 3834}, {"rank": 3, "name_ko": "시라유키 히나", "name_en": "Shirayuki Hina", "unit": "UNIVERSE", "followers": 235881, "stream_count": 250, "span_days": 307, "streams_per_week": 5.7, "avg_duration_h": 6.34, "median_duration_h": 5.8, "total_hours": 1584.3, "hours_per_week": 36.1, "avg_start_hour": 6.4, "night_share": 0.72, "game_share": 0.404, "talk_share": 0.532, "top_category": "talk", "avg_vod_views": 4850}, {"rank": 4, "name_ko": "텐코 시부키", "name_en": "Tenko Shibuki", "unit": "CLICHE", "followers": 239642, "stream_count": 250, "span_days": 346, "streams_per_week": 5.06, "avg_duration_h": 6.93, "median_duration_h": 7.05, "total_hours": 1732.7, "hours_per_week": 35.1, "avg_start_hour": 5.2, "night_share": 0.78, "game_share": 0.74, "talk_share": 0.228, "top_category": "talk", "avg_vod_views": 6880}, {"rank": 5, "name_ko": "유즈하 리코", "name_en": "Yuzuha Riko", "unit": "CLICHE", "followers": 207924, "stream_count": 250, "span_days": 363, "streams_per_week": 4.82, "avg_duration_h": 6.93, "median_duration_h": 7.26, "total_hours": 1733.5, "hours_per_week": 33.4, "avg_start_hour": 7.9, "night_share": 0.664, "game_share": 0.328, "talk_share": 0.64, "top_category": "talk", "avg_vod_views": 4434}, {"rank": 6, "name_ko": "강지", "name_en": "Kangji", "unit": "STELLIVE", "followers": 285702, "stream_count": 250, "span_days": 332, "streams_per_week": 5.27, "avg_duration_h": 6.16, "median_duration_h": 6.44, "total_hours": 1540.4, "hours_per_week": 32.5, "avg_start_hour": 13.2, "night_share": 0.296, "game_share": 0.42, "talk_share": 0.512, "top_category": "talk", "avg_vod_views": 3037}, {"rank": 7, "name_ko": "사키하네 후야", "name_en": "Sakihane Huya", "unit": "EVERYS", "followers": 155179, "stream_count": 237, "span_days": 316, "streams_per_week": 5.25, "avg_duration_h": 5.15, "median_duration_h": 5.68, "total_hours": 1221.6, "hours_per_week": 27.1, "avg_start_hour": 13.1, "night_share": 0.392, "game_share": 0.308, "talk_share": 0.684, "top_category": "talk", "avg_vod_views": 3479}, {"rank": 8, "name_ko": "네네코 마시로", "name_en": "Neneko Mashiro", "unit": "UNIVERSE", "followers": 208252, "stream_count": 250, "span_days": 337, "streams_per_week": 5.19, "avg_duration_h": 4.78, "median_duration_h": 5.35, "total_hours": 1194.3, "hours_per_week": 24.8, "avg_start_hour": 16.2, "night_share": 0.232, "game_share": 0.42, "talk_share": 0.48, "top_category": "talk", "avg_vod_views": 3242}, {"rank": 9, "name_ko": "아카네 리제", "name_en": "Akane Lize", "unit": "UNIVERSE", "followers": 251433, "stream_count": 250, "span_days": 380, "streams_per_week": 4.61, "avg_duration_h": 4.94, "median_duration_h": 5.34, "total_hours": 1235.8, "hours_per_week": 22.8, "avg_start_hour": 8.1, "night_share": 0.64, "game_share": 0.524, "talk_share": 0.46, "top_category": "talk", "avg_vod_views": 3474}, {"rank": 10, "name_ko": "하나코 나나", "name_en": "Hanako Nana", "unit": "CLICHE", "followers": 205471, "stream_count": 250, "span_days": 427, "streams_per_week": 4.1, "avg_duration_h": 5.15, "median_duration_h": 5.15, "total_hours": 1288.6, "hours_per_week": 21.1, "avg_start_hour": 11.0, "night_share": 0.488, "game_share": 0.72, "talk_share": 0.196, "top_category": "talk", "avg_vod_views": 3886}, {"rank": 11, "name_ko": "아오쿠모 린", "name_en": "Aokumo Rin", "unit": "CLICHE", "followers": 217291, "stream_count": 250, "span_days": 396, "streams_per_week": 4.42, "avg_duration_h": 4.55, "median_duration_h": 4.52, "total_hours": 1137.1, "hours_per_week": 20.1, "avg_start_hour": 8.4, "night_share": 0.64, "game_share": 0.88, "talk_share": 0.1, "top_category": "마인크래프트", "avg_vod_views": 3726}], "heatmap": [[76, 76, 38, 21, 22, 14, 3, 2, 1, 2, 0, 0, 1, 1, 4, 1, 1, 6, 11, 4, 10, 18, 27, 50], [43, 62, 38, 24, 13, 6, 9, 2, 3, 1, 1, 2, 3, 0, 1, 3, 4, 9, 14, 14, 16, 20, 32, 50], [57, 62, 22, 45, 20, 13, 1, 3, 1, 3, 1, 1, 2, 1, 5, 1, 5, 3, 9, 8, 7, 14, 26, 56], [49, 75, 46, 17, 15, 11, 11, 0, 4, 8, 4, 3, 1, 1, 7, 4, 4, 4, 10, 7, 10, 21, 32, 52], [56, 56, 43, 15, 17, 10, 5, 3, 3, 6, 5, 2, 4, 3, 9, 9, 10, 5, 11, 15, 12, 20, 34, 33], [47, 56, 32, 30, 15, 3, 9, 4, 5, 1, 2, 3, 1, 3, 2, 3, 5, 13, 15, 13, 17, 18, 26, 44], [86, 59, 38, 27, 21, 9, 1, 5, 8, 3, 3, 6, 2, 3, 6, 8, 7, 17, 14, 9, 18, 25, 33, 55]], "top_categories": [{"name": "talk", "count": 1205}, {"name": "마인크래프트", "count": 342}, {"name": "리그 오브 레전드", "count": 154}, {"name": "오버워치", "count": 94}, {"name": "이터널 리턴", "count": 81}, {"name": "음악/노래", "count": 76}, {"name": "2026 FIFA 북중미 월드컵", "count": 70}, {"name": "종합 게임", "count": 47}, {"name": "팰월드", "count": 45}, {"name": "명조:워더링 웨이브", "count": 26}, {"name": "붕괴: 스타레일", "count": 26}, {"name": "데드 바이 데이라이트", "count": 21}], "hour_dist": [414, 446, 257, 179, 123, 66, 39, 19, 25, 24, 16, 17, 14, 12, 34, 29, 36, 57, 84, 70, 90, 136, 210, 340]};
+const SERIES=['--s1','--s2','--s3','--s4','--s5','--s6','--s7','--s8'];
+const WD=['월','화','수','목','금','토','일'];
+const cssv=v=>getComputedStyle(document.body).getPropertyValue(v).trim();
+const fmt=n=>n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(0)+'K':(''+n);
+const fmtN=n=>Number(n).toLocaleString('ko-KR');
+const mcolor={}; DATA.members.forEach((m,i)=>mcolor[m.name_en]=SERIES[i%SERIES.length]);
+const tip=document.getElementById('tip');
+const showTip=(e,h)=>{tip.innerHTML=h;tip.style.opacity=1;tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';};
+const hideTip=()=>tip.style.opacity=0;
+const svgEl=(t,a)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+document.getElementById('tags').innerHTML =
+  `<span class="tag">수집 ${DATA.meta.fetched_at.slice(0,10)}</span>`+
+  `<span class="tag">방송 ${fmtN(DATA.meta.n_streams)}건</span>`+
+  `<span class="tag">멤버 ${DATA.meta.n_members}명</span>`+
+  `<span class="tag">치지직 API</span>`;
+
+// KPIs
+const byHours=[...DATA.members].sort((a,b)=>b.hours_per_week-a.hours_per_week);
+const byNight=[...DATA.members].sort((a,b)=>b.night_share-a.night_share)[0];
+const byGame=[...DATA.members].sort((a,b)=>b.game_share-a.game_share)[0];
+let peakH=0,peakV=-1; DATA.hour_dist.forEach((v,h)=>{if(v>peakV){peakV=v;peakH=h;}});
+document.getElementById('kpis').innerHTML=[
+  ['방송 시간 1위',byHours[0].name_ko,'주 '+byHours[0].hours_per_week+'시간'],
+  ['최다 심야형',byNight.name_ko,(byNight.night_share*100).toFixed(0)+'% · 0~5시 시작'],
+  ['최고 게임형',byGame.name_ko,(byGame.game_share*100).toFixed(0)+'% 게임 방송'],
+  ['피크 시작 시간',peakH+'시',fmtN(peakV)+'회 (KST)'],
+].map(k=>`<div class="kpi"><div class="v">${k[1]}</div><div class="l">${k[0]}</div><div class="s">${k[2]}</div></div>`).join('');
+
+// Heatmap
+function drawHeat(){
+  const svg=document.getElementById('heatmap');svg.innerHTML='';
+  const ml=34,mt=16,cw=(760-ml-6)/24,chh=26,H=DATA.heatmap;
+  let max=0; H.forEach(r=>r.forEach(v=>{if(v>max)max=v;}));
+  for(let d=0;d<7;d++){
+    const t=svgEl('text',{x:ml-8,y:mt+d*chh+chh/2+4,'text-anchor':'end',class:'axis'});t.textContent=WD[d];svg.appendChild(t);
+    for(let h=0;h<24;h++){
+      const v=H[d][h],a=max?v/max:0;
+      const rect=svgEl('rect',{x:ml+h*cw,y:mt+d*chh,width:cw-1.5,height:chh-1.5,rx:3,
+        class:'heat-cell',fill:`rgba(${cssv('--heat')},${0.08+a*0.92})`});
+      rect.addEventListener('mousemove',e=>showTip(e,`${WD[d]} ${h}시<br><b>${v}</b>회 방송`));
+      rect.addEventListener('mouseleave',hideTip);
+      svg.appendChild(rect);
+    }
+  }
+  for(let h=0;h<24;h+=2){const t=svgEl('text',{x:ml+h*cw+cw/2,y:mt+7*chh+14,'text-anchor':'middle',class:'axis'});t.textContent=h;svg.appendChild(t);}
+}
+
+// table
+const COLS=[
+  ['name_ko','멤버',r=>`<i class="dot" style="background:${cssv(mcolor[r.name_en])}"></i>${r.name_ko}`],
+  ['streams_per_week','주간횟수',r=>r.streams_per_week.toFixed(1)],
+  ['avg_duration_h','평균시간',r=>r.avg_duration_h.toFixed(1)+'h'],
+  ['hours_per_week','주간시간',r=>r.hours_per_week.toFixed(1)+'h'],
+  ['night_share','심야비중',r=>(r.night_share*100).toFixed(0)+'%'],
+  ['game_share','게임비중',r=>(r.game_share*100).toFixed(0)+'%'],
+  ['top_category','주력',r=>r.top_category],
+  ['followers','팔로워',r=>fmt(r.followers)],
+];
+let sortKey='hours_per_week',sortDir=-1;
+const rows=()=>[...DATA.members].sort((a,b)=>(a[sortKey]>b[sortKey]?1:-1)*sortDir);
+function drawTable(){
+  const t=document.getElementById('tbl');
+  t.innerHTML='<thead><tr>'+COLS.map(c=>`<th class="${c[0]===sortKey?'active':''}" onclick="setSort('${c[0]}')">${c[1]}${c[0]===sortKey?(sortDir<0?' ▾':' ▴'):''}</th>`).join('')+'</tr></thead>'+
+    '<tbody>'+rows().map(r=>'<tr>'+COLS.map(c=>`<td>${c[2](r)}</td>`).join('')+'</tr>').join('')+'</tbody>';
+}
+function setSort(k){if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=-1;}drawTable();}
+
+// categories
+const maxCat=DATA.top_categories[0].count;
+document.getElementById('cats').innerHTML=DATA.top_categories.map((c,i)=>
+  `<div class="catrow"><span>${c.name}</span>`+
+  `<span class="bar" style="width:${(c.count/maxCat*100).toFixed(1)}%;background:${cssv(SERIES[i%SERIES.length])}"></span>`+
+  `<span class="n">${c.count}</span></div>`).join('');
+
+// scatter
+function drawScatter(){
+  const svg=document.getElementById('scatter');svg.innerHTML='';
+  const W=460,H=380,ml=44,mr=30,mt=14,mb=40,list=DATA.members;
+  const xs=list.map(m=>m.streams_per_week),ys=list.map(m=>m.avg_duration_h);
+  const xmin=Math.min(...xs)*0.9,xmax=Math.max(...xs)*1.05,ymin=Math.min(...ys)*0.85,ymax=Math.max(...ys)*1.08;
+  const X=v=>ml+(v-xmin)/(xmax-xmin)*(W-ml-mr),Y=v=>H-mb-(v-ymin)/(ymax-ymin)*(H-mt-mb);
+  for(let i=0;i<=4;i++){const gy=mt+i/4*(H-mt-mb);svg.appendChild(svgEl('line',{x1:ml,x2:W-mr,y1:gy,y2:gy,class:'gridline'}));
+    const t=svgEl('text',{x:ml-8,y:gy+4,'text-anchor':'end',class:'axis'});t.textContent=(ymax-(i/4)*(ymax-ymin)).toFixed(1)+'h';svg.appendChild(t);}
+  for(let i=0;i<=4;i++){const gx=ml+i/4*(W-ml-mr);const t=svgEl('text',{x:gx,y:H-mb+18,'text-anchor':'middle',class:'axis'});t.textContent=(xmin+(i/4)*(xmax-xmin)).toFixed(1);svg.appendChild(t);}
+  svg.appendChild(svgEl('text',{x:(ml+W-mr)/2,y:H-4,'text-anchor':'middle',class:'axis'})).textContent='주간 방송 횟수';
+  const maxF=Math.max(...list.map(m=>m.followers));
+  list.forEach(m=>{
+    const r=7+Math.sqrt(m.followers/maxF)*14,cx=X(m.streams_per_week),cy=Y(m.avg_duration_h);
+    const c=svgEl('circle',{cx,cy,r,fill:cssv(mcolor[m.name_en]),opacity:.8,stroke:cssv('--surface'),'stroke-width':2});
+    c.addEventListener('mousemove',e=>showTip(e,`<b>${m.name_ko}</b><br>주 ${m.streams_per_week}회 · ${m.avg_duration_h}h<br>팔로워 ${fmt(m.followers)}`));
+    c.addEventListener('mouseleave',hideTip);svg.appendChild(c);
+    const right=cx+r+50>W-mr;
+    const tx=svgEl('text',{x:right?cx-r-4:cx+r+4,y:cy+4,class:'mlabel','text-anchor':right?'end':'start'});tx.textContent=m.name_ko;svg.appendChild(tx);
+  });
+}
+
+document.getElementById('foot').innerHTML=
+  `방송 데이터: 치지직 다시보기(REPLAY) 기준. 멤버당 최근 최대 ${DATA.meta.max_items}개, 시간은 KST.<br>`+
+  `'주간' 지표는 수집된 방송의 실제 기간으로 환산 · 지표는 수집 시점 스냅샷입니다.`;
+
+function toggleTheme(){const r=document.documentElement;
+  const cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  r.setAttribute('data-theme',cur==='dark'?'light':'dark');drawAll();}
+function drawAll(){drawHeat();drawTable();drawScatter();}
+drawAll();
+</script>
+</body>
+</html>

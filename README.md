@@ -11,7 +11,7 @@
 |---|----------|------|------|
 | 1 | 멤버별 유튜브 채널 성과 분석 | ✅ 완료 | [`01_member_channel_performance/`](01_member_channel_performance/) |
 | 2 | 커버곡 성과 랭킹 분석 | ✅ 완료 | [`02_cover_song_ranking/`](02_cover_song_ranking/) |
-| 3 | 치지직 방송 패턴 분석 | ⏳ 예정 | `03_chzzk_stream_pattern/` |
+| 3 | 치지직 방송 패턴 분석 | ✅ 완료 | [`03_chzzk_stream_pattern/`](03_chzzk_stream_pattern/) |
 | 4 | 키리누키(2차창작) 생태계 분석 | ⏳ 예정 | `04_kirinuki_ecosystem/` |
 | 5 | 댓글 여론/감성 분석 | ⏳ 예정 | `05_comment_sentiment/` |
 | 6 | 경쟁사 비교 분석 | ⏳ 예정 | `06_competitor_comparison/` |

@@ -48,6 +48,21 @@ OFFICIAL_CHANNEL = ("스텔라이브 공식", "StelLive Official", "UC2b4WRE5BZ6
 
 INCLUDE_FOUNDER = True
 
+# 치지직(Chzzk) 채널 ID — API 검색으로 확인한 값 (name_en 기준)
+CHZZK_IDS = {
+    "Kangji":         "b5ed5db484d04faf4d150aedd362f34b",
+    "Ayatsuno Yuni":  "45e71a76e949e16a34764deb962f9d9f",
+    "Sakihane Huya":  "36ddb9bb4f17593b60f1b63cec86611d",
+    "Shirayuki Hina": "b044e3a3b9259246bc92e863e7d3f3b8",
+    "Neneko Mashiro": "4515b179f86b67b4981e16190817c580",
+    "Akane Lize":     "4325b1d5bbc321fad3042306646e2e50",
+    "Arahashi Tabi":  "a6c4ddb09cdb160478996007bff35296",
+    "Tenko Shibuki":  "64d76089fba26b180d9c9e48a32600d9",
+    "Aokumo Rin":     "516937b5f85cbf2249ce31b0ad046b0f",
+    "Hanako Nana":    "4d812b586ff63f8a2946e64fa860bbf5",
+    "Yuzuha Riko":    "8fd39bb8de623317de90654718638b10",
+}
+
 
 def member_rows(include_founder: bool = INCLUDE_FOUNDER):
     rows = []
