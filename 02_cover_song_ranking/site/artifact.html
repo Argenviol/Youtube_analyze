@@ -1,0 +1,173 @@
+<style>
+:root{
+  --bg:#f9f9f7; --surface:#fcfcfb; --text:#0b0b0b; --text2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --border:rgba(11,11,11,.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0d0d0d; --surface:#1a1a19; --text:#fff; --text2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --border:rgba(255,255,255,.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+}}
+:root[data-theme=dark]{
+  --bg:#0d0d0d; --surface:#1a1a19; --text:#fff; --text2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --border:rgba(255,255,255,.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+header h1{font-size:26px;margin:0 0 4px}
+header p{color:var(--text2);margin:0 0 6px}
+.tag{display:inline-block;font-size:12px;color:var(--muted);border:1px solid var(--border);
+  border-radius:999px;padding:2px 10px;margin-right:6px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:26px 0}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
+.kpi .v{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.kpi .l{font-size:12.5px;color:var(--text2);margin-top:3px}
+.kpi .s{font-size:12px;color:var(--muted);margin-top:2px}
+section{margin:34px 0}
+h2{font-size:18px;margin:0 0 4px}
+.sub{color:var(--text2);font-size:13.5px;margin:0 0 16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.chart-svg{width:100%;height:auto;display:block;overflow:visible}
+.axis text{fill:var(--muted);font-size:11px}
+.gridline{stroke:var(--grid);stroke-width:1}
+.blabel{fill:var(--text);font-size:11px;font-variant-numeric:tabular-nums}
+.mlabel{fill:var(--text2);font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+th{color:var(--text2);font-weight:600;cursor:pointer;user-select:none;white-space:nowrap}
+th.active{color:var(--text)}
+td.song{text-align:left;font-variant-numeric:normal;max-width:440px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+tbody tr:hover{background:color-mix(in srgb,var(--s3) 8%,transparent)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.rankn{color:var(--muted);font-variant-numeric:tabular-nums;width:26px;display:inline-block}
+.tip{position:fixed;pointer-events:none;background:var(--text);color:var(--bg);font-size:12px;
+  padding:6px 9px;border-radius:8px;opacity:0;transition:opacity .1s;z-index:10;white-space:nowrap}
+.foot{color:var(--muted);font-size:12px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px}
+.toggle{float:right;background:var(--surface);border:1px solid var(--border);color:var(--text2);
+  border-radius:999px;padding:5px 12px;font-size:12.5px;cursor:pointer}
+</style>
+
+<div class="wrap">
+<button class="toggle" onclick="toggleTheme()">◐ 테마</button>
+<header>
+  <h1>StelLive 커버곡 성과 랭킹</h1>
+  <p>스텔라이브 멤버들의 유튜브 커버곡 조회수·좋아요·참여율 비교</p>
+  <div id="tags"></div>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<section>
+  <h2>멤버별 커버 성과</h2>
+  <p class="sub">열 제목 클릭 시 정렬. 총 조회수는 각 멤버 커버곡의 합입니다.</p>
+  <div class="card" style="overflow-x:auto"><table id="tbl"></table></div>
+</section>
+
+<section>
+  <h2>커버 수 vs 곡당 평균 조회수</h2>
+  <p class="sub">버블 크기 = 총 조회수. 오른쪽=다작, 위쪽=곡당 파괴력. 둘 다 높으면 최상위.</p>
+  <div class="card"><svg id="scatter" class="chart-svg" viewBox="0 0 720 440"></svg></div>
+</section>
+
+<section>
+  <h2>커버곡 조회수 TOP 20</h2>
+  <div class="card" style="overflow-x:auto"><table id="topcovers"></table></div>
+</section>
+
+<div class="foot" id="foot"></div>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const DATA = {"meta": {"fetched_at": "2026-08-03T06:46:38.769478+00:00", "n_covers": 327, "n_members": 11, "queries": ["cover", "커버", "歌ってみた"], "source": "YouTube Data API v3 (search+videos)"}, "members": [{"rank": 1, "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw", "name_ko": "아카네 리제", "name_en": "Akane Lize", "unit": "UNIVERSE", "cover_count": 37, "total_views": 98019504, "avg_views": 2649175.8, "median_views": 1959942.0, "max_views": 11933087, "best_cover": "출항 [抜錨(발묘) / 나나호시 관현악단 ナナホシ管弦楽団] ㅣ아카네 리제(Akane Lize) 【COVER】", "total_likes": 923274, "avg_engagement_rate": 0.01851, "collab_share": 0.081}, {"rank": 2, "channel_id": "UCQmcltnre6aG9SkDRYZqFIg", "name_ko": "아오쿠모 린", "name_en": "Aokumo Rin", "unit": "CLICHE", "cover_count": 48, "total_views": 77604432, "avg_views": 1616759.0, "median_views": 1304468.0, "max_views": 4932991, "best_cover": "유령도쿄(Ayase) / 아오쿠모 린(Aokumo Rin) Cover", "total_likes": 899774, "avg_engagement_rate": 0.01933, "collab_share": 0.25}, {"rank": 3, "channel_id": "UCIVFv8AiQLqM9oLHTixrNYw", "name_ko": "강지", "name_en": "Kangji", "unit": "STELLIVE", "cover_count": 25, "total_views": 61198211, "avg_views": 2447928.4, "median_views": 1393329.0, "max_views": 13981616, "best_cover": "【강지】 내가 죽으려고 생각 한것은 한국어 커버 (僕が死のうと思ったのは korean cover)", "total_likes": 599267, "avg_engagement_rate": 0.01329, "collab_share": 0.04}, {"rank": 4, "channel_id": "UC1afpiIuBDcjYlmruAa0HiA", "name_ko": "시라유키 히나", "name_en": "Shirayuki Hina", "unit": "UNIVERSE", "cover_count": 42, "total_views": 59559393, "avg_views": 1418080.8, "median_views": 1016402.0, "max_views": 7840661, "best_cover": "낙향(都落ち) / 시라유키 히나 Cover", "total_likes": 642180, "avg_engagement_rate": 0.02162, "collab_share": 0.095}, {"rank": 5, "channel_id": "UCj0c1jUr91dTetIQP2pFeLA", "name_ko": "유즈하 리코", "name_en": "Yuzuha Riko", "unit": "CLICHE", "cover_count": 46, "total_views": 51647987, "avg_views": 1122782.3, "median_views": 1009800.5, "max_views": 3201619, "best_cover": "케세라세라 (Mrs. GREEN APPLE)  / 유즈하 리코(Yuzuha Riko) cover", "total_likes": 646249, "avg_engagement_rate": 0.02807, "collab_share": 0.13}, {"rank": 6, "channel_id": "UCcA21_PzN1EhNe7xS4MJGsQ", "name_ko": "하나코 나나", "name_en": "Hanako Nana", "unit": "CLICHE", "cover_count": 34, "total_views": 49293656, "avg_views": 1449813.4, "median_views": 1118538.0, "max_views": 4981923, "best_cover": "비행정 [飛行艇 - King Gnu] / 하나코 나나 COVER", "total_likes": 668734, "avg_engagement_rate": 0.01972, "collab_share": 0.206}, {"rank": 7, "channel_id": "UCYxLMfeX1CbMBll9MsGlzmw", "name_ko": "텐코 시부키", "name_en": "Tenko Shibuki", "unit": "CLICHE", "cover_count": 34, "total_views": 38068966, "avg_views": 1119675.5, "median_views": 597482.0, "max_views": 6865916, "best_cover": "너에게 메롱(一二三) / 텐코 시부키(Tenko Shibuki) cover", "total_likes": 502252, "avg_engagement_rate": 0.03012, "collab_share": 0.088}, {"rank": 8, "channel_id": "UCAHVQ44O81aehLWfy9O6Elw", "name_ko": "아라하시 타비", "name_en": "Arahashi Tabi", "unit": "UNIVERSE", "cover_count": 22, "total_views": 24849846, "avg_views": 1129538.5, "median_views": 800380.5, "max_views": 3772080, "best_cover": "낮에 뜨는 달 ( 안예은 ) / 아라하시 타비 Cover", "total_likes": 288453, "avg_engagement_rate": 0.01861, "collab_share": 0.091}, {"rank": 9, "channel_id": "UClbYIn9LDbbFZ9w2shX3K0g", "name_ko": "아야츠노 유니", "name_en": "Ayatsuno Yuni", "unit": "EVERYS", "cover_count": 14, "total_views": 14118206, "avg_views": 1008443.3, "median_views": 866338.5, "max_views": 2837796, "best_cover": "【아야츠노 유니 X 아이리 칸나】 점묘의 노래 (点描の唄) | Cover", "total_likes": 164056, "avg_engagement_rate": 0.01651, "collab_share": 0.143}, {"rank": 10, "channel_id": "UC_eeSpMBz8PG4ssdBPnP07g", "name_ko": "네네코 마시로", "name_en": "Neneko Mashiro", "unit": "UNIVERSE", "cover_count": 19, "total_views": 12993648, "avg_views": 683876.2, "median_views": 477430.0, "max_views": 2085876, "best_cover": "Pale (MIMI) / 네네코 마시로 Cover", "total_likes": 158941, "avg_engagement_rate": 0.02527, "collab_share": 0.105}, {"rank": 11, "channel_id": "UC0YQnenKBCu5sGb7H61n6HA", "name_ko": "사키하네 후야", "name_en": "Sakihane Huya", "unit": "EVERYS", "cover_count": 6, "total_views": 2952997, "avg_views": 492166.2, "median_views": 315945.0, "max_views": 1316362, "best_cover": "별자리가 될 수 있다면 (星座になれたら) l 사키하네 후야(Sakihane Huya) Cover", "total_likes": 78315, "avg_engagement_rate": 0.03796, "collab_share": 0.167}], "top_covers": [{"name_ko": "강지", "title": "【강지】 내가 죽으려고 생각 한것은 한국어 커버 (僕が死のうと思ったのは korean cover)", "views": 13981616, "likes": 129001.0, "comments": 35899.0, "published_at": "2018-07-14 04:15:02+00:00"}, {"name_ko": "아카네 리제", "title": "출항 [抜錨(발묘) / 나나호시 관현악단 ナナホシ管弦楽団] ㅣ아카네 리제(Akane Lize) 【COVER】", "views": 11933087, "likes": 94756.0, "comments": 4093.0, "published_at": "2025-12-04 10:30:06+00:00"}, {"name_ko": "아카네 리제", "title": "Drowning (WOODZ)ㅣ아카네 리제 (Akane Lize) 【Cover】", "views": 11493989, "likes": 71155.0, "comments": 3717.0, "published_at": "2024-07-20 10:40:07+00:00"}, {"name_ko": "아카네 리제", "title": "내일의 밤하늘 초계반(アスノヨゾラ哨戒班)ㅣ아카네 리제(Akane Lize) 【COVER】", "views": 9478741, "likes": 55069.0, "comments": 1976.0, "published_at": "2025-02-04 11:00:07+00:00"}, {"name_ko": "강지", "title": "【강지X너불】 ✿동경 캐스터! (東京キャスター)✿ 「Korean Cover」", "views": 8402677, "likes": 48637.0, "comments": 5535.0, "published_at": "2017-11-23 04:04:54+00:00"}, {"name_ko": "시라유키 히나", "title": "낙향(都落ち) / 시라유키 히나 Cover", "views": 7840661, "likes": 44022.0, "comments": 2261.0, "published_at": "2023-06-08 06:00:09+00:00"}, {"name_ko": "아카네 리제", "title": "괴물 (怪物) / 아카네 리제 Cover", "views": 7297682, "likes": 41037.0, "comments": 1597.0, "published_at": "2023-06-09 06:00:09+00:00"}, {"name_ko": "텐코 시부키", "title": "너에게 메롱(一二三) / 텐코 시부키(Tenko Shibuki) cover", "views": 6865916, "likes": 42338.0, "comments": 2484.0, "published_at": "2024-05-16 08:00:07+00:00"}, {"name_ko": "강지", "title": "【강지X너불】 ✿니아! (Near, ニア)✿ 「Korean Cover」", "views": 6191549, "likes": 35332.0, "comments": 2041.0, "published_at": "2018-04-14 09:45:30+00:00"}, {"name_ko": "아카네 리제", "title": "선잠 (Leina) / 아카네 리제 Cover", "views": 5974289, "likes": 34170.0, "comments": 940.0, "published_at": "2024-03-02 10:30:09+00:00"}, {"name_ko": "하나코 나나", "title": "비행정 [飛行艇 - King Gnu] / 하나코 나나 COVER", "views": 4981923, "likes": 35452.0, "comments": 1327.0, "published_at": "2025-01-27 12:00:06+00:00"}, {"name_ko": "아오쿠모 린", "title": "유령도쿄(Ayase) / 아오쿠모 린(Aokumo Rin) Cover", "views": 4932991, "likes": 31485.0, "comments": 1227.0, "published_at": "2024-05-16 09:00:07+00:00"}, {"name_ko": "시라유키 히나", "title": "피날레(フィナーレ。) / 시라유키 히나 Cover", "views": 4738045, "likes": 30516.0, "comments": 1022.0, "published_at": "2024-02-11 12:00:07+00:00"}, {"name_ko": "시라유키 히나", "title": "I Really Want to Stay At Your House (Arrange ver.) | 시라유키 히나 Cover", "views": 4677071, "likes": 46916.0, "comments": 1834.0, "published_at": "2024-06-29 11:00:07+00:00"}, {"name_ko": "텐코 시부키", "title": "여우비 / 텐코 시부키(Tenko Shibuki) cover", "views": 4652172, "likes": 30937.0, "comments": 1524.0, "published_at": "2024-08-09 11:00:07+00:00"}, {"name_ko": "아오쿠모 린", "title": "W/X/Y (Tani Yuuki) / 아오쿠모 린(Aokumo Rin) Cover", "views": 4590164, "likes": 30633.0, "comments": 1136.0, "published_at": "2025-03-08 10:00:06+00:00"}, {"name_ko": "강지", "title": "【강지】*.Letter Song.* 「Korean Cover」", "views": 4317115, "likes": 35924.0, "comments": 4782.0, "published_at": "2018-11-28 07:00:02+00:00"}, {"name_ko": "아오쿠모 린", "title": "TAEYEON (태연) 'To. X' / 아오쿠모 린(Aokumo Rin) Cover", "views": 4131437, "likes": 30839.0, "comments": 1300.0, "published_at": "2025-02-15 10:30:06+00:00"}, {"name_ko": "아오쿠모 린", "title": "무희 (Vaundy) / 아오쿠모 린(Aokumo Rin) Cover", "views": 3996701, "likes": 29346.0, "comments": 903.0, "published_at": "2024-09-15 09:00:07+00:00"}, {"name_ko": "하나코 나나", "title": "サムライハート(Some Like It Hot!!) / 하나코 나나 COVER", "views": 3923321, "likes": 25062.0, "comments": 773.0, "published_at": "2024-10-05 10:00:31+00:00"}]};
+const SERIES=['--s1','--s2','--s3','--s4','--s5','--s6','--s7','--s8'];
+const cssv=v=>getComputedStyle(document.body).getPropertyValue(v).trim();
+const fmt=n=>n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(0)+'K':(''+n);
+const fmtN=n=>Number(n).toLocaleString('ko-KR');
+const mcolor={}; DATA.members.forEach((m,i)=>mcolor[m.name_en]=SERIES[i%SERIES.length]);
+const tip=document.getElementById('tip');
+const showTip=(e,h)=>{tip.innerHTML=h;tip.style.opacity=1;tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';};
+const hideTip=()=>tip.style.opacity=0;
+
+document.getElementById('tags').innerHTML =
+  `<span class="tag">수집 ${DATA.meta.fetched_at.slice(0,10)}</span>`+
+  `<span class="tag">커버 ${DATA.meta.n_covers}곡</span>`+
+  `<span class="tag">멤버 ${DATA.meta.n_members}명</span>`+
+  `<span class="tag">YouTube Data API v3</span>`;
+
+const totCovers=DATA.members.reduce((a,m)=>a+m.cover_count,0);
+const totViews=DATA.members.reduce((a,m)=>a+m.total_views,0);
+const king=[...DATA.members].sort((a,b)=>b.total_views-a.total_views)[0];
+const topCover=DATA.top_covers[0];
+document.getElementById('kpis').innerHTML=[
+  ['총 커버곡',fmtN(totCovers)+'곡','11명 채널 합산'],
+  ['합산 조회수',fmt(totViews),'모든 커버곡 조회수 합'],
+  ['총 조회수 1위',king.name_ko,fmt(king.total_views)+' · '+king.cover_count+'곡'],
+  ['최고 조회 커버',topCover.name_ko,fmt(topCover.views)+' 조회'],
+].map(k=>`<div class="kpi"><div class="v">${k[1]}</div><div class="l">${k[0]}</div><div class="s">${k[2]}</div></div>`).join('');
+
+const COLS=[
+  ['name_ko','멤버',r=>`<i class="dot" style="background:${cssv(mcolor[r.name_en])}"></i>${r.name_ko}`],
+  ['cover_count','곡수',r=>r.cover_count],
+  ['total_views','총 조회수',r=>fmtN(r.total_views)],
+  ['avg_views','평균 조회수',r=>fmtN(Math.round(r.avg_views))],
+  ['max_views','최고 조회',r=>fmtN(r.max_views)],
+  ['avg_engagement_rate','참여율',r=>(r.avg_engagement_rate*100).toFixed(1)+'%'],
+];
+let sortKey='total_views',sortDir=-1;
+function rows(){return [...DATA.members].sort((a,b)=>(a[sortKey]>b[sortKey]?1:-1)*sortDir);}
+function drawTable(){
+  const t=document.getElementById('tbl');
+  t.innerHTML='<thead><tr>'+COLS.map(c=>
+    `<th class="${c[0]===sortKey?'active':''}" onclick="setSort('${c[0]}')">${c[1]}${c[0]===sortKey?(sortDir<0?' ▾':' ▴'):''}</th>`).join('')+'</tr></thead>'+
+    '<tbody>'+rows().map(r=>'<tr>'+COLS.map(c=>`<td>${c[2](r)}</td>`).join('')+'</tr>').join('')+'</tbody>';
+}
+function setSort(k){if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=-1;}drawTable();}
+
+function svgEl(t,a){const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function drawScatter(){
+  const svg=document.getElementById('scatter');svg.innerHTML='';
+  const W=720,H=440,ml=64,mr=40,mt=16,mb=44,list=DATA.members;
+  const xs=list.map(m=>m.cover_count),ys=list.map(m=>m.avg_views/1e6);
+  const xmin=0,xmax=Math.max(...xs)*1.08,ymin=0,ymax=Math.max(...ys)*1.1;
+  const X=v=>ml+(v-xmin)/(xmax-xmin)*(W-ml-mr);
+  const Y=v=>H-mb-(v-ymin)/(ymax-ymin)*(H-mt-mb);
+  for(let i=0;i<=4;i++){const gy=mt+i/4*(H-mt-mb);
+    svg.appendChild(svgEl('line',{x1:ml,x2:W-mr,y1:gy,y2:gy,class:'gridline'}));
+    const t=svgEl('text',{x:ml-8,y:gy+4,'text-anchor':'end',class:'axis'});t.textContent=(ymax-(i/4)*(ymax-ymin)).toFixed(1)+'M';svg.appendChild(t);}
+  for(let i=0;i<=5;i++){const gx=ml+i/5*(W-ml-mr);
+    const t=svgEl('text',{x:gx,y:H-mb+18,'text-anchor':'middle',class:'axis'});t.textContent=Math.round(xmin+(i/5)*(xmax-xmin));svg.appendChild(t);}
+  svg.appendChild(svgEl('text',{x:(ml+W-mr)/2,y:H-6,'text-anchor':'middle',class:'axis'})).textContent='커버곡 수';
+  const maxTV=Math.max(...list.map(m=>m.total_views));
+  list.forEach(m=>{
+    const r=8+Math.sqrt(m.total_views/maxTV)*20,cx=X(m.cover_count),cy=Y(m.avg_views/1e6);
+    const c=svgEl('circle',{cx,cy,r,fill:cssv(mcolor[m.name_en]),opacity:.82,stroke:cssv('--surface'),'stroke-width':2});
+    c.addEventListener('mousemove',e=>showTip(e,`<b>${m.name_ko}</b><br>${m.cover_count}곡 · 총 ${fmt(m.total_views)}<br>평균 ${fmt(Math.round(m.avg_views))}`));
+    c.addEventListener('mouseleave',hideTip);svg.appendChild(c);
+    const right=cx+r+58>W-mr;
+    const tx=svgEl('text',{x:right?cx-r-4:cx+r+4,y:cy+4,class:'mlabel','text-anchor':right?'end':'start'});
+    tx.textContent=m.name_ko;svg.appendChild(tx);
+  });
+}
+
+const tc=document.getElementById('topcovers');
+tc.innerHTML='<thead><tr><th>#</th><th>멤버</th><th style="text-align:left">곡</th><th>조회수</th><th>좋아요</th></tr></thead>'+
+  '<tbody>'+DATA.top_covers.map((v,i)=>`<tr><td><span class="rankn">${i+1}</span></td>`+
+  `<td>${v.name_ko}</td><td class="song">${v.title}</td>`+
+  `<td>${fmtN(v.views)}</td><td>${v.likes==null?'-':fmtN(v.likes)}</td></tr>`).join('')+'</tbody>';
+
+document.getElementById('foot').innerHTML=
+  `커버 식별: 채널 내 "cover / 커버 / 歌ってみた" 검색 후 제목 필터. 콜라보 곡은 소유 채널 기준 집계.<br>`+
+  `데이터 출처: YouTube Data API v3 · 지표는 수집 시점 스냅샷입니다.`;
+
+function toggleTheme(){const r=document.documentElement;
+  const cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  r.setAttribute('data-theme',cur==='dark'?'light':'dark');drawAll();}
+function drawAll(){drawTable();drawScatter();}
+drawAll();
+</script>
