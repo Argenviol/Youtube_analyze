@@ -13,8 +13,10 @@ from matplotlib import font_manager
 
 from . import config
 
-# apt로 설치된 나눔 폰트를 matplotlib 캐시가 못 잡는 경우가 있어 명시적으로 등록
-for _p in glob.glob("/usr/share/fonts/truetype/nanum/*.ttf"):
+# apt 설치 폰트를 matplotlib 캐시가 못 잡는 경우가 있어 명시적으로 등록.
+# Noto Sans CJK: 한글+일본어(커버곡 제목의 가나/한자)를 한 폰트로 커버.
+for _p in (glob.glob("/usr/share/fonts/truetype/nanum/*.ttf")
+           + glob.glob("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc")):
     try:
         font_manager.fontManager.addfont(_p)
     except Exception:
@@ -28,8 +30,9 @@ GRID = config.INK["grid"]
 
 def _pick_korean_font():
     """설치된 한글 폰트가 있으면 사용, 없으면 기본(한글은 □로 나올 수 있음)."""
-    candidates = ["NanumGothic", "Noto Sans CJK KR", "Noto Sans KR",
-                  "Malgun Gothic", "AppleGothic", "UnDotum"]
+    # 한글+일본어 혼용 제목이 있으므로 CJK 통합 폰트를 우선.
+    candidates = ["Noto Sans CJK KR", "Noto Sans CJK JP", "Noto Sans KR",
+                  "NanumGothic", "Malgun Gothic", "AppleGothic", "UnDotum"]
     available = {f.name for f in font_manager.fontManager.ttflist}
     for c in candidates:
         if c in available:
