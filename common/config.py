@@ -48,6 +48,29 @@ OFFICIAL_CHANNEL = ("스텔라이브 공식", "StelLive Official", "UC2b4WRE5BZ6
 
 INCLUDE_FOUNDER = True
 
+# ---------------------------------------------------------------------------
+# 경쟁사 비교(프로젝트6)용 로스터 — 모두 YouTube API로 검증한 채널 ID
+# ---------------------------------------------------------------------------
+COMPETITORS = {
+    "홀로라이브": [
+        # name_ko, name_en, channel_id
+        ("우사다 페코라", "Usada Pekora", "UC1DCedRgGHBdm81E1llLhOQ"),
+        ("가우르 구라", "Gawr Gura", "UCoSrY_IQQVpmIRZ9Xf-y93g"),
+        ("호쇼 마린", "Houshou Marine", "UCCzUftO8KOVkV4wQG1vkUvg"),
+        ("모리 캘리오프", "Mori Calliope", "UCL_qhgtOy0dy1Agp8vkySQg"),
+        ("모모스즈 네네", "Momosuzu Nene", "UCAWSyEs_Io8MtpY3m-zqILA"),
+        ("이누가미 코로네", "Inugami Korone", "UChAnqc_AY5_I3Px5dig3X1Q"),
+    ],
+    "이세계아이돌": [
+        ("아이네", "Ine", "UCroM00J2ahCN6k-0-oAiDxg"),
+        ("징버거", "Jingburger", "UCHE7GBQVtdh-c1m3tjFdevQ"),
+        ("릴파", "Lilpa", "UC-oCJP9t47v7-DmsnmXV38Q"),
+        ("주르르", "Jururu", "UCTifMx1ONpElK5x6B4ng8eg"),
+        ("고세구", "Gosegu", "UCV9WL7sW6_KjanYkUUaIDfQ"),
+        ("비챤", "Viichan", "UCs6EwgxKLY9GG4QNUrP5hoQ"),
+    ],
+}
+
 # 치지직(Chzzk) 채널 ID — API 검색으로 확인한 값 (name_en 기준)
 CHZZK_IDS = {
     "Kangji":         "b5ed5db484d04faf4d150aedd362f34b",
