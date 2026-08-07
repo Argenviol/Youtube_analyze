@@ -1,0 +1,197 @@
+<style>
+:root{
+  --bg:#f9f9f7; --surface:#fcfcfb; --text:#0b0b0b; --text2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --border:rgba(11,11,11,.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0d0d0d; --surface:#1a1a19; --text:#fff; --text2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --border:rgba(255,255,255,.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+}}
+:root[data-theme=dark]{
+  --bg:#0d0d0d; --surface:#1a1a19; --text:#fff; --text2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --border:rgba(255,255,255,.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+header h1{font-size:26px;margin:0 0 4px}
+header p{color:var(--text2);margin:0 0 6px}
+.tag{display:inline-block;font-size:12px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:2px 10px;margin-right:6px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:26px 0}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
+.kpi .v{font-size:23px;font-weight:700;letter-spacing:-.5px}
+.kpi .l{font-size:12.5px;color:var(--text2);margin-top:3px}
+.kpi .s{font-size:11.5px;color:var(--muted);margin-top:2px}
+section{margin:34px 0}
+h2{font-size:18px;margin:0 0 4px}
+.sub{color:var(--text2);font-size:13.5px;margin:0 0 16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.chart-svg{width:100%;height:auto;display:block;overflow:visible}
+.gridline{stroke:var(--grid);stroke-width:1}
+.axis,.axis text{fill:var(--muted);font-size:11px}
+.mlabel{fill:var(--text2);font-size:12px}
+.timeline{position:relative;padding:50px 10px 60px}
+.tl-line{position:absolute;left:0;right:0;top:50%;height:2px;background:var(--grid)}
+.tl-items{display:flex;justify-content:space-between;position:relative}
+.tl-item{flex:1;text-align:center;position:relative;padding:0 4px}
+.tl-dot{width:14px;height:14px;border-radius:50%;margin:0 auto;position:relative;z-index:2;border:3px solid var(--surface)}
+.tl-date{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:6px}
+.tl-event{font-size:12px;color:var(--text);margin-top:2px;line-height:1.35}
+.tl-item.up .tl-content{position:absolute;bottom:calc(50% + 16px);left:50%;transform:translateX(-50%);width:150px}
+.tl-item.down .tl-content{position:absolute;top:calc(50% + 16px);left:50%;transform:translateX(-50%);width:150px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--text2);margin-top:16px;justify-content:center}
+.legend span{display:flex;align-items:center}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--text2);font-weight:600}
+a{color:var(--s1)}
+.foot{color:var(--muted);font-size:12px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px}
+.toggle{float:right;background:var(--surface);border:1px solid var(--border);color:var(--text2);border-radius:999px;padding:5px 12px;font-size:12.5px;cursor:pointer}
+.note{background:color-mix(in srgb,var(--s4) 12%,transparent);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--text2);margin-top:16px}
+</style>
+
+<div class="wrap">
+<button class="toggle" onclick="toggleTheme()">◐ 테마</button>
+<header>
+  <h1>버추얼 크리에이터 시장 분석</h1>
+  <p>글로벌 VTuber 시장 · 한국 스트리밍 생태계(치지직) · StelLive의 시장 포지션 — Claude 웹서치 기반</p>
+  <div id="tags"></div>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<section>
+  <h2>글로벌 VTuber 시장 규모 전망</h2>
+  <p class="sub">리서치사별 추정치 비교 — 방법론 차이로 편차가 있어 범위로 해석 권장.</p>
+  <div class="card"><svg id="market" class="chart-svg" viewBox="0 0 640 430"></svg></div>
+</section>
+
+<section>
+  <h2>StelLive 성장 타임라인</h2>
+  <p class="sub">창립부터 브레이브 그룹 인수·첫 콘서트까지.</p>
+  <div class="card">
+    <div class="timeline" id="timeline"></div>
+    <div class="legend" id="tllegend"></div>
+  </div>
+</section>
+
+<section>
+  <h2>시장 구조 &amp; 한국 스트리밍 현황</h2>
+  <div class="card" id="factstable"></div>
+</section>
+
+<div class="note">
+  시장 규모 추정치는 리서치사별 방법론 차이로 편차가 크며, 절대값보다 <b>성장 추세와 구조적 신호</b>로
+  해석하는 것을 권장합니다. 모든 수치는 출처 링크를 포함합니다.
+</div>
+
+<div class="foot" id="foot"></div>
+</div>
+
+<script>
+const DATA = {"meta": {"built_at": "2026-08-07T01:54:56.602265+00:00", "source": "Claude 웹서치(시장 통계) + 프로젝트1·6 자체 수집 데이터", "n_facts": 13, "n_milestones": 8}, "facts": [{"metric": "글로벌 VTuber 시장 규모(2026)", "category": "market_size", "value": 3130.0, "unit": "million_usd", "year": 2026, "region": "Global", "source_name": "SkyQuest Vtuber Market Report", "source_url": "https://www.skyquestt.com/report/vtuber-market", "note": "2031년 49.4억 달러 전망, CAGR 9.56%"}, {"metric": "글로벌 VTuber 시장 규모(2031 전망)", "category": "market_size", "value": 4940.0, "unit": "million_usd", "year": 2031, "region": "Global", "source_name": "SkyQuest Vtuber Market Report", "source_url": "https://www.skyquestt.com/report/vtuber-market", "note": "CAGR 9.56%"}, {"metric": "글로벌 VTuber 시장 규모(2026 대안추정)", "category": "market_size", "value": 3310.0, "unit": "million_usd", "year": 2026, "region": "Global", "source_name": "Global Growth Insights", "source_url": "https://www.globalgrowthinsights.com/market-reports/vtuber-virtual-youtuber-market-102516", "note": "2032년 82.4억 달러 전망, CAGR 16.3%"}, {"metric": "글로벌 VTuber 시장 규모(2032 전망)", "category": "market_size", "value": 8240.0, "unit": "million_usd", "year": 2032, "region": "Global", "source_name": "Global Growth Insights", "source_url": "https://www.globalgrowthinsights.com/market-reports/vtuber-virtual-youtuber-market-102516", "note": "CAGR 16.3%"}, {"metric": "구독+후원 매출 비중", "category": "revenue_share", "value": 52.67, "unit": "pct", "year": 2025, "region": "Global", "source_name": "SkyQuest Vtuber Market Report", "source_url": "https://www.skyquestt.com/report/vtuber-market", "note": "VTuber 매출원 중 구독/후원(수퍼챗 등) 비중"}, {"metric": "유튜브 매출 비중", "category": "revenue_share", "value": 49.73, "unit": "pct", "year": 2025, "region": "Global", "source_name": "SkyQuest Vtuber Market Report", "source_url": "https://www.skyquestt.com/report/vtuber-market", "note": "플랫폼별 매출 중 YouTube 비중"}, {"metric": "아시아태평양 지역 점유율", "category": "region_share", "value": 65.14, "unit": "pct", "year": 2025, "region": "APAC", "source_name": "SkyQuest Vtuber Market Report", "source_url": "https://www.skyquestt.com/report/vtuber-market", "note": "VTuber 시장 지역별 점유율"}, {"metric": "치지직 월간활성이용자(MAU)", "category": "platform_kpi", "value": 2420000.0, "unit": "users", "year": 2026, "region": "Korea", "source_name": "파이낸셜뉴스", "source_url": "https://www.fnnews.com/news/202508171809456473", "note": "2026년 7월 기준. 전년동월 대비 +17%"}, {"metric": "치지직 월간 시청시간", "category": "platform_kpi", "value": 847000000.0, "unit": "minutes", "year": 2026, "region": "Korea", "source_name": "파이낸셜뉴스", "source_url": "https://www.fnnews.com/news/202508171809456473", "note": "2026년 7월 기준. 전년동월 대비 +91%"}, {"metric": "치지직 LCK 뷰어십", "category": "platform_kpi", "value": 3310000.0, "unit": "users", "year": 2026, "region": "Korea", "source_name": "파이낸셜뉴스", "source_url": "https://www.fnnews.com/news/202508171809456473", "note": "SOOP(옛 아프리카TV) 125만명 대비 우위·점유율 60%+"}, {"metric": "한국 크리에이터 산업 사업체 수", "category": "industry_kr", "value": 11089.0, "unit": "count", "year": 2025, "region": "Korea", "source_name": "한국콘텐츠진흥원(KMCC)", "source_url": "https://www.kmcc.go.kr/", "note": "크리에이터 미디어 산업 실태조사"}, {"metric": "한국 크리에이터 산업 매출액", "category": "industry_kr", "value": 5550300.0, "unit": "million_krw", "year": 2025, "region": "Korea", "source_name": "한국콘텐츠진흥원(KMCC)", "source_url": "https://www.kmcc.go.kr/", "note": "5조 5,503억원"}, {"metric": "한국 크리에이터 산업 종사자 수", "category": "industry_kr", "value": 43717.0, "unit": "count", "year": 2025, "region": "Korea", "source_name": "한국콘텐츠진흥원(KMCC)", "source_url": "https://www.kmcc.go.kr/", "note": "크리에이터 미디어 산업 실태조사"}], "milestones": [{"date": "2014-11", "event": "강지 개인 스트리머로 유튜브 채널 개설", "category": "origin"}, {"date": "2021-01", "event": "강지 버추얼 크리에이터 기획사 스텔라이브 설립 준비 시작", "category": "origin"}, {"date": "2022-12", "event": "1세대 EVERYS 유닛 데뷔 (아야츠노 유니 등)", "category": "launch"}, {"date": "2023-06", "event": "2세대 UNIVERSE 유닛 데뷔 (네네코 마시로 등)", "category": "launch"}, {"date": "2024-01", "event": "3세대 cliché 유닛 데뷔", "category": "launch"}, {"date": "2025-07", "event": "브레이브 그룹(Brave Group)에 인수합병 발표", "category": "investment"}, {"date": "2025-09", "event": "브레이브 그룹 투자 라운드 참여", "category": "investment"}, {"date": "2025-12", "event": "첫 단체 콘서트 \"2025 THE 1ST STELLIVE FESTIVAL [STAR TRAIL]\" 개최", "category": "milestone"}], "groups": [{"group": "StelLive", "n_members": 6, "avg_subscribers": 263833.3333, "median_subscribers": 286000.0, "total_subscribers": 1583000, "avg_recent_views": 155585.9167, "avg_engagement_rate": 0.0424, "avg_uploads_per_week": 3.7517, "avg_reach_ratio": 0.598}, {"group": "이세계아이돌", "n_members": 6, "avg_subscribers": 414166.6667, "median_subscribers": 416500.0, "total_subscribers": 2485000, "avg_recent_views": 93544.1833, "avg_engagement_rate": 0.0621, "avg_uploads_per_week": 4.6917, "avg_reach_ratio": 0.2273}, {"group": "홀로라이브", "n_members": 6, "avg_subscribers": 3001666.6667, "median_subscribers": 2700000.0, "total_subscribers": 18010000, "avg_recent_views": 481659.95, "avg_engagement_rate": 0.0701, "avg_uploads_per_week": 4.2333, "avg_reach_ratio": 0.1363}]};
+const cssv=v=>getComputedStyle(document.body).getPropertyValue(v).trim();
+const svgEl=(t,a)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+document.getElementById('tags').innerHTML =
+  `<span class="tag">시장통계: Claude 웹서치</span>`+
+  `<span class="tag">자체데이터: 프로젝트1·6</span>`+
+  `<span class="tag">${DATA.meta.n_facts}개 지표</span>`;
+
+const f = m => DATA.facts.find(x=>x.metric===m);
+const marketSize2026 = f('글로벌 VTuber 시장 규모(2026)');
+const chzzkMau = f('치지직 월간활성이용자(MAU)');
+const apac = f('아시아태평양 지역 점유율');
+const krRevenue = f('한국 크리에이터 산업 매출액');
+document.getElementById('kpis').innerHTML=[
+  ['글로벌 시장(2026)','$'+(marketSize2026.value/1000).toFixed(1)+'B','VTuber 시장 규모 추정'],
+  ['치지직 MAU',Math.round(chzzkMau.value/10000)+'만명','2026.7 · YoY +17%'],
+  ['APAC 점유율',apac.value.toFixed(0)+'%','글로벌 VTuber 시장 지역 비중'],
+  ['한국 크리에이터 매출',(krRevenue.value/1e6).toFixed(2)+'조원','2025 KMCC 산업조사'],
+].map(k=>`<div class="kpi"><div class="v">${k[1]}</div><div class="l">${k[0]}</div><div class="s">${k[2]}</div></div>`).join('');
+
+function drawMarket(){
+  const svg=document.getElementById('market');svg.innerHTML='';
+  const W=640,H=400,ml=54,mr=30,mt=20,mb=40,legendY=430;
+  const ms=DATA.facts.filter(f=>f.category==='market_size');
+  const sources=[...new Set(ms.map(f=>f.source_name))];
+  const years=[...new Set(ms.map(f=>f.year))].sort((a,b)=>a-b);
+  const xmin=Math.min(...years),xmax=Math.max(...years);
+  const ymax=Math.max(...ms.map(f=>f.value))/1000*1.15;
+  const X=v=>ml+(v-xmin)/(xmax-xmin)*(W-ml-mr),Y=v=>H-mb-(v/ymax)*(H-mt-mb);
+  for(let i=0;i<=4;i++){const gy=mt+i/4*(H-mt-mb);svg.appendChild(svgEl('line',{x1:ml,x2:W-mr,y1:gy,y2:gy,class:'gridline'}));
+    const t=svgEl('text',{x:ml-8,y:gy+4,'text-anchor':'end',class:'axis'});t.textContent='$'+(ymax-(i/4)*ymax).toFixed(1)+'B';svg.appendChild(t);}
+  years.forEach(y=>{const gx=X(y);const t=svgEl('text',{x:gx,y:H-mb+18,'text-anchor':'middle',class:'axis'});t.textContent=y;svg.appendChild(t);});
+  const SER=['--s1','--s2'];
+  sources.forEach((src,i)=>{
+    const d=ms.filter(f=>f.source_name===src).sort((a,b)=>a.year-b.year);
+    const pts=d.map(f=>`${X(f.year)},${Y(f.value/1000)}`).join(' ');
+    svg.appendChild(svgEl('polyline',{points:pts,fill:'none',stroke:cssv(SER[i]),'stroke-width':2.5}));
+    d.forEach((f,j)=>{
+      svg.appendChild(svgEl('circle',{cx:X(f.year),cy:Y(f.value/1000),r:6,fill:cssv(SER[i]),stroke:cssv('--surface'),'stroke-width':2}));
+      // 시작점(첫 연도)은 두 시리즈가 겹치므로 세로로 살짝 벌려서 라벨 배치
+      const dy = (j===0) ? (i===0? 16 : -8) : -10;
+      const t=svgEl('text',{x:X(f.year)+8,y:Y(f.value/1000)+dy,class:'mlabel'});t.textContent='$'+(f.value/1000).toFixed(1)+'B';svg.appendChild(t);
+    });
+  });
+  // 범례: 차트 아래
+  const ly=legendY-6;
+  sources.forEach((src,i)=>{
+    const lx=ml + i*260;
+    svg.appendChild(svgEl('circle',{cx:lx,cy:ly,r:5,fill:cssv(SER[i])}));
+    const lt=svgEl('text',{x:lx+10,y:ly+4,class:'mlabel'});lt.textContent=src;svg.appendChild(lt);
+  });
+}
+
+const CAT_LABEL={origin:'창립',launch:'런칭',investment:'투자',milestone:'성과'};
+const CAT_COLOR={origin:'--muted',launch:'--s1',investment:'--s2',milestone:'--s3'};
+function drawTimeline(){
+  const el=document.getElementById('timeline');
+  const items=DATA.milestones;
+  el.innerHTML='<div class="tl-line"></div><div class="tl-items">'+
+    items.map((m,i)=>{
+      const dir=i%2===0?'up':'down';
+      return `<div class="tl-item ${dir}">
+        <div class="tl-content">
+          ${dir==='up'?`<div class="tl-event">${m.event}</div><div class="tl-date">${m.date}</div>`:''}
+        </div>
+        <div class="tl-dot" style="background:${cssv(CAT_COLOR[m.category])}"></div>
+        <div class="tl-content">
+          ${dir==='down'?`<div class="tl-date">${m.date}</div><div class="tl-event">${m.event}</div>`:''}
+        </div>
+      </div>`;
+    }).join('')+'</div>';
+  document.getElementById('tllegend').innerHTML = Object.entries(CAT_LABEL).map(([k,v])=>
+    `<span><i class="dot" style="background:${cssv(CAT_COLOR[k])}"></i>${v}</span>`).join('');
+}
+
+function drawFacts(){
+  const rows = DATA.facts.filter(f=>['revenue_share','region_share','platform_kpi','industry_kr'].includes(f.category));
+  const fmtVal=f=>{
+    if(f.unit==='pct') return f.value.toFixed(1)+'%';
+    if(f.unit==='users') return (f.value/1e6).toFixed(2)+'M';
+    if(f.unit==='minutes') return (f.value/1e8).toFixed(1)+'억분';
+    if(f.unit==='million_krw') return (f.value/1e6).toFixed(2)+'조원';
+    if(f.unit==='count') return f.value.toLocaleString('ko-KR')+'개';
+    return f.value;
+  };
+  document.getElementById('factstable').innerHTML = '<table><thead><tr><th>지표</th><th>값</th><th>출처</th><th>비고</th></tr></thead><tbody>'+
+    rows.map(f=>`<tr><td>${f.metric}</td><td><b>${fmtVal(f)}</b></td>`+
+    `<td><a href="${f.source_url}" target="_blank" rel="noopener">${f.source_name}</a></td>`+
+    `<td style="color:var(--text2)">${f.note||''}</td></tr>`).join('')+'</tbody></table>';
+}
+
+document.getElementById('foot').innerHTML=
+  `시장 통계는 Claude가 웹서치로 수집한 공개 리서치·보도자료 기반이며, 리서치사별 추정 방법론 차이로 편차가 있습니다.<br>`+
+  `StelLive 자체 포지션 데이터는 프로젝트1(멤버별 채널 성과)·프로젝트6(경쟁사 비교)의 실측 데이터를 재사용했습니다.`;
+
+function toggleTheme(){const r=document.documentElement;
+  const cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  r.setAttribute('data-theme',cur==='dark'?'light':'dark');drawAll();}
+function drawAll(){drawMarket();drawTimeline();drawFacts();}
+drawAll();
+</script>

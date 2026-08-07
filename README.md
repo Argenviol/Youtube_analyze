@@ -15,7 +15,7 @@
 | 4 | 키리누키(2차창작) 생태계 분석 | ✅ 완료 | [`04_kirinuki_ecosystem/`](04_kirinuki_ecosystem/) |
 | 5 | 댓글 여론/감성 분석 | ✅ 완료 | [`05_comment_sentiment/`](05_comment_sentiment/) |
 | 6 | 경쟁사 비교 분석 | ✅ 완료 | [`06_competitor_comparison/`](06_competitor_comparison/) |
-| 7 | 버추얼 크리에이터 시장 분석 | ⏳ 예정 | `07_market_analysis/` |
+| 7 | 버추얼 크리에이터 시장 분석 | ✅ 완료 | [`07_market_analysis/`](07_market_analysis/) |
 
 각 프로젝트 폴더는 `data/`(원천·정제), `sql/`(스키마·INSERT·분석쿼리·SQLite),
 `charts/`(PNG 그래프), `site/`(HTML 대시보드), `README.md`/`REPORT.md`(설명·결과)로 구성됩니다.
