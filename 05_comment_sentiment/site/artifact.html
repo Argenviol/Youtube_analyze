@@ -1,0 +1,180 @@
+<style>
+:root{
+  --bg:#f9f9f7; --surface:#fcfcfb; --text:#0b0b0b; --text2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --border:rgba(11,11,11,.10);
+  --pos:#1baf7a; --neu:#898781; --neg:#e34948;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0d0d0d; --surface:#1a1a19; --text:#fff; --text2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --border:rgba(255,255,255,.10);
+  --pos:#199e70; --neu:#898781; --neg:#e66767;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+}}
+:root[data-theme=dark]{
+  --bg:#0d0d0d; --surface:#1a1a19; --text:#fff; --text2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --border:rgba(255,255,255,.10);
+  --pos:#199e70; --neu:#898781; --neg:#e66767;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+header h1{font-size:26px;margin:0 0 4px}
+header p{color:var(--text2);margin:0 0 6px}
+.tag{display:inline-block;font-size:12px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:2px 10px;margin-right:6px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:26px 0}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
+.kpi .v{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.kpi .l{font-size:12.5px;color:var(--text2);margin-top:3px}
+.kpi .s{font-size:12px;color:var(--muted);margin-top:2px}
+section{margin:34px 0}
+h2{font-size:18px;margin:0 0 4px}
+.sub{color:var(--text2);font-size:13.5px;margin:0 0 16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+th{color:var(--text2);font-weight:600;cursor:pointer;user-select:none;white-space:nowrap}
+th.active{color:var(--text)}
+tbody tr:hover{background:color-mix(in srgb,var(--pos) 8%,transparent)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.bar-outer{background:var(--grid);border-radius:5px;overflow:hidden;height:18px;display:flex}
+.bar-seg{height:100%}
+.senti-row{display:grid;grid-template-columns:100px 1fr 120px;align-items:center;gap:10px;font-size:13px;margin-bottom:9px}
+.senti-nums{font-size:11.5px;color:var(--text2);text-align:right;font-variant-numeric:tabular-nums}
+.comment-card{border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:var(--bg)}
+.comment-card .meta{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:5px}
+.pill{font-size:10.5px;border-radius:999px;padding:1px 8px;font-weight:600}
+.pill.positive{background:color-mix(in srgb,var(--pos) 20%,transparent);color:var(--pos)}
+.pill.neutral{background:color-mix(in srgb,var(--neu) 20%,transparent);color:var(--text2)}
+.pill.negative{background:color-mix(in srgb,var(--neg) 20%,transparent);color:var(--neg)}
+.chart-svg{width:100%;height:auto;display:block;overflow:visible}
+.gridline{stroke:var(--grid);stroke-width:1}
+.axis,.axis text{fill:var(--muted);font-size:11px}
+.foot{color:var(--muted);font-size:12px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px}
+.toggle{float:right;background:var(--surface);border:1px solid var(--border);color:var(--text2);border-radius:999px;padding:5px 12px;font-size:12.5px;cursor:pointer}
+.two{display:grid;grid-template-columns:1.1fr 0.9fr;gap:20px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+</style>
+
+<div class="wrap">
+<button class="toggle" onclick="toggleTheme()">◐ 테마</button>
+<header>
+  <h1>StelLive 댓글 여론/감성 분석</h1>
+  <p>인기 영상 상위 댓글 표본을 Claude가 직접 읽고 감성·토픽으로 분류했습니다</p>
+  <div id="tags"></div>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<section>
+  <h2>멤버별 감성 구성</h2>
+  <p class="sub">긍정(초록)·중립(회색)·부정(빨강) 비율. 표본은 각 멤버 좋아요 상위 30개 댓글.</p>
+  <div class="card" id="sentibars"></div>
+</section>
+
+<section class="two">
+  <div>
+    <h2>전체 토픽 분포</h2>
+    <p class="sub">댓글이 가장 많이 언급하는 주제.</p>
+    <div class="card"><svg id="topics" class="chart-svg" viewBox="0 0 460 320"></svg></div>
+  </div>
+  <div>
+    <h2>가장 좋아요 많은 댓글</h2>
+    <p class="sub">상위 8개, 감성·토픽 라벨 포함.</p>
+    <div class="card" id="topcomments"></div>
+  </div>
+</section>
+
+<section>
+  <h2>멤버별 상세</h2>
+  <div class="card" style="overflow-x:auto"><table id="tbl"></table></div>
+</section>
+
+<div class="foot" id="foot"></div>
+</div>
+
+<script>
+const DATA = {"meta": {"fetched_at": "2026-08-07T01:40:14.117931+00:00", "n_videos": 44, "n_comments": 1753, "videos_per_member": 4, "comments_per_video": 40, "source": "YouTube Data API v3 (commentThreads, order=relevance)"}, "members": [{"rank": 1, "name_ko": "네네코 마시로", "name_en": "Neneko Mashiro", "unit": "UNIVERSE", "n_comments": 30, "positive_share": 0.933, "negative_share": 0.0, "neutral_share": 0.067, "sentiment_score": 0.933, "top_topic": "방송내용·게임", "avg_likes": 229.2}, {"rank": 2, "name_ko": "유즈하 리코", "name_en": "Yuzuha Riko", "unit": "CLICHE", "n_comments": 30, "positive_share": 0.933, "negative_share": 0.0, "neutral_share": 0.067, "sentiment_score": 0.933, "top_topic": "방송내용·게임", "avg_likes": 980.0}, {"rank": 3, "name_ko": "텐코 시부키", "name_en": "Tenko Shibuki", "unit": "CLICHE", "n_comments": 30, "positive_share": 0.9, "negative_share": 0.0, "neutral_share": 0.1, "sentiment_score": 0.9, "top_topic": "성격·개그", "avg_likes": 620.3}, {"rank": 4, "name_ko": "하나코 나나", "name_en": "Hanako Nana", "unit": "CLICHE", "n_comments": 30, "positive_share": 0.9, "negative_share": 0.0, "neutral_share": 0.1, "sentiment_score": 0.9, "top_topic": "방송내용·게임", "avg_likes": 336.2}, {"rank": 5, "name_ko": "아라하시 타비", "name_en": "Arahashi Tabi", "unit": "UNIVERSE", "n_comments": 30, "positive_share": 0.833, "negative_share": 0.0, "neutral_share": 0.167, "sentiment_score": 0.833, "top_topic": "성격·개그", "avg_likes": 614.3}, {"rank": 6, "name_ko": "아카네 리제", "name_en": "Akane Lize", "unit": "UNIVERSE", "n_comments": 30, "positive_share": 0.833, "negative_share": 0.0, "neutral_share": 0.167, "sentiment_score": 0.833, "top_topic": "성격·개그", "avg_likes": 815.5}, {"rank": 7, "name_ko": "시라유키 히나", "name_en": "Shirayuki Hina", "unit": "UNIVERSE", "n_comments": 30, "positive_share": 0.8, "negative_share": 0.0, "neutral_share": 0.2, "sentiment_score": 0.8, "top_topic": "방송내용·게임", "avg_likes": 384.2}, {"rank": 8, "name_ko": "사키하네 후야", "name_en": "Sakihane Huya", "unit": "EVERYS", "n_comments": 30, "positive_share": 0.767, "negative_share": 0.0, "neutral_share": 0.233, "sentiment_score": 0.767, "top_topic": "성격·개그", "avg_likes": 209.4}, {"rank": 9, "name_ko": "강지", "name_en": "Kangji", "unit": "STELLIVE", "n_comments": 30, "positive_share": 0.8, "negative_share": 0.067, "neutral_share": 0.133, "sentiment_score": 0.733, "top_topic": "멤버 케미", "avg_likes": 1551.3}, {"rank": 10, "name_ko": "아오쿠모 린", "name_en": "Aokumo Rin", "unit": "CLICHE", "n_comments": 30, "positive_share": 0.633, "negative_share": 0.0, "neutral_share": 0.367, "sentiment_score": 0.633, "top_topic": "목소리·노래", "avg_likes": 426.9}, {"rank": 11, "name_ko": "아야츠노 유니", "name_en": "Ayatsuno Yuni", "unit": "EVERYS", "n_comments": 30, "positive_share": 0.5, "negative_share": 0.167, "neutral_share": 0.333, "sentiment_score": 0.333, "top_topic": "기타", "avg_likes": 346.5}], "topic_totals": [{"topic": "성격·개그", "count": 91}, {"topic": "방송내용·게임", "count": 88}, {"topic": "비주얼·디자인", "count": 39}, {"topic": "기타", "count": 38}, {"topic": "목소리·노래", "count": 31}, {"topic": "멤버 케미", "count": 29}, {"topic": "성장·추억", "count": 14}], "heatmap": {"members": ["강지", "네네코 마시로", "사키하네 후야", "시라유키 히나", "아라하시 타비", "아야츠노 유니", "아오쿠모 린", "아카네 리제", "유즈하 리코", "텐코 시부키", "하나코 나나"], "topics": ["기타", "멤버 케미", "목소리·노래", "방송내용·게임", "비주얼·디자인", "성격·개그", "성장·추억"], "values": [[4, 17, 0, 4, 2, 3, 0], [2, 0, 1, 13, 3, 6, 5], [3, 5, 1, 3, 5, 10, 3], [2, 1, 0, 16, 3, 8, 0], [3, 0, 2, 4, 5, 14, 2], [17, 0, 0, 8, 3, 1, 1], [3, 0, 14, 7, 1, 4, 1], [2, 2, 2, 8, 1, 14, 1], [1, 0, 4, 12, 2, 11, 0], [1, 4, 2, 2, 4, 16, 1], [0, 0, 5, 11, 10, 4, 0]]}, "top_liked": [{"name_ko": "유즈하 리코", "text": "아닠ㅋㅋㅋ 이걸 더빙해줬구낰ㅋㅋㅋㅋㅋ 아 귀여워 ㅋㅋㅋㅋㅋㅋㅋ", "like_count": 4630, "sentiment": "positive", "topic_ko": "방송내용·게임"}, {"name_ko": "강지", "text": "'장작이 스스로 불타는 수준을 넘어서, 아예 원자로로 진화한 뒤 멜트다운을 일으키는 경지에 도달함'", "like_count": 4307, "sentiment": "positive", "topic_ko": "멤버 케미"}, {"name_ko": "강지", "text": "감자누나랑 뭘 준비중일까??😂😂", "like_count": 4120, "sentiment": "positive", "topic_ko": "멤버 케미"}, {"name_ko": "아카네 리제", "text": "선생님…❤사랑합니다 찬란하게 피어나십쇼!!!!!!💙💙💙🦋🦋🦋저에게 연락하셨으면 엠알이라도 보내드렸을텐데요ㅠㅠㅠㅠ감사합니다", "like_count": 3725, "sentiment": "positive", "topic_ko": "성장·추억"}, {"name_ko": "강지", "text": "\"포보스 선정 종료된 우결중 유일하게 팬들 보다 지들이 더 장작을 많이 넣는 커플\"", "like_count": 3673, "sentiment": "positive", "topic_ko": "멤버 케미"}, {"name_ko": "강지", "text": "둘이 꽁냥대는 거 아주 쥬시해\n방금 치과다녀왔는데 다시 가야할 것같아", "like_count": 3634, "sentiment": "positive", "topic_ko": "멤버 케미"}, {"name_ko": "유즈하 리코", "text": "클리셰는 진짜 너무 귀여운 집단임 아오 귀여워", "like_count": 3016, "sentiment": "positive", "topic_ko": "성격·개그"}, {"name_ko": "강지", "text": "배그 서버비는 역시 대 스텔라이브", "like_count": 3014, "sentiment": "positive", "topic_ko": "방송내용·게임"}, {"name_ko": "강지", "text": "강지 웃을때 끊어서 하하하 웃는거 진짜 개 귀여움", "like_count": 2951, "sentiment": "positive", "topic_ko": "성격·개그"}, {"name_ko": "아카네 리제", "text": "라이트팬들 콘서트 현장 ㅈㄴ 쉽지않을예정ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ", "like_count": 2832, "sentiment": "positive", "topic_ko": "방송내용·게임"}, {"name_ko": "유즈하 리코", "text": "_이세계에서 누가 돌아왔게~☆_", "like_count": 2591, "sentiment": "neutral", "topic_ko": "기타"}, {"name_ko": "텐코 시부키", "text": "후배 선배는 그냥 부조리잖아 ㅋㅋㅋ", "like_count": 2534, "sentiment": "positive", "topic_ko": "성격·개그"}, {"name_ko": "아라하시 타비", "text": "기다렸는데 반갑진않은 이 느낌은 뭘까..", "like_count": 2511, "sentiment": "neutral", "topic_ko": "방송내용·게임"}, {"name_ko": "아카네 리제", "text": "콘서트 가야하는데 이거보고 지금깬 엥나들은  헉 ㄷㄷ", "like_count": 2319, "sentiment": "positive", "topic_ko": "방송내용·게임"}, {"name_ko": "아오쿠모 린", "text": "뮤비노래분위기 ㄹㅇ 역대급이면 개추 ㅋㅋㅋㅋㅋㅋㅋ", "like_count": 2229, "sentiment": "positive", "topic_ko": "목소리·노래"}], "overall_sentiment": {"positive": 265, "neutral": 58, "negative": 7}};
+const cssv=v=>getComputedStyle(document.body).getPropertyValue(v).trim();
+const fmtN=n=>Number(n).toLocaleString('ko-KR');
+const svgEl=(t,a)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+document.getElementById('tags').innerHTML =
+  `<span class="tag">수집 ${DATA.meta.fetched_at.slice(0,10)}</span>`+
+  `<span class="tag">원천 댓글 ${DATA.meta.n_comments}개</span>`+
+  `<span class="tag">라벨링 표본 330개</span>`+
+  `<span class="tag">분류: Claude</span>`;
+
+const os=DATA.overall_sentiment, totS=os.positive+os.neutral+os.negative;
+const best=[...DATA.members].sort((a,b)=>b.sentiment_score-a.sentiment_score)[0];
+document.getElementById('kpis').innerHTML=[
+  ['긍정 비율',(os.positive/totS*100).toFixed(0)+'%',os.positive+'개 / '+totS+'개'],
+  ['중립 비율',(os.neutral/totS*100).toFixed(0)+'%',os.neutral+'개'],
+  ['부정 비율',(os.negative/totS*100).toFixed(0)+'%',os.negative+'개'],
+  ['감성 점수 1위',best.name_ko,'+'+ (best.sentiment_score*100).toFixed(0)+'점'],
+].map(k=>`<div class="kpi"><div class="v">${k[1]}</div><div class="l">${k[0]}</div><div class="s">${k[2]}</div></div>`).join('');
+
+const byScore=[...DATA.members].sort((a,b)=>b.sentiment_score-a.sentiment_score);
+document.getElementById('sentibars').innerHTML = byScore.map(m=>`
+  <div class="senti-row">
+    <span>${m.name_ko}</span>
+    <span class="bar-outer">
+      <span class="bar-seg" style="width:${(m.positive_share*100).toFixed(1)}%;background:${cssv('--pos')}"></span>
+      <span class="bar-seg" style="width:${(m.neutral_share*100).toFixed(1)}%;background:${cssv('--neu')}"></span>
+      <span class="bar-seg" style="width:${(m.negative_share*100).toFixed(1)}%;background:${cssv('--neg')}"></span>
+    </span>
+    <span class="senti-nums">${(m.positive_share*100).toFixed(0)}% / ${(m.negative_share*100).toFixed(0)}%</span>
+  </div>`).join('');
+
+function drawTopics(){
+  const svg=document.getElementById('topics');svg.innerHTML='';
+  const W=460,H=320,ml=100,mr=30,mt=10,mb=10;
+  const data=[...DATA.topic_totals].sort((a,b)=>a.count-b.count);
+  const max=Math.max(...data.map(d=>d.count));
+  const bh=(H-mt-mb)/data.length;
+  const X=v=>ml+(v/max)*(W-ml-mr);
+  const SER=['--s1','--s2','--s3','--s4','--s5','--s6','--s7'];
+  data.forEach((d,i)=>{
+    const y=mt+i*bh;
+    svg.appendChild(svgEl('rect',{x:ml,y:y+bh*0.2,width:Math.max(1,X(d.count)-ml),height:bh*0.6,rx:4,fill:cssv(SER[i%SER.length])}));
+    const t1=svgEl('text',{x:ml-8,y:y+bh/2+4,'text-anchor':'end',class:'axis'});t1.textContent=d.topic;svg.appendChild(t1);
+    const t2=svgEl('text',{x:X(d.count)+6,y:y+bh/2+4,class:'axis'});t2.textContent=d.count;svg.appendChild(t2);
+  });
+}
+
+const SENTI_KO={positive:'긍정',neutral:'중립',negative:'부정'};
+document.getElementById('topcomments').innerHTML = DATA.top_liked.slice(0,8).map(c=>`
+  <div class="comment-card">
+    <div class="meta"><span>${c.name_ko} · ${c.topic_ko}</span>
+      <span class="pill ${c.sentiment}">${SENTI_KO[c.sentiment]} · ♥${fmtN(c.like_count)}</span></div>
+    <div>${c.text}</div>
+  </div>`).join('');
+
+const COLS=[
+  ['name_ko','멤버',r=>r.name_ko],
+  ['n_comments','표본수',r=>r.n_comments],
+  ['positive_share','긍정',r=>(r.positive_share*100).toFixed(0)+'%'],
+  ['negative_share','부정',r=>(r.negative_share*100).toFixed(0)+'%'],
+  ['sentiment_score','감성점수',r=>(r.sentiment_score>=0?'+':'')+(r.sentiment_score*100).toFixed(0)],
+  ['top_topic','주요토픽',r=>r.top_topic],
+  ['avg_likes','평균좋아요',r=>fmtN(Math.round(r.avg_likes))],
+];
+let sk='sentiment_score',sd=-1;
+const rows=()=>[...DATA.members].sort((a,b)=>(a[sk]>b[sk]?1:-1)*sd);
+function drawTable(){const t=document.getElementById('tbl');
+  t.innerHTML='<thead><tr>'+COLS.map(c=>`<th class="${c[0]===sk?'active':''}" onclick="setSk('${c[0]}')">${c[1]}${c[0]===sk?(sd<0?' ▾':' ▴'):''}</th>`).join('')+'</tr></thead>'+
+  '<tbody>'+rows().map(r=>'<tr>'+COLS.map(c=>`<td>${c[2](r)}</td>`).join('')+'</tr>').join('')+'</tbody>';}
+function setSk(k){if(sk===k)sd*=-1;else{sk=k;sd=-1;}drawTable();}
+
+document.getElementById('foot').innerHTML=
+  `표본: 멤버별 인기 영상 상위(추천순) 댓글 중 좋아요 상위 30개(총 330개). 라벨링은 Claude가 문맥을 읽고 직접 분류(반어법·팬덤 용어 고려).<br>`+
+  `추천순 상위 댓글은 긍정 편향이 있을 수 있음 · 지표는 수집 시점 스냅샷입니다.`;
+
+function toggleTheme(){const r=document.documentElement;
+  const cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  r.setAttribute('data-theme',cur==='dark'?'light':'dark');drawAll();}
+function drawAll(){drawTopics();drawTable();}
+drawAll();
+</script>
