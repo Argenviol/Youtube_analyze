@@ -30,8 +30,13 @@ app/src/data/*.json
 fandom-analytics/
 
 # 이 폴더와 무관한 개인 작업물
+# ⚠ 대소문자·표기 변형을 모두 막는다. Stel-Database 는 자체 .git 을 가진 별도
+#   저장소라, 제외하지 않으면 submodule 포인터(gitlink)로 잘못 커밋된다.
 character-analyzer/
+Character-Analyzer/
 steldatabase/
+Stel-Database/
+stel-database/
 
 # 배포/전달용으로 만든 압축본 — 저장소에 넣지 않는다
 *.zip
