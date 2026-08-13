@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-12T07:50:23.582827+00:00",
+  "fetched_at": "2026-08-13T02:33:26.519114+00:00",
   "source": "yatta.moe(Project Amber 후신, 캐릭터 마스터) + google-play-scraper(앱스토어 리뷰) + pytrends(Google Trends, 실패)",
   "n_characters": 225,
   "n_playable_avatars_excluded": 24,
@@ -9,6 +9,6 @@
     "starrail"
   ],
   "google_trends_ok": false,
-  "google_trends_error": "TooManyRequestsError: The request failed: Google returned a response with code 429",
+  "google_trends_error": "ModuleNotFoundError: No module named 'pytrends'",
   "n_reviews_requested_per_app": 3000
 }
