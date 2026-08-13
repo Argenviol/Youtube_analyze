@@ -46,7 +46,10 @@ jobs:
       - name: 수집 → 분석 → 사이트 재생성
         run: python scripts/refresh.py --group live
 
+      # 08은 소급 수집이 불가능하다. 분석이나 사이트 생성이 죽어도 이미 찍은 스냅샷은
+      # 반드시 남겨야 한다 — 이 단계가 skip 되면 그 시점 데이터는 영구 공백이 된다.
       - name: 변경분 커밋
+        if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
