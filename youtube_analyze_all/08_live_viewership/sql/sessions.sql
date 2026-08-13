@@ -1,4 +1,4 @@
--- sessions 데이터 (11 rows)
+-- sessions 데이터 (12 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-12 19:54', 224.0, 27, 5651, 5352, '8시 크아 떠나보내기 w.타비, 린', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-12 19:54', 224.0, 27, 4829, 3647, '팔척귀신 누나랑 여름휴가를 보내는 공포겜 
@@ -8,6 +8,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-12 19:54', 224.0, 27, 3221, 3108, '역전재판 3-2 더빙 플레이', '역전재판 3');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-12 19:54', 224.0, 27, 3172, 2734, '오늘 밤에 시간당100개의 별동뼐이쏟아지는걸아시나요', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('네네코 마시로', 'Neneko Mashiro', 'UNIVERSE', '2026-08-12 15:37', 70.6, 9, 3073, 2448, '하이!', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-13 14:22', 0.0, 1, 3032, 3032, '( ܸ ⩌⩊⩌ ܸ )', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-12 16:07', 40.4, 6, 2995, 2286, '휴 일상편이 제일 힘들다', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-12 15:57', 50.4, 7, 1891, 1503, '오 케 마 루', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-12 19:54', 51.6, 7, 1885, 1770, '도끼 하나로 회사(스텔아님)에게 복수하는 게임 / Chop chop inc.', '종합 게임');
