@@ -1,4 +1,4 @@
--- sessions 데이터 (61 rows)
+-- sessions 데이터 (62 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-12 19:54', 224.0, 27, 5651, 5352, '8시 크아 떠나보내기 w.타비, 린', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-13 19:48', 0.0, 1, 5346, 5346, '그놈의 대두 스페이스 ', '데드 스페이스');
@@ -32,6 +32,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-13 20:35', 0.0, 1, 3172, 3172, '우효오오오오오옹ㅇ오ㅗ옸', '이터널 리턴');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('네네코 마시로', 'Neneko Mashiro', 'UNIVERSE', '2026-08-12 15:37', 70.6, 9, 3073, 2448, '하이!', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-14 02:17', 0.0, 1, 3056, 3056, ' [시키샤카샤카슈-와! 100만회 감사합니당]💚', '오버워치');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-14 04:30', 0.0, 1, 3041, 3041, ' [시키샤카샤카슈-와! 100만회 감사합니당]💚', '이터널 리턴');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-13 14:22', 0.0, 1, 3032, 3032, '( ܸ ⩌⩊⩌ ܸ )', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-08-14 01:14', 0.0, 1, 3006, 3006, '데바데 w. 사장님, 리제, 리코, 춘향님', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-12 16:07', 40.4, 6, 2995, 2286, '휴 일상편이 제일 힘들다', 'talk');
