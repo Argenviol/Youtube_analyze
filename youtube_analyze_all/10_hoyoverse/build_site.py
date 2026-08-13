@@ -29,9 +29,11 @@ def _c(game: str) -> str:
 def _push_rows(push_top: list[dict]) -> str:
     out = []
     for r in push_top:
+        # 색은 미리 뽑아 쓴다 — f-string 안에서 같은 따옴표를 중첩하면 3.11 이하가 못 읽는다.
+        color = _c(r["game"])
         out.append(
             f'<tr><td>{int(r["push_rank"])}</td>'
-            f'<td><span style="display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle;background:{_c(r['game'])}"></span>{r["name_ko"]}</td>'
+            f'<td><span style="display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle;background:{color}"></span>{r["name_ko"]}</td>'
             f'<td>{r["name_ko_game"]}</td><td>{"5성" if r["rank"]==5 else "4성"}</td>'
             f'<td>{str(r["release_date"])[:10]}</td></tr>'
         )
@@ -60,8 +62,9 @@ def _audience_rows(audience_top: list[dict]) -> str:
 def _gap_rows(rows: list[dict]) -> str:
     out = []
     for r in rows:
+        color = _c(r["game"])
         out.append(
-            f'<tr><td><span style="display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle;background:{_c(r['game'])}"></span>{r["name_ko"]}</td>'
+            f'<tr><td><span style="display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle;background:{color}"></span>{r["name_ko"]}</td>'
             f'<td>{r["name_ko_game"]}</td><td>{int(r["push_rank"])}</td>'
             f'<td>{int(r["audience_rank"])}</td><td>{int(r["gap"]):+d}</td></tr>'
         )

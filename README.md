@@ -7,11 +7,14 @@
 `수집 → 정제 → SQL → 시각화 → 대시보드`의 같은 파이프라인을 따릅니다.
 
 ```
+결과물/                결과만 모아둔 폴더 — 리포트 11건 · 차트 67종 · 대시보드 11건
 youtube_analyze_all/   분석 파이프라인 11개 (Python · pandas · SQLite · matplotlib)
 app/                   통합 대시보드 (Next.js · TypeScript · 정적 export)
 .github/workflows/     자동 수집 (live 10분 / daily / weekly / monthly)
 PRD.md                 요구사항 정의서
 ```
+
+코드는 건너뛰고 결과만 보시려면 **[`결과물/`](결과물/)** 부터 보세요.
 
 ## 무엇을 발견했는가
 
