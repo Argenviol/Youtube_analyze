@@ -149,10 +149,11 @@ const INCIDENT_GROUPS: IncidentGroup[] = [
         action:
           "호요버스 캐릭터 인기도를 다루는 현재 파이프라인(youtube_analyze_all/10_hoyoverse)은 " +
           "Enka를 아예 채택하지 않았다 — 캐릭터 마스터 데이터는 yatta.moe(Project Amber 후신), " +
-          "유저 반응은 앱스토어 리뷰 언급량으로 대체했다. Enka 수집기 자체는 이 프로젝트보다 " +
-          "먼저 만든 별도의 Node.js 프로토타입(fandom-analytics)에만 남아 있고, 그 코드와 README에 " +
-          "표본 편향 경고를 그대로 적어뒀다.",
-        source: "fandom-analytics/src/collectors/enka.js, fandom-analytics/README.md",
+          "유저 반응은 앱스토어 리뷰 언급량으로 대체했다. 초기에 Node.js로 만들었던 Enka 수집기 " +
+          "프로토타입은 채택하지 않기로 결정한 뒤 저장소에서 제거했다 — 쓰지 않을 수집기를 " +
+          "남겨두면 나중에 누군가 그것부터 실행해볼 위험이 있다.",
+        source:
+          "Enka.Network 공식 API 문서(UID 열거 금지 조항), 10_hoyoverse/README.md",
       },
     ],
   },
