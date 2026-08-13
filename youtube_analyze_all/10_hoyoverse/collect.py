@@ -128,11 +128,25 @@ def try_google_trends() -> dict:
             raise RuntimeError("빈 결과(interest_over_time empty)")
         status["ok"] = True
         status["n_rows"] = len(df)
+    except ModuleNotFoundError as e:
+        # pytrends 는 requirements.txt 에 일부러 넣지 않았다. 이 경우 "호출해봤더니
+        # 실패했다"가 아니라 "호출 자체를 하지 않았다"이므로, 429 를 원인으로 적으면
+        # 기록이 사실과 달라진다. 실패 유형을 그대로 구분해 남긴다.
+        status["error"] = f"{type(e).__name__}: {e}"
+        status["attempted"] = False
+        status["note"] = (
+            "pytrends 미설치 — 이번 실행에서는 Google Trends 를 호출하지 않았다. "
+            "과거 실측에서 매 호출마다 즉시 429(TooManyRequestsError)가 발생했고, "
+            "재시도 로직(Retry(method_whitelist=...))은 최신 urllib3 와 인자가 맞지 않아 "
+            "TypeError 가 나서, 설계에서 드롭하고 의존성도 넣지 않기로 했다. "
+            "분석 단계에서는 이 소스를 사용하지 않는다(허위 데이터로 채우지 않음)."
+        )
     except Exception as e:
         status["error"] = f"{type(e).__name__}: {e}"
+        status["attempted"] = True
         status["note"] = (
             "PRD 지시에 따라 collect.py 실행 시점에 실제로 호출해보고 실패를 그대로 기록한다. "
-            "이 프로젝트에서는 매 실행마다 즉시 429(TooManyRequestsError)가 발생했고, "
+            "실측에서는 매 실행마다 즉시 429(TooManyRequestsError)가 발생했고, "
             "재시도 로직(Retry(method_whitelist=...))을 넣으면 설치된 urllib3와 인자 불일치로 "
             "TypeError가 난다 — 라이브러리가 이 환경의 urllib3 최신 버전과 호환되지 않는다. "
             "분석 단계에서는 이 소스를 사용하지 않는다(허위 데이터로 채우지 않음)."
