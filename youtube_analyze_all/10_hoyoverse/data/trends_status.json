@@ -1,7 +1,7 @@
 {
-  "attempted_at": "2026-08-12T07:50:14.518970+00:00",
+  "attempted_at": "2026-08-13T02:15:52.355834+00:00",
   "ok": false,
   "library": "pytrends",
-  "error": "TooManyRequestsError: The request failed: Google returned a response with code 429",
+  "error": "ModuleNotFoundError: No module named 'pytrends'",
   "note": "PRD 지시에 따라 collect.py 실행 시점에 실제로 호출해보고 실패를 그대로 기록한다. 이 프로젝트에서는 매 실행마다 즉시 429(TooManyRequestsError)가 발생했고, 재시도 로직(Retry(method_whitelist=...))을 넣으면 설치된 urllib3와 인자 불일치로 TypeError가 난다 — 라이브러리가 이 환경의 urllib3 최신 버전과 호환되지 않는다. 분석 단계에서는 이 소스를 사용하지 않는다(허위 데이터로 채우지 않음)."
 }
