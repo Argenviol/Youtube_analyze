@@ -38,8 +38,11 @@ GROUPS = {
     "live":     ["08_live_viewership"],
     # 02는 원래 search.list 를 써서 3,300 units 를 먹는 weekly 대상이었으나,
     # 2026-08-12 업로드 재생목록 전량 열거로 바꾸면서 ~173 units 로 떨어져 daily 로 옮겼다.
+    # 07은 06의 group_summary.csv 를 읽어 시장 리포트를 만든다. 반드시 06 뒤에 온다
+    # (이 리스트 순서가 곧 실행 순서다). 자체 수집은 없고 재분석만 한다 — NO_COLLECT 참고.
     "daily":    ["01_member_channel_performance", "02_cover_song_ranking",
-                 "03_chzzk_stream_pattern", "06_competitor_comparison"],
+                 "03_chzzk_stream_pattern", "06_competitor_comparison",
+                 "07_market_analysis"],
     "weekly":   ["04_kirinuki_ecosystem", "05_comment_sentiment",
                  "10_hoyoverse", "11_fan_commerce"],
     # 09는 DART 공시 주기를 따른다. 재무제표는 분기·연간 단위로만 갱신되므로
@@ -52,8 +55,13 @@ GROUPS["all"] = GROUPS["daily"] + GROUPS["weekly"] + GROUPS["monthly"] + GROUPS[
 # 08은 --once 로 스냅샷 1회만 찍는다. 나머지는 인자 없이 전량 수집.
 COLLECT_ARGS = {"08_live_viewership": ["--once"]}
 
-# 07은 외부 리서치 기반이라 자동 수집이 불가능하다. 어떤 그룹에도 넣지 않는다.
-EXCLUDED = {"07_market_analysis"}
+# 수집 단계만 건너뛰고 분석·사이트 생성은 그대로 도는 프로젝트.
+#
+# 07은 외부 리서치(웹서치로 모은 공개 시장 통계) 기반이라 자동 수집이 불가능하다.
+# 그렇다고 그룹에서 아예 빼면 안 된다 — 07은 06의 group_summary.csv 를 읽어 쓰는데,
+# 06이 daily 로 갱신되는 동안 07만 안 돌면 두 프로젝트가 서로 다른 숫자를 말하게 된다.
+# 실제로 그랬다: 06이 평균 최근 조회수 148,356 을 들고 있을 때 07은 155,586 이었다.
+NO_COLLECT = {"07_market_analysis"}
 
 
 def run(project: str, script: str, extra: list[str] | None = None) -> tuple[bool, str]:
@@ -72,14 +80,15 @@ def run(project: str, script: str, extra: list[str] | None = None) -> tuple[bool
 
 
 def main(group: str, skip_collect: bool) -> int:
-    projects = [p for p in GROUPS[group] if p not in EXCLUDED]
+    projects = list(GROUPS[group])
     started = datetime.now(timezone.utc)
     print(f"[refresh] group={group} 프로젝트 {len(projects)}개 · {started.isoformat()}")
 
     failures = []
     for proj in projects:
         print(f"\n  {proj}")
-        steps = [] if skip_collect else [("collect.py", COLLECT_ARGS.get(proj))]
+        collect = not skip_collect and proj not in NO_COLLECT
+        steps = [("collect.py", COLLECT_ARGS.get(proj))] if collect else []
         steps += [("analyze.py", None), ("build_site.py", None)]
 
         for script, extra in steps:
