@@ -53,10 +53,13 @@ def collect(videos_per_member: int = 4, comments_per_video: int = 40) -> None:
             threads = yt.comment_threads(v["id"], limit=comments_per_video, order="relevance")
             for t in threads:
                 top_c = t["snippet"]["topLevelComment"]["snippet"]
+                # 작성자(authorDisplayName)는 수집하지 않는다. 감성·토픽 집계는 전부
+                # 멤버 단위라 작성자가 필요 없는데, 저장하면 공개 저장소에 핸들과 댓글
+                # 원문이 묶인 데이터셋이 남는다. 분석에 안 쓰는 개인 식별자는 애초에
+                # 받아두지 않는 쪽이 맞다.
                 comment_rows.append(dict(
                     comment_id=t["id"], video_id=v["id"],
                     name_ko=m["name_ko"], name_en=m["name_en"], unit=m["unit"],
-                    author=top_c.get("authorDisplayName"),
                     text=top_c.get("textDisplay"),
                     like_count=to_int(top_c.get("likeCount")),
                     published_at=top_c.get("publishedAt"),
