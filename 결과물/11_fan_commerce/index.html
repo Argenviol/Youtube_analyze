@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>팬 커머스 분석 · 프로젝트 11</title>
+<style>:root {
+  --primary: #0066FF;
+  --primary-strong: #005EEB;
+  --bg: #ffffff;
+  --bg-alt: #F7F7F8;
+  --bg-elevated: #ffffff;
+  --label: #171719;
+  --label-strong: #000000;
+  --label-neutral: #37383C;
+  --label-alt: #70737C;
+  --label-assistive: #989BA2;
+  --line: #E1E2E4;
+  --line-neutral: #EAEBEC;
+  --line-alt: #F4F4F5;
+  --fill: #F4F4F5;
+  --positive: #00BF40;
+  --cautionary: #FF9200;
+  --negative: #FF4242;
+  --accent-0: #005EEB;
+  --accent-1: #F55A00;
+  --accent-2: #009632;
+  --accent-3: #D17600;
+  --accent-4: #E846CD;
+  --accent-5: #429E00;
+  --accent-6: #5B37ED;
+  --accent-7: #E52222;
+  --accent-8: #0098B2;
+  --accent-9: #AD36E3;
+  --accent-10: #008DCF;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --shadow-xsmall: 0px 1px 2px -1px rgba(23,23,23,0.10);
+  --shadow-small: 0px 2px 4px -2px rgba(23,23,23,0.06), 0px 4px 6px -1px rgba(23,23,23,0.06);
+  --shadow-medium: 0px 4px 6px -2px rgba(23,23,23,0.07), 0px 10px 15px -3px rgba(23,23,23,0.07);
+  --shadow-large: 0px 6px 10px -4px rgba(23,23,23,0.08), 0px 16px 24px -6px rgba(23,23,23,0.08);
+  --font: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  --primary: #3385FF;
+  --primary-strong: #1A75FF;
+  --bg: #1B1C1E;
+  --bg-alt: #0F0F10;
+  --bg-elevated: #212225;
+  --label: #F7F7F8;
+  --label-strong: #ffffff;
+  --label-neutral: #C2C4C8;
+  --label-alt: #AEB0B6;
+  --label-assistive: #989BA2;
+  --line: #37383C;
+  --line-neutral: #333438;
+  --line-alt: #2E2F33;
+  --fill: #2E2F33;
+  --positive: #1ED45A;
+  --cautionary: #FFA938;
+  --negative: #FF6363;
+  --accent-0: #3385FF;
+  --accent-1: #FF7B2E;
+  --accent-2: #1ED45A;
+  --accent-3: #FF9200;
+  --accent-4: #FA73E3;
+  --accent-5: #58CF04;
+  --accent-6: #7D5EF7;
+  --accent-7: #FF6363;
+  --accent-8: #28D0ED;
+  --accent-9: #D478FF;
+  --accent-10: #3DC2FF;
+  }
+}
+:root[data-theme="dark"] {
+  --primary: #3385FF;
+  --primary-strong: #1A75FF;
+  --bg: #1B1C1E;
+  --bg-alt: #0F0F10;
+  --bg-elevated: #212225;
+  --label: #F7F7F8;
+  --label-strong: #ffffff;
+  --label-neutral: #C2C4C8;
+  --label-alt: #AEB0B6;
+  --label-assistive: #989BA2;
+  --line: #37383C;
+  --line-neutral: #333438;
+  --line-alt: #2E2F33;
+  --fill: #2E2F33;
+  --positive: #1ED45A;
+  --cautionary: #FFA938;
+  --negative: #FF6363;
+  --accent-0: #3385FF;
+  --accent-1: #FF7B2E;
+  --accent-2: #1ED45A;
+  --accent-3: #FF9200;
+  --accent-4: #FA73E3;
+  --accent-5: #58CF04;
+  --accent-6: #7D5EF7;
+  --accent-7: #FF6363;
+  --accent-8: #28D0ED;
+  --accent-9: #D478FF;
+  --accent-10: #3DC2FF;
+}
+* { box-sizing: border-box; }
+
+html { color-scheme: light dark; }
+
+body {
+  margin: 0;
+  background: var(--bg-alt);
+  color: var(--label);
+  font-family: var(--font);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 1000px; margin: 0 auto; padding: 48px 20px 80px; }
+
+/* ---- 타이포 ---- */
+h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 6px; }
+h2 {
+  font-size: 18px; font-weight: 700; letter-spacing: -0.01em;
+  margin: 40px 0 16px; color: var(--label);
+}
+.sub { color: var(--label-alt); font-size: 14px; margin-bottom: 32px; }
+.eyebrow {
+  display: inline-block; font-size: 12px; font-weight: 600;
+  color: var(--primary); letter-spacing: 0.02em; margin-bottom: 8px;
+}
+
+/* ---- 카드 ---- */
+.cards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+.card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-xsmall);
+}
+.card .k { color: var(--label-alt); font-size: 12px; font-weight: 500; }
+.card .v {
+  font-size: 24px; font-weight: 700; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums; margin-top: 2px;
+}
+
+/* ---- 뱃지(상태 표시) ---- */
+.pill {
+  display: inline-block; font-size: 11.5px; font-weight: 600;
+  padding: 3px 9px; border-radius: var(--radius-full, 999px);
+  white-space: nowrap;
+}
+.pill-ok { background: color-mix(in srgb, var(--positive) 16%, transparent); color: var(--positive); }
+.pill-warn { background: color-mix(in srgb, var(--cautionary) 16%, transparent); color: var(--cautionary); }
+.pill-no { background: color-mix(in srgb, var(--negative) 16%, transparent); color: var(--negative); }
+
+/* ---- 알림 ---- */
+.warn {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--cautionary);
+  border-radius: var(--radius-md);
+  padding: 14px 18px; font-size: 14px; margin: 24px 0;
+  color: var(--label-neutral);
+}
+.warn strong { color: var(--label); }
+
+/* ---- 바 리스트 ---- */
+.row { display: flex; align-items: center; gap: 12px; margin: 6px 0; font-size: 14px; }
+.nm { width: 108px; flex: none; color: var(--label-neutral); }
+.track {
+  flex: 1; height: 18px; background: var(--fill);
+  border-radius: var(--radius-sm); overflow: hidden;
+}
+.fill { display: block; height: 100%; border-radius: var(--radius-sm); }
+.val {
+  width: 84px; text-align: right; flex: none;
+  font-variant-numeric: tabular-nums; font-weight: 600;
+}
+
+/* ---- 차트 ---- */
+.chart-box {
+  background: var(--bg-elevated); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 20px;
+  overflow-x: auto;
+}
+.chart { width: 100%; height: auto; display: block; }
+.ax { fill: var(--label-assistive); font-size: 11px; }
+.legend {
+  display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px;
+  color: var(--label-alt); margin-top: 12px;
+}
+.lg i {
+  display: inline-block; width: 10px; height: 10px;
+  border-radius: var(--radius-sm); margin-right: 6px; vertical-align: -1px;
+}
+
+/* ---- 표 ---- */
+.table-box {
+  background: var(--bg-elevated); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); overflow: hidden; overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td {
+  text-align: right; padding: 10px 14px;
+  border-bottom: 1px solid var(--line-alt);
+  font-variant-numeric: tabular-nums;
+}
+th:first-child, td:first-child { text-align: left; font-variant-numeric: normal; }
+th {
+  color: var(--label-alt); font-weight: 600; font-size: 12px;
+  background: var(--bg-alt); border-bottom: 1px solid var(--line);
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--fill); }
+
+/* ---- 기타 ---- */
+.empty { color: var(--label-assistive); font-size: 14px; padding: 24px 0; }
+.note {
+  color: var(--label-alt); font-size: 13px; margin-top: 40px;
+  padding-top: 20px; border-top: 1px solid var(--line);
+}
+.note strong { color: var(--label-neutral); }
+code {
+  background: var(--fill); border-radius: var(--radius-sm);
+  padding: 1px 5px; font-size: 0.92em;
+}
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 32px 16px 56px; }
+  h1 { font-size: 23px; }
+  .nm { width: 84px; }
+  .val { width: 68px; }
+}
+</style>
+</head><body><div class="wrap">
+
+<div class="eyebrow">PROJECT 11</div>
+<h1>팬 커머스 분석 — 팬덤은 얼마를 쓰고, 그 돈은 회사에 남는가?</h1>
+<div class="sub">팬딩(Fanding) 가격 구조 · 텀블벅(Tumblbug) 실제 지출(정적 큐레이션) ·
+09_dart_financials 감사보고서 재사용 · 수집 2026-08-12</div>
+
+<div class="cards">
+  <div class="card"><div class="k">팬딩 VTuber 크리에이터</div><div class="v">111명</div></div>
+  <div class="card"><div class="k">멤버십 티어 확보</div><div class="v">67건</div></div>
+  <div class="card"><div class="k">크라우드펀딩 프로젝트</div><div class="v">6건</div></div>
+  <div class="card"><div class="k">재무 확보 회사</div><div class="v">2곳</div></div>
+</div>
+
+<div class="warn">
+<strong>텀블벅 실제 지출 레이어는 자동 수집이 불가능하다.</strong> 텀블벅
+<code>robots.txt</code>가 <code>Disallow: /api/</code>를 명시하는데, 모금액·후원자 수·달성률
+등 모든 수치는 그 경로에서만 온다(상세 페이지 HTML 자체는 빈 껍데기). 그래서 이 레이어는
+언론 보도·텀블벅 자체 발표·프로젝트 페이지 1회성 열람으로 확보한 <strong>정적 큐레이션</strong>이다 —
+재실행해도 갱신되지 않는다. 아래 표의 <code>source_type</code> 열에 각 수치의 출처를 남긴다.
+</div>
+
+<h2>레이어 1 · 팬딩 VTuber 멤버십 가격 (자동 수집)</h2>
+<p class="sub">팬딩 VTuber 카테고리 크리에이터 111명의 공개 멤버십 페이지를
+전수 조사. 가격을 매긴 크리에이터 57명, 티어 67건.
+범위 1,000~550,000원(중앙값 7,200원). ⭐ = 스텔라이브
+(하위 84%ile — 더 저렴한 티어가 그만큼 있다는 뜻).</p>
+<div class="chart-box">
+<div class="row"><span class="nm">아랭 ARENG</span><span class="track"><span class="fill" style="width:100.0%;background:#005EEB"></span></span><span class="val">280,445원</span></div>
+<div class="row"><span class="nm">마리엘</span><span class="track"><span class="fill" style="width:19.6%;background:#005EEB"></span></span><span class="val">55,000원</span></div>
+<div class="row"><span class="nm">유키링 yukilling</span><span class="track"><span class="fill" style="width:16.0%;background:#005EEB"></span></span><span class="val">45,000원</span></div>
+<div class="row"><span class="nm">빅터 KR</span><span class="track"><span class="fill" style="width:13.2%;background:#005EEB"></span></span><span class="val">37,000원</span></div>
+<div class="row"><span class="nm">마야100</span><span class="track"><span class="fill" style="width:11.0%;background:#005EEB"></span></span><span class="val">30,800원</span></div>
+<div class="row"><span class="nm">아리스마나</span><span class="track"><span class="fill" style="width:10.7%;background:#005EEB"></span></span><span class="val">30,000원</span></div>
+<div class="row"><span class="nm">포더모어 ForTheMore</span><span class="track"><span class="fill" style="width:10.3%;background:#005EEB"></span></span><span class="val">29,000원</span></div>
+<div class="row"><span class="nm">스텔라이브 ⭐</span><span class="track"><span class="fill" style="width:8.6%;background:#F55A00"></span></span><span class="val">24,000원</span></div>
+<div class="row"><span class="nm">스타데이즈</span><span class="track"><span class="fill" style="width:8.6%;background:#005EEB"></span></span><span class="val">24,000원</span></div>
+<div class="row"><span class="nm">KAVY 카비</span><span class="track"><span class="fill" style="width:8.1%;background:#005EEB"></span></span><span class="val">22,733원</span></div>
+<div class="row"><span class="nm">스튜디오 세뇨</span><span class="track"><span class="fill" style="width:7.8%;background:#005EEB"></span></span><span class="val">22,000원</span></div>
+<div class="row"><span class="nm">요나 Yona</span><span class="track"><span class="fill" style="width:6.5%;background:#005EEB"></span></span><span class="val">18,095원</span></div>
+</div>
+<div class="note">가격 ≠ 매출. 팬딩은 구독자 수를 공개하지 않아 이 표만으로 실제 수입을 추정할 수 없다 —
+여기서는 "팬이 얼마를 요구받는가"만 다룬다.</div>
+
+<h2>레이어 2 · 텀블벅 크라우드펀딩 — 실제 지출</h2>
+<p class="sub">공식 굿즈 펀딩(이세계아이돌·패러블엔터테인먼트 소속)과 팬메이드 광고 펀딩(스텔라이브
+멤버 개인, 비공식·팬 운영)을 구분했다. 표본은 검색으로 발견된 프로젝트만 포함해 생존자 편향이 있다.</p>
+<div class="table-box"><table><thead><tr>
+<th>프로젝트</th><th>구분</th><th>모인금액</th><th>후원자</th><th>달성률</th><th>1인당 평균</th>
+</tr></thead><tbody>
+<tr><td>차원을 넘어 이세계아이돌 단행본 & 굿즈</td><td><span class="pill pill-ok">공식 굿즈 펀딩</span></td><td>8,822,342,758원</td><td>35,600명</td><td>44,112%</td><td>247,819원</td></tr><tr><td>마법소녀 이세계아이돌 단행본 & 스페셜 굿즈</td><td><span class="pill pill-ok">공식 굿즈 펀딩</span></td><td>4,198,890,740원</td><td>31,336명</td><td>20,994%</td><td>133,996원</td></tr><tr><td>유니버스 데뷔 3주년 기념 광고 프로젝트</td><td><span class="pill pill-warn">팬메이드 광고 펀딩</span></td><td>37,856,556원</td><td>973명</td><td>473%</td><td>38,907원</td></tr><tr><td>2026 사키하네 후야 생일 광고</td><td><span class="pill pill-warn">팬메이드 광고 펀딩</span></td><td>30,244,027원</td><td>693명</td><td>302%</td><td>43,642원</td></tr><tr><td>2026 아라하시 타비 생일 광고</td><td><span class="pill pill-warn">팬메이드 광고 펀딩</span></td><td>26,810,200원</td><td>920명</td><td>470%</td><td>29,142원</td></tr><tr><td>[팬메이드] 2026 하나코 나나 생일 광고</td><td><span class="pill pill-warn">팬메이드 광고 펀딩</span></td><td>22,576,103원</td><td>523명</td><td>282%</td><td>43,167원</td></tr>
+</tbody></table></div>
+<div class="note">
+<strong>팬메이드 광고 펀딩은 회사 매출이 아니다.</strong> '유니버스 데뷔 3주년 기념 광고' 창작자는
+정산액 34,114,780원(수수료 차감 후)을 전액 광고비·일러스트레이터 외주비로 지출했다고 직접
+공개했다 — 이 돈은 스텔라이브 회사 매출로 잡히지 않고 팬 커뮤니티 내부에서 돌 뿐이다.
+</div>
+
+<h2>레이어 3 · 회사에 남는 것 (09_dart_financials 재사용)</h2>
+<p class="sub">DART 감사보고서 원문 파싱으로 확보한 재무제표(09에서 재사용, DART 재수집 없음).
+팬딩은 여전히 DART 공시가 0건이라 이 레이어에 팬딩 자체는 없다.</p>
+<div class="cards">
+  <div class="chart-box">
+    <div class="sub" style="margin-bottom:8px">패러블엔터테인먼트(이세계아이돌 소속사)</div>
+    <svg viewBox="0 0 780 280" class="chart"><line x1="46" y1="234.0" x2="734" y2="234.0" stroke="var(--grid)" stroke-width="1"/><text x="38" y="238.0" text-anchor="end" class="ax">-91</text><line x1="46" y1="187.0" x2="734" y2="187.0" stroke="var(--grid)" stroke-width="1"/><text x="38" y="191.0" text-anchor="end" class="ax">-14</text><line x1="46" y1="140.0" x2="734" y2="140.0" stroke="var(--grid)" stroke-width="1"/><text x="38" y="144.0" text-anchor="end" class="ax">64</text><line x1="46" y1="93.0" x2="734" y2="93.0" stroke="var(--grid)" stroke-width="1"/><text x="38" y="97.0" text-anchor="end" class="ax">141</text><line x1="46" y1="46.0" x2="734" y2="46.0" stroke="var(--grid)" stroke-width="1"/><text x="38" y="50.0" text-anchor="end" class="ax">218</text><line x1="46" y1="178.7" x2="734" y2="178.7" stroke="var(--negative)" stroke-width="1" stroke-dasharray="3,3"/><text x="46.0" y="252" text-anchor="middle" class="ax">2024</text><text x="734.0" y="252" text-anchor="middle" class="ax">2025</text><path d="M46.0,51.3 L734.0,46.0" fill="none" stroke="#D17600" stroke-width="2.2" /><circle cx="46.0" cy="51.3" r="3.2" fill="#D17600"><title>2024: 209.5억원</title></circle><circle cx="734.0" cy="46.0" r="3.2" fill="#D17600"><title>2025: 218.3억원</title></circle><path d="M46.0,171.3 L734.0,234.0" fill="none" stroke="#171719" stroke-width="2.2" stroke-dasharray="5,3"/><circle cx="46.0" cy="171.3" r="3.2" fill="#171719"><title>2024: 12.1억원</title></circle><circle cx="734.0" cy="234.0" r="3.2" fill="#171719"><title>2025: -91.0억원</title></circle></svg><div class="legend"><span class="lg"><i style="background:#D17600"></i>매출(억원)</span><span class="lg"><i style="background:#171719"></i>영업이익(억원, 점선)</span></div>
+  </div>
+</div>
+<div class="chart-box" style="margin-top:12px">
+  <div class="sub" style="margin-bottom:8px">샌드박스네트워크 (2018~2025년 전 연도 영업손실
+  8/8년)</div>
+  <svg viewBox="0 0 780 280" class="chart"><line x1="46" y1="234.0" x2="734" y2="234.0" stroke="var(--grid)" stroke-width="1"/><text x="38" y="238.0" text-anchor="end" class="ax">-254</text><line x1="46" y1="187.0" x2="734" y2="187.0" stroke="var(--grid)" stroke-width="1"/><text x="38" y="191.0" text-anchor="end" class="ax">188</text><line x1="46" y1="140.0" x2="734" y2="140.0" stroke="var(--grid)" stroke-width="1"/><text x="38" y="144.0" text-anchor="end" class="ax">630</text><line x1="46" y1="93.0" x2="734" y2="93.0" stroke="var(--grid)" stroke-width="1"/><text x="38" y="97.0" text-anchor="end" class="ax">1,072</text><line x1="46" y1="46.0" x2="734" y2="46.0" stroke="var(--grid)" stroke-width="1"/><text x="38" y="50.0" text-anchor="end" class="ax">1,514</text><line x1="46" y1="207.0" x2="734" y2="207.0" stroke="var(--negative)" stroke-width="1" stroke-dasharray="3,3"/><text x="46.0" y="252" text-anchor="middle" class="ax">2018</text><text x="144.3" y="252" text-anchor="middle" class="ax">2019</text><text x="242.6" y="252" text-anchor="middle" class="ax">2020</text><text x="340.9" y="252" text-anchor="middle" class="ax">2021</text><text x="439.1" y="252" text-anchor="middle" class="ax">2022</text><text x="537.4" y="252" text-anchor="middle" class="ax">2023</text><text x="635.7" y="252" text-anchor="middle" class="ax">2024</text><text x="734.0" y="252" text-anchor="middle" class="ax">2025</text><path d="M46.0,177.0 L144.3,142.3 L242.6,111.4 L340.9,86.1 L439.1,46.0 L537.4,132.9 L635.7,138.4 L734.0,129.2" fill="none" stroke="#5B37ED" stroke-width="2.2" /><circle cx="46.0" cy="177.0" r="3.2" fill="#5B37ED"><title>2018: 282.1억원</title></circle><circle cx="144.3" cy="142.3" r="3.2" fill="#5B37ED"><title>2019: 608.1억원</title></circle><circle cx="242.6" cy="111.4" r="3.2" fill="#5B37ED"><title>2020: 899.2억원</title></circle><circle cx="340.9" cy="86.1" r="3.2" fill="#5B37ED"><title>2021: 1,136.7억원</title></circle><circle cx="439.1" cy="46.0" r="3.2" fill="#5B37ED"><title>2022: 1,513.8억원</title></circle><circle cx="537.4" cy="132.9" r="3.2" fill="#5B37ED"><title>2023: 697.2억원</title></circle><circle cx="635.7" cy="138.4" r="3.2" fill="#5B37ED"><title>2024: 644.7억원</title></circle><circle cx="734.0" cy="129.2" r="3.2" fill="#5B37ED"><title>2025: 731.5억원</title></circle><path d="M46.0,209.4 L144.3,215.3 L242.6,214.7 L340.9,219.9 L439.1,234.0 L537.4,223.3 L635.7,212.0 L734.0,211.6" fill="none" stroke="#171719" stroke-width="2.2" stroke-dasharray="5,3"/><circle cx="46.0" cy="209.4" r="3.2" fill="#171719"><title>2018: -22.9억원</title></circle><circle cx="144.3" cy="215.3" r="3.2" fill="#171719"><title>2019: -78.3억원</title></circle><circle cx="242.6" cy="214.7" r="3.2" fill="#171719"><title>2020: -72.7억원</title></circle><circle cx="340.9" cy="219.9" r="3.2" fill="#171719"><title>2021: -121.3억원</title></circle><circle cx="439.1" cy="234.0" r="3.2" fill="#171719"><title>2022: -253.7억원</title></circle><circle cx="537.4" cy="223.3" r="3.2" fill="#171719"><title>2023: -153.0억원</title></circle><circle cx="635.7" cy="212.0" r="3.2" fill="#171719"><title>2024: -47.0억원</title></circle><circle cx="734.0" cy="211.6" r="3.2" fill="#171719"><title>2025: -42.7억원</title></circle></svg><div class="legend"><span class="lg"><i style="background:#5B37ED"></i>매출(억원)</span><span class="lg"><i style="background:#171719"></i>영업이익(억원, 점선)</span></div>
+</div>
+<div class="table-box" style="margin-top:16px"><table><thead><tr>
+<th>법인</th><th>연도</th><th>구분</th><th>매출</th><th>영업이익</th><th>영업이익률</th>
+</tr></thead><tbody>
+<tr><td>샌드박스네트워크</td><td>2018</td><td>OFS</td><td>282.1억원</td><td><span class="pill pill-no">-22.9억원</span></td><td>-8.1%</td></tr><tr><td>샌드박스네트워크</td><td>2019</td><td>OFS</td><td>608.1억원</td><td><span class="pill pill-no">-78.3억원</span></td><td>-12.9%</td></tr><tr><td>샌드박스네트워크</td><td>2020</td><td>OFS</td><td>899.2억원</td><td><span class="pill pill-no">-72.7억원</span></td><td>-8.1%</td></tr><tr><td>샌드박스네트워크</td><td>2021</td><td>CFS</td><td>1,136.7억원</td><td><span class="pill pill-no">-121.3억원</span></td><td>-10.7%</td></tr><tr><td>샌드박스네트워크</td><td>2022</td><td>CFS</td><td>1,513.8억원</td><td><span class="pill pill-no">-253.7억원</span></td><td>-16.8%</td></tr><tr><td>샌드박스네트워크</td><td>2023</td><td>CFS</td><td>697.2억원</td><td><span class="pill pill-no">-153.0억원</span></td><td>-21.9%</td></tr><tr><td>샌드박스네트워크</td><td>2024</td><td>CFS</td><td>644.7억원</td><td><span class="pill pill-no">-47.0억원</span></td><td>-7.3%</td></tr><tr><td>샌드박스네트워크</td><td>2025</td><td>CFS</td><td>731.5억원</td><td><span class="pill pill-no">-42.7억원</span></td><td>-5.8%</td></tr><tr><td>패러블엔터테인먼트</td><td>2024</td><td>OFS</td><td>209.5억원</td><td><span class="pill pill-ok">+12.1억원</span></td><td>5.8%</td></tr><tr><td>패러블엔터테인먼트</td><td>2025</td><td>OFS</td><td>218.3억원</td><td><span class="pill pill-no">-91.0억원</span></td><td>-41.7%</td></tr>
+</tbody></table></div>
+
+<h2>세 레이어를 나란히 놓아보면 (관찰 — 증명 아님)</h2>
+<div class="note">
+이세계아이돌 굿즈 펀딩 두 건은 41억원·88억원이라는 국내 크라우드펀딩 역대 최고 기록을 냈다.
+같은 기간 그 IP의 실제 관리사로 보도된 패러블엔터테인먼트의 감사보고서는 매출이
+210억→218억원으로 늘었는데도 영업이익은 +12억→-91억원으로
+무너졌다. 팬덤이 쓰는 돈이 늘어난다고 회사에 남는 돈이 늘어난다는 보장은 없다 —
+샌드박스네트워크는 관측된 전 연도(8개 연도) 모두 영업손실을 기록했다.
+<br><br>
+<strong>이건 증명이 아니라 관찰이다.</strong>
+① 크라우드펀딩 IP 소유자(이세계아이돌)와 감사보고서 법인(패러블엔터테인먼트)은 '실제 관리사'라는
+언론 보도로만 연결돼 있어 펀딩 수익이 재무제표에 정확히 얼마나 반영되는지는 알 수 없다.
+② 재무 표본이 회사 2곳뿐이라 상관계수를 계산하지 않았다.
+③ 회계연도(연 1회)와 크라우드펀딩 캠페인(특정 시점)은 기간이 정확히 겹치지 않는다.
+④ 팬딩 가격 레이어는 이 두 회사와 무관한 제3의 플랫폼 데이터라 세 레이어를 하나의 숫자로
+합칠 수 없다 — 그래서 병렬로만 제시하고 억지로 잇지 않았다.
+</div>
+
+</div></body></html>

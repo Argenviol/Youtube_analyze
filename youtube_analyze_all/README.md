@@ -24,6 +24,9 @@
 각 프로젝트 폴더는 `data/`(원천·정제), `sql/`(스키마·INSERT·분석쿼리·SQLite),
 `charts/`(PNG 그래프), `site/`(HTML 대시보드), `README.md`/`REPORT.md`(설명·결과)로 구성됩니다.
 
+결과만 모아 본 것은 저장소 루트의 [`결과물/`](../결과물/) 에 있습니다
+(`scripts/build_deliverables.py` 가 생성 — `refresh.py` 가 분석 후 자동 호출).
+
 ## 통합 대시보드
 
 `../app/` 에 Next.js 대시보드가 있습니다. 각 프로젝트의 `site/data.json` 을 읽어
