@@ -1,0 +1,43 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-9);
+  padding: var(--space-7) var(--space-9);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  font-size: 0.9375rem;
+  font-weight: 800;
+  color: var(--label-strong);
+  letter-spacing: -0.01em;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--space-9);
+}
+
+.navLink {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--label-alt);
+}
+
+.navLink:hover {
+  color: var(--label);
+}

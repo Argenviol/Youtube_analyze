@@ -1,0 +1,36 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.tone-neutral {
+  background: var(--fill);
+  color: var(--label-neutral);
+}
+
+.tone-primary {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--primary-strong);
+}
+
+.tone-positive {
+  background: color-mix(in srgb, var(--positive) 16%, transparent);
+  color: var(--positive);
+}
+
+.tone-cautionary {
+  background: color-mix(in srgb, var(--cautionary) 18%, transparent);
+  color: var(--cautionary);
+}
+
+.tone-negative {
+  background: color-mix(in srgb, var(--negative) 16%, transparent);
+  color: var(--negative);
+}

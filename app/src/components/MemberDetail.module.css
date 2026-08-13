@@ -1,0 +1,153 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 15, 16, 0.4);
+  z-index: 40;
+  animation: fade 0.15s ease;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(420px, 100vw);
+  background: var(--bg-elevated);
+  border-left: 1px solid var(--line);
+  box-shadow: var(--shadow-large);
+  z-index: 41;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-11) var(--space-9) var(--space-8);
+  border-bottom: 1px solid var(--line);
+}
+
+.nameKo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--label-strong);
+}
+
+.nameEn {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: 0.8125rem;
+  color: var(--label-alt);
+}
+
+.badgeRow {
+  margin-top: var(--space-5);
+}
+
+.closeButton {
+  appearance: none;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--label-alt);
+  border-radius: var(--radius-full);
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.closeButton:hover {
+  color: var(--label-strong);
+  border-color: var(--primary);
+}
+
+.body {
+  padding: var(--space-9);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.empty {
+  padding: var(--space-9);
+  color: var(--label-alt);
+  font-size: 0.875rem;
+}
+
+.group {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.groupTitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--label-strong);
+}
+
+.groupLink {
+  font-size: 0.75rem;
+  color: var(--primary-strong);
+  font-weight: 600;
+}
+
+.groupLink:hover {
+  text-decoration: underline;
+}
+
+.pending {
+  font-size: 0.8125rem;
+  color: var(--cautionary);
+  background: color-mix(in srgb, var(--cautionary) 12%, transparent);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.metricList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.metricRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-6);
+  font-size: 0.8125rem;
+}
+
+.metricLabel {
+  color: var(--label-alt);
+}
+
+.metricValue {
+  font-weight: 600;
+  color: var(--label);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}

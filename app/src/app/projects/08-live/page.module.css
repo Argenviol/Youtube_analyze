@@ -1,0 +1,106 @@
+.fallback {
+  padding: var(--space-16);
+  text-align: center;
+  color: var(--label-alt);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-11);
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-13) var(--space-9) var(--space-16);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-9);
+}
+
+.title {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--label-strong);
+}
+
+.subhead {
+  max-width: 720px;
+  color: var(--label-alt);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.insightCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.insightText {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--label);
+}
+
+.empty {
+  color: var(--label-alt);
+  font-size: 0.875rem;
+  padding: var(--space-9) 0;
+  text-align: center;
+}
+
+.statRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-9);
+}
+
+.noteText {
+  font-size: 0.8125rem;
+  color: var(--label-alt);
+  line-height: 1.5;
+}
+
+.coverageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-7);
+  width: 100%;
+}
+
+.coverageStat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.coverageLabel {
+  font-size: 0.75rem;
+  color: var(--label-alt);
+}
+
+.coverageValue {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--label-strong);
+}

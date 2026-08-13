@@ -1,0 +1,156 @@
+<style>
+:root{
+  --bg:#F7F7F8; --surface:#ffffff; --text:#171719; --text2:#37383C; --muted:#70737C;
+  --grid:#E1E2E4; --border:rgba(112,115,124,.22);
+  --g1:#2a78d6; --g2:#eb6834; --g3:#1baf7a;
+  --s1:#005EEB; --s2:#F55A00; --s3:#009632; --s4:#D17600; --s5:#E846CD; --s6:#429E00; --s7:#5B37ED; --s8:#E52222;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0F0F10; --surface:#212225; --text:#F7F7F8; --text2:#C2C4C8; --muted:#70737C;
+  --grid:#37383C; --border:rgba(112,115,124,.32);
+  --g1:#3987e5; --g2:#d95926; --g3:#199e70;
+  --s1:#3385FF; --s2:#FF7B2E; --s3:#1ED45A; --s4:#FF9200; --s5:#FA73E3; --s6:#429E00; --s7:#7D5EF7; --s8:#FF6363;
+}}
+:root[data-theme=dark]{
+  --bg:#0F0F10; --surface:#212225; --text:#F7F7F8; --text2:#C2C4C8; --muted:#70737C;
+  --grid:#37383C; --border:rgba(112,115,124,.32);
+  --g1:#3987e5; --g2:#d95926; --g3:#199e70;
+  --s1:#3385FF; --s2:#FF7B2E; --s3:#1ED45A; --s4:#FF9200; --s5:#FA73E3; --s6:#429E00; --s7:#7D5EF7; --s8:#FF6363;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Pretendard,"Pretendard Variable",-apple-system,BlinkMacSystemFont,"Malgun Gothic","Noto Sans KR",system-ui,sans-serif;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+header h1{font-size:26px;margin:0 0 4px}
+header p{color:var(--text2);margin:0 0 6px}
+.tag{display:inline-block;font-size:12px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:2px 10px;margin-right:6px}
+section{margin:34px 0}
+h2{font-size:18px;margin:0 0 4px}
+.sub{color:var(--text2);font-size:13.5px;margin:0 0 16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.gcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:26px 0}
+.gcard{background:var(--surface);border:1px solid var(--border);border-top:4px solid var(--gc);border-radius:14px;padding:18px 20px}
+.gcard h3{margin:0 0 10px;font-size:16px}
+.gcard .row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid var(--border)}
+.gcard .row:last-child{border-bottom:none}
+.gcard .row b{font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+th{color:var(--text2);font-weight:600;cursor:pointer;user-select:none;white-space:nowrap}
+th.active{color:var(--text)}
+tbody tr:hover{background:color-mix(in srgb,var(--s1) 8%,transparent)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.gpill{font-size:11px;color:var(--text2);border:1px solid var(--border);border-radius:6px;padding:1px 7px}
+.chart-svg{width:100%;height:auto;display:block;overflow:visible}
+.gridline{stroke:var(--grid);stroke-width:1}
+.axis,.axis text{fill:var(--muted);font-size:11px}
+.mlabel{fill:var(--text2);font-size:12px}
+.legend{display:flex;gap:16px;font-size:12.5px;color:var(--text2);margin-top:10px}
+.legend span{display:flex;align-items:center}
+.tip{position:fixed;pointer-events:none;background:var(--text);color:var(--bg);font-size:12px;padding:6px 9px;border-radius:8px;opacity:0;transition:opacity .1s;z-index:10;white-space:nowrap}
+.foot{color:var(--muted);font-size:12px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px}
+.toggle{float:right;background:var(--surface);border:1px solid var(--border);color:var(--text2);border-radius:999px;padding:5px 12px;font-size:12.5px;cursor:pointer}
+</style>
+
+<div class="wrap">
+<button class="toggle" onclick="toggleTheme()">◐ 테마</button>
+<header>
+  <h1>StelLive 경쟁사 비교 분석</h1>
+  <p>StelLive vs 홀로라이브(Hololive) vs 이세계아이돌(이세돌) — 그룹별 대표 6명 표본 비교</p>
+  <div id="tags"></div>
+</header>
+
+<div class="gcards" id="gcards"></div>
+
+<section>
+  <h2>구독자 vs 참여율 (로그 스케일)</h2>
+  <p class="sub">규모가 커질수록 참여율은 낮아지는 경향 — 팬덤 밀도와 채널 규모의 트레이드오프.</p>
+  <div class="card"><svg id="scatter" class="chart-svg" viewBox="0 0 720 440"></svg></div>
+  <div class="legend" id="glegend"></div>
+</section>
+
+<section>
+  <h2>전체 18명 상세 비교</h2>
+  <p class="sub">열 제목 클릭 시 정렬.</p>
+  <div class="card" style="overflow-x:auto"><table id="tbl"></table></div>
+</section>
+
+<div class="foot" id="foot"></div>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const DATA = {"meta": {"fetched_at": "2026-08-12T07:21:07.992942+00:00", "n_channels": 18, "n_videos": 540, "recent_per_channel": 30, "groups": ["StelLive", "홀로라이브", "이세계아이돌"], "source": "YouTube Data API v3", "note": "각 그룹 대표 멤버 6명 표본 비교"}, "members": [{"rank": 1, "group": "홀로라이브", "channel_id": "UCoSrY_IQQVpmIRZ9Xf-y93g", "name_ko": "가우르 구라", "name_en": "Gawr Gura", "unit": null, "subscribers": 4610000, "total_views": 470558144, "video_count": 565, "recent_avg_views": 1251428.1, "recent_avg_engagement_rate": 0.07283, "uploads_per_week": 0.8, "reach_ratio": 0.271}, {"rank": 2, "group": "홀로라이브", "channel_id": "UCCzUftO8KOVkV4wQG1vkUvg", "name_ko": "호쇼 마린", "name_en": "Houshou Marine", "unit": null, "subscribers": 4400000, "total_views": 2383831794, "video_count": 1706, "recent_avg_views": 808286.8, "recent_avg_engagement_rate": 0.06564, "uploads_per_week": 3.76, "reach_ratio": 0.184}, {"rank": 3, "group": "홀로라이브", "channel_id": "UC1DCedRgGHBdm81E1llLhOQ", "name_ko": "우사다 페코라", "name_en": "Usada Pekora", "unit": null, "subscribers": 2790000, "total_views": 1162445854, "video_count": 2709, "recent_avg_views": 264149.0, "recent_avg_engagement_rate": 0.04847, "uploads_per_week": 8.83, "reach_ratio": 0.095}, {"rank": 4, "group": "홀로라이브", "channel_id": "UCL_qhgtOy0dy1Agp8vkySQg", "name_ko": "모리 캘리오프", "name_en": "Mori Calliope", "unit": null, "subscribers": 2620000, "total_views": 910848492, "video_count": 1889, "recent_avg_views": 193097.2, "recent_avg_engagement_rate": 0.10058, "uploads_per_week": 4.83, "reach_ratio": 0.074}, {"rank": 5, "group": "홀로라이브", "channel_id": "UChAnqc_AY5_I3Px5dig3X1Q", "name_ko": "이누가미 코로네", "name_en": "Inugami Korone", "unit": null, "subscribers": 2280000, "total_views": 509525199, "video_count": 1501, "recent_avg_views": 222125.7, "recent_avg_engagement_rate": 0.06041, "uploads_per_week": 3.62, "reach_ratio": 0.097}, {"rank": 6, "group": "홀로라이브", "channel_id": "UCAWSyEs_Io8MtpY3m-zqILA", "name_ko": "모모스즈 네네", "name_en": "Momosuzu Nene", "unit": null, "subscribers": 1330000, "total_views": 245386941, "video_count": 1389, "recent_avg_views": 110422.5, "recent_avg_engagement_rate": 0.08487, "uploads_per_week": 3.56, "reach_ratio": 0.083}, {"rank": 7, "group": "이세계아이돌", "channel_id": "UCV9WL7sW6_KjanYkUUaIDfQ", "name_ko": "고세구", "name_en": "Gosegu", "unit": null, "subscribers": 537000, "total_views": 423398779, "video_count": 1111, "recent_avg_views": 99105.9, "recent_avg_engagement_rate": 0.05643, "uploads_per_week": 4.51, "reach_ratio": 0.185}, {"rank": 8, "group": "이세계아이돌", "channel_id": "UC-oCJP9t47v7-DmsnmXV38Q", "name_ko": "릴파", "name_en": "Lilpa", "unit": null, "subscribers": 428000, "total_views": 345192933, "video_count": 1099, "recent_avg_views": 85262.2, "recent_avg_engagement_rate": 0.07091, "uploads_per_week": 6.77, "reach_ratio": 0.199}, {"rank": 9, "group": "이세계아이돌", "channel_id": "UCHE7GBQVtdh-c1m3tjFdevQ", "name_ko": "징버거", "name_en": "Jingburger", "unit": null, "subscribers": 421000, "total_views": 300112375, "video_count": 1088, "recent_avg_views": 128199.2, "recent_avg_engagement_rate": 0.05464, "uploads_per_week": 4.23, "reach_ratio": 0.305}, {"rank": 10, "group": "이세계아이돌", "channel_id": "UCTifMx1ONpElK5x6B4ng8eg", "name_ko": "주르르", "name_en": "Jururu", "unit": null, "subscribers": 411000, "total_views": 262932187, "video_count": 804, "recent_avg_views": 84586.0, "recent_avg_engagement_rate": 0.05703, "uploads_per_week": 1.88, "reach_ratio": 0.206}, {"rank": 11, "group": "이세계아이돌", "channel_id": "UCroM00J2ahCN6k-0-oAiDxg", "name_ko": "아이네", "name_en": "Ine", "unit": null, "subscribers": 359000, "total_views": 328835552, "video_count": 637, "recent_avg_views": 131206.3, "recent_avg_engagement_rate": 0.04964, "uploads_per_week": 1.88, "reach_ratio": 0.365}, {"rank": 12, "group": "StelLive", "channel_id": "UClbYIn9LDbbFZ9w2shX3K0g", "name_ko": "아야츠노 유니", "name_en": "Ayatsuno Yuni", "unit": "EVERYS", "subscribers": 358000, "total_views": 193441560, "video_count": 727, "recent_avg_views": 119713.6, "recent_avg_engagement_rate": 0.04002, "uploads_per_week": 3.12, "reach_ratio": 0.334}, {"rank": 13, "group": "StelLive", "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw", "name_ko": "아카네 리제", "name_en": "Akane Lize", "unit": "UNIVERSE", "subscribers": 347000, "total_views": 287391854, "video_count": 584, "recent_avg_views": 257785.4, "recent_avg_engagement_rate": 0.04401, "uploads_per_week": 5.49, "reach_ratio": 0.743}, {"rank": 14, "group": "이세계아이돌", "channel_id": "UCs6EwgxKLY9GG4QNUrP5hoQ", "name_ko": "비챤", "name_en": "Viichan", "unit": null, "subscribers": 326000, "total_views": 278365310, "video_count": 1023, "recent_avg_views": 46274.4, "recent_avg_engagement_rate": 0.0892, "uploads_per_week": 7.0, "reach_ratio": 0.142}, {"rank": 15, "group": "StelLive", "channel_id": "UC1afpiIuBDcjYlmruAa0HiA", "name_ko": "시라유키 히나", "name_en": "Shirayuki Hina", "unit": "UNIVERSE", "subscribers": 319000, "total_views": 185681032, "video_count": 604, "recent_avg_views": 136663.0, "recent_avg_engagement_rate": 0.04417, "uploads_per_week": 3.69, "reach_ratio": 0.428}, {"rank": 16, "group": "StelLive", "channel_id": "UCAHVQ44O81aehLWfy9O6Elw", "name_ko": "아라하시 타비", "name_en": "Arahashi Tabi", "unit": "UNIVERSE", "subscribers": 255000, "total_views": 178843581, "video_count": 771, "recent_avg_views": 173111.8, "recent_avg_engagement_rate": 0.03971, "uploads_per_week": 3.98, "reach_ratio": 0.679}, {"rank": 17, "group": "StelLive", "channel_id": "UC_eeSpMBz8PG4ssdBPnP07g", "name_ko": "네네코 마시로", "name_en": "Neneko Mashiro", "unit": "UNIVERSE", "subscribers": 180000, "total_views": 58144100, "video_count": 417, "recent_avg_views": 90975.8, "recent_avg_engagement_rate": 0.05028, "uploads_per_week": 1.88, "reach_ratio": 0.505}, {"rank": 18, "group": "StelLive", "channel_id": "UC0YQnenKBCu5sGb7H61n6HA", "name_ko": "사키하네 후야", "name_en": "Sakihane Huya", "unit": "EVERYS", "subscribers": 130000, "total_views": 49868316, "video_count": 322, "recent_avg_views": 97191.9, "recent_avg_engagement_rate": 0.0469, "uploads_per_week": 3.44, "reach_ratio": 0.748}], "groups": [{"group": "StelLive", "n_members": 6, "avg_subscribers": 264833.3333, "median_subscribers": 287000.0, "total_subscribers": 1589000, "avg_recent_views": 145906.9167, "avg_engagement_rate": 0.0442, "avg_uploads_per_week": 3.6, "avg_reach_ratio": 0.5728}, {"group": "이세계아이돌", "n_members": 6, "avg_subscribers": 413666.6667, "median_subscribers": 416000.0, "total_subscribers": 2482000, "avg_recent_views": 95772.3333, "avg_engagement_rate": 0.063, "avg_uploads_per_week": 4.3783, "avg_reach_ratio": 0.2337}, {"group": "홀로라이브", "n_members": 6, "avg_subscribers": 3005000.0, "median_subscribers": 2705000.0, "total_subscribers": 18030000, "avg_recent_views": 474918.2167, "avg_engagement_rate": 0.0721, "avg_uploads_per_week": 4.2333, "avg_reach_ratio": 0.134}]};
+const GC={'StelLive':'--g1','홀로라이브':'--g2','이세계아이돌':'--g3'};
+const cssv=v=>getComputedStyle(document.body).getPropertyValue(v).trim();
+const fmt=n=>n>=1e6?(n/1e6).toFixed(2)+'M':n>=1e3?(n/1e3).toFixed(0)+'K':(''+n);
+const fmtN=n=>Number(n).toLocaleString('ko-KR');
+const tip=document.getElementById('tip');
+const showTip=(e,h)=>{tip.innerHTML=h;tip.style.opacity=1;tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';};
+const hideTip=()=>tip.style.opacity=0;
+const svgEl=(t,a)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+document.getElementById('tags').innerHTML =
+  `<span class="tag">수집 ${DATA.meta.fetched_at.slice(0,10)}</span>`+
+  `<span class="tag">그룹당 6명 표본</span>`+
+  `<span class="tag">최근 ${DATA.meta.recent_per_channel}영상</span>`+
+  `<span class="tag">YouTube Data API v3</span>`;
+
+document.getElementById('gcards').innerHTML = DATA.groups.map(g=>`
+  <div class="gcard" style="--gc:${cssv(GC[g.group])}">
+    <h3>${g.group}</h3>
+    <div class="row"><span>평균 구독자</span><b>${fmt(g.avg_subscribers)}</b></div>
+    <div class="row"><span>평균 최근 조회수</span><b>${fmt(g.avg_recent_views)}</b></div>
+    <div class="row"><span>평균 참여율</span><b>${(g.avg_engagement_rate*100).toFixed(1)}%</b></div>
+    <div class="row"><span>주간 업로드</span><b>${g.avg_uploads_per_week.toFixed(1)}회</b></div>
+    <div class="row"><span>도달 효율</span><b>${(g.avg_reach_ratio*100).toFixed(0)}%</b></div>
+  </div>`).join('');
+
+document.getElementById('glegend').innerHTML = Object.entries(GC).map(([g,c])=>
+  `<span><i class="dot" style="background:${cssv(c)}"></i>${g}</span>`).join('');
+
+function drawScatter(){
+  const svg=document.getElementById('scatter');svg.innerHTML='';
+  const W=720,H=440,ml=70,mr=30,mt=16,mb=44,list=DATA.members;
+  const xs=list.map(m=>Math.log10(m.subscribers)),ys=list.map(m=>m.recent_avg_engagement_rate*100);
+  const xmin=Math.min(...xs)-0.08,xmax=Math.max(...xs)+0.08,ymin=0,ymax=Math.max(...ys)*1.15;
+  const X=v=>ml+(v-xmin)/(xmax-xmin)*(W-ml-mr),Y=v=>H-mb-(v-ymin)/(ymax-ymin)*(H-mt-mb);
+  for(let i=0;i<=4;i++){const gy=mt+i/4*(H-mt-mb);svg.appendChild(svgEl('line',{x1:ml,x2:W-mr,y1:gy,y2:gy,class:'gridline'}));
+    const t=svgEl('text',{x:ml-8,y:gy+4,'text-anchor':'end',class:'axis'});t.textContent=(ymax-(i/4)*(ymax-ymin)).toFixed(1)+'%';svg.appendChild(t);}
+  [1e5,2e5,5e5,1e6,2e6,5e6,1e7].forEach(v=>{const lx=Math.log10(v);if(lx<xmin||lx>xmax)return;
+    const gx=X(lx);const t=svgEl('text',{x:gx,y:H-mb+18,'text-anchor':'middle',class:'axis'});t.textContent=fmt(v);svg.appendChild(t);
+    svg.appendChild(svgEl('line',{x1:gx,x2:gx,y1:mt,y2:H-mb,class:'gridline'}));});
+  svg.appendChild(svgEl('text',{x:(ml+W-mr)/2,y:H-6,'text-anchor':'middle',class:'axis'})).textContent='구독자 (log)';
+  list.forEach(m=>{
+    const cx=X(Math.log10(m.subscribers)),cy=Y(m.recent_avg_engagement_rate*100);
+    const c=svgEl('circle',{cx,cy,r:9,fill:cssv(GC[m.group]),opacity:.82,stroke:cssv('--surface'),'stroke-width':2});
+    c.addEventListener('mousemove',e=>showTip(e,`<b>${m.name_ko}</b> (${m.group})<br>구독 ${fmt(m.subscribers)}<br>참여율 ${(m.recent_avg_engagement_rate*100).toFixed(1)}%`));
+    c.addEventListener('mouseleave',hideTip);svg.appendChild(c);
+  });
+}
+
+const COLS=[
+  ['name_ko','멤버',r=>`<i class="dot" style="background:${cssv(GC[r.group])}"></i>${r.name_ko} <span class="gpill">${r.group}</span>`],
+  ['subscribers','구독자',r=>fmtN(r.subscribers)],
+  ['recent_avg_views','평균조회수',r=>fmtN(Math.round(r.recent_avg_views))],
+  ['recent_avg_engagement_rate','참여율',r=>(r.recent_avg_engagement_rate*100).toFixed(1)+'%'],
+  ['uploads_per_week','주간업로드',r=>r.uploads_per_week.toFixed(1)],
+  ['reach_ratio','도달효율',r=>(r.reach_ratio*100).toFixed(0)+'%'],
+];
+let sk='subscribers',sd=-1;
+const rows=()=>[...DATA.members].sort((a,b)=>(a[sk]>b[sk]?1:-1)*sd);
+function drawTable(){const t=document.getElementById('tbl');
+  t.innerHTML='<thead><tr>'+COLS.map(c=>`<th class="${c[0]===sk?'active':''}" onclick="setSk('${c[0]}')">${c[1]}${c[0]===sk?(sd<0?' ▾':' ▴'):''}</th>`).join('')+'</tr></thead>'+
+  '<tbody>'+rows().map(r=>'<tr>'+COLS.map(c=>`<td>${c[2](r)}</td>`).join('')+'</tr>').join('')+'</tbody>';}
+function setSk(k){if(sk===k)sd*=-1;else{sk=k;sd=-1;}drawTable();}
+
+document.getElementById('foot').innerHTML=
+  `표본: 각 그룹 대표 6명 비교(전체 소속 인원 아님). 홀로라이브는 EN/JP 혼합 대표 선정.<br>`+
+  `데이터 출처: YouTube Data API v3 · 지표는 수집 시점 스냅샷입니다.`;
+
+function toggleTheme(){const r=document.documentElement;
+  const cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  r.setAttribute('data-theme',cur==='dark'?'light':'dark');drawAll();}
+function drawAll(){drawScatter();drawTable();}
+drawAll();
+</script>

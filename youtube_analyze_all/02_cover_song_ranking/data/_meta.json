@@ -1,0 +1,10 @@
+{
+  "fetched_at": "2026-08-12T07:30:34.326125+00:00",
+  "n_covers": 362,
+  "n_members": 11,
+  "title_filter": "cover|커버|歌ってみた|うたってみた|불러[봤본]",
+  "source": "YouTube Data API v3 (playlistItems 전량 열거 + videos)",
+  "method": "uploads_playlist_enumeration",
+  "method_changed_at": "2026-08-12",
+  "method_note": "이전에는 search.list 상위 40개 창을 썼다. 결과가 실행마다 흔들리고 커버곡 수를 과소집계해 시계열 비교가 불가능했으므로 전량 열거로 교체했다. 이 시점 이전 스냅샷과 커버곡 수를 직접 비교하지 말 것."
+}

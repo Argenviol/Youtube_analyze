@@ -1,0 +1,95 @@
+.wrap {
+  width: 100%;
+}
+
+.scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.gridline {
+  stroke: var(--line-alt);
+  stroke-width: 1;
+}
+
+.axisLine {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.tick {
+  font-size: 10px;
+  fill: var(--label-alt);
+  font-family: var(--font);
+  font-variant-numeric: tabular-nums;
+}
+
+.line {
+  fill: none;
+  stroke-width: 2.5;
+  transition: stroke-width 0.1s ease, opacity 0.1s ease;
+}
+
+.series[data-interactive="true"] {
+  cursor: pointer;
+}
+
+.series[data-interactive="true"]:hover .line,
+.series[data-interactive="true"]:focus-visible .line {
+  stroke-width: 4;
+}
+
+.series[data-selected="true"] .line {
+  stroke-width: 4;
+}
+
+.series[data-dimmed="true"] .line {
+  opacity: 0.25;
+}
+
+.endLabel {
+  font-size: 10px;
+  font-weight: 600;
+  font-family: var(--font);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  appearance: none;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-6);
+  font-size: 0.75rem;
+  color: var(--label-neutral);
+  font-family: var(--font);
+}
+
+.legendItem[data-selected="true"] {
+  border-color: var(--label-strong);
+  color: var(--label-strong);
+  font-weight: 700;
+}
+
+.legendSwatch {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}

@@ -1,0 +1,1249 @@
+{
+  "meta": {
+    "fetched_at": "2026-08-12T11:50:37.114919+00:00",
+    "source": "팬딩(Fanding) 공개 REST(/rest/explorer/creator_list, /@.../membership) + 텀블벅(Tumblbug) 공개 결과 정적 큐레이션(로봇배제표준상 /api/ 자동수집 불가) + 09_dart_financials 재사용(DART 재수집 없음)",
+    "n_fanding_creators": 111,
+    "n_fanding_creators_with_tiers": 57,
+    "n_fanding_tiers": 67,
+    "n_crowdfunding_projects": 6,
+    "n_financial_company_years": 10,
+    "tumblbug_blocked_by_robots": true,
+    "tumblbug_robots_rule": "Disallow: /api/  (https://tumblbug.com/robots.txt) — 실제 모금액/후원자 수치는 전부 이 경로에서만 온다. 상세 페이지 HTML은 클라이언트 렌더링 껍데기라 requests만으로는 수치를 읽을 수 없다.",
+    "wadiz_note": "robots.txt는 개별 캠페인 페이지를 막지 않지만, VTuber 카테고리 캠페인 자체가 검색상 사실상 없어(국내 버튜버 크라우드펀딩은 텀블벅에 쏠림) 이 프로젝트에서는 다루지 않음"
+  },
+  "fanding": {
+    "stats": {
+      "n_tiers": 67,
+      "n_creators_with_tiers": 57,
+      "min_price": 1000,
+      "max_price": 550000,
+      "median_price": 7200,
+      "mean_price": 20189.0,
+      "stellive_prices": [
+        24000
+      ],
+      "stellive_percentile": 83.6
+    },
+    "creator_summary": [
+      {
+        "creator_url": "kg0qIswfj4Vr",
+        "nickname": "아랭 ARENG",
+        "n_tiers": 2,
+        "min_price": 10890,
+        "max_price": 550000,
+        "avg_price": 280445
+      },
+      {
+        "creator_url": "jKn2OagAoQ4Y",
+        "nickname": "마리엘",
+        "n_tiers": 1,
+        "min_price": 55000,
+        "max_price": 55000,
+        "avg_price": 55000
+      },
+      {
+        "creator_url": "myjZVWA2LSO4",
+        "nickname": "유키링 yukilling",
+        "n_tiers": 1,
+        "min_price": 45000,
+        "max_price": 45000,
+        "avg_price": 45000
+      },
+      {
+        "creator_url": "LNFyxMaszUEC",
+        "nickname": "빅터 KR",
+        "n_tiers": 3,
+        "min_price": 1000,
+        "max_price": 100000,
+        "avg_price": 37000
+      },
+      {
+        "creator_url": "maya100",
+        "nickname": "마야100",
+        "n_tiers": 2,
+        "min_price": 6600,
+        "max_price": 55000,
+        "avg_price": 30800
+      },
+      {
+        "creator_url": "alicemana",
+        "nickname": "아리스마나",
+        "n_tiers": 1,
+        "min_price": 30000,
+        "max_price": 30000,
+        "avg_price": 30000
+      },
+      {
+        "creator_url": "forthemore",
+        "nickname": "포더모어 ForTheMore",
+        "n_tiers": 1,
+        "min_price": 29000,
+        "max_price": 29000,
+        "avg_price": 29000
+      },
+      {
+        "creator_url": "stellive",
+        "nickname": "스텔라이브",
+        "n_tiers": 1,
+        "min_price": 24000,
+        "max_price": 24000,
+        "avg_price": 24000
+      },
+      {
+        "creator_url": "STARDAYS",
+        "nickname": "스타데이즈",
+        "n_tiers": 1,
+        "min_price": 24000,
+        "max_price": 24000,
+        "avg_price": 24000
+      },
+      {
+        "creator_url": "kavy2020",
+        "nickname": "KAVY 카비",
+        "n_tiers": 3,
+        "min_price": 2200,
+        "max_price": 55000,
+        "avg_price": 22733
+      },
+      {
+        "creator_url": "studiosegno",
+        "nickname": "스튜디오 세뇨",
+        "n_tiers": 1,
+        "min_price": 22000,
+        "max_price": 22000,
+        "avg_price": 22000
+      },
+      {
+        "creator_url": "iotayona",
+        "nickname": "요나 Yona",
+        "n_tiers": 2,
+        "min_price": 8690,
+        "max_price": 27500,
+        "avg_price": 18095
+      },
+      {
+        "creator_url": "vTSF8M3yYcBf",
+        "nickname": "찬비니",
+        "n_tiers": 1,
+        "min_price": 16500,
+        "max_price": 16500,
+        "avg_price": 16500
+      },
+      {
+        "creator_url": "_marimo",
+        "nickname": "_마리모0",
+        "n_tiers": 1,
+        "min_price": 16390,
+        "max_price": 16390,
+        "avg_price": 16390
+      },
+      {
+        "creator_url": "Myong",
+        "nickname": "묭이",
+        "n_tiers": 2,
+        "min_price": 8800,
+        "max_price": 17600,
+        "avg_price": 13200
+      },
+      {
+        "creator_url": "dalchesom",
+        "nickname": "Dalchesom",
+        "n_tiers": 1,
+        "min_price": 11000,
+        "max_price": 11000,
+        "avg_price": 11000
+      },
+      {
+        "creator_url": "quLa8SzFA0Db",
+        "nickname": "모야__",
+        "n_tiers": 1,
+        "min_price": 11000,
+        "max_price": 11000,
+        "avg_price": 11000
+      },
+      {
+        "creator_url": "aho0226",
+        "nickname": "아호_aho",
+        "n_tiers": 1,
+        "min_price": 11000,
+        "max_price": 11000,
+        "avg_price": 11000
+      },
+      {
+        "creator_url": "hiyoko",
+        "nickname": "히요코_POCOTONE",
+        "n_tiers": 1,
+        "min_price": 11000,
+        "max_price": 11000,
+        "avg_price": 11000
+      },
+      {
+        "creator_url": "hareu",
+        "nickname": "하르-",
+        "n_tiers": 1,
+        "min_price": 11000,
+        "max_price": 11000,
+        "avg_price": 11000
+      },
+      {
+        "creator_url": "imducko3o",
+        "nickname": "오리꿍_Fanding",
+        "n_tiers": 1,
+        "min_price": 11000,
+        "max_price": 11000,
+        "avg_price": 11000
+      },
+      {
+        "creator_url": "J9ZrQ63sY4Ry",
+        "nickname": "ning_gu",
+        "n_tiers": 1,
+        "min_price": 11000,
+        "max_price": 11000,
+        "avg_price": 11000
+      },
+      {
+        "creator_url": "5Zs9QAdTFcxk",
+        "nickname": "연루나",
+        "n_tiers": 1,
+        "min_price": 11000,
+        "max_price": 11000,
+        "avg_price": 11000
+      },
+      {
+        "creator_url": "HFVLRpcanjz1",
+        "nickname": "미베_",
+        "n_tiers": 1,
+        "min_price": 11000,
+        "max_price": 11000,
+        "avg_price": 11000
+      },
+      {
+        "creator_url": "Y1Y4_",
+        "nickname": "이야",
+        "n_tiers": 1,
+        "min_price": 11000,
+        "max_price": 11000,
+        "avg_price": 11000
+      },
+      {
+        "creator_url": "camellia1225",
+        "nickname": "동백 camellia",
+        "n_tiers": 2,
+        "min_price": 6490,
+        "max_price": 10890,
+        "avg_price": 8690
+      },
+      {
+        "creator_url": "rev_vit",
+        "nickname": "레브 Rev_",
+        "n_tiers": 1,
+        "min_price": 7700,
+        "max_price": 7700,
+        "avg_price": 7700
+      },
+      {
+        "creator_url": "cihe_",
+        "nickname": "인텔리 치에",
+        "n_tiers": 2,
+        "min_price": 5000,
+        "max_price": 10000,
+        "avg_price": 7500
+      },
+      {
+        "creator_url": "chuing",
+        "nickname": "김츄잉",
+        "n_tiers": 1,
+        "min_price": 7200,
+        "max_price": 7200,
+        "avg_price": 7200
+      },
+      {
+        "creator_url": "visoe",
+        "nickname": "이소에",
+        "n_tiers": 1,
+        "min_price": 5500,
+        "max_price": 5500,
+        "avg_price": 5500
+      },
+      {
+        "creator_url": "vrecord",
+        "nickname": "브이레코드_VRECORD",
+        "n_tiers": 1,
+        "min_price": 5500,
+        "max_price": 5500,
+        "avg_price": 5500
+      },
+      {
+        "creator_url": "vunet",
+        "nickname": "유네트",
+        "n_tiers": 1,
+        "min_price": 5500,
+        "max_price": 5500,
+        "avg_price": 5500
+      },
+      {
+        "creator_url": "moonmomo",
+        "nickname": "문모모",
+        "n_tiers": 1,
+        "min_price": 5500,
+        "max_price": 5500,
+        "avg_price": 5500
+      },
+      {
+        "creator_url": "MEv9NGSudtL8",
+        "nickname": "정나은양",
+        "n_tiers": 1,
+        "min_price": 5500,
+        "max_price": 5500,
+        "avg_price": 5500
+      },
+      {
+        "creator_url": "WR9TP4OQqLM8",
+        "nickname": "아카이브 스튜디오",
+        "n_tiers": 1,
+        "min_price": 5390,
+        "max_price": 5390,
+        "avg_price": 5390
+      },
+      {
+        "creator_url": "hananeno_chuchu",
+        "nickname": "하나네노 츄츄",
+        "n_tiers": 1,
+        "min_price": 3700,
+        "max_price": 3700,
+        "avg_price": 3700
+      },
+      {
+        "creator_url": "pgtQf3VFG0nO",
+        "nickname": "유루리 Yururi",
+        "n_tiers": 1,
+        "min_price": 3630,
+        "max_price": 3630,
+        "avg_price": 3630
+      },
+      {
+        "creator_url": "shiroko",
+        "nickname": "시로코 SHIROKO",
+        "n_tiers": 1,
+        "min_price": 3300,
+        "max_price": 3300,
+        "avg_price": 3300
+      },
+      {
+        "creator_url": "iPsXc7F1ldLn",
+        "nickname": "앰구",
+        "n_tiers": 1,
+        "min_price": 3300,
+        "max_price": 3300,
+        "avg_price": 3300
+      },
+      {
+        "creator_url": "heemi",
+        "nickname": "희미",
+        "n_tiers": 1,
+        "min_price": 3300,
+        "max_price": 3300,
+        "avg_price": 3300
+      },
+      {
+        "creator_url": "LJzftS8Mmcgl",
+        "nickname": "배부른 강아지 527841",
+        "n_tiers": 1,
+        "min_price": 2000,
+        "max_price": 2000,
+        "avg_price": 2000
+      },
+      {
+        "creator_url": "Reana",
+        "nickname": "레아나 Reana",
+        "n_tiers": 1,
+        "min_price": 1100,
+        "max_price": 1100,
+        "avg_price": 1100
+      },
+      {
+        "creator_url": "1Ko0Wup6L2wV",
+        "nickname": "원사비",
+        "n_tiers": 1,
+        "min_price": 1100,
+        "max_price": 1100,
+        "avg_price": 1100
+      },
+      {
+        "creator_url": "jBk9WO2adheJ",
+        "nickname": "코튼캔탑",
+        "n_tiers": 1,
+        "min_price": 1100,
+        "max_price": 1100,
+        "avg_price": 1100
+      },
+      {
+        "creator_url": "jongtachi",
+        "nickname": "종타치",
+        "n_tiers": 1,
+        "min_price": 1100,
+        "max_price": 1100,
+        "avg_price": 1100
+      },
+      {
+        "creator_url": "Veginning",
+        "nickname": "VGG",
+        "n_tiers": 1,
+        "min_price": 1100,
+        "max_price": 1100,
+        "avg_price": 1100
+      },
+      {
+        "creator_url": "Ux35RL4tPZJY",
+        "nickname": "아티손즈",
+        "n_tiers": 1,
+        "min_price": 1100,
+        "max_price": 1100,
+        "avg_price": 1100
+      },
+      {
+        "creator_url": "cRZIuFf3Mq5p",
+        "nickname": "베아루",
+        "n_tiers": 1,
+        "min_price": 1100,
+        "max_price": 1100,
+        "avg_price": 1100
+      },
+      {
+        "creator_url": "WXSt8G3KxVno",
+        "nickname": "여름어름",
+        "n_tiers": 1,
+        "min_price": 1100,
+        "max_price": 1100,
+        "avg_price": 1100
+      },
+      {
+        "creator_url": "t95BmlTKSD7s",
+        "nickname": "죠셉죠슈아",
+        "n_tiers": 1,
+        "min_price": 1100,
+        "max_price": 1100,
+        "avg_price": 1100
+      },
+      {
+        "creator_url": "lVHeuU1MNncE",
+        "nickname": "2브임",
+        "n_tiers": 1,
+        "min_price": 1100,
+        "max_price": 1100,
+        "avg_price": 1100
+      },
+      {
+        "creator_url": "watame_plan_kr",
+        "nickname": "와타메이트 기획부 KR",
+        "n_tiers": 1,
+        "min_price": 1100,
+        "max_price": 1100,
+        "avg_price": 1100
+      },
+      {
+        "creator_url": "CHOOSE",
+        "nickname": "츄즈",
+        "n_tiers": 1,
+        "min_price": 1000,
+        "max_price": 1000,
+        "avg_price": 1000
+      },
+      {
+        "creator_url": "TWILLITSTUDIO_",
+        "nickname": "TWILLITSTUDIO_트윌릿",
+        "n_tiers": 1,
+        "min_price": 1000,
+        "max_price": 1000,
+        "avg_price": 1000
+      },
+      {
+        "creator_url": "VDePEsT5SZIr",
+        "nickname": "아쿠쨩",
+        "n_tiers": 1,
+        "min_price": 1000,
+        "max_price": 1000,
+        "avg_price": 1000
+      },
+      {
+        "creator_url": "02rKIyDJSxjd",
+        "nickname": "모모시로 카나",
+        "n_tiers": 1,
+        "min_price": 1000,
+        "max_price": 1000,
+        "avg_price": 1000
+      },
+      {
+        "creator_url": "hika1",
+        "nickname": "히카1",
+        "n_tiers": 1,
+        "min_price": 1000,
+        "max_price": 1000,
+        "avg_price": 1000
+      }
+    ],
+    "tiers": [
+      {
+        "creator_url": "myjZVWA2LSO4",
+        "nickname": "유키링 yukilling",
+        "tier_index": 0,
+        "tier_title": "키링이 환생 도와주기",
+        "price_krw": 45000
+      },
+      {
+        "creator_url": "hananeno_chuchu",
+        "nickname": "하나네노 츄츄",
+        "tier_index": 0,
+        "tier_title": "츄츄와 DM 멤버십",
+        "price_krw": 3700
+      },
+      {
+        "creator_url": "LNFyxMaszUEC",
+        "nickname": "빅터 KR",
+        "tier_index": 0,
+        "tier_title": "소량 투자",
+        "price_krw": 1000
+      },
+      {
+        "creator_url": "LNFyxMaszUEC",
+        "nickname": "빅터 KR",
+        "tier_index": 1,
+        "tier_title": "기본 투자",
+        "price_krw": 10000
+      },
+      {
+        "creator_url": "LNFyxMaszUEC",
+        "nickname": "빅터 KR",
+        "tier_index": 2,
+        "tier_title": "대형 투자",
+        "price_krw": 100000
+      },
+      {
+        "creator_url": "hika1",
+        "nickname": "히카1",
+        "tier_index": 0,
+        "tier_title": "기본",
+        "price_krw": 1000
+      },
+      {
+        "creator_url": "TWILLITSTUDIO_",
+        "nickname": "TWILLITSTUDIO_트윌릿",
+        "tier_index": 0,
+        "tier_title": "WILLIT",
+        "price_krw": 1000
+      },
+      {
+        "creator_url": "cihe_",
+        "nickname": "인텔리 치에",
+        "tier_index": 0,
+        "tier_title": "치유사",
+        "price_krw": 5000
+      },
+      {
+        "creator_url": "cihe_",
+        "nickname": "인텔리 치에",
+        "tier_index": 1,
+        "tier_title": "특별치유사",
+        "price_krw": 10000
+      },
+      {
+        "creator_url": "studiosegno",
+        "nickname": "스튜디오 세뇨",
+        "tier_index": 0,
+        "tier_title": "스튜디오 세뇨 멤버십 [달세뇨] 1기",
+        "price_krw": 22000
+      },
+      {
+        "creator_url": "CHOOSE",
+        "nickname": "츄즈",
+        "tier_index": 0,
+        "tier_title": "💚츄즈 구독💚",
+        "price_krw": 1000
+      },
+      {
+        "creator_url": "VDePEsT5SZIr",
+        "nickname": "아쿠쨩",
+        "tier_index": 0,
+        "tier_title": "아쿠마단",
+        "price_krw": 1000
+      },
+      {
+        "creator_url": "chuing",
+        "nickname": "김츄잉",
+        "tier_index": 0,
+        "tier_title": "츄잉이의 다이아방",
+        "price_krw": 7200
+      },
+      {
+        "creator_url": "LJzftS8Mmcgl",
+        "nickname": "배부른 강아지 527841",
+        "tier_index": 0,
+        "tier_title": "기본 멤버쉽",
+        "price_krw": 2000
+      },
+      {
+        "creator_url": "02rKIyDJSxjd",
+        "nickname": "모모시로 카나",
+        "tier_index": 0,
+        "tier_title": "코야미쿤",
+        "price_krw": 1000
+      },
+      {
+        "creator_url": "jKn2OagAoQ4Y",
+        "nickname": "마리엘",
+        "tier_index": 0,
+        "tier_title": "쭉냥이 멤버십",
+        "price_krw": 55000
+      },
+      {
+        "creator_url": "iotayona",
+        "nickname": "요나 Yona",
+        "tier_index": 0,
+        "tier_title": "일각모비🐳",
+        "price_krw": 8690
+      },
+      {
+        "creator_url": "iotayona",
+        "nickname": "요나 Yona",
+        "tier_index": 1,
+        "tier_title": "💎크리스탈 일각모비🐳",
+        "price_krw": 27500
+      },
+      {
+        "creator_url": "visoe",
+        "nickname": "이소에",
+        "tier_index": 0,
+        "tier_title": "소에월드",
+        "price_krw": 5500
+      },
+      {
+        "creator_url": "pgtQf3VFG0nO",
+        "nickname": "유루리 Yururi",
+        "tier_index": 0,
+        "tier_title": "파랑새 보호 협회",
+        "price_krw": 3630
+      },
+      {
+        "creator_url": "maya100",
+        "nickname": "마야100",
+        "tier_index": 0,
+        "tier_title": "일반 멤버십",
+        "price_krw": 6600
+      },
+      {
+        "creator_url": "maya100",
+        "nickname": "마야100",
+        "tier_index": 1,
+        "tier_title": "다이아 멤버십",
+        "price_krw": 55000
+      },
+      {
+        "creator_url": "Reana",
+        "nickname": "레아나 Reana",
+        "tier_index": 0,
+        "tier_title": "레아나 팬딩",
+        "price_krw": 1100
+      },
+      {
+        "creator_url": "alicemana",
+        "nickname": "아리스마나",
+        "tier_index": 0,
+        "tier_title": "휴일의 여우불",
+        "price_krw": 30000
+      },
+      {
+        "creator_url": "shiroko",
+        "nickname": "시로코 SHIROKO",
+        "tier_index": 0,
+        "tier_title": "타마시",
+        "price_krw": 3300
+      },
+      {
+        "creator_url": "moonmomo",
+        "nickname": "문모모",
+        "tier_index": 0,
+        "tier_title": "곰탕이",
+        "price_krw": 5500
+      },
+      {
+        "creator_url": "forthemore",
+        "nickname": "포더모어 ForTheMore",
+        "tier_index": 0,
+        "tier_title": "⚡ 포더모어 포도알 멤버십 2기",
+        "price_krw": 29000
+      },
+      {
+        "creator_url": "quLa8SzFA0Db",
+        "nickname": "모야__",
+        "tier_index": 0,
+        "tier_title": "모야모야?",
+        "price_krw": 11000
+      },
+      {
+        "creator_url": "watame_plan_kr",
+        "nickname": "와타메이트 기획부 KR",
+        "tier_index": 0,
+        "tier_title": "와타메이트",
+        "price_krw": 1100
+      },
+      {
+        "creator_url": "MEv9NGSudtL8",
+        "nickname": "정나은양",
+        "tier_index": 0,
+        "tier_title": "아이언 멤버십",
+        "price_krw": 5500
+      },
+      {
+        "creator_url": "hareu",
+        "nickname": "하르-",
+        "tier_index": 0,
+        "tier_title": "하르 멤버십",
+        "price_krw": 11000
+      },
+      {
+        "creator_url": "Ux35RL4tPZJY",
+        "nickname": "아티손즈",
+        "tier_index": 0,
+        "tier_title": "테스트 (구매하지 말아주세요)",
+        "price_krw": 1100
+      },
+      {
+        "creator_url": "kg0qIswfj4Vr",
+        "nickname": "아랭 ARENG",
+        "tier_index": 0,
+        "tier_title": "성수기",
+        "price_krw": 10890
+      },
+      {
+        "creator_url": "kg0qIswfj4Vr",
+        "nickname": "아랭 ARENG",
+        "tier_index": 1,
+        "tier_title": "마스터 성수기",
+        "price_krw": 550000
+      },
+      {
+        "creator_url": "heemi",
+        "nickname": "희미",
+        "tier_index": 0,
+        "tier_title": "HP",
+        "price_krw": 3300
+      },
+      {
+        "creator_url": "vTSF8M3yYcBf",
+        "nickname": "찬비니",
+        "tier_index": 0,
+        "tier_title": "찬빈이에게 후원",
+        "price_krw": 16500
+      },
+      {
+        "creator_url": "1Ko0Wup6L2wV",
+        "nickname": "원사비",
+        "tier_index": 0,
+        "tier_title": "반짝이는 방울이",
+        "price_krw": 1100
+      },
+      {
+        "creator_url": "jongtachi",
+        "nickname": "종타치",
+        "tier_index": 0,
+        "tier_title": "브론즈",
+        "price_krw": 1100
+      },
+      {
+        "creator_url": "STARDAYS",
+        "nickname": "스타데이즈",
+        "tier_index": 0,
+        "tier_title": "스타데이즈 멤버십 플랜 \\\"별사탕\\\" 1기",
+        "price_krw": 24000
+      },
+      {
+        "creator_url": "aho0226",
+        "nickname": "아호_aho",
+        "tier_index": 0,
+        "tier_title": "아호 사랑둥이",
+        "price_krw": 11000
+      },
+      {
+        "creator_url": "WR9TP4OQqLM8",
+        "nickname": "아카이브 스튜디오",
+        "tier_index": 0,
+        "tier_title": "싱글 멤버쉽",
+        "price_krw": 5390
+      },
+      {
+        "creator_url": "imducko3o",
+        "nickname": "오리꿍_Fanding",
+        "tier_index": 0,
+        "tier_title": "오리꿍 멤버십",
+        "price_krw": 11000
+      },
+      {
+        "creator_url": "hiyoko",
+        "nickname": "히요코_POCOTONE",
+        "tier_index": 0,
+        "tier_title": "히요코 멤버십",
+        "price_krw": 11000
+      },
+      {
+        "creator_url": "dalchesom",
+        "nickname": "Dalchesom",
+        "tier_index": 0,
+        "tier_title": "달체솜 멤버십",
+        "price_krw": 11000
+      },
+      {
+        "creator_url": "vunet",
+        "nickname": "유네트",
+        "tier_index": 0,
+        "tier_title": "모험가 멤버십",
+        "price_krw": 5500
+      },
+      {
+        "creator_url": "rev_vit",
+        "nickname": "레브 Rev_",
+        "tier_index": 0,
+        "tier_title": "의뢰소 견학",
+        "price_krw": 7700
+      },
+      {
+        "creator_url": "Y1Y4_",
+        "nickname": "이야",
+        "tier_index": 0,
+        "tier_title": "숲 속 아리단🐤",
+        "price_krw": 11000
+      },
+      {
+        "creator_url": "t95BmlTKSD7s",
+        "nickname": "죠셉죠슈아",
+        "tier_index": 0,
+        "tier_title": "사원단",
+        "price_krw": 1100
+      },
+      {
+        "creator_url": "Myong",
+        "nickname": "묭이",
+        "tier_index": 0,
+        "tier_title": "보물상자 엿보기",
+        "price_krw": 8800
+      },
+      {
+        "creator_url": "Myong",
+        "nickname": "묭이",
+        "tier_index": 1,
+        "tier_title": "보물상자 점령하기",
+        "price_krw": 17600
+      },
+      {
+        "creator_url": "HFVLRpcanjz1",
+        "nickname": "미베_",
+        "tier_index": 0,
+        "tier_title": "젤리젤리 플랜",
+        "price_krw": 11000
+      },
+      {
+        "creator_url": "iPsXc7F1ldLn",
+        "nickname": "앰구",
+        "tier_index": 0,
+        "tier_title": "커미션 맞긴 일러스트 선공개!",
+        "price_krw": 3300
+      },
+      {
+        "creator_url": "J9ZrQ63sY4Ry",
+        "nickname": "ning_gu",
+        "tier_index": 0,
+        "tier_title": "닝갱신",
+        "price_krw": 11000
+      },
+      {
+        "creator_url": "jBk9WO2adheJ",
+        "nickname": "코튼캔탑",
+        "tier_index": 0,
+        "tier_title": "커버곡 미리 듣기",
+        "price_krw": 1100
+      },
+      {
+        "creator_url": "cRZIuFf3Mq5p",
+        "nickname": "베아루",
+        "tier_index": 0,
+        "tier_title": "원석단",
+        "price_krw": 1100
+      },
+      {
+        "creator_url": "5Zs9QAdTFcxk",
+        "nickname": "연루나",
+        "tier_index": 0,
+        "tier_title": "미리보기",
+        "price_krw": 11000
+      },
+      {
+        "creator_url": "lVHeuU1MNncE",
+        "nickname": "2브임",
+        "tier_index": 0,
+        "tier_title": "집사단",
+        "price_krw": 1100
+      },
+      {
+        "creator_url": "vrecord",
+        "nickname": "브이레코드_VRECORD",
+        "tier_index": 0,
+        "tier_title": "엿보기 멤버십",
+        "price_krw": 5500
+      },
+      {
+        "creator_url": "WXSt8G3KxVno",
+        "nickname": "여름어름",
+        "tier_index": 0,
+        "tier_title": "어름쟝의 특별한 얼음",
+        "price_krw": 1100
+      },
+      {
+        "creator_url": "Veginning",
+        "nickname": "VGG",
+        "tier_index": 0,
+        "tier_title": "테스트",
+        "price_krw": 1100
+      },
+      {
+        "creator_url": "camellia1225",
+        "nickname": "동백 camellia",
+        "tier_index": 0,
+        "tier_title": "🐣아가 동박새",
+        "price_krw": 6490
+      },
+      {
+        "creator_url": "camellia1225",
+        "nickname": "동백 camellia",
+        "tier_index": 1,
+        "tier_title": "🐥성숙한 동박새",
+        "price_krw": 10890
+      },
+      {
+        "creator_url": "_marimo",
+        "nickname": "_마리모0",
+        "tier_index": 0,
+        "tier_title": "심해마을 주민(한정 50명)",
+        "price_krw": 16390
+      },
+      {
+        "creator_url": "stellive",
+        "nickname": "스텔라이브",
+        "tier_index": 0,
+        "tier_title": "스텔라이브 공식 팬클럽 [파스텔] 6기",
+        "price_krw": 24000
+      },
+      {
+        "creator_url": "kavy2020",
+        "nickname": "KAVY 카비",
+        "tier_index": 0,
+        "tier_title": "한 컵",
+        "price_krw": 2200
+      },
+      {
+        "creator_url": "kavy2020",
+        "nickname": "KAVY 카비",
+        "tier_index": 1,
+        "tier_title": "두 컵",
+        "price_krw": 11000
+      },
+      {
+        "creator_url": "kavy2020",
+        "nickname": "KAVY 카비",
+        "tier_index": 2,
+        "tier_title": "세 컵",
+        "price_krw": 55000
+      }
+    ]
+  },
+  "crowdfunding": [
+    {
+      "project_name": "차원을 넘어 이세계아이돌 단행본 & 굿즈",
+      "org": "이세계아이돌(패러블엔터테인먼트)",
+      "category": "공식 굿즈 펀딩",
+      "platform": "텀블벅",
+      "slug": "beyondthedimension_isedol",
+      "period_start": "2024-10-23",
+      "period_end": "2024-11-22",
+      "goal_krw": 20000000,
+      "goal_estimated": false,
+      "raised_krw": 8822342758,
+      "backers": 35600,
+      "source_url": "https://namu.wiki/w/%EC%B0%A8%EC%9B%90%EC%9D%84%20%EB%84%98%EC%96%B4%20%EC%9D%B4%EC%84%B8%EA%B3%84%EC%95%84%EC%9D%B4%EB%8F%8C ; https://www.asiae.co.kr/article/2024112710003515336",
+      "source_type": "언론 보도 + 나무위키 (텀블벅 자체·언론이 사후 발표한 최종 집계, 2024-11-27 보도 기준)",
+      "note": "위 '마법소녀 이세계아이돌' 기록을 경신하며 역대 1위 등극. 오픈 23분 만에 이전 최고 기록 경신.",
+      "achievement_pct": 44111.7,
+      "per_backer_krw": 247819
+    },
+    {
+      "project_name": "마법소녀 이세계아이돌 단행본 & 스페셜 굿즈",
+      "org": "이세계아이돌(패러블엔터테인먼트)",
+      "category": "공식 굿즈 펀딩",
+      "platform": "텀블벅",
+      "slug": "magicalgirl_isegyeidol",
+      "period_start": "2023-12-28",
+      "period_end": "2024-01-25",
+      "goal_krw": 20000000,
+      "goal_estimated": false,
+      "raised_krw": 4198890740,
+      "backers": 31336,
+      "source_url": "https://namu.wiki/w/%EB%A7%88%EB%B2%95%EC%86%8C%EB%85%80%20%EC%9D%B4%EC%84%B8%EA%B3%84%EC%95%84%EC%9D%B4%EB%8F%8C ; https://sports.khan.co.kr/article/202401261010003",
+      "source_type": "언론 보도 + 나무위키 (텀블벅 자체·언론이 사후 발표한 최종 집계, 2024-01-26 보도 기준)",
+      "note": "당시 국내 크라우드펀딩 역사상 최대 후원액으로 보도됨. 오픈 24시간 만에 25.3억원 돌파.",
+      "achievement_pct": 20994.5,
+      "per_backer_krw": 133996
+    },
+    {
+      "project_name": "유니버스 데뷔 3주년 기념 광고 프로젝트",
+      "org": "스텔라이브(팬 제작·비공식)",
+      "category": "팬메이드 광고 펀딩",
+      "platform": "텀블벅",
+      "slug": "stelluniverse3",
+      "period_start": "2026-03-01",
+      "period_end": "2026-03-31",
+      "goal_krw": 8000000,
+      "goal_estimated": true,
+      "raised_krw": 37856556,
+      "backers": 973,
+      "source_url": "https://tumblbug.com/stelluniverse3",
+      "source_type": "텀블벅 프로젝트 페이지 직접 열람(2026-08-12)",
+      "note": "스텔라이브 2기생(UNIVERSE) 팬이 기획·운영. 회사 공식 계정이 아니다(2차창작 가이드라인 범위 내 사전 승인). 최종 정산액 34,114,780원(플랫폼 수수료 약 9.9% 차감) 전액을 광고비· 일러스트레이터 외주비로 지출했다고 창작자가 정산 내역을 공개 — 이 돈은 스텔라이브 회사 매출로 잡히지 않는다.",
+      "achievement_pct": 473.2,
+      "per_backer_krw": 38907
+    },
+    {
+      "project_name": "2026 사키하네 후야 생일 광고",
+      "org": "스텔라이브(팬 제작·비공식)",
+      "category": "팬메이드 광고 펀딩",
+      "platform": "텀블벅",
+      "slug": "happy_huya_day",
+      "period_start": "2026-04-01",
+      "period_end": "2026-04-29",
+      "goal_krw": 10000000,
+      "goal_estimated": true,
+      "raised_krw": 30244027,
+      "backers": 693,
+      "source_url": "https://tumblbug.com/happy_huya_day",
+      "source_type": "텀블벅 프로젝트 페이지 직접 열람(2026-08-12)",
+      "note": "스텔라이브 멤버 개인 생일 기념 팬메이드 광고 펀딩.",
+      "achievement_pct": 302.4,
+      "per_backer_krw": 43642
+    },
+    {
+      "project_name": "2026 아라하시 타비 생일 광고",
+      "org": "스텔라이브(팬 제작·비공식)",
+      "category": "팬메이드 광고 펀딩",
+      "platform": "텀블벅",
+      "slug": "2026tabi_birthday",
+      "period_start": "2026-05-25",
+      "period_end": "2026-06-24",
+      "goal_krw": 5700000,
+      "goal_estimated": true,
+      "raised_krw": 26810200,
+      "backers": 920,
+      "source_url": "https://tumblbug.com/2026tabi_birthday",
+      "source_type": "텀블벅 프로젝트 페이지 직접 열람(2026-08-12)",
+      "note": "스텔라이브 멤버 개인 생일 기념 팬메이드 광고 펀딩.",
+      "achievement_pct": 470.4,
+      "per_backer_krw": 29142
+    },
+    {
+      "project_name": "[팬메이드] 2026 하나코 나나 생일 광고",
+      "org": "스텔라이브(팬 제작·비공식)",
+      "category": "팬메이드 광고 펀딩",
+      "platform": "텀블벅",
+      "slug": "20260807",
+      "period_start": "2026-04-20",
+      "period_end": "2026-05-20",
+      "goal_krw": 8000000,
+      "goal_estimated": true,
+      "raised_krw": 22576103,
+      "backers": 523,
+      "source_url": "https://tumblbug.com/20260807",
+      "source_type": "텀블벅 프로젝트 페이지 직접 열람(2026-08-12)",
+      "note": "스텔라이브 멤버 개인 생일 기념 팬메이드 광고 펀딩.",
+      "achievement_pct": 282.2,
+      "per_backer_krw": 43167
+    }
+  ],
+  "financials": [
+    {
+      "corp_name": "샌드박스네트워크",
+      "bsns_year": 2018,
+      "fs_div": "OFS",
+      "assets": 17694288990.0,
+      "liabilities": 4305610825.0,
+      "equity": 13388678165.0,
+      "revenue": 28205573451.0,
+      "operating_income": -2289460416.0,
+      "net_income": -2120712352.0,
+      "operating_margin": -0.081170497,
+      "net_margin": -0.0751877056,
+      "asset_turnover": 1.5940495528,
+      "equity_ratio": 0.7566666382,
+      "debt_to_equity": 0.3215859528,
+      "revenue_yoy": null,
+      "operating_income_yoy": null
+    },
+    {
+      "corp_name": "샌드박스네트워크",
+      "bsns_year": 2019,
+      "fs_div": "OFS",
+      "assets": 40712576468.0,
+      "liabilities": 7749752315.0,
+      "equity": 32962824153.0,
+      "revenue": 60813297021.0,
+      "operating_income": -7826589979.0,
+      "net_income": -7810643160.0,
+      "operating_margin": -0.1286986623,
+      "net_margin": -0.1284364365,
+      "asset_turnover": 1.4937226355,
+      "equity_ratio": 0.809647215,
+      "debt_to_equity": 0.2351058356,
+      "revenue_yoy": 1.1560737677,
+      "operating_income_yoy": 2.418530377
+    },
+    {
+      "corp_name": "샌드박스네트워크",
+      "bsns_year": 2020,
+      "fs_div": "OFS",
+      "assets": 92648431676.0,
+      "liabilities": 20746992923.0,
+      "equity": 71901438753.0,
+      "revenue": 89924648768.0,
+      "operating_income": -7274039054.0,
+      "net_income": -5724007646.0,
+      "operating_margin": -0.0808903805,
+      "net_margin": -0.0636533778,
+      "asset_turnover": 0.9706008741,
+      "equity_ratio": 0.7760675216,
+      "debt_to_equity": 0.2885476742,
+      "revenue_yoy": 0.4787004352,
+      "operating_income_yoy": -0.0705991915
+    },
+    {
+      "corp_name": "샌드박스네트워크",
+      "bsns_year": 2021,
+      "fs_div": "CFS",
+      "assets": 82709714904.0,
+      "liabilities": 26400615354.0,
+      "equity": 56309099550.0,
+      "revenue": 113672460903.0,
+      "operating_income": -12129143448.0,
+      "net_income": -15712402656.0,
+      "operating_margin": -0.1067025676,
+      "net_margin": -0.1382252353,
+      "asset_turnover": 1.3743544037,
+      "equity_ratio": 0.6808039372,
+      "debt_to_equity": 0.4688516699,
+      "revenue_yoy": null,
+      "operating_income_yoy": null
+    },
+    {
+      "corp_name": "샌드박스네트워크",
+      "bsns_year": 2022,
+      "fs_div": "CFS",
+      "assets": 82113446782.0,
+      "liabilities": 55451225512.0,
+      "equity": 26662221270.0,
+      "revenue": 151384113930.0,
+      "operating_income": -25373869625.0,
+      "net_income": -38096922154.0,
+      "operating_margin": -0.1676124989,
+      "net_margin": -0.2516573316,
+      "asset_turnover": 1.8435971191,
+      "equity_ratio": 0.3246998185,
+      "debt_to_equity": 2.0797676589,
+      "revenue_yoy": 0.331757162,
+      "operating_income_yoy": 1.0919753925
+    },
+    {
+      "corp_name": "샌드박스네트워크",
+      "bsns_year": 2023,
+      "fs_div": "CFS",
+      "assets": 39987726471.0,
+      "liabilities": 130053957421.0,
+      "equity": -90066230950.0,
+      "revenue": 69715552688.0,
+      "operating_income": -15296214851.0,
+      "net_income": -205045401.0,
+      "operating_margin": -0.2194089304,
+      "net_margin": -0.0029411716,
+      "asset_turnover": 1.7434237663,
+      "equity_ratio": -2.2523468799,
+      "debt_to_equity": -1.4439813463,
+      "revenue_yoy": -0.5394790716,
+      "operating_income_yoy": -0.3971666491
+    },
+    {
+      "corp_name": "샌드박스네트워크",
+      "bsns_year": 2024,
+      "fs_div": "CFS",
+      "assets": 32389420968.0,
+      "liabilities": 126626358069.0,
+      "equity": -94236937101.0,
+      "revenue": 64472805935.0,
+      "operating_income": -4702164076.0,
+      "net_income": -4160999816.0,
+      "operating_margin": -0.0729325179,
+      "net_margin": -0.0645388355,
+      "asset_turnover": 1.9905513593,
+      "equity_ratio": -2.9094974311,
+      "debt_to_equity": -1.3437019704,
+      "revenue_yoy": -0.0752019679,
+      "operating_income_yoy": -0.6925929636
+    },
+    {
+      "corp_name": "샌드박스네트워크",
+      "bsns_year": 2025,
+      "fs_div": "CFS",
+      "assets": 36740868871.0,
+      "liabilities": 124632059746.0,
+      "equity": -87891190875.0,
+      "revenue": 73147510889.0,
+      "operating_income": -4273011835.0,
+      "net_income": -4512363070.0,
+      "operating_margin": -0.0584163669,
+      "net_margin": -0.0616885389,
+      "asset_turnover": 1.9909031315,
+      "equity_ratio": -2.3921914091,
+      "debt_to_equity": -1.41802675,
+      "revenue_yoy": 0.134548277,
+      "operating_income_yoy": -0.0912669643
+    },
+    {
+      "corp_name": "패러블엔터테인먼트",
+      "bsns_year": 2024,
+      "fs_div": "OFS",
+      "assets": 16906675717.0,
+      "liabilities": 3219372458.0,
+      "equity": 13687303259.0,
+      "revenue": 20950950397.0,
+      "operating_income": 1214424890.0,
+      "net_income": 1090832577.0,
+      "operating_margin": 0.0579651456,
+      "net_margin": 0.0520660188,
+      "asset_turnover": 1.2392117024,
+      "equity_ratio": 0.8095798067,
+      "debt_to_equity": 0.2352086746,
+      "revenue_yoy": null,
+      "operating_income_yoy": null
+    },
+    {
+      "corp_name": "패러블엔터테인먼트",
+      "bsns_year": 2025,
+      "fs_div": "OFS",
+      "assets": 9206282637.0,
+      "liabilities": 4707252317.0,
+      "equity": 4499030320.0,
+      "revenue": 21827033343.0,
+      "operating_income": -9096628575.0,
+      "net_income": -9188272939.0,
+      "operating_margin": -0.4167597324,
+      "net_margin": -0.4209583957,
+      "asset_turnover": 2.3708845583,
+      "equity_ratio": 0.4886913098,
+      "debt_to_equity": 1.0462815278,
+      "revenue_yoy": 0.0418159047,
+      "operating_income_yoy": -8.4904826555
+    }
+  ]
+}

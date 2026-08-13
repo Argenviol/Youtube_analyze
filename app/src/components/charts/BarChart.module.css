@@ -1,0 +1,55 @@
+.wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.row {
+  transition: opacity 0.1s ease;
+}
+
+.row[data-interactive="true"] {
+  cursor: pointer;
+}
+
+.row[data-interactive="true"]:hover .bar,
+.row[data-interactive="true"]:focus-visible .bar {
+  opacity: 0.8;
+}
+
+.row[data-interactive="true"]:focus-visible {
+  outline: none;
+}
+
+.row[data-interactive="true"]:focus-visible .bar {
+  stroke: var(--primary);
+  stroke-width: 2;
+}
+
+.row[data-selected="true"] .bar {
+  stroke: var(--label-strong);
+  stroke-width: 2;
+}
+
+.bar {
+  transition: opacity 0.1s ease;
+}
+
+.nameLabel {
+  font-size: 11px;
+  fill: var(--label-alt);
+  font-family: var(--font);
+}
+
+.valueLabel {
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--label);
+  font-family: var(--font);
+  font-variant-numeric: tabular-nums;
+}

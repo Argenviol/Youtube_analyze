@@ -1,0 +1,146 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-14);
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-13) var(--space-9) var(--space-16);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.title {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--label-strong);
+}
+
+.subhead {
+  max-width: 640px;
+  color: var(--label-alt);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.insights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-9);
+}
+
+.insightCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.insightIndex {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--label-assistive);
+  letter-spacing: 0.05em;
+}
+
+.insightHeadline {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--label-strong);
+}
+
+.insightDetail {
+  font-size: 0.8125rem;
+  color: var(--label-alt);
+  line-height: 1.5;
+}
+
+.projectsSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-11);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-9);
+}
+
+.highlightCard {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-small);
+}
+
+.pendingCard {
+  opacity: 0.72;
+  border-style: dashed;
+}
+
+.pendingNote {
+  margin-top: var(--space-6);
+  font-size: 0.75rem;
+  color: var(--label-assistive);
+  line-height: 1.5;
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-7);
+}
+
+.cardNo {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--label-assistive);
+  letter-spacing: 0.05em;
+}
+
+.cardTitle {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--label-strong);
+  margin-bottom: var(--space-9);
+}
+
+.externalMark {
+  color: var(--label-alt);
+  font-weight: 500;
+}
+
+.freshness {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-9);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-alt);
+}
+
+.freshnessText {
+  font-size: 0.8125rem;
+  color: var(--label-alt);
+}
+
+@media (max-width: 480px) {
+  .freshness {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

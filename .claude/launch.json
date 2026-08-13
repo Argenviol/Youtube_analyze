@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "stellog",
+      "runtimeExecutable": "C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "runtimeArgs": ["steldatabase/server.py"],
+      "port": 8080
+    },
+    {
+      "_comment": "app/out 정적 빌드 결과물 서빙. Next.js export 는 에셋을 /_next/... 절대경로로 참조하므로 file:// 로 열면 동작하지 않는다. 반드시 HTTP 로 서빙할 것.",
+      "name": "app-static",
+      "runtimeExecutable": "C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "runtimeArgs": ["-m", "http.server", "3100", "--directory", "app/out"],
+      "port": 3100
+    }
+  ]
+}

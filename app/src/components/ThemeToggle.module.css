@@ -1,0 +1,32 @@
+.group {
+  display: inline-flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: var(--fill);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--line);
+}
+
+.option {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--label-alt);
+  font-size: 0.8125rem;
+  font-family: var(--font);
+  line-height: 1.4;
+  padding: var(--space-4) var(--space-7);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.option:hover {
+  color: var(--label);
+}
+
+.option[data-active="true"] {
+  background: var(--bg-elevated);
+  color: var(--label-strong);
+  box-shadow: var(--shadow-xsmall);
+}

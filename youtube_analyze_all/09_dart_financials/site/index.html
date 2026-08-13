@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DART 재무 분석 · 프로젝트 9</title>
+<style>:root {
+  --primary: #0066FF;
+  --primary-strong: #005EEB;
+  --bg: #ffffff;
+  --bg-alt: #F7F7F8;
+  --bg-elevated: #ffffff;
+  --label: #171719;
+  --label-strong: #000000;
+  --label-neutral: #37383C;
+  --label-alt: #70737C;
+  --label-assistive: #989BA2;
+  --line: #E1E2E4;
+  --line-neutral: #EAEBEC;
+  --line-alt: #F4F4F5;
+  --fill: #F4F4F5;
+  --positive: #00BF40;
+  --cautionary: #FF9200;
+  --negative: #FF4242;
+  --accent-0: #005EEB;
+  --accent-1: #F55A00;
+  --accent-2: #009632;
+  --accent-3: #D17600;
+  --accent-4: #E846CD;
+  --accent-5: #429E00;
+  --accent-6: #5B37ED;
+  --accent-7: #E52222;
+  --accent-8: #0098B2;
+  --accent-9: #AD36E3;
+  --accent-10: #008DCF;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --shadow-xsmall: 0px 1px 2px -1px rgba(23,23,23,0.10);
+  --shadow-small: 0px 2px 4px -2px rgba(23,23,23,0.06), 0px 4px 6px -1px rgba(23,23,23,0.06);
+  --shadow-medium: 0px 4px 6px -2px rgba(23,23,23,0.07), 0px 10px 15px -3px rgba(23,23,23,0.07);
+  --shadow-large: 0px 6px 10px -4px rgba(23,23,23,0.08), 0px 16px 24px -6px rgba(23,23,23,0.08);
+  --font: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  --primary: #3385FF;
+  --primary-strong: #1A75FF;
+  --bg: #1B1C1E;
+  --bg-alt: #0F0F10;
+  --bg-elevated: #212225;
+  --label: #F7F7F8;
+  --label-strong: #ffffff;
+  --label-neutral: #C2C4C8;
+  --label-alt: #AEB0B6;
+  --label-assistive: #989BA2;
+  --line: #37383C;
+  --line-neutral: #333438;
+  --line-alt: #2E2F33;
+  --fill: #2E2F33;
+  --positive: #1ED45A;
+  --cautionary: #FFA938;
+  --negative: #FF6363;
+  --accent-0: #3385FF;
+  --accent-1: #FF7B2E;
+  --accent-2: #1ED45A;
+  --accent-3: #FF9200;
+  --accent-4: #FA73E3;
+  --accent-5: #58CF04;
+  --accent-6: #7D5EF7;
+  --accent-7: #FF6363;
+  --accent-8: #28D0ED;
+  --accent-9: #D478FF;
+  --accent-10: #3DC2FF;
+  }
+}
+:root[data-theme="dark"] {
+  --primary: #3385FF;
+  --primary-strong: #1A75FF;
+  --bg: #1B1C1E;
+  --bg-alt: #0F0F10;
+  --bg-elevated: #212225;
+  --label: #F7F7F8;
+  --label-strong: #ffffff;
+  --label-neutral: #C2C4C8;
+  --label-alt: #AEB0B6;
+  --label-assistive: #989BA2;
+  --line: #37383C;
+  --line-neutral: #333438;
+  --line-alt: #2E2F33;
+  --fill: #2E2F33;
+  --positive: #1ED45A;
+  --cautionary: #FFA938;
+  --negative: #FF6363;
+  --accent-0: #3385FF;
+  --accent-1: #FF7B2E;
+  --accent-2: #1ED45A;
+  --accent-3: #FF9200;
+  --accent-4: #FA73E3;
+  --accent-5: #58CF04;
+  --accent-6: #7D5EF7;
+  --accent-7: #FF6363;
+  --accent-8: #28D0ED;
+  --accent-9: #D478FF;
+  --accent-10: #3DC2FF;
+}
+* { box-sizing: border-box; }
+
+html { color-scheme: light dark; }
+
+body {
+  margin: 0;
+  background: var(--bg-alt);
+  color: var(--label);
+  font-family: var(--font);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 1000px; margin: 0 auto; padding: 48px 20px 80px; }
+
+/* ---- 타이포 ---- */
+h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 6px; }
+h2 {
+  font-size: 18px; font-weight: 700; letter-spacing: -0.01em;
+  margin: 40px 0 16px; color: var(--label);
+}
+.sub { color: var(--label-alt); font-size: 14px; margin-bottom: 32px; }
+.eyebrow {
+  display: inline-block; font-size: 12px; font-weight: 600;
+  color: var(--primary); letter-spacing: 0.02em; margin-bottom: 8px;
+}
+
+/* ---- 카드 ---- */
+.cards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+.card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-xsmall);
+}
+.card .k { color: var(--label-alt); font-size: 12px; font-weight: 500; }
+.card .v {
+  font-size: 24px; font-weight: 700; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums; margin-top: 2px;
+}
+
+/* ---- 뱃지(상태 표시) ---- */
+.pill {
+  display: inline-block; font-size: 11.5px; font-weight: 600;
+  padding: 3px 9px; border-radius: var(--radius-full, 999px);
+  white-space: nowrap;
+}
+.pill-ok { background: color-mix(in srgb, var(--positive) 16%, transparent); color: var(--positive); }
+.pill-warn { background: color-mix(in srgb, var(--cautionary) 16%, transparent); color: var(--cautionary); }
+.pill-no { background: color-mix(in srgb, var(--negative) 16%, transparent); color: var(--negative); }
+
+/* ---- 알림 ---- */
+.warn {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--cautionary);
+  border-radius: var(--radius-md);
+  padding: 14px 18px; font-size: 14px; margin: 24px 0;
+  color: var(--label-neutral);
+}
+.warn strong { color: var(--label); }
+
+/* ---- 바 리스트 ---- */
+.row { display: flex; align-items: center; gap: 12px; margin: 6px 0; font-size: 14px; }
+.nm { width: 108px; flex: none; color: var(--label-neutral); }
+.track {
+  flex: 1; height: 18px; background: var(--fill);
+  border-radius: var(--radius-sm); overflow: hidden;
+}
+.fill { display: block; height: 100%; border-radius: var(--radius-sm); }
+.val {
+  width: 84px; text-align: right; flex: none;
+  font-variant-numeric: tabular-nums; font-weight: 600;
+}
+
+/* ---- 차트 ---- */
+.chart-box {
+  background: var(--bg-elevated); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 20px;
+  overflow-x: auto;
+}
+.chart { width: 100%; height: auto; display: block; }
+.ax { fill: var(--label-assistive); font-size: 11px; }
+.legend {
+  display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px;
+  color: var(--label-alt); margin-top: 12px;
+}
+.lg i {
+  display: inline-block; width: 10px; height: 10px;
+  border-radius: var(--radius-sm); margin-right: 6px; vertical-align: -1px;
+}
+
+/* ---- 표 ---- */
+.table-box {
+  background: var(--bg-elevated); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); overflow: hidden; overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td {
+  text-align: right; padding: 10px 14px;
+  border-bottom: 1px solid var(--line-alt);
+  font-variant-numeric: tabular-nums;
+}
+th:first-child, td:first-child { text-align: left; font-variant-numeric: normal; }
+th {
+  color: var(--label-alt); font-weight: 600; font-size: 12px;
+  background: var(--bg-alt); border-bottom: 1px solid var(--line);
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--fill); }
+
+/* ---- 기타 ---- */
+.empty { color: var(--label-assistive); font-size: 14px; padding: 24px 0; }
+.note {
+  color: var(--label-alt); font-size: 13px; margin-top: 40px;
+  padding-top: 20px; border-top: 1px solid var(--line);
+}
+.note strong { color: var(--label-neutral); }
+code {
+  background: var(--fill); border-radius: var(--radius-sm);
+  padding: 1px 5px; font-size: 0.92em;
+}
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 32px 16px 56px; }
+  h1 { font-size: 23px; }
+  .nm { width: 84px; }
+  .val { width: 68px; }
+}
+</style>
+</head><body><div class="wrap">
+
+<div class="eyebrow">PROJECT 09</div>
+<h1>DART 재무 분석 — 팬덤과 재무 사이의 간극</h1>
+<div class="sub">Open DART(전자공시시스템) Open API · 조사 대상 9곳 중 기업코드 확인 6곳,
+구조화된 재무제표 확보 4곳 · 수집 2026-08-12</div>
+
+<div class="cards">
+  <div class="card"><div class="k">조사 대상</div><div class="v">9곳</div></div>
+  <div class="card"><div class="k">DART 기업코드 확인</div><div class="v">6곳</div></div>
+  <div class="card"><div class="k">재무제표 확보</div><div class="v">4곳</div></div>
+  <div class="card"><div class="k">NAVER/SOOP 매출 규모차</div><div class="v">26배</div></div>
+</div>
+
+<div class="warn">
+<strong>이 프로젝트가 유일하게 다루는 것: 감사받은 법정 재무제표.</strong> 정기보고서 XBRL
+(<code>fnlttSinglAcntAll</code>) 경로로는 <strong>NAVER·SOOP 2곳</strong>만 나왔지만, 비상장
+법인이 내는 <strong>감사보고서 원문(document.xml)을 직접 파싱하는 경로</strong>를 추가해
+<strong>샌드박스네트워크·패러블엔터테인먼트</strong>까지 확보했다. 스텔라이브 본체·Brave
+group·팬딩은 여전히 확보하지 못했다 — 스텔라이브/Brave group은 DART 기업코드 자체가 없고,
+팬딩은 기업코드는 있지만 공시 이력이 단 한 건도 없다. "없다"는 것도 이 프로젝트의 결과다.
+</div>
+
+<h2>대상 법인 검색 결과</h2>
+<p class="sub">기업코드는 매 실행마다 DART 기업코드 마스터(11만+ 법인)에서 이름 완전 일치로 검색해 확인한다. 추측 없음.</p>
+<div class="table-box"><table><thead><tr>
+<th>대상</th><th>구분</th><th>상태</th><th>기업코드</th><th>비고</th>
+</tr></thead><tbody>
+<tr><td>스텔라이브 (StelLive 운영법인)</td><td>핵심</td><td><span class="pill pill-no">DART 미등재</span></td><td>—</td><td style="text-align:left;color:var(--label-alt);font-size:12.5px">DART 기업코드 마스터에 없음(비상장·소규모 외부감사 미제출 또는 국내 미등록 가능)</td></tr><tr><td>브레이브그룹코리아 (Brave group 한국법인)</td><td>핵심</td><td><span class="pill pill-no">DART 미등재</span></td><td>—</td><td style="text-align:left;color:var(--label-alt);font-size:12.5px">DART 기업코드 마스터에 없음(비상장·소규모 외부감사 미제출 또는 국내 미등록 가능)</td></tr><tr><td>Brave group (일본 모기업)</td><td>핵심</td><td><span class="pill pill-no">DART 미등재</span></td><td>—</td><td style="text-align:left;color:var(--label-alt);font-size:12.5px">DART 기업코드 마스터에 없음(비상장·소규모 외부감사 미제출 또는 국내 미등록 가능)</td></tr><tr><td>팬딩 (Fanding, 팬 커머스)</td><td>비교군</td><td><span class="pill pill-warn">기업코드만 확인(공시 없음)</span></td><td>팬딩 · 01921913</td><td style="text-align:left;color:var(--label-alt);font-size:12.5px">완전 일치 1건</td></tr><tr><td>샌드박스네트워크 (국내 대형 MCN)</td><td>비교군</td><td><span class="pill pill-ok">재무제표 확보(감사보고서 원문 파싱)</span></td><td>샌드박스네트워크 · 01375682</td><td style="text-align:left;color:var(--label-alt);font-size:12.5px">완전 일치 1건</td></tr><tr><td>패러블엔터테인먼트 (이세계아이돌 소속사)</td><td>비교군</td><td><span class="pill pill-ok">재무제표 확보(감사보고서 원문 파싱)</span></td><td>패러블엔터테인먼트 · 01906622</td><td style="text-align:left;color:var(--label-alt);font-size:12.5px">완전 일치 1건</td></tr><tr><td>브레이브엔터테인먼트 (참고: 동명이인 주의)</td><td>동명이인</td><td><span class="pill pill-warn">동명이인 — 분석 제외</span></td><td>브레이브엔터테인먼트 · 01605556</td><td style="text-align:left;color:var(--label-alt);font-size:12.5px">완전 일치 1건</td></tr><tr><td>SOOP (구 아프리카TV, 치지직 경쟁 플랫폼)</td><td>플랫폼</td><td><span class="pill pill-ok">재무제표 확보(정기보고서 XBRL)</span></td><td>SOOP · 00399694</td><td style="text-align:left;color:var(--label-alt);font-size:12.5px">완전 일치 1건</td></tr><tr><td>NAVER (치지직 운영사)</td><td>플랫폼</td><td><span class="pill pill-ok">재무제표 확보(정기보고서 XBRL)</span></td><td>NAVER · 00266961</td><td style="text-align:left;color:var(--label-alt);font-size:12.5px">완전 일치 1건</td></tr>
+</tbody></table></div>
+
+<h2>매출 성장 지수 (첫 확보 연도=100)</h2>
+<p class="sub">NAVER·SOOP는 매출 규모가 26배 차이나 절대값 대신 지수로 겹쳐 비교한다. 연결재무제표(CFS) 기준.</p>
+<div class="chart-box"><svg viewBox="0 0 820 320" class="chart"><line x1="48" y1="272.0" x2="772" y2="272.0" stroke="var(--grid)" stroke-width="1"/><text x="40" y="276.0" text-anchor="end" class="ax">100</text><line x1="48" y1="216.0" x2="772" y2="216.0" stroke="var(--grid)" stroke-width="1"/><text x="40" y="220.0" text-anchor="end" class="ax">221</text><line x1="48" y1="160.0" x2="772" y2="160.0" stroke="var(--grid)" stroke-width="1"/><text x="40" y="164.0" text-anchor="end" class="ax">342</text><line x1="48" y1="104.0" x2="772" y2="104.0" stroke="var(--grid)" stroke-width="1"/><text x="40" y="108.0" text-anchor="end" class="ax">463</text><line x1="48" y1="48.0" x2="772" y2="48.0" stroke="var(--grid)" stroke-width="1"/><text x="40" y="52.0" text-anchor="end" class="ax">584</text><text x="48.0" y="290" text-anchor="middle" class="ax">2016</text><text x="128.4" y="290" text-anchor="middle" class="ax">2017</text><text x="208.9" y="290" text-anchor="middle" class="ax">2018</text><text x="289.3" y="290" text-anchor="middle" class="ax">2019</text><text x="369.8" y="290" text-anchor="middle" class="ax">2020</text><text x="450.2" y="290" text-anchor="middle" class="ax">2021</text><text x="530.7" y="290" text-anchor="middle" class="ax">2022</text><text x="611.1" y="290" text-anchor="middle" class="ax">2023</text><text x="691.6" y="290" text-anchor="middle" class="ax">2024</text><text x="772.0" y="290" text-anchor="middle" class="ax">2025</text><path d="M48.0,272.0 L128.4,264.5 L208.9,254.0 L289.3,242.5 L369.8,257.3 L450.2,239.9 L530.7,223.8 L611.1,207.1 L691.6,194.8 L772.0,179.9" fill="none" stroke="#005EEB" stroke-width="2.5"/><path d="M48.0,272.0 L128.4,263.5 L208.9,244.9 L289.3,221.1 L369.8,205.3 L450.2,167.4 L530.7,150.8 L611.1,119.0 L691.6,78.9 L772.0,48.0" fill="none" stroke="#F55A00" stroke-width="2.5"/><path d="M208.9,272.0 L289.3,218.5 L369.8,170.8 L450.2,131.9 L530.7,70.1 L611.1,204.0 L691.6,212.5 L772.0,198.3" fill="none" stroke="#009632" stroke-width="2.5"/><path d="M691.6,272.0 L772.0,270.1" fill="none" stroke="#D17600" stroke-width="2.5"/><circle cx="48.0" cy="272.0" r="3.5" fill="#005EEB"><title>NAVER 2016 100</title></circle><circle cx="128.4" cy="264.5" r="3.5" fill="#005EEB"><title>NAVER 2017 116</title></circle><circle cx="208.9" cy="254.0" r="3.5" fill="#005EEB"><title>NAVER 2018 139</title></circle><circle cx="289.3" cy="242.5" r="3.5" fill="#005EEB"><title>NAVER 2019 164</title></circle><circle cx="369.8" cy="257.3" r="3.5" fill="#005EEB"><title>NAVER 2020 132</title></circle><circle cx="450.2" cy="239.9" r="3.5" fill="#005EEB"><title>NAVER 2021 169</title></circle><circle cx="530.7" cy="223.8" r="3.5" fill="#005EEB"><title>NAVER 2022 204</title></circle><circle cx="611.1" cy="207.1" r="3.5" fill="#005EEB"><title>NAVER 2023 240</title></circle><circle cx="691.6" cy="194.8" r="3.5" fill="#005EEB"><title>NAVER 2024 267</title></circle><circle cx="772.0" cy="179.9" r="3.5" fill="#005EEB"><title>NAVER 2025 299</title></circle><circle cx="48.0" cy="272.0" r="3.5" fill="#F55A00"><title>SOOP 2016 100</title></circle><circle cx="128.4" cy="263.5" r="3.5" fill="#F55A00"><title>SOOP 2017 118</title></circle><circle cx="208.9" cy="244.9" r="3.5" fill="#F55A00"><title>SOOP 2018 159</title></circle><circle cx="289.3" cy="221.1" r="3.5" fill="#F55A00"><title>SOOP 2019 210</title></circle><circle cx="369.8" cy="205.3" r="3.5" fill="#F55A00"><title>SOOP 2020 244</title></circle><circle cx="450.2" cy="167.4" r="3.5" fill="#F55A00"><title>SOOP 2021 326</title></circle><circle cx="530.7" cy="150.8" r="3.5" fill="#F55A00"><title>SOOP 2022 362</title></circle><circle cx="611.1" cy="119.0" r="3.5" fill="#F55A00"><title>SOOP 2023 431</title></circle><circle cx="691.6" cy="78.9" r="3.5" fill="#F55A00"><title>SOOP 2024 518</title></circle><circle cx="772.0" cy="48.0" r="3.5" fill="#F55A00"><title>SOOP 2025 584</title></circle><circle cx="208.9" cy="272.0" r="3.5" fill="#009632"><title>샌드박스네트워크 2018 100</title></circle><circle cx="289.3" cy="218.5" r="3.5" fill="#009632"><title>샌드박스네트워크 2019 216</title></circle><circle cx="369.8" cy="170.8" r="3.5" fill="#009632"><title>샌드박스네트워크 2020 319</title></circle><circle cx="450.2" cy="131.9" r="3.5" fill="#009632"><title>샌드박스네트워크 2021 403</title></circle><circle cx="530.7" cy="70.1" r="3.5" fill="#009632"><title>샌드박스네트워크 2022 537</title></circle><circle cx="611.1" cy="204.0" r="3.5" fill="#009632"><title>샌드박스네트워크 2023 247</title></circle><circle cx="691.6" cy="212.5" r="3.5" fill="#009632"><title>샌드박스네트워크 2024 229</title></circle><circle cx="772.0" cy="198.3" r="3.5" fill="#009632"><title>샌드박스네트워크 2025 259</title></circle><circle cx="691.6" cy="272.0" r="3.5" fill="#D17600"><title>패러블엔터테인먼트 2024 100</title></circle><circle cx="772.0" cy="270.1" r="3.5" fill="#D17600"><title>패러블엔터테인먼트 2025 104</title></circle></svg><div class="legend"><span class="lg"><i style="background:#005EEB"></i>NAVER</span><span class="lg"><i style="background:#F55A00"></i>SOOP</span><span class="lg"><i style="background:#009632"></i>샌드박스네트워크</span><span class="lg"><i style="background:#D17600"></i>패러블엔터테인먼트</span></div></div>
+
+<h2>회사×연도 핵심 지표</h2>
+<p class="sub">연도별 매출(영업수익)·영업이익·영업이익률·자산회전율(매출/자산총계). 연결(CFS)·별도(OFS) 모두 표기.</p>
+<div class="table-box"><table><thead><tr>
+<th>법인</th><th>연도</th><th>구분</th><th>매출</th><th>영업이익</th><th>영업이익률</th><th>자산회전율</th>
+</tr></thead><tbody>
+<tr><td>NAVER</td><td>2016</td><td>CFS</td><td>40,226억원</td><td>11,020억원</td><td>27.4%</td><td>0.63배</td></tr>
+<tr><td>NAVER</td><td>2017</td><td>CFS</td><td>46,785억원</td><td>11,792억원</td><td>25.2%</td><td>0.58배</td></tr>
+<tr><td>NAVER</td><td>2018</td><td>CFS</td><td>55,869억원</td><td>9,425억원</td><td>16.9%</td><td>0.57배</td></tr>
+<tr><td>NAVER</td><td>2019</td><td>CFS</td><td>65,934억원</td><td>7,101억원</td><td>10.8%</td><td>0.54배</td></tr>
+<tr><td>NAVER</td><td>2020</td><td>CFS</td><td>53,041억원</td><td>12,153억원</td><td>22.9%</td><td>0.31배</td></tr>
+<tr><td>NAVER</td><td>2021</td><td>CFS</td><td>68,176억원</td><td>13,255억원</td><td>19.4%</td><td>0.20배</td></tr>
+<tr><td>NAVER</td><td>2022</td><td>CFS</td><td>82,201억원</td><td>13,047억원</td><td>15.9%</td><td>0.24배</td></tr>
+<tr><td>NAVER</td><td>2023</td><td>CFS</td><td>96,706억원</td><td>14,888억원</td><td>15.4%</td><td>0.27배</td></tr>
+<tr><td>NAVER</td><td>2024</td><td>CFS</td><td>107,377억원</td><td>19,793억원</td><td>18.4%</td><td>0.28배</td></tr>
+<tr><td>NAVER</td><td>2025</td><td>CFS</td><td>120,350억원</td><td>22,081억원</td><td>18.3%</td><td>0.29배</td></tr>
+<tr><td>SOOP</td><td>2016</td><td>CFS</td><td>798억원</td><td>160억원</td><td>20.1%</td><td>0.96배</td></tr>
+<tr><td>SOOP</td><td>2017</td><td>CFS</td><td>946억원</td><td>183억원</td><td>19.4%</td><td>0.91배</td></tr>
+<tr><td>SOOP</td><td>2018</td><td>CFS</td><td>1,266억원</td><td>271억원</td><td>21.4%</td><td>0.80배</td></tr>
+<tr><td>SOOP</td><td>2019</td><td>CFS</td><td>1,677억원</td><td>367억원</td><td>21.9%</td><td>0.73배</td></tr>
+<tr><td>SOOP</td><td>2020</td><td>CFS</td><td>1,950억원</td><td>504억원</td><td>25.8%</td><td>0.67배</td></tr>
+<tr><td>SOOP</td><td>2021</td><td>CFS</td><td>2,605억원</td><td>888억원</td><td>34.1%</td><td>0.64배</td></tr>
+<tr><td>SOOP</td><td>2022</td><td>CFS</td><td>2,891억원</td><td>824억원</td><td>28.5%</td><td>0.62배</td></tr>
+<tr><td>SOOP</td><td>2023</td><td>CFS</td><td>3,440억원</td><td>903억원</td><td>26.3%</td><td>0.60배</td></tr>
+<tr><td>SOOP</td><td>2024</td><td>CFS</td><td>4,132억원</td><td>1,135억원</td><td>27.5%</td><td>0.58배</td></tr>
+<tr><td>SOOP</td><td>2025</td><td>CFS</td><td>4,666억원</td><td>1,248억원</td><td>26.8%</td><td>0.53배</td></tr>
+<tr><td>샌드박스네트워크</td><td>2018</td><td>OFS</td><td>282억원</td><td>-23억원</td><td>-8.1%</td><td>1.59배</td></tr>
+<tr><td>샌드박스네트워크</td><td>2019</td><td>OFS</td><td>608억원</td><td>-78억원</td><td>-12.9%</td><td>1.49배</td></tr>
+<tr><td>샌드박스네트워크</td><td>2020</td><td>OFS</td><td>899억원</td><td>-73억원</td><td>-8.1%</td><td>0.97배</td></tr>
+<tr><td>샌드박스네트워크</td><td>2021</td><td>CFS</td><td>1,137억원</td><td>-121억원</td><td>-10.7%</td><td>1.37배</td></tr>
+<tr><td>샌드박스네트워크</td><td>2022</td><td>CFS</td><td>1,514억원</td><td>-254억원</td><td>-16.8%</td><td>1.84배</td></tr>
+<tr><td>샌드박스네트워크</td><td>2023</td><td>CFS</td><td>697억원</td><td>-153억원</td><td>-21.9%</td><td>1.74배</td></tr>
+<tr><td>샌드박스네트워크</td><td>2024</td><td>CFS</td><td>645억원</td><td>-47억원</td><td>-7.3%</td><td>1.99배</td></tr>
+<tr><td>샌드박스네트워크</td><td>2025</td><td>CFS</td><td>731억원</td><td>-43억원</td><td>-5.8%</td><td>1.99배</td></tr>
+<tr><td>패러블엔터테인먼트</td><td>2024</td><td>OFS</td><td>210억원</td><td>12억원</td><td>5.8%</td><td>1.24배</td></tr>
+<tr><td>패러블엔터테인먼트</td><td>2025</td><td>OFS</td><td>218억원</td><td>-91억원</td><td>-41.7%</td><td>2.37배</td></tr>
+</tbody></table></div>
+
+<h2>팬덤 지표와 나란히 (참고용 — 상관관계 아님)</h2>
+<div class="cards">
+  <div class="card"><div class="k">프로젝트1 · 구독자 합산 (2026-08 스냅샷)</div>
+    <div class="v">3,265,000명</div></div>
+  <div class="card"><div class="k">프로젝트8 · 관측 구간 팔로워 증감 (2026-08 스냅샷)</div>
+    <div class="v">+628명</div></div>
+</div>
+<div class="note">프로젝트1·8은 2026-08 수집 시점의 단일 스냅샷이다. DART 재무제표는 회계연도(~FY2025, 2026년 3월 제출) 단위라 기간이 겹치지 않는다. 상관계수를 계산하지 않고 참고 수치로만 병기한다.</div>
+
+<div class="note">
+<strong>데이터 함정 — 013(데이터 없음)은 "재무제표가 없다"는 뜻이 아니었다.</strong>
+<code>fnlttSinglAcntAll.json</code>은 XBRL이 태깅된 <strong>정기보고서</strong>(사업·반기·분기보고서)만
+파싱한다. 비상장 소규모 법인은 「외부감사법」에 따라 <strong>감사보고서</strong>만 제출하면 되고,
+이 감사보고서 재무제표는 이 API로 조회되지 않는다 — 그래서 013이 나온다. 하지만 감사보고서
+자체는 <code>list.json(pblntf_ty=F)</code>로 찾을 수 있고, 그 원문(<code>document.xml</code>, ZIP
+안의 DART 자체 DTD XML)을 직접 파싱하면 재무상태표·손익계산서 표를 계정코드(별도재무제표) 또는
+계정과목 텍스트(연결재무제표)로 읽어낼 수 있었다. 그렇게 샌드박스네트워크·패러블엔터테인먼트를
+추가로 확보했다. 팬딩은 이 경로로도 확인해봤지만 <code>list.json</code>에 어떤 필터로도 단 한 건도
+잡히지 않는다 — 감사보고서 자체를 낸 적이 없는 유일한 매칭 법인이다(<code>data/filings.csv</code> 확인).
+<br><br>
+<strong>인건비 비중을 계획했지만 산출하지 못했다.</strong> 두 경로 모두 재무제표 본표에는 인건비가
+별도 계정으로 없다(기능별 표시 손익계산서라 '영업비용' 한 줄로 뭉쳐 있음). 인건비는 감사보고서
+주석에만 있는데, 주석 표는 단위가 '천원'으로 바뀌는 경우가 많고 구조도 회사·연도마다 달라 이번
+파싱 범위에서 제외했다 — 추정치를 만드는 대신 '산출 불가'로 남겼다.
+<br><br>
+<strong>왜 상관관계를 계산하지 않았는가.</strong> 스텔라이브 자체 재무제표가 없고(패러블엔터테인먼트는
+이세계아이돌 소속사이지만 스텔라이브와는 다른 법인), NAVER·SOOP는 플랫폼 전체 실적이라 개별
+크리에이터 그룹 기여분을 분리할 수 없으며, 재무제표(회계연도)와 팬덤 지표(2026-08 스냅샷)의
+기간도 어긋난다. 숫자 몇 개로 인과관계를 만들지 않았다.
+</div>
+
+</div></body></html>

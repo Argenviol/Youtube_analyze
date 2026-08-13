@@ -1,0 +1,71 @@
+.wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.gridline {
+  stroke: var(--line-alt);
+  stroke-width: 1;
+}
+
+.axisLine {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.tick {
+  font-size: 10px;
+  fill: var(--label-alt);
+  font-family: var(--font);
+  font-variant-numeric: tabular-nums;
+}
+
+.axisTitle {
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--label-alt);
+  font-family: var(--font);
+}
+
+.point[data-interactive="true"] {
+  cursor: pointer;
+}
+
+.bubble {
+  opacity: 0.85;
+  stroke: var(--bg-elevated);
+  stroke-width: 1.5;
+  transition: opacity 0.1s ease, stroke-width 0.1s ease;
+}
+
+.point[data-interactive="true"]:hover .bubble,
+.point[data-interactive="true"]:focus-visible .bubble {
+  opacity: 1;
+}
+
+.point[data-interactive="true"]:focus-visible {
+  outline: none;
+}
+
+.point[data-interactive="true"]:focus-visible .bubble {
+  stroke: var(--primary);
+  stroke-width: 2.5;
+}
+
+.point[data-selected="true"] .bubble {
+  stroke: var(--label-strong);
+  stroke-width: 2.5;
+}
+
+.pointLabel {
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--label);
+  font-family: var(--font);
+}

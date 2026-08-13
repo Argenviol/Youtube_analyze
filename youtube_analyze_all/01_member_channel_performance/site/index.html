@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StelLive 멤버 채널 성과 분석</title>
+<style>
+:root{
+  --bg:#F7F7F8; --surface:#ffffff; --text:#171719; --text2:#37383C; --muted:#70737C;
+  --grid:#E1E2E4; --border:rgba(112,115,124,.22);
+  --s1:#005EEB; --s2:#F55A00; --s3:#009632; --s4:#D17600; --s5:#E846CD; --s6:#429E00; --s7:#5B37ED; --s8:#E52222;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0F0F10; --surface:#212225; --text:#F7F7F8; --text2:#C2C4C8; --muted:#70737C;
+  --grid:#37383C; --border:rgba(112,115,124,.32);
+  --s1:#3385FF; --s2:#FF7B2E; --s3:#1ED45A; --s4:#FF9200; --s5:#FA73E3; --s6:#429E00; --s7:#7D5EF7; --s8:#FF6363;
+}}
+:root[data-theme=dark]{
+  --bg:#0F0F10; --surface:#212225; --text:#F7F7F8; --text2:#C2C4C8; --muted:#70737C;
+  --grid:#37383C; --border:rgba(112,115,124,.32);
+  --s1:#3385FF; --s2:#FF7B2E; --s3:#1ED45A; --s4:#FF9200; --s5:#FA73E3; --s6:#429E00; --s7:#7D5EF7; --s8:#FF6363;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:Pretendard,"Pretendard Variable",-apple-system,BlinkMacSystemFont,"Malgun Gothic","Noto Sans KR",system-ui,sans-serif;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+header h1{font-size:26px;margin:0 0 4px}
+header p{color:var(--text2);margin:0 0 6px}
+.tag{display:inline-block;font-size:12px;color:var(--muted);border:1px solid var(--border);
+  border-radius:999px;padding:2px 10px;margin-right:6px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:26px 0}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
+.kpi .v{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.kpi .l{font-size:12.5px;color:var(--text2);margin-top:3px}
+.kpi .s{font-size:12px;color:var(--muted);margin-top:2px}
+section{margin:34px 0}
+h2{font-size:18px;margin:0 0 4px}
+.sub{color:var(--text2);font-size:13.5px;margin:0 0 16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.chart-svg{width:100%;height:auto;display:block;overflow:visible}
+.axis text{fill:var(--muted);font-size:11px}
+.gridline{stroke:var(--grid);stroke-width:1}
+.blabel{fill:var(--text);font-size:11px;font-variant-numeric:tabular-nums}
+.mlabel{fill:var(--text2);font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+th{color:var(--text2);font-weight:600;cursor:pointer;user-select:none;white-space:nowrap}
+th.active{color:var(--text)}
+tbody tr:hover{background:color-mix(in srgb,var(--s1) 8%,transparent)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.unit-chip{font-size:11px;color:var(--text2);border:1px solid var(--border);border-radius:6px;padding:1px 7px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.filters button{background:var(--surface);border:1px solid var(--border);color:var(--text2);
+  border-radius:999px;padding:5px 14px;font-size:13px;cursor:pointer}
+.filters button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.tip{position:fixed;pointer-events:none;background:var(--text);color:var(--bg);font-size:12px;
+  padding:6px 9px;border-radius:8px;opacity:0;transition:opacity .1s;z-index:10;white-space:nowrap}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--text2);margin-top:10px}
+.legend span{display:flex;align-items:center}
+.foot{color:var(--muted);font-size:12px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px}
+.toggle{float:right;background:var(--surface);border:1px solid var(--border);color:var(--text2);
+  border-radius:999px;padding:5px 12px;font-size:12.5px;cursor:pointer}
+a{color:var(--s1)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<button class="toggle" onclick="toggleTheme()">◐ 테마</button>
+<header>
+  <h1>StelLive 멤버별 유튜브 채널 성과 분석</h1>
+  <p>스텔라이브 멤버 11명(창립자 강지 포함)의 채널 지표 · 최근 영상 성과 비교</p>
+  <div id="tags"></div>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<section>
+  <h2>멤버 랭킹</h2>
+  <p class="sub">열 제목을 클릭하면 정렬됩니다. 도달 효율 = 최근 평균 조회수 ÷ 구독자.</p>
+  <div class="filters" id="filters"></div>
+  <div class="card" style="overflow-x:auto"><table id="tbl"></table></div>
+  <div class="legend" id="unitlegend"></div>
+</section>
+
+<section>
+  <h2>구독자 vs 최근 평균 조회수</h2>
+  <p class="sub">버블 크기 = 참여율. 점선은 회귀선(추세). 오른쪽 위일수록 규모·조회수 모두 높음.</p>
+  <div class="card"><svg id="scatter" class="chart-svg" viewBox="0 0 720 440"></svg></div>
+</section>
+
+<section class="two">
+  <div>
+    <h2>도달 효율</h2>
+    <p class="sub">구독자 대비 실제 조회수 도달률(%). 팬 참여도가 높을수록 큼.</p>
+    <div class="card"><svg id="reach" class="chart-svg" viewBox="0 0 480 460"></svg></div>
+  </div>
+  <div>
+    <h2>참여율</h2>
+    <p class="sub">(좋아요+댓글) ÷ 조회수, 최근 영상 평균 %.</p>
+    <div class="card"><svg id="engage" class="chart-svg" viewBox="0 0 480 460"></svg></div>
+  </div>
+</section>
+
+<section>
+  <h2>최고 조회수 영상 TOP 15</h2>
+  <div class="card" style="overflow-x:auto"><table id="topvids"></table></div>
+</section>
+
+<div class="foot" id="foot"></div>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const DATA = {"meta": {"fetched_at": "2026-08-12T07:20:41.648954+00:00", "recent_per_channel": 50, "n_channels": 11, "n_videos": 550, "source": "YouTube Data API v3"}, "correlations": {"subs_vs_avgviews": 0.439, "cadence_vs_subs": -0.032, "cadence_vs_avgviews": 0.8, "engagement_vs_subs": -0.72, "reach_vs_subs": -0.393}, "members": [{"rank_subs": 1, "channel_id": "UCIVFv8AiQLqM9oLHTixrNYw", "name_ko": "강지", "name_en": "Kangji", "unit": "STELLIVE", "role": "founder", "handle": "gangzi1", "subscribers": 761000, "total_views": 931269746, "video_count": 2256, "created_at": "2014-11-11T22:36:14Z", "channel_age_years": 11.75, "recent_n": 50, "recent_avg_views": 229895.9, "recent_median_views": 195288.5, "recent_max_views": 917685, "recent_avg_engagement_rate": 0.03025, "recent_avg_like_rate": 0.02876, "uploads_per_week": 4.29, "uploads_per_month": 18.64, "shorts_share": 0.2, "reach_ratio": 0.302, "lifetime_views_per_sub": 1223.7, "lifetime_views_per_video": 412796.9}, {"rank_subs": 2, "channel_id": "UClbYIn9LDbbFZ9w2shX3K0g", "name_ko": "아야츠노 유니", "name_en": "Ayatsuno Yuni", "unit": "EVERYS", "role": "talent", "handle": "ayatsunoyuni", "subscribers": 358000, "total_views": 193441560, "video_count": 727, "created_at": "2022-12-20T18:25:09.738437Z", "channel_age_years": 3.64, "recent_n": 50, "recent_avg_views": 131268.6, "recent_median_views": 95639.5, "recent_max_views": 572617, "recent_avg_engagement_rate": 0.03899, "recent_avg_like_rate": 0.03634, "uploads_per_week": 2.7, "uploads_per_month": 11.74, "shorts_share": 0.22, "reach_ratio": 0.367, "lifetime_views_per_sub": 540.3, "lifetime_views_per_video": 266081.9}, {"rank_subs": 3, "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw", "name_ko": "아카네 리제", "name_en": "Akane Lize", "unit": "UNIVERSE", "role": "talent", "handle": "akanelize", "subscribers": 347000, "total_views": 287391854, "video_count": 584, "created_at": "2023-06-01T11:50:41.527518Z", "channel_age_years": 3.2, "recent_n": 50, "recent_avg_views": 267479.0, "recent_median_views": 133264.0, "recent_max_views": 1424488, "recent_avg_engagement_rate": 0.04073, "recent_avg_like_rate": 0.03895, "uploads_per_week": 5.72, "uploads_per_month": 24.86, "shorts_share": 0.42, "reach_ratio": 0.771, "lifetime_views_per_sub": 828.2, "lifetime_views_per_video": 492109.3}, {"rank_subs": 4, "channel_id": "UC1afpiIuBDcjYlmruAa0HiA", "name_ko": "시라유키 히나", "name_en": "Shirayuki Hina", "unit": "UNIVERSE", "role": "talent", "handle": "shirayukihina", "subscribers": 319000, "total_views": 185681032, "video_count": 604, "created_at": "2023-06-01T11:42:49.359854Z", "channel_age_years": 3.2, "recent_n": 50, "recent_avg_views": 219982.6, "recent_median_views": 109161.5, "recent_max_views": 1304985, "recent_avg_engagement_rate": 0.03926, "recent_avg_like_rate": 0.03637, "uploads_per_week": 3.77, "uploads_per_month": 16.39, "shorts_share": 0.34, "reach_ratio": 0.69, "lifetime_views_per_sub": 582.1, "lifetime_views_per_video": 307418.9}, {"rank_subs": 5, "channel_id": "UCQmcltnre6aG9SkDRYZqFIg", "name_ko": "아오쿠모 린", "name_en": "Aokumo Rin", "unit": "CLICHE", "role": "talent", "handle": "aokumorin", "subscribers": 276000, "total_views": 177561097, "video_count": 427, "created_at": "2024-05-14T10:09:58.99504Z", "channel_age_years": 2.24, "recent_n": 50, "recent_avg_views": 181030.8, "recent_median_views": 96204.5, "recent_max_views": 1213259, "recent_avg_engagement_rate": 0.04179, "recent_avg_like_rate": 0.03978, "uploads_per_week": 4.9, "uploads_per_month": 21.31, "shorts_share": 0.24, "reach_ratio": 0.656, "lifetime_views_per_sub": 643.3, "lifetime_views_per_video": 415834.0}, {"rank_subs": 6, "channel_id": "UCAHVQ44O81aehLWfy9O6Elw", "name_ko": "아라하시 타비", "name_en": "Arahashi Tabi", "unit": "UNIVERSE", "role": "talent", "handle": "arahashitabi", "subscribers": 255000, "total_views": 178843581, "video_count": 771, "created_at": "2023-06-01T11:48:28.671861Z", "channel_age_years": 3.2, "recent_n": 50, "recent_avg_views": 176265.0, "recent_median_views": 107424.0, "recent_max_views": 1042735, "recent_avg_engagement_rate": 0.03848, "recent_avg_like_rate": 0.03629, "uploads_per_week": 4.23, "uploads_per_month": 18.41, "shorts_share": 0.2, "reach_ratio": 0.691, "lifetime_views_per_sub": 701.3, "lifetime_views_per_video": 231963.1}, {"rank_subs": 7, "channel_id": "UCYxLMfeX1CbMBll9MsGlzmw", "name_ko": "텐코 시부키", "name_en": "Tenko Shibuki", "unit": "CLICHE", "role": "talent", "handle": "tenkoshibuki", "subscribers": 224000, "total_views": 186415500, "video_count": 596, "created_at": "2024-05-14T10:02:13.057547Z", "channel_age_years": 2.24, "recent_n": 50, "recent_avg_views": 222675.5, "recent_median_views": 146497.0, "recent_max_views": 1025503, "recent_avg_engagement_rate": 0.04012, "recent_avg_like_rate": 0.03884, "uploads_per_week": 6.73, "uploads_per_month": 29.25, "shorts_share": 0.5, "reach_ratio": 0.994, "lifetime_views_per_sub": 832.2, "lifetime_views_per_video": 312777.7}, {"rank_subs": 8, "channel_id": "UCj0c1jUr91dTetIQP2pFeLA", "name_ko": "유즈하 리코", "name_en": "Yuzuha Riko", "unit": "CLICHE", "role": "talent", "handle": "yuzuhariko", "subscribers": 214000, "total_views": 169607243, "video_count": 554, "created_at": "2024-05-14T10:16:40.978487Z", "channel_age_years": 2.24, "recent_n": 50, "recent_avg_views": 256652.8, "recent_median_views": 126100.0, "recent_max_views": 2271153, "recent_avg_engagement_rate": 0.04443, "recent_avg_like_rate": 0.04145, "uploads_per_week": 6.24, "uploads_per_month": 27.12, "shorts_share": 0.36, "reach_ratio": 1.199, "lifetime_views_per_sub": 792.6, "lifetime_views_per_video": 306150.3}, {"rank_subs": 9, "channel_id": "UCcA21_PzN1EhNe7xS4MJGsQ", "name_ko": "하나코 나나", "name_en": "Hanako Nana", "unit": "CLICHE", "role": "talent", "handle": "hanako_nana", "subscribers": 201000, "total_views": 146708202, "video_count": 468, "created_at": "2024-05-14T10:18:50.368619Z", "channel_age_years": 2.24, "recent_n": 50, "recent_avg_views": 162293.5, "recent_median_views": 83359.0, "recent_max_views": 794295, "recent_avg_engagement_rate": 0.0477, "recent_avg_like_rate": 0.04557, "uploads_per_week": 4.7, "uploads_per_month": 20.43, "shorts_share": 0.46, "reach_ratio": 0.807, "lifetime_views_per_sub": 729.9, "lifetime_views_per_video": 313479.1}, {"rank_subs": 10, "channel_id": "UC_eeSpMBz8PG4ssdBPnP07g", "name_ko": "네네코 마시로", "name_en": "Neneko Mashiro", "unit": "UNIVERSE", "role": "talent", "handle": "neneko_mashiro", "subscribers": 180000, "total_views": 58144100, "video_count": 417, "created_at": "2023-06-01T11:33:30.823588Z", "channel_age_years": 3.2, "recent_n": 50, "recent_avg_views": 83392.5, "recent_median_views": 57488.0, "recent_max_views": 644835, "recent_avg_engagement_rate": 0.04967, "recent_avg_like_rate": 0.04677, "uploads_per_week": 1.96, "uploads_per_month": 8.52, "shorts_share": 0.08, "reach_ratio": 0.463, "lifetime_views_per_sub": 323.0, "lifetime_views_per_video": 139434.3}, {"rank_subs": 11, "channel_id": "UC0YQnenKBCu5sGb7H61n6HA", "name_ko": "사키하네 후야", "name_en": "Sakihane Huya", "unit": "EVERYS", "role": "talent", "handle": "sakihanechannel", "subscribers": 130000, "total_views": 49868316, "video_count": 322, "created_at": "2025-09-16T10:33:13.484328Z", "channel_age_years": 0.9, "recent_n": 50, "recent_avg_views": 110608.1, "recent_median_views": 85666.5, "recent_max_views": 424162, "recent_avg_engagement_rate": 0.04508, "recent_avg_like_rate": 0.04319, "uploads_per_week": 4.18, "uploads_per_month": 18.19, "shorts_share": 0.36, "reach_ratio": 0.851, "lifetime_views_per_sub": 383.6, "lifetime_views_per_video": 154870.5}], "top_videos": [{"name_ko": "유즈하 리코", "title": "클리셰 최강의 로봇... #vtuber #shorts #스텔라이브 #리코 #용사툰 #클리셰", "views": 2271153, "likes": 57178, "comments": 914.0, "published_at": "2026-07-08 06:00:22+00:00"}, {"name_ko": "아카네 리제", "title": "온라인도 오프라인도 모두 야르한 콘서트 되세요~ #vtuber #shorts", "views": 1424488, "likes": 36677, "comments": 626.0, "published_at": "2026-07-11 05:30:14+00:00"}, {"name_ko": "시라유키 히나", "title": "스텔라이브 삼색 볼펜들의 오도루프!🎵 #오도루프 #oddoloop #オドループ #vtuber #shorts", "views": 1304985, "likes": 23526, "comments": 816.0, "published_at": "2026-05-21 05:00:27+00:00"}, {"name_ko": "아오쿠모 린", "title": "아오쿠모 린(Aokumo Rin) | 'Maid My Way'", "views": 1213259, "likes": 32164, "comments": 2412.0, "published_at": "2026-07-27 09:00:22+00:00"}, {"name_ko": "시라유키 히나", "title": "오냐 어디 한 번 죽어보자 #cartoon #comic #vtuber #shorts", "views": 1129917, "likes": 27239, "comments": 386.0, "published_at": "2026-06-07 06:00:28+00:00"}, {"name_ko": "아라하시 타비", "title": "타비도 꿍싯꿍싯💕 #shorts #vtuber #타비", "views": 1042735, "likes": 41119, "comments": 716.0, "published_at": "2026-07-15 04:00:40+00:00"}, {"name_ko": "텐코 시부키", "title": "143cm #shorts #vtuber", "views": 1025503, "likes": 22611, "comments": 495.0, "published_at": "2026-07-09 08:20:42+00:00"}, {"name_ko": "유즈하 리코", "title": "유즈하 리코(Yuzuha Riko) | '악당주의보'", "views": 1013581, "likes": 26863, "comments": 1938.0, "published_at": "2026-07-24 09:00:07+00:00"}, {"name_ko": "아오쿠모 린", "title": "물떼새(ヨルシカ - 千鳥) / 아오쿠모 린(Aokumo Rin) Cover", "views": 953632, "likes": 19644, "comments": 922.0, "published_at": "2026-06-28 08:00:06+00:00"}, {"name_ko": "텐코 시부키", "title": "나 후배 선배! #shorts #vtuber", "views": 952152, "likes": 23050, "comments": 259.0, "published_at": "2026-07-11 07:07:25+00:00"}, {"name_ko": "강지", "title": "신호등 자매의 윙크 (｡•̀ ᴗ -)✧ #강지 #쇼츠 #밈", "views": 917685, "likes": 26679, "comments": 368.0, "published_at": "2026-06-02 05:00:07+00:00"}, {"name_ko": "시라유키 히나", "title": "왜 나만 빼고 뽀뽀해???? #cartoon #comic #vtuber #shorts", "views": 897951, "likes": 26056, "comments": 337.0, "published_at": "2026-05-13 05:00:37+00:00"}, {"name_ko": "아라하시 타비", "title": "요즘 유행하는 야르송에 신이난 야랄의 악마 #shorts #vtuber #타비", "views": 860716, "likes": 22334, "comments": 1024.0, "published_at": "2026-06-29 03:41:43+00:00"}, {"name_ko": "시라유키 히나", "title": "공주 언니 좋으면 멍멍해! #cartoon #comic #vtuber #shorts", "views": 860010, "likes": 23043, "comments": 345.0, "published_at": "2026-07-15 06:15:28+00:00"}, {"name_ko": "유즈하 리코", "title": "어때 느낌 있지? #vtuber #shorts #스텔라이브 #리코 #용사툰 #유니 #강지 #타비 #마시로 #히나 #리제", "views": 855090, "likes": 26606, "comments": 392.0, "published_at": "2026-07-18 06:16:07+00:00"}]};
+const SERIES=['--s1','--s2','--s3','--s4','--s5','--s6','--s7','--s8'];
+const cssv=v=>getComputedStyle(document.body).getPropertyValue(v).trim();
+const fmt=n=>n>=1e6?(n/1e6).toFixed(2)+'M':n>=1e3?(n/1e3).toFixed(0)+'K':(''+n);
+const fmtN=n=>Number(n).toLocaleString('ko-KR');
+const UNITCOLORS={EVERYS:'--s1',UNIVERSE:'--s2',CLICHE:'--s3',STELLIVE:'--muted'};
+// 멤버 고정색
+const mcolor={}; DATA.members.forEach((m,i)=>mcolor[m.name_en]=SERIES[i%SERIES.length]);
+const tip=document.getElementById('tip');
+function showTip(e,html){tip.innerHTML=html;tip.style.opacity=1;
+  tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';}
+function hideTip(){tip.style.opacity=0;}
+
+// tags
+document.getElementById('tags').innerHTML =
+  `<span class="tag">수집 ${DATA.meta.fetched_at.slice(0,10)}</span>`+
+  `<span class="tag">채널 ${DATA.meta.n_channels}개</span>`+
+  `<span class="tag">영상 ${DATA.meta.n_videos}개</span>`+
+  `<span class="tag">YouTube Data API v3</span>`;
+
+// KPIs
+const talents=DATA.members.filter(m=>m.role==='talent');
+const sumSubs=talents.reduce((a,m)=>a+m.subscribers,0);
+const avgViews=Math.round(talents.reduce((a,m)=>a+m.recent_avg_views,0)/talents.length);
+const avgEng=(talents.reduce((a,m)=>a+m.recent_avg_engagement_rate,0)/talents.length*100).toFixed(1);
+const topReach=[...talents].sort((a,b)=>b.reach_ratio-a.reach_ratio)[0];
+const kpis=[
+  ['탤런트 합산 구독자',fmt(sumSubs),'창립자 강지 제외'],
+  ['평균 조회수(최근)',fmtN(avgViews),'채널당 최근 50영상'],
+  ['평균 참여율',avgEng+'%','좋아요+댓글/조회수'],
+  ['도달 효율 1위',topReach.name_ko,(topReach.reach_ratio*100).toFixed(0)+'% · 조회수/구독자'],
+];
+document.getElementById('kpis').innerHTML=kpis.map(k=>
+  `<div class="kpi"><div class="v">${k[1]}</div><div class="l">${k[0]}</div><div class="s">${k[2]}</div></div>`).join('');
+
+// unit legend
+document.getElementById('unitlegend').innerHTML=Object.entries(UNITCOLORS).map(([u,c])=>
+  `<span><i class="dot" style="background:${cssv(c)}"></i>${u}</span>`).join('');
+
+// table
+const COLS=[
+  ['name_ko','멤버',r=>`<i class="dot" style="background:${cssv(mcolor[r.name_en])}"></i>${r.name_ko} `+
+      `<span class="unit-chip">${r.unit}</span>`],
+  ['subscribers','구독자',r=>fmtN(r.subscribers)],
+  ['recent_avg_views','평균조회수',r=>fmtN(Math.round(r.recent_avg_views))],
+  ['uploads_per_week','주간업로드',r=>r.uploads_per_week.toFixed(1)],
+  ['recent_avg_engagement_rate','참여율',r=>(r.recent_avg_engagement_rate*100).toFixed(1)+'%'],
+  ['reach_ratio','도달효율',r=>(r.reach_ratio*100).toFixed(0)+'%'],
+  ['shorts_share','쇼츠',r=>(r.shorts_share*100).toFixed(0)+'%'],
+];
+let sortKey='subscribers',sortDir=-1,unitFilter='ALL';
+function rows(){let r=DATA.members.filter(m=>unitFilter==='ALL'||m.unit===unitFilter);
+  return r.sort((a,b)=>(a[sortKey]>b[sortKey]?1:-1)*sortDir);}
+function drawTable(){
+  const t=document.getElementById('tbl');
+  t.innerHTML='<thead><tr>'+COLS.map(c=>
+    `<th class="${c[0]===sortKey?'active':''}" onclick="setSort('${c[0]}')">${c[1]}${c[0]===sortKey?(sortDir<0?' ▾':' ▴'):''}</th>`).join('')+'</tr></thead>'+
+    '<tbody>'+rows().map(r=>'<tr>'+COLS.map(c=>`<td>${c[2](r)}</td>`).join('')+'</tr>').join('')+'</tbody>';
+}
+function setSort(k){if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=-1;}drawTable();}
+// filters
+const units=['ALL',...new Set(DATA.members.map(m=>m.unit))];
+document.getElementById('filters').innerHTML=units.map(u=>
+  `<button class="${u==='ALL'?'on':''}" data-u="${u}" onclick="setFilter('${u}')">${u==='ALL'?'전체':u}</button>`).join('');
+function setFilter(u){unitFilter=u;
+  document.querySelectorAll('#filters button').forEach(b=>b.classList.toggle('on',b.dataset.u===u));
+  drawTable();drawScatter();}
+
+// ---- SVG helpers ----
+function svgEl(tag,attrs){const e=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  for(const k in attrs)e.setAttribute(k,attrs[k]);return e;}
+
+function hbarChart(id,list,valfn,labelfn,colorfn){
+  const svg=document.getElementById(id);svg.innerHTML='';
+  const W=480,H=460,ml=96,mr=54,mt=10,mb=24;
+  const data=[...list].sort((a,b)=>valfn(a)-valfn(b));
+  const max=Math.max(...data.map(valfn))*1.02;
+  const bh=(H-mt-mb)/data.length;
+  const x=v=>ml+(v/max)*(W-ml-mr);
+  // gridlines
+  for(let i=0;i<=4;i++){const gx=ml+i/4*(W-ml-mr);
+    svg.appendChild(svgEl('line',{x1:gx,x2:gx,y1:mt,y2:H-mb,class:'gridline'}));}
+  data.forEach((r,i)=>{
+    const y=mt+i*bh, val=valfn(r), col=cssv(colorfn(r));
+    const bar=svgEl('rect',{x:ml,y:y+bh*0.18,width:Math.max(1,x(val)-ml),height:bh*0.64,
+      rx:4,fill:col});
+    bar.addEventListener('mousemove',e=>showTip(e,`<b>${r.name_ko}</b><br>${labelfn(r)}`));
+    bar.addEventListener('mouseleave',hideTip);
+    svg.appendChild(bar);
+    const t1=svgEl('text',{x:ml-8,y:y+bh/2+4,'text-anchor':'end',class:'mlabel'});t1.textContent=r.name_ko;
+    svg.appendChild(t1);
+    const t2=svgEl('text',{x:x(val)+6,y:y+bh/2+4,class:'blabel'});t2.textContent=labelfn(r);
+    svg.appendChild(t2);
+  });
+}
+function drawReach(){hbarChart('reach',talents,m=>m.reach_ratio,
+  m=>(m.reach_ratio*100).toFixed(0)+'%',m=>mcolor[m.name_en]);}
+function drawEngage(){hbarChart('engage',talents,m=>m.recent_avg_engagement_rate,
+  m=>(m.recent_avg_engagement_rate*100).toFixed(1)+'%',m=>mcolor[m.name_en]);}
+
+function drawScatter(){
+  const svg=document.getElementById('scatter');svg.innerHTML='';
+  const W=720,H=440,ml=64,mr=34,mt=16,mb=44;
+  const list=talents;
+  const xs=list.map(m=>m.subscribers),ys=list.map(m=>m.recent_avg_views);
+  const xmin=Math.min(...xs)*0.9,xmax=Math.max(...xs)*1.05;
+  const ymin=Math.min(...ys)*0.8,ymax=Math.max(...ys)*1.08;
+  const X=v=>ml+(v-xmin)/(xmax-xmin)*(W-ml-mr);
+  const Y=v=>H-mb-(v-ymin)/(ymax-ymin)*(H-mt-mb);
+  // grid + axes
+  for(let i=0;i<=4;i++){const gy=mt+i/4*(H-mt-mb);
+    svg.appendChild(svgEl('line',{x1:ml,x2:W-mr,y1:gy,y2:gy,class:'gridline'}));
+    const val=ymax-(i/4)*(ymax-ymin);
+    const tl=svgEl('text',{x:ml-8,y:gy+4,'text-anchor':'end',class:'axis'});tl.textContent=fmt(Math.round(val));
+    svg.appendChild(tl);}
+  for(let i=0;i<=4;i++){const gx=ml+i/4*(W-ml-mr);const val=xmin+(i/4)*(xmax-xmin);
+    const tl=svgEl('text',{x:gx,y:H-mb+18,'text-anchor':'middle',class:'axis'});tl.textContent=fmt(Math.round(val));
+    svg.appendChild(tl);}
+  svg.appendChild(svgEl('text',{x:(ml+W-mr)/2,y:H-6,'text-anchor':'middle',class:'axis'})).textContent='구독자';
+  // regression line
+  const n=list.length,sx=xs.reduce((a,b)=>a+b),sy=ys.reduce((a,b)=>a+b);
+  const sxy=list.reduce((a,m)=>a+m.subscribers*m.recent_avg_views,0);
+  const sxx=xs.reduce((a,b)=>a+b*b,0);
+  const slope=(n*sxy-sx*sy)/(n*sxx-sx*sx),inter=(sy-slope*sx)/n;
+  svg.appendChild(svgEl('line',{x1:X(xmin),y1:Y(slope*xmin+inter),x2:X(xmax),y2:Y(slope*xmax+inter),
+    stroke:cssv('--muted'),'stroke-width':1.2,'stroke-dasharray':'5 4'}));
+  // points
+  const highlight=unitFilter==='ALL'?null:unitFilter;
+  list.forEach(m=>{
+    const r=Math.max(7,Math.min(22,5+Math.sqrt(m.recent_avg_engagement_rate)*52));
+    const faded=highlight&&m.unit!==highlight;
+    const cx=X(m.subscribers),cy=Y(m.recent_avg_views);
+    const c=svgEl('circle',{cx:cx,cy:cy,r:r,
+      fill:cssv(mcolor[m.name_en]),opacity:faded?0.18:0.82,stroke:cssv('--surface'),'stroke-width':2});
+    c.addEventListener('mousemove',e=>showTip(e,
+      `<b>${m.name_ko}</b><br>구독 ${fmtN(m.subscribers)}<br>평균조회 ${fmtN(Math.round(m.recent_avg_views))}<br>참여율 ${(m.recent_avg_engagement_rate*100).toFixed(1)}%`));
+    c.addEventListener('mouseleave',hideTip);
+    svg.appendChild(c);
+    if(!faded){
+      const rightEdge=cx+r+64>W-mr;   // 오른쪽 끝이면 라벨을 왼쪽으로
+      const tx=svgEl('text',{x:rightEdge?cx-r-4:cx+r+4,y:cy+4,class:'mlabel',
+        'text-anchor':rightEdge?'end':'start'});
+      tx.textContent=m.name_ko;svg.appendChild(tx);}
+  });
+}
+
+// top videos
+const tv=document.getElementById('topvids');
+tv.innerHTML='<thead><tr><th>멤버</th><th style="text-align:left">영상</th><th>조회수</th><th>좋아요</th><th>댓글</th></tr></thead>'+
+  '<tbody>'+DATA.top_videos.map(v=>`<tr><td>${v.name_ko}</td>`+
+  `<td style="text-align:left;max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${v.title}</td>`+
+  `<td>${fmtN(v.views)}</td><td>${v.likes==null?'-':fmtN(v.likes)}</td><td>${v.comments==null?'-':fmtN(v.comments)}</td></tr>`).join('')+'</tbody>';
+
+// foot
+const c=DATA.correlations;
+document.getElementById('foot').innerHTML=
+  `상관관계(탤런트): 구독자↔평균조회수 r=${c.subs_vs_avgviews} · 업로드빈도↔구독자 r=${c.cadence_vs_subs} · `+
+  `도달효율↔구독자 r=${c.reach_vs_subs}<br>데이터 출처: YouTube Data API v3 · 지표는 수집 시점 스냅샷입니다.`;
+
+function toggleTheme(){const r=document.documentElement;
+  const cur=r.getAttribute('data-theme')|| (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  r.setAttribute('data-theme',cur==='dark'?'light':'dark');
+  drawAll();}
+function drawAll(){drawTable();drawScatter();drawReach();drawEngage();}
+drawAll();
+</script>
+</body>
+</html>

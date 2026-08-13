@@ -1,0 +1,91 @@
+.scrollArea {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+
+.table {
+  width: 100%;
+  min-width: max-content;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.caption {
+  caption-side: top;
+  text-align: left;
+  padding: var(--space-7) var(--space-9) var(--space-4);
+  font-size: 0.75rem;
+  color: var(--label-alt);
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--line);
+  padding: 0;
+  text-align: left;
+}
+
+.table tbody td {
+  padding: var(--space-6) var(--space-9);
+  border-bottom: 1px solid var(--line-alt);
+  color: var(--label);
+  white-space: nowrap;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover td {
+  background: var(--fill);
+}
+
+.clickableRow {
+  cursor: pointer;
+}
+
+.clickableRow:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+.sortButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-9);
+  font-family: var(--font);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--label-alt);
+}
+
+.alignRight .sortButton {
+  justify-content: flex-end;
+}
+
+.sortButton:hover {
+  color: var(--label-strong);
+}
+
+.sortButton[data-active="true"] {
+  color: var(--primary-strong);
+}
+
+.sortIcon {
+  font-size: 0.6875rem;
+  opacity: 0.7;
+}

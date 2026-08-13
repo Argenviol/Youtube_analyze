@@ -1,0 +1,37 @@
+# ---- 비밀 ----
+.env
+.env.local
+*.key
+
+# ---- Node / Next.js ----
+node_modules/
+.next/
+out/
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# ---- Python ----
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ---- OS / 편집기 ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ---- 이 저장소에 올리지 않는 것 ----
+# 앱이 빌드 시 생성하는 사본. 원본은 youtube_analyze_all/*/site/data.json 이다.
+app/src/data/*.json
+
+# 세션 중 만들었다가 은퇴시킨 Node 프로토타입 (수집기는 Python으로 이관됨)
+fandom-analytics/
+
+# 이 폴더와 무관한 개인 작업물
+character-analyzer/
+steldatabase/
+
+# 배포/전달용으로 만든 압축본 — 저장소에 넣지 않는다
+*.zip

@@ -1,0 +1,51 @@
+.bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-9);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-9);
+}
+
+.rowLabel {
+  flex-shrink: 0;
+  width: 2.5rem;
+  padding-top: var(--space-4);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--label-alt);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.reset {
+  align-self: flex-start;
+  appearance: none;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--primary-strong);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: var(--space-3) 0;
+}
+
+.reset:disabled {
+  color: var(--label-assistive);
+  cursor: not-allowed;
+}
+
+.reset:not(:disabled):hover {
+  text-decoration: underline;
+}

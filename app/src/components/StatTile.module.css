@@ -1,0 +1,52 @@
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.label {
+  font-size: 0.8125rem;
+  color: var(--label-alt);
+}
+
+.valueRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--label-strong);
+  letter-spacing: -0.01em;
+}
+
+.unit {
+  font-size: 0.9375rem;
+  color: var(--label-alt);
+}
+
+.delta {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.tone-positive {
+  color: var(--positive);
+}
+
+.tone-negative {
+  color: var(--negative);
+}
+
+.tone-neutral {
+  color: var(--label-alt);
+}
+
+.caption {
+  font-size: 0.75rem;
+  color: var(--label-assistive);
+}

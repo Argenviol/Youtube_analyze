@@ -1,0 +1,182 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-11);
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-13) var(--space-9) var(--space-16);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.title {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--label-strong);
+}
+
+.subhead {
+  max-width: 760px;
+  color: var(--label-alt);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------------------
+ * FR-5 커버리지 가드 카드
+ * ------------------------------------------------------------------------- */
+
+.guardCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);
+}
+
+.guardText {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--label);
+  max-width: 820px;
+}
+
+.guardLink {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.guardLink:hover {
+  color: var(--primary-strong);
+  text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------------
+ * 인시던트 그룹 / 카드
+ * ------------------------------------------------------------------------- */
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+}
+
+.incidentList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+}
+
+.incidentCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.incidentHeader {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-7);
+}
+
+.incidentIndex {
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--label-assistive);
+}
+
+.incidentTitle {
+  flex: 1 1 auto;
+  min-width: 200px;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--label-strong);
+  letter-spacing: -0.01em;
+}
+
+.incidentBody {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-9);
+  margin: var(--space-9) 0 0;
+}
+
+.incidentField dt {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--label-alt);
+  margin-bottom: var(--space-4);
+}
+
+.incidentField dd {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--label);
+}
+
+.followUp {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-top: var(--space-9);
+  padding: var(--space-8);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--cautionary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--cautionary) 32%, transparent);
+}
+
+.followUpText {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--label);
+}
+
+.incidentFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  margin-top: var(--space-9);
+  padding-top: var(--space-9);
+  border-top: 1px solid var(--line);
+}
+
+.source {
+  font-size: 0.75rem;
+  color: var(--label-assistive);
+  line-height: 1.5;
+  /* 넓은 파일 경로 목록이 좁은 화면에서 줄바꿈되도록 허용 — 가로 스크롤을 만들지 않는다. */
+  overflow-wrap: anywhere;
+}
+
+.incidentLink {
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.incidentLink:hover {
+  color: var(--primary-strong);
+  text-decoration: underline;
+}

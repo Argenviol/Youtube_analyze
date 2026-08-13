@@ -1,0 +1,136 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-11);
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-13) var(--space-9) var(--space-16);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-9);
+}
+
+.title {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--label-strong);
+}
+
+.subhead {
+  max-width: 760px;
+  color: var(--label-alt);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.warnCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.insightText {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--label);
+}
+
+.insightText code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  background: var(--fill);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.statRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-9);
+}
+
+.filterBar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-9);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+}
+
+.filterRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-9);
+}
+
+.filterRowLabel {
+  flex-shrink: 0;
+  width: 3.5rem;
+  padding-top: var(--space-4);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--label-alt);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.reset {
+  align-self: flex-start;
+  appearance: none;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--primary-strong);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: var(--space-3) 0;
+}
+
+.reset:disabled {
+  color: var(--label-assistive);
+  cursor: not-allowed;
+}
+
+.reset:not(:disabled):hover {
+  text-decoration: underline;
+}
+
+.gapGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-9);
+}
+
+.gapLabel {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--label-alt);
+  margin-bottom: var(--space-5);
+}

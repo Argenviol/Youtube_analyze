@@ -1,0 +1,57 @@
+.wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.svg {
+  display: block;
+  height: auto;
+}
+
+.row[data-interactive="true"] {
+  cursor: pointer;
+}
+
+.row[data-interactive="true"]:hover .cell,
+.row[data-interactive="true"]:focus-visible .cell {
+  stroke: var(--primary);
+  stroke-width: 1.5;
+}
+
+.row[data-interactive="true"]:focus-visible {
+  outline: none;
+}
+
+.row[data-selected="true"] .cell {
+  stroke: var(--label-strong);
+  stroke-width: 1.5;
+}
+
+.cell {
+  transition: stroke 0.1s ease, stroke-width 0.1s ease;
+}
+
+.rowLabel {
+  font-size: 11px;
+  fill: var(--label-alt);
+  font-family: var(--font);
+}
+
+.colLabel {
+  font-size: 10px;
+  fill: var(--label-alt);
+  font-family: var(--font);
+}
+
+.cellLabel {
+  font-size: 9px;
+  font-weight: 600;
+  fill: var(--label);
+  font-family: var(--font);
+  font-variant-numeric: tabular-nums;
+  paint-order: stroke;
+  stroke: var(--bg-elevated);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
