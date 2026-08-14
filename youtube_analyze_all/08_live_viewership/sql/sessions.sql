@@ -1,6 +1,7 @@
--- sessions 데이터 (84 rows)
+-- sessions 데이터 (89 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-14 20:08', 0.0, 1, 6741, 6741, '봉누도2 설명회 보기💚', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-14 22:25', 0.0, 1, 6299, 6299, '추억의 애니(추억별로없음) OST 월드컵 하기', '음악/노래');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-12 19:54', 224.0, 27, 5651, 5352, '8시 크아 떠나보내기 w.타비, 린', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-14 20:08', 0.0, 1, 5391, 5391, '오늘운 옵치 대회 카봉컵 팀 뽑는 날 ~~ ', '오버워치');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-13 19:48', 0.0, 1, 5346, 5346, '그놈의 대두 스페이스 ', '데드 스페이스');
@@ -12,6 +13,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-13 20:35', 0.0, 1, 4879, 4879, '그놈의 대두 스페이스 ', '데드 스페이스');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-12 19:54', 224.0, 27, 4829, 3647, '팔척귀신 누나랑 여름휴가를 보내는 공포겜 
 ', '하치샤쿠사마');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-14 22:25', 0.0, 1, 4827, 4827, '오늘운 옵치 대회 카봉컵 팀 뽑는 날 ~~ ', '오버워치');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-13 17:39', 0.0, 1, 4590, 4590, '포린이 혼자하다가 드디어 방송에서 포챔스키다', '포켓몬 챔피언스');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-13 19:48', 0.0, 1, 4589, 4589, '데바데 w. 강지 리제 린 [시키샤카샤카슈-와! 100만회 감사합니당]💚', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-14 00:14', 0.0, 1, 4545, 4545, '그놈의 대두 스페이스 ', '데드 스페이스');
@@ -25,11 +27,13 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-13 18:47', 0.0, 1, 3900, 3900, '드디어 빙하기 끝! [시키샤카샤카슈-와! 100만회 감사합니당]💚', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('네네코 마시로', 'Neneko Mashiro', 'UNIVERSE', '2026-08-14 17:51', 0.0, 1, 3887, 3887, '히게단 라이브 월드컵', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-14 00:14', 0.0, 1, 3752, 3752, '포평 ;;', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-14 22:25', 0.0, 1, 3729, 3729, '대두 스페이스 끝까지 가보쟈', '데드 스페이스');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-14 17:51', 0.0, 1, 3552, 3552, '오늘운 옵치 대회 카봉컵 팀 뽑는 날 ~~ ', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-14 20:57', 0.0, 1, 3540, 3540, '대두 스페이스 끝까지 가보쟈', '데드 스페이스');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-14 20:08', 0.0, 1, 3487, 3487, '대두 스페이스 끝까지 가보쟈', '데드 스페이스');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-08-13 23:07', 0.0, 1, 3463, 3463, '데바데 w. 사장님, 리제, 리코, 춘향님', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-13 15:57', 0.0, 1, 3407, 3407, '( ܸ ⩌⩊⩌ ܸ )', '데드 바이 데이라이트');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-14 22:25', 0.0, 1, 3343, 3343, '아오오니 2 ', '아오오니2');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-08-12 20:05', 213.0, 25, 3342, 3048, '어라 카테고리에 왜 크아가 없지... w. 타비, 부키', '종합 게임');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-13 23:07', 0.0, 1, 3310, 3310, '마지막 내전 ! ', '오버워치');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-14 03:13', 0.0, 1, 3309, 3309, ' [시키샤카샤카슈-와! 100만회 감사합니당]💚', '오버워치');
@@ -42,6 +46,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-13 19:48', 0.0, 1, 3186, 3186, '우효오오오오오옹ㅇ오ㅗ옸', '이터널 리턴');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-13 20:35', 0.0, 1, 3172, 3172, '우효오오오오오옹ㅇ오ㅗ옸', '이터널 리턴');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-12 19:54', 224.0, 27, 3172, 2734, '오늘 밤에 시간당100개의 별동뼐이쏟아지는걸아시나요', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아카네 리제', 'Akane Lize', 'UNIVERSE', '2026-08-14 22:25', 0.0, 1, 3089, 3089, '팔척귀신눈나랑 공포연애?미연시???게임', '하치샤쿠사마');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('네네코 마시로', 'Neneko Mashiro', 'UNIVERSE', '2026-08-12 15:37', 70.6, 9, 3073, 2448, '하이!', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-14 02:17', 0.0, 1, 3056, 3056, ' [시키샤카샤카슈-와! 100만회 감사합니당]💚', '오버워치');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-14 04:30', 0.0, 1, 3041, 3041, ' [시키샤카샤카슈-와! 100만회 감사합니당]💚', '이터널 리턴');
