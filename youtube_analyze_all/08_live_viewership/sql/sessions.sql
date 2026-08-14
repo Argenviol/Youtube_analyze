@@ -1,4 +1,4 @@
--- sessions 데이터 (104 rows)
+-- sessions 데이터 (105 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-15 00:28', 0.0, 1, 7862, 7862, '추억의 애니(추억별로없음) OST 월드컵 하기', '음악/노래');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-15 01:27', 0.0, 1, 7405, 7405, '추억의 애니(추억별로없음) OST 월드컵 하기', '음악/노래');
@@ -95,11 +95,12 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-13 19:48', 0.0, 1, 1892, 1892, '마지막 내전 ! ', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-12 15:57', 50.4, 7, 1891, 1503, '오 케 마 루', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-12 19:54', 51.6, 7, 1885, 1770, '도끼 하나로 회사(스텔아님)에게 복수하는 게임 / Chop chop inc.', '종합 게임');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-15 03:31', 0.0, 1, 1824, 1824, '새벽 노래연습이다', '음악/노래');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-12 16:38', 10.1, 2, 1723, 1199, '팔척귀신 누나랑 여름휴가를 보내는 공포겜 
 ', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-14 20:08', 0.0, 1, 1716, 1716, '감기용가리의 늙크크 수리점...(´。＿。｀)', '리스토리: 칠 일렉트로닉스 리페어스');
-INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-14 20:57', 0.0, 1, 1700, 1700, '감기용가리의 늙크크 수리점...(´。＿。｀)', '리스토리: 칠 일렉트로닉스 리페어스');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-13 21:31', 0.0, 1, 1700, 1700, '방제모', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-14 20:57', 0.0, 1, 1700, 1700, '감기용가리의 늙크크 수리점...(´。＿。｀)', '리스토리: 칠 일렉트로닉스 리페어스');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-13 18:47', 0.0, 1, 1663, 1663, '그냥별똥별기다리다가기절한사람', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-13 20:35', 0.0, 1, 1657, 1657, '저랑 리버스: 1999 하실 분 [광고]', '리버스: 1999');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-14 19:08', 0.0, 1, 1598, 1598, '감기용가리의 늙크크 수리점...(´。＿。｀)', '리스토리: 칠 일렉트로닉스 리페어스');
