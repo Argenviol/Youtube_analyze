@@ -1,8 +1,9 @@
--- sessions 데이터 (62 rows)
+-- sessions 데이터 (63 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-12 19:54', 224.0, 27, 5651, 5352, '8시 크아 떠나보내기 w.타비, 린', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-13 19:48', 0.0, 1, 5346, 5346, '그놈의 대두 스페이스 ', '데드 스페이스');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-13 23:07', 0.0, 1, 5060, 5060, '그놈의 대두 스페이스 ', '데드 스페이스');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('네네코 마시로', 'Neneko Mashiro', 'UNIVERSE', '2026-08-14 16:44', 0.0, 1, 5055, 5055, '히게단 라이브 월드컵', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-13 21:31', 0.0, 1, 5043, 5043, '그놈의 대두 스페이스 ', '데드 스페이스');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-13 20:35', 0.0, 1, 4879, 4879, '그놈의 대두 스페이스 ', '데드 스페이스');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-12 19:54', 224.0, 27, 4829, 3647, '팔척귀신 누나랑 여름휴가를 보내는 공포겜 
