@@ -1,4 +1,4 @@
--- sessions 데이터 (180 rows)
+-- sessions 데이터 (181 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-15 00:28', 0.0, 1, 7862, 7862, '추억의 애니(추억별로없음) OST 월드컵 하기', '음악/노래');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-08-15 19:36', 21.8, 2, 7675, 7435, '봉누도 2 ppt 설명회 같이 보자 !!!', 'talk');
@@ -86,8 +86,8 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-15 21:46', 0.0, 1, 3465, 3465, '데바데 뉴비예용용 살려주세용용', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-08-13 23:07', 0.0, 1, 3463, 3463, '데바데 w. 사장님, 리제, 리코, 춘향님', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-14 23:32', 0.0, 1, 3437, 3437, '아오 스트레스 풀어', '데드 바이 데이라이트');
-INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-15 18:15', 0.0, 1, 3429, 3429, '여언습', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('네네코 마시로', 'Neneko Mashiro', 'UNIVERSE', '2026-08-15 16:41', 0.0, 1, 3429, 3429, '레디언드 찍습니다 오늘', '발로란트');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-15 18:15', 0.0, 1, 3429, 3429, '여언습', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-13 15:57', 0.0, 1, 3407, 3407, '( ܸ ⩌⩊⩌ ܸ )', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-14 22:25', 0.0, 1, 3343, 3343, '아오오니 2 ', '아오오니2');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-08-12 20:05', 213.0, 25, 3342, 3048, '어라 카테고리에 왜 크아가 없지... w. 타비, 부키', '종합 게임');
@@ -145,6 +145,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-15 22:19', 0.0, 1, 2351, 2351, '( ܸ ⩌⩊⩌ ܸ )', '마인크래프트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-15 22:19', 0.0, 1, 2341, 2341, '오늘 하루도 고생 많았떠 [데친 양배추]', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-15 22:49', 21.8, 2, 2189, 2174, '( ܸ ⩌⩊⩌ ܸ )', '데드 바이 데이라이트');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-16 15:20', 0.0, 1, 2166, 2166, '( ܸ ⩌⩊⩌ ܸ )', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-15 23:42', 19.3, 2, 2141, 2104, '( ܸ ⩌⩊⩌ ܸ )', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-13 20:35', 0.0, 1, 2109, 2109, '( ܸ ⩌⩊⩌ ܸ )', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-14 20:08', 0.0, 1, 2109, 2109, '히~~~~~나', 'talk');
