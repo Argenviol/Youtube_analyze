@@ -1,0 +1,14 @@
+{
+  "fetched_at": "2026-08-13T02:31:41.674812+00:00",
+  "source": "Open DART(전자공시시스템) Open API — corpCode.xml, company.json, list.json, fnlttSinglAcntAll.json, document.xml",
+  "corp_master_total": 118706,
+  "n_targets": 9,
+  "n_matched": 6,
+  "n_with_financials": 2,
+  "n_with_audit_report_financials": 3,
+  "years": [
+    2016,
+    2025
+  ],
+  "note": "fnlttSinglAcntAll은 XBRL 태깅된 정기보고서(사업/반기/분기보고서)만 파싱한다. 감사보고서만 제출하는 비상장 법인은 corp_code가 있어도 013(데이터 없음)이 정상 결과다. 이 경우 document.xml(감사보고서 원문 ZIP)을 직접 파싱하는 대체 경로를 시도한다 (fetch_audit_report_financials) — 그래도 필링 자체가 아예 없는 법인(예: 팬딩)은 이 경로로도 데이터가 나오지 않는다."
+}
