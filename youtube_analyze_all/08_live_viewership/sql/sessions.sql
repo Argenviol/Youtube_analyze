@@ -1,4 +1,4 @@
--- sessions 데이터 (68 rows)
+-- sessions 데이터 (69 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-17 16:59', 410.1, 11, 8239, 5370, '대회 결승 하는날 무관귀신 탈출 ????????', '오버워치');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-14 22:25', 246.9, 5, 7862, 6690, '추억의 애니(추억별로없음) OST 월드컵 하기', '음악/노래');
@@ -55,6 +55,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아카네 리제', 'Akane Lize', 'UNIVERSE', '2026-08-13 23:07', 126.9, 3, 2958, 2875, '헤헿 하합빵해요합방 헤헿 (w.사쬬, 린, 리코, 춘향님)', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-08-13 19:48', 103.7, 3, 2918, 1873, '데바데 2:8 w. 사장님, 리제, 리코', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-16 18:31', 309.3, 11, 2898, 2337, '여름감기는 개도 안걸린다는데', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-08-18 18:54', 0.0, 1, 2894, 2894, '호오오옥', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-17 17:55', 293.3, 8, 2852, 2615, '6시 클리셰 합방', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-16 18:31', 309.3, 11, 2746, 2546, '커버곡 나온댜아아~!!! 논브레스 오블리이쥬!', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-17 20:57', 171.4, 5, 2698, 1994, '자연산 용가리가 왔어', 'talk');
