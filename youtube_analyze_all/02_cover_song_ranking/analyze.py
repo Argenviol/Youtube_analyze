@@ -165,7 +165,7 @@ def build_outputs(df, metrics):
     most = metrics.iloc[metrics["cover_count"].argmax()]
     besteff = metrics.iloc[metrics["avg_views"].argmax()]
     topcover = df.sort_values("views", ascending=False).iloc[0]
-    md = f"""# 프로젝트 2 · StelLive 커버곡 성과 랭킹 분석
+    md = f"""# 프로젝트 2 · StelLive 커버곡 성과 랭킹 분석 ({meta['fetched_at'][:10]} 기준)
 
 - 데이터 소스: YouTube Data API v3 (채널 검색 + 영상 지표), 수집 {meta['fetched_at'][:10]}
 - 멤버 {meta['n_members']}명 · 커버곡 {meta['n_covers']}개

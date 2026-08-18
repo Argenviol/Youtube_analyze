@@ -181,7 +181,7 @@ def build_outputs(df, metrics):
     freq = metrics.iloc[metrics["streams_per_week"].argmax()]
     night = metrics.iloc[metrics["night_share"].argmax()]
     peak_hour = int(np.argmax(site_data["hour_dist"]))
-    md = f"""# 프로젝트 3 · StelLive 치지직 방송 패턴 분석
+    md = f"""# 프로젝트 3 · StelLive 치지직 방송 패턴 분석 ({meta['fetched_at'][:10]} 기준)
 
 - 데이터 소스: 치지직(Chzzk) 비공식 API — 다시보기(VOD replay) {meta['n_streams']}건, 수집 {meta['fetched_at'][:10]}
 - 멤버 {meta['n_members']}명, 멤버당 최근 최대 {meta['max_items']}개 방송
