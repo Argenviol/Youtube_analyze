@@ -296,9 +296,7 @@ def build_outputs(df, sess, metrics, cov, charts, enough):
 
     top_grow = metrics.iloc[metrics["follower_delta"].argmax()]
     lines = [
-        # 08은 관측 구간이 계속 늘어난다. 제목에 마지막 관측일을 박아두면
-        # 어느 시점 리포트인지 본문을 안 봐도 안다.
-        f"# 프로젝트 8 · StelLive 동시시청자 시계열 분석 ({cov['last'][:10]} 기준)\n",
+        "# 프로젝트 8 · StelLive 동시시청자 시계열 분석\n",
         "- 데이터 소스: 치지직 비공식 API (polling live-status) — 10분 간격 자체 수집",
         f"- 관측 구간: {cov['first'][:16]} ~ {cov['last'][:16]} (UTC), "
         f"약 {cov['span_hours']:.1f}시간 / 스냅샷 {cov['n_timepoints']}시점 · {cov['n_snapshots']}건",

@@ -254,7 +254,7 @@ def build_outputs(ch, vids, metrics):
     eff = t.iloc[t["reach_ratio"].argmax()]
     busy = t.iloc[t["uploads_per_week"].argmax()]
     eng = t.iloc[t["recent_avg_engagement_rate"].argmax()]
-    md = f"""# 프로젝트 1 · StelLive 멤버별 유튜브 채널 성과 분석 ({meta['fetched_at'][:10]} 기준)
+    md = f"""# 프로젝트 1 · StelLive 멤버별 유튜브 채널 성과 분석
 
 - 데이터 소스: YouTube Data API v3 (수집 {meta['fetched_at'][:10]})
 - 대상: StelLive 멤버 11명(창립자 강지 포함), 채널당 최근 {meta['recent_per_channel']}개 영상

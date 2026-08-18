@@ -1,9 +1,21 @@
-# 프로젝트 11 · 팬 커머스 분석 — 팬덤은 얼마를 쓰고, 그 돈은 회사에 남는가?
+# 프로젝트 11 · 팬 커머스
+
+**기준 2026-08-15**
+
+## 결론
+
+팬은 돈을 쓰지만 회사에 남지 않는다. 팬딩 월 구독 중앙값은 7,200원인데 크라우드펀딩 1인당 후원액은 24.8만원으로 **약 34배**다 — 같은 팬이 정기 구독에는 만원 미만을, 한정 굿즈에는 수십만원을 쓴다. 그런데 같은 IP 를 운영하는 패러블엔터테인먼트의 감사받은 FY2025 영업이익은 **-91억원**이다. 지출과 수익성 사이에 구조적 간극이 있다.
+
+---
+
+## 데이터
 
 - 수집 시각: 2026-08-15T20:47:10 UTC
 - 데이터 소스: 팬딩(Fanding) 공개 REST + 텀블벅(Tumblbug) 공개 결과 정적 큐레이션 + 09_dart_financials 감사보고서 재무제표(읽기 전용 재사용)
 
-## 세 레이어, 세 가지 확보 방식
+## 상세 분석
+
+### 세 레이어, 세 가지 확보 방식
 
 이 프로젝트는 '팬덤 지출'을 한 번에 재는 지표가 없어서 세 레이어로 쪼갰다. 각 레이어는
 확보 방법이 근본적으로 다르고, 그 차이 자체가 이 프로젝트의 발견이다.
@@ -67,7 +79,7 @@ API가 아니므로).
 - **패러블엔터테인먼트**(이세계아이돌 소속사): 매출 2024년 210억원 → 2025년 218억원으로 증가했지만, 영업이익은 2024년 +12억원(흑자)에서 2025년 -91억원(적자)으로 전환됐다.
 - **샌드박스네트워크**: 2018~2025년 8개 연도 전부 영업손실(8/8년 적자). 2025년 매출 731억원에도 영업이익률 -5.8%.
 
-## 세 레이어를 나란히 놓아보면 (펀치라인 — 증명이 아니라 관찰)
+### 세 레이어를 나란히 놓아보면 (펀치라인 — 증명이 아니라 관찰)
 
 이세계아이돌 굿즈 펀딩 두 건은 41억원·88억원이라는 국내 크라우드펀딩 역대 최고 기록을
 냈다. 같은 기간 그 IP의 실제 관리사로 보도된 패러블엔터테인먼트의 감사보고서는
@@ -84,10 +96,29 @@ API가 아니므로).
 ④ 팬딩 가격 레이어는 이 두 회사와 아예 무관한 제3의 플랫폼 데이터라 세 레이어를 하나의
 숫자로 합칠 수 없다 — 그래서 세 레이어를 병렬로만 제시하고 억지로 잇지 않았다.
 
-## 산출물
-- `data/fanding_creators.csv`·`data/fanding_tiers.csv` 팬딩 VTuber 카테고리 크리에이터·멤버십 티어
-- `data/crowdfunding_projects.csv` 텀블벅 VTuber 관련 크라우드펀딩 정적 큐레이션(출처 포함)
-- `data/company_financials.csv` 09_dart_financials 재사용(샌드박스네트워크·패러블엔터테인먼트)
-- `sql/` 스키마·INSERT·분석쿼리·SQLite·실행결과
-- `charts/` 차트 5종(가격 분포·달성률·1인당 후원액·회사별 매출-영업이익 추이 2종)
-- `site/index.html` 대시보드
+## 근거 자료
+
+### 차트 5종 (최신 실행 2026-08-15 기준)
+
+![01_fanding_price_dist](charts/01_fanding_price_dist.png)
+
+![02_crowdfunding_achievement](charts/02_crowdfunding_achievement.png)
+
+![03_crowdfunding_per_backer](charts/03_crowdfunding_per_backer.png)
+
+![04_parable_revenue_vs_operating](charts/04_parable_revenue_vs_operating.png)
+
+![05_sandbox_revenue_vs_operating](charts/05_sandbox_revenue_vs_operating.png)
+
+
+## 원자료
+
+이 리포트를 만든 코드와 데이터는 저장소의 [`youtube_analyze_all/11_fan_commerce/`](../../youtube_analyze_all/11_fan_commerce/) 에 있다.
+
+| 경로 | 내용 |
+|---|---|
+| `collect.py` | 수집 |
+| `analyze.py` | 정제·집계·차트 생성 |
+| `data/` | 원천·정제 데이터 (CSV/JSON) |
+| `sql/` | 스키마·INSERT·분석쿼리·SQLite·쿼리 실행결과 |
+| `site/index.html` | 자체완결 인터랙티브 대시보드 |

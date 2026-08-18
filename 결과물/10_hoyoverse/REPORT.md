@@ -1,4 +1,14 @@
-# 프로젝트 10 · 호요버스 캐릭터 인기도 분석
+# 프로젝트 10 · 호요버스 캐릭터 인기도
+
+**기준 2026-08-15**
+
+## 결론
+
+게임사가 미는 캐릭터와 유저가 반응하는 캐릭터가 **다르다.** 공식 푸시 1위(최신 5성)와 리뷰 언급량 1위가 일치하지 않는다. 다만 매칭 가능한 199명 중 72명은 수집된 리뷰에 한 번도 언급되지 않아, 언급량은 '인기'가 아니라 **'화제성'** 의 근사치로만 읽어야 한다. Google Trends 는 매 호출 429 로 실패해 설계에서 드롭했고, 그 실패도 데이터로 기록했다.
+
+---
+
+## 데이터
 
 **질문**: 게임사가 밀어주는 캐릭터와 유저가 실제로 반응하는 캐릭터는 일치하는가?
 
@@ -9,7 +19,7 @@
 - **Google Trends는 이 환경에서 사용 불가** — 매 시도 즉시 429(요청 제한). 검색 관심도는
   아예 다루지 않았고, 대신 리뷰 본문 언급량으로 유저 반응을 근사했다(README 참고).
 
-## 핵심 요약
+## 한눈에
 
 - **공식 푸시 1위**(5성·최신 출시): 오데트(원신, 2026-08-10 출시)
 - **유저 반응 1위**(리뷰 언급량): 반디(붕괴:스타레일, 71건 언급)
@@ -22,7 +32,9 @@
 - **주의**: 관측 데이터라 "배너를 자주 돌려서 언급량이 늘었다"는 인과 해석은 하지 않는다.
   언급량은 리뷰 작성 시점의 여러 이유(신캐 출시, 밸런스 논란, 버그 등)가 섞인 결과다.
 
-## 데이터 함정
+## 상세 분석
+
+### 데이터 함정
 
 1. **배너/재출시 이력 데이터가 없다.** 무료·키 불필요 소스 중 배너 스케줄 API를 찾지
    못해(수집 단계 주석 참고), "공식 푸시"는 **5성 여부 + 출시 최신순**이라는 거친 프록시다.
@@ -35,9 +47,35 @@
    못 썼다. 리뷰 언급량은 검색량의 대체재이지 동의어가 아니다 — 리뷰를 남기는 유저는
    전체 플레이어의 일부이고, 특정 성향(불만이 있는 유저)에 쏠렸을 가능성이 있다.
 
-## 산출물
-- `data/characters.csv` 캐릭터 마스터, `data/reviews.csv` 리뷰 원본,
-  `data/character_metrics.csv` 캐릭터별 푸시/반응 지표, `data/trends_status.json` Google Trends 실패 로그
-- `sql/` 스키마·INSERT·분석쿼리·SQLite·실행결과
-- `charts/` 차트 8종(푸시 TOP15·반응 TOP15·순위 산점도·월간 평점 추이·평점 분포·희귀도 구성·원소 분포·언급-감성 산점도)
-- `site/index.html` 인터랙티브 대시보드
+## 근거 자료
+
+### 차트 8종 (최신 실행 2026-08-15 기준)
+
+![01_push_proxy_top15](charts/01_push_proxy_top15.png)
+
+![02_audience_mentions_top15](charts/02_audience_mentions_top15.png)
+
+![03_push_vs_audience_rank](charts/03_push_vs_audience_rank.png)
+
+![04_monthly_score_trend](charts/04_monthly_score_trend.png)
+
+![05_score_distribution](charts/05_score_distribution.png)
+
+![06_rarity_composition](charts/06_rarity_composition.png)
+
+![07_element_distribution](charts/07_element_distribution.png)
+
+![08_mentions_vs_sentiment](charts/08_mentions_vs_sentiment.png)
+
+
+## 원자료
+
+이 리포트를 만든 코드와 데이터는 저장소의 [`youtube_analyze_all/10_hoyoverse/`](../../youtube_analyze_all/10_hoyoverse/) 에 있다.
+
+| 경로 | 내용 |
+|---|---|
+| `collect.py` | 수집 |
+| `analyze.py` | 정제·집계·차트 생성 |
+| `data/` | 원천·정제 데이터 (CSV/JSON) |
+| `sql/` | 스키마·INSERT·분석쿼리·SQLite·쿼리 실행결과 |
+| `site/index.html` | 자체완결 인터랙티브 대시보드 |

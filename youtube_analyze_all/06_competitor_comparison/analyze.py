@@ -149,7 +149,7 @@ def build_outputs(vids, members, group_summary):
 
     gs = group_summary.set_index("group")
     stel, holo, ise = gs.loc["StelLive"], gs.loc["홀로라이브"], gs.loc["이세계아이돌"]
-    md = f"""# 프로젝트 6 · 경쟁사 비교 분석 (StelLive vs 홀로라이브 vs 이세계아이돌) — {meta['fetched_at'][:10]} 기준
+    md = f"""# 프로젝트 6 · 경쟁사 비교 분석 (StelLive vs 홀로라이브 vs 이세계아이돌)
 
 - 각 그룹 대표 멤버 6명 표본, 채널당 최근 {meta['recent_per_channel']}개 영상. 수집 {meta['fetched_at'][:10]}
 - 홀로라이브: 우사다 페코라·가우르 구라·호쇼 마린·모리 캘리오프·모모스즈 네네·이누가미 코로네
