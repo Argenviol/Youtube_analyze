@@ -49,6 +49,13 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      # 차트 라벨이 전부 한글이다. 러너에는 한글 폰트가 없어서, 없으면 matplotlib 이
+      # DejaVu Sans 로 폴백해 모든 글자가 □(tofu)로 렌더된다. 실제로 그렇게 커밋돼
+      # 있었다 — 멤버 이름도 제목도 못 읽는 차트가 결과물에 그대로 들어갔다.
+      # common/viz.py 가 이 경로를 명시적으로 addfont 하므로 캐시 문제도 없다.
+      - name: 한글 폰트 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum
+
       - name: 실행할 그룹 결정
         id: pick
         run: |

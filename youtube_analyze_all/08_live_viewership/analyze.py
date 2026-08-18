@@ -34,10 +34,28 @@ MIN_LIVE_SESSIONS = 5
 #    넘겨버리지만 실제 데이터는 몇 시간치뿐이다. span 을 기준으로 가드를 풀면
 #    "얇은 데이터로 만든 그럴듯한 차트"가 정확히 그 상황에서 통과한다.
 MIN_OBSERVED_HOURS = 24
-# 스냅샷 간격(10분)의 2배를 넘게 벌어지면 같은 방송으로 잇지 않는다.
-SESSION_GAP_MIN = 25
-# 수집 간격(분). collect.py 의 기본값과 맞춘다.
-INTERVAL_MIN = 10
+# 수집 간격은 고정값으로 둘 수 없다. GitHub Actions 스케줄러는 cron 집행을
+# 보장하지 않고 고빈도일수록 자주 건너뛴다 — 워크플로에 10분으로 걸어둬도 실제로는
+# 중앙값 30분 안팎으로 들어온다(실측 48시간: 중앙값 32분, 최대 107분).
+#
+# 이걸 고정값으로 두면 두 군데가 동시에 무너진다.
+#   1) 세션 재구성: 정상 간격이 임계값(25분)을 넘겨서 연속 방송이 스냅샷 1개짜리
+#      세션으로 산산조각 난다. 실측에서 365세션 중 300건(82%)이 1포인트였다.
+#   2) 커버리지: 관측 시간을 "시점 수 × 간격"으로 재는데 간격을 10분으로 잡으면
+#      실제의 1/3로 과소평가된다.
+# 그래서 둘 다 실측 간격에서 유도한다. 스케줄러 사정이 바뀌어도 따라간다.
+NOMINAL_INTERVAL_MIN = 10   # 워크플로 cron 이 의도한 간격. 하한선으로만 쓴다.
+SESSION_GAP_FACTOR = 2.5    # 관측 간격의 몇 배까지 같은 방송으로 이을지
+
+
+def observed_interval_min(df: pd.DataFrame) -> float:
+    """실제 스냅샷 간격의 중앙값(분). 장시간 중단 구간이 섞여 있어 평균이 아니라
+    중앙값을 쓴다. 데이터가 없거나 의도 간격보다 촘촘하면 의도 간격을 쓴다."""
+    stamps = df["collected_at"].drop_duplicates().sort_values()
+    gaps = stamps.diff().dt.total_seconds().div(60).dropna()
+    if gaps.empty:
+        return float(NOMINAL_INTERVAL_MIN)
+    return max(float(NOMINAL_INTERVAL_MIN), float(gaps.median()))
 
 
 def load() -> pd.DataFrame:
@@ -48,14 +66,14 @@ def load() -> pd.DataFrame:
     return df.sort_values("collected_at").reset_index(drop=True)
 
 
-def coverage(df: pd.DataFrame) -> dict:
+def coverage(df: pd.DataFrame, interval_min: float) -> dict:
     span_h = (df["collected_at"].max() - df["collected_at"].min()).total_seconds() / 3600
     n_timepoints = int(df["collected_at"].nunique())
 
     # 실제 관측 시간 = 찍은 시점 수 × 간격. PC가 꺼져 있던 구간은 여기 안 들어간다.
-    observed_h = n_timepoints * INTERVAL_MIN / 60
+    observed_h = n_timepoints * interval_min / 60
     # 기대 시점 수 대비 실제 시점 수. 1.0 이면 무중단, 0.3 이면 70%가 공백이다.
-    expected = max(1.0, span_h * 60 / INTERVAL_MIN)
+    expected = max(1.0, span_h * 60 / interval_min)
     ratio = min(1.0, n_timepoints / expected)
 
     # 가장 큰 단절 구간 — "언제 꺼져 있었나"를 한 숫자로 보여준다.
@@ -96,13 +114,13 @@ def follower_growth(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-def sessions(df: pd.DataFrame) -> pd.DataFrame:
+def sessions(df: pd.DataFrame, gap_threshold_min: float) -> pd.DataFrame:
     """연속된 is_live 스냅샷을 하나의 방송 세션으로 묶는다."""
     rows = []
     for (ko, en, unit), g in df[df["is_live"]].groupby(["name_ko", "name_en", "unit"]):
         g = g.sort_values("collected_at")
         gap = g["collected_at"].diff().dt.total_seconds().div(60)
-        sid = (gap.isna() | (gap > SESSION_GAP_MIN)).cumsum()
+        sid = (gap.isna() | (gap > gap_threshold_min)).cumsum()
         for _, s in g.groupby(sid):
             start, end = s["collected_at"].iloc[0], s["collected_at"].iloc[-1]
             rows.append(dict(
@@ -362,9 +380,14 @@ ANALYSIS_QUERIES = "-- StelLive 동시시청자 분석 쿼리 (SQLite: sql/viewe
 
 def main():
     df = load()
-    cov = coverage(df)
+    # 수집 간격을 실측에서 먼저 구한다. 커버리지 계산과 세션 임계값이 둘 다 여기에 걸린다.
+    interval = observed_interval_min(df)
+    gap_threshold = interval * SESSION_GAP_FACTOR
+    print(f"  실측 수집 간격 중앙값 {interval:.0f}분 · 세션 분리 임계값 {gap_threshold:.0f}분")
+
+    cov = coverage(df, interval)
     grow = follower_growth(df)
-    sess = sessions(df)
+    sess = sessions(df, gap_threshold)
     metrics = member_metrics(df, sess, grow)
 
     # span 이 아니라 observed_hours 로 판단한다. PC가 꺼져 있던 시간은 관측이 아니다.
