@@ -99,6 +99,16 @@ def main(group: str, skip_collect: bool) -> int:
                 failures.append(f"{proj}/{script}")
                 break
 
+    # 01·02·03·06 은 metrics CSV 를 덮어쓴다. 덮어쓰기 전이 아니라 후에 불러도
+    # 되는 이유는, history.py 가 _meta.json 의 수집 날짜를 키로 쓰고 같은 날짜면
+    # 교체하기 때문이다. 하루에 여러 번 돌아도 중복이 안 쌓인다.
+    if group != "live":
+        print("\n  지표 축적(history)")
+        ok, msg = run(".", "scripts/history.py")
+        print(msg)
+        if not ok:
+            failures.append("scripts/history.py")
+
     # 리포트·차트·대시보드가 갱신됐으니 `결과물/` 도 다시 만든다. 이걸 빼먹으면
     # 결과물 폴더가 조용히 옛 수치를 보여주게 된다 — 틀린 것보다 나쁘다.
     # 08(live)은 10분마다 도는데 매번 전량 복사할 이유가 없어 제외한다.

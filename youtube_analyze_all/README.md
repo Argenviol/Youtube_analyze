@@ -58,6 +58,24 @@ powershell -File scripts/register_tasks.ps1 -Apply # 작업 스케줄러 등록
 | `weekly` | 주 1회 | 04·05·10·11 |
 | `monthly` | 월 1회 | 09 (DART 공시 주기가 분기·연간) |
 
+## 지표 축적 (`data/history.csv`)
+
+01·02·03·06 은 수집할 때마다 metrics CSV 를 통째로 덮어쓴다. 그래서 리포트는 항상
+"지금"만 보여준다. `scripts/history.py` 가 각 프로젝트에 append-only `data/history.csv`
+를 만들어 **(날짜 × 대상 × 지표)** 를 쌓는다. `refresh.py` 가 분석 후 자동 호출한다.
+
+```bash
+python scripts/history.py --backfill   # git 히스토리에서 과거분 소급 복원
+python scripts/history.py --report     # 1일/7일/28일 변화율
+```
+
+행의 날짜는 스크립트를 돌린 날이 아니라 **데이터를 수집한 날**(`_meta.json`)이다.
+같은 (날짜, 대상)이 이미 있으면 교체하므로 하루에 여러 번 돌아도 중복이 안 쌓인다.
+
+⚠ 유튜브 구독자는 API 가 1,000 단위로 반올림해 준다. 13만 채널은 하루에 0 아니면
++1,000 으로만 움직여서 변화율이 계단처럼 튄다. 짧은 창(1일·7일)에서는 치지직
+팔로워(정확한 정수)를 같이 보는 편이 낫다.
+
 ## 스냅샷 보존
 
 ```bash
