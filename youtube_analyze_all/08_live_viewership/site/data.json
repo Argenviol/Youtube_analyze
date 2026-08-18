@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-08-18T09:54:16.434150+00:00",
-    "n_snapshots": 2481,
+    "fetched_at": "2026-08-18T10:33:56.649982+00:00",
+    "n_snapshots": 2492,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-08-18T09:54:16.434150+00:00"
+      "2026-08-18T10:33:56.649982+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 2452,
-    "n_timepoints": 223,
-    "span_hours": 147.98,
-    "observed_hours": 116.94,
-    "coverage_ratio": 0.79,
+    "n_snapshots": 2463,
+    "n_timepoints": 224,
+    "span_hours": 148.64,
+    "observed_hours": 117.82,
+    "coverage_ratio": 0.793,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 600,
+    "n_live_rows": 603,
     "members": 11,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-08-18T09:54:16.434150+00:00"
+    "last": "2026-08-18T10:33:56.649982+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,9 +30,9 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 302778,
-      "follower_delta": 858,
-      "follower_per_day": 139.2,
+      "followers": 302780,
+      "follower_delta": 860,
+      "follower_per_day": 138.9,
       "n_sessions": 9,
       "n_live_points": 74,
       "peak_ccu": 8239,
@@ -44,9 +44,9 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 237728,
-      "follower_delta": 880,
-      "follower_per_day": 142.7,
+      "followers": 237736,
+      "follower_delta": 888,
+      "follower_per_day": 143.4,
       "n_sessions": 8,
       "n_live_points": 83,
       "peak_ccu": 7862,
@@ -58,9 +58,9 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 256378,
-      "follower_delta": 1052,
-      "follower_per_day": 170.6,
+      "followers": 256383,
+      "follower_delta": 1057,
+      "follower_per_day": 170.7,
       "n_sessions": 4,
       "n_live_points": 72,
       "peak_ccu": 7675,
@@ -72,9 +72,9 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 208551,
-      "follower_delta": 1125,
-      "follower_per_day": 182.5,
+      "followers": 208558,
+      "follower_delta": 1132,
+      "follower_per_day": 182.8,
       "n_sessions": 7,
       "n_live_points": 70,
       "peak_ccu": 7593,
@@ -86,9 +86,9 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 210429,
-      "follower_delta": 1094,
-      "follower_per_day": 177.4,
+      "followers": 210435,
+      "follower_delta": 1100,
+      "follower_per_day": 177.6,
       "n_sessions": 7,
       "n_live_points": 43,
       "peak_ccu": 6741,
@@ -100,13 +100,13 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 242164,
-      "follower_delta": 1047,
-      "follower_per_day": 169.8,
-      "n_sessions": 7,
-      "n_live_points": 67,
+      "followers": 242176,
+      "follower_delta": 1059,
+      "follower_per_day": 171.0,
+      "n_sessions": 8,
+      "n_live_points": 68,
       "peak_ccu": 5870,
-      "avg_ccu": 4809,
+      "avg_ccu": 4815,
       "ccu_per_1k_followers": 24.24
     },
     {
@@ -114,23 +114,37 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 210664,
-      "follower_delta": 845,
-      "follower_per_day": 137.0,
-      "n_sessions": 5,
-      "n_live_points": 43,
+      "followers": 210679,
+      "follower_delta": 860,
+      "follower_per_day": 138.9,
+      "n_sessions": 6,
+      "n_live_points": 44,
       "peak_ccu": 5055,
-      "avg_ccu": 2795,
-      "ccu_per_1k_followers": 24.0
+      "avg_ccu": 2781,
+      "ccu_per_1k_followers": 23.99
     },
     {
       "rank": 8,
+      "name_ko": "아오쿠모 린",
+      "name_en": "Aokumo Rin",
+      "unit": "CLICHE",
+      "followers": 220270,
+      "follower_delta": 1170,
+      "follower_per_day": 188.9,
+      "n_sessions": 6,
+      "n_live_points": 48,
+      "peak_ccu": 3789,
+      "avg_ccu": 3008,
+      "ccu_per_1k_followers": 17.2
+    },
+    {
+      "rank": 9,
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 253907,
-      "follower_delta": 1005,
-      "follower_per_day": 163.0,
+      "followers": 253909,
+      "follower_delta": 1007,
+      "follower_per_day": 162.6,
       "n_sessions": 6,
       "n_live_points": 31,
       "peak_ccu": 3780,
@@ -138,27 +152,13 @@
       "ccu_per_1k_followers": 14.89
     },
     {
-      "rank": 9,
-      "name_ko": "아오쿠모 린",
-      "name_en": "Aokumo Rin",
-      "unit": "CLICHE",
-      "followers": 220256,
-      "follower_delta": 1156,
-      "follower_per_day": 187.5,
-      "n_sessions": 6,
-      "n_live_points": 47,
-      "peak_ccu": 3594,
-      "avg_ccu": 2991,
-      "ccu_per_1k_followers": 16.32
-    },
-    {
       "rank": 10,
       "name_ko": "강지",
       "name_en": "Kangji",
       "unit": "STELLIVE",
-      "followers": 288264,
-      "follower_delta": 1117,
-      "follower_per_day": 181.2,
+      "followers": 288267,
+      "follower_delta": 1120,
+      "follower_per_day": 180.8,
       "n_sessions": 6,
       "n_live_points": 47,
       "peak_ccu": 3467,
@@ -170,9 +170,9 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 157466,
-      "follower_delta": 725,
-      "follower_per_day": 117.7,
+      "followers": 157473,
+      "follower_delta": 732,
+      "follower_per_day": 118.3,
       "n_sessions": 4,
       "n_live_points": 23,
       "peak_ccu": 2698,
@@ -338,6 +338,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "텐코 시부키",
+      "name_en": "Tenko Shibuki",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-18 19:33",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 5238,
+      "avg_ccu": 5238,
+      "title": "감동의 슬픔이었는데 진짜 슬퍼짐 ",
+      "category": "talk"
+    },
+    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -480,6 +492,18 @@
       "avg_ccu": 3250,
       "title": "데바데 w. 강지 리제 린 이춘향 [시키샤카샤카슈-와! 100만회 감사합니당]💚",
       "category": "데드 바이 데이라이트"
+    },
+    {
+      "name_ko": "아오쿠모 린",
+      "name_en": "Aokumo Rin",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-18 18:54",
+      "observed_min": 39.7,
+      "n_points": 2,
+      "peak_ccu": 3789,
+      "avg_ccu": 3341,
+      "title": "호오오옥",
+      "category": "talk"
     },
     {
       "name_ko": "아카네 리제",
@@ -830,18 +854,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "아오쿠모 린",
-      "name_en": "Aokumo Rin",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-18 18:54",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 2894,
-      "avg_ccu": 2894,
-      "title": "호오오옥",
-      "category": "talk"
-    },
-    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -924,6 +936,18 @@
       "avg_ccu": 1960,
       "title": "( ܸ ⩌⩊⩌ ܸ )",
       "category": "피크"
+    },
+    {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-18 19:33",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 2149,
+      "avg_ccu": 2149,
+      "title": "찌로",
+      "category": "talk"
     },
     {
       "name_ko": "강지",
@@ -1330,6 +1354,10 @@
         [
           "2026-08-18 18:54",
           2894
+        ],
+        [
+          "2026-08-18 19:33",
+          3789
         ]
       ]
     },
@@ -2579,6 +2607,10 @@
         [
           "2026-08-17 21:59",
           3187
+        ],
+        [
+          "2026-08-18 19:33",
+          2149
         ]
       ]
     },
@@ -3286,6 +3318,10 @@
         [
           "2026-08-18 00:14",
           5336
+        ],
+        [
+          "2026-08-18 19:33",
+          5238
         ]
       ]
     },
