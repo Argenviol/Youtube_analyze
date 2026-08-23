@@ -1,4 +1,4 @@
--- sessions 데이터 (95 rows)
+-- sessions 데이터 (96 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-18 19:33', 245.4, 7, 9910, 7725, '감동의 슬픔이었는데 진짜 슬퍼짐 ', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-21 19:02', 636.2, 18, 9272, 6787, '히나입니댜', 'talk');
@@ -64,6 +64,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-13 15:57', 0.0, 1, 3407, 3407, '( ܸ ⩌⩊⩌ ܸ )', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-08-12 20:05', 213.0, 25, 3342, 3048, '어라 카테고리에 왜 크아가 없지... w. 타비, 부키', '종합 게임');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-13 23:07', 0.0, 1, 3310, 3310, '마지막 내전 ! ', '오버워치');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-23 14:50', 0.0, 1, 3305, 3305, '( ܸ ⩌⩊⩌ ܸ )', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아카네 리제', 'Akane Lize', 'UNIVERSE', '2026-08-16 18:31', 362.4, 13, 3266, 2298, '스텔데바데내전 으마무시한 살인마 등장', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-08-17 18:48', 191.2, 6, 3257, 3179, '클리셰와 함께 조깅해', '빅 워크');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-16 16:45', 416.1, 14, 3254, 1983, '나우울해서빵먹고곤약냉면먹고닭가슴살먹고닭가슴살깐풍기먹고비타민은안먹고일하다가소처럼뒤집어잔다음방송켰어', 'talk');
