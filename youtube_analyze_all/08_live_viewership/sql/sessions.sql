@@ -1,4 +1,4 @@
--- sessions 데이터 (111 rows)
+-- sessions 데이터 (112 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-24 18:29', 528.9, 13, 9915, 5613, '정나나가 돌아왔다요~!! [8시 이리 치지직컵 드래프트]', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-18 19:33', 245.4, 7, 9910, 7725, '감동의 슬픔이었는데 진짜 슬퍼짐 ', 'talk');
@@ -112,4 +112,5 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-12 16:38', 10.1, 2, 1723, 1199, '팔척귀신 누나랑 여름휴가를 보내는 공포겜 
 ', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-14 17:51', 185.6, 4, 1716, 1253, '감기용가리...(´。＿。｀)', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-25 15:20', 0.0, 1, 1425, 1425, '( ܸ ⩌⩊⩌ ܸ )', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아카네 리제', 'Akane Lize', 'UNIVERSE', '2026-08-14 20:57', 0.0, 1, 1409, 1409, '팔척귀신눈나랑 공포연애?미연시???게임', 'talk');
