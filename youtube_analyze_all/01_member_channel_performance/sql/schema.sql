@@ -28,10 +28,10 @@ CREATE TABLE videos (
     duration TEXT,
     views INTEGER,
     likes INTEGER,
-    comments REAL,
+    comments INTEGER,
     dur_sec INTEGER,
     is_short INTEGER,
-    engagement REAL,
+    engagement INTEGER,
     engagement_rate REAL,
     like_rate REAL
 );
