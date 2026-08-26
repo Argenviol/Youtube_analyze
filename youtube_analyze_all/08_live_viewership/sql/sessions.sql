@@ -1,4 +1,4 @@
--- sessions 데이터 (135 rows)
+-- sessions 데이터 (136 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-24 18:29', 528.9, 13, 9915, 5613, '정나나가 돌아왔다요~!! [8시 이리 치지직컵 드래프트]', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-18 19:33', 245.4, 7, 9910, 7725, '감동의 슬픔이었는데 진짜 슬퍼짐 ', 'talk');
@@ -115,6 +115,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-16 18:31', 309.3, 11, 2746, 2546, '커버곡 나온댜아아~!!! 논브레스 오블리이쥬!', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-27 01:34', 0.0, 1, 2725, 2725, 'ㅎㅎ...................................................', '로블록스');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-17 20:57', 171.4, 5, 2698, 1994, '자연산 용가리가 왔어', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-08-27 05:40', 0.0, 1, 2647, 2647, '사이버 렉카가 되어보았습니다, ;ㅁ;', '페이크북');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-19 16:58', 0.0, 1, 2568, 2568, '바쿠쿠 바쿠바쿠 바쿠쿠', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('강지', 'Kangji', 'STELLIVE', '2026-08-13 17:39', 232.8, 5, 2548, 2260, '( ܸ ⩌⩊⩌ ܸ )', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-08-27 01:34', 0.0, 1, 2531, 2531, '[수동암즈] 이리 대회 연습 2일차', '이터널 리턴');
