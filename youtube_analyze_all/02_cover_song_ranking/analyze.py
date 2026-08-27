@@ -28,7 +28,10 @@ def build_metrics():
     df["published_at"] = pd.to_datetime(df["published_at"], utc=True)
     for c in ("views", "likes", "comments"):
         df[c] = pd.to_numeric(df[c], errors="coerce")
-    df["engagement_rate"] = np.where(df["views"] > 0,
+    # 방금 올라온 커버는 좋아요보다 조회수 집계가 늦게 붙는다. views>0 만으로는
+    # "조회수 1 · 좋아요 443" 이 통과해 평균 참여율이 수천 %로 폭파된다(2026-08-25 실측,
+    # 01과 동일한 함정). 비율 지표는 조회수 1,000 이상만 계산에 넣는다.
+    df["engagement_rate"] = np.where(df["views"] >= 1000,
                                      (df["likes"].fillna(0) + df["comments"].fillna(0)) / df["views"], np.nan)
 
     rows = []

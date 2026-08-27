@@ -33,7 +33,9 @@ def build_metrics():
     vids["published_at"] = pd.to_datetime(vids["published_at"], utc=True)
     for c in ("views", "likes", "comments"):
         vids[c] = pd.to_numeric(vids[c], errors="coerce")
-    vids["engagement_rate"] = np.where(vids["views"] > 0,
+    # 신규 영상은 조회수 집계가 늦게 붙는다 — views>0 만으로는 "조회수 1·좋아요 443"
+    # 이 통과해 평균 참여율을 폭파시킨다(01·02와 동일 함정, 2026-08-25 실측). 1,000 미만 제외.
+    vids["engagement_rate"] = np.where(vids["views"] >= 1000,
                                        (vids["likes"].fillna(0)+vids["comments"].fillna(0))/vids["views"], np.nan)
 
     # 데이터 계약(PRD 7): name_en을 조인 키로 하는 unit 필드가 필요하다.
