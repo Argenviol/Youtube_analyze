@@ -52,8 +52,14 @@ def build_metrics():
     for col in ("views", "likes", "comments"):
         vids[col] = pd.to_numeric(vids[col], errors="coerce")
     vids["engagement"] = (vids["likes"].fillna(0) + vids["comments"].fillna(0))
-    vids["engagement_rate"] = np.where(vids["views"] > 0, vids["engagement"] / vids["views"], np.nan)
-    vids["like_rate"] = np.where(vids["views"] > 0, vids["likes"] / vids["views"], np.nan)
+    # 비율 지표는 조회수가 자리를 잡은 영상만 쓴다. 방금 올라온 영상은 좋아요·댓글보다
+    # 조회수 집계가 훨씬 늦게 붙어서, views>0 가드만으로는 "조회수 1 · 좋아요 443"
+    # 같은 행이 통과한다. 실제로 2026-08-25 수집에서 이 한 행이 마시로의 평균 참여율을
+    # 4.97% -> 1028.9% 로 폭파시켰다. 절대 지표(조회수 합 등)에는 그대로 포함한다.
+    RATE_MIN_VIEWS = 1000
+    rate_ok = vids["views"] >= RATE_MIN_VIEWS
+    vids["engagement_rate"] = np.where(rate_ok, vids["engagement"] / vids["views"], np.nan)
+    vids["like_rate"] = np.where(rate_ok, vids["likes"] / vids["views"], np.nan)
 
     rows = []
     for _, c in ch.iterrows():
