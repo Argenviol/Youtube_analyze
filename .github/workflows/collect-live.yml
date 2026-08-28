@@ -1,33 +1,40 @@
 # 프로젝트 8(동시시청자) 수집 — 소급 불가라 가장 중요하다.
 #
-# ⚠ 비용
-#   공개 저장소  : Actions 무제한 무료 → 10분 간격 그대로 가능
-#   비공개 저장소: 월 2,000분 무료. 10분 간격이면 월 4,320회 × 약 1분이라 한도를 넘겨
-#                 과금된다. 비공개로 쓰려면 아래 cron 을 "0 * * * *"(1시간)로 늘릴 것.
+# ## 왜 "한 번 깨어나 한 장"이 아니라 "한 번 깨어나 5시간 반" 인가
 #
-# ⚠ GitHub Actions cron 은 정시를 보장하지 않는다. 부하에 따라 수 분~수십 분 밀린다.
-#   10분으로 적어도 실제로는 10~20분 간격이 된다. 분석 코드는 불규칙 간격을 전제로
-#   작성돼 있고(세션 재구성이 25분 gap 기준), 커버리지도 span 이 아니라 실제 찍은
-#   시점 수로 계산하므로 밀림이 지표를 왜곡하지 않는다.
+# 원래는 cron "*/10" 이 매번 스냅샷 1장을 찍고 끝났다. 그런데 GitHub 스케줄러는
+# cron 집행을 보장하지 않고, 이 저장소에서 실측으로 점점 나빠졌다:
+#   8/13~18: 중앙값 ~35분   →   8/26~28: 중앙값 64분, 8~10시간 공백 3회
+# 소급 수집이 불가능한 지표라 저 공백은 영구 손실이다.
+#
+# 그래서 구조를 뒤집었다: 스케줄러가 언제 깨워주느냐에 목숨 걸지 않고, **한 번
+# 깨어나면 잡 안에서 10분 간격으로 최대 5시간 반 동안 계속 찍는다.** 매 반복마다
+# 커밋·푸시하므로 잡이 중간에 죽어도 그때까지 찍은 것은 남는다. concurrency 그룹이
+# 겹침을 막고(뒤 실행은 큐에서 대기 후 이어받음), cron 은 1시간으로 두어 앞 잡이
+# 끝나면 다음 잡이 사슬처럼 이어진다. 스케줄러가 6시간에 한 번만 깨워줘도
+# 커버리지가 유지된다.
+#
+# 공개 저장소는 Actions 러너 시간이 무료라 장시간 잡의 비용 문제는 없다.
+# (비공개로 전환하면 월 2,000분 무료를 하루 만에 소진하니 이 설계를 버려야 한다.)
 
 name: collect-live
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "0 * * * *" # 매시 — 앞 잡(최대 5.5h)이 돌고 있으면 큐에서 대기 후 이어받는다
   workflow_dispatch: # 수동 실행 버튼
 
 permissions:
   contents: write # 수집한 데이터를 저장소에 커밋해야 한다
 
 concurrency:
-  group: collect-live # 앞 실행이 안 끝났으면 큐만 쌓이지 않게 한다
+  group: collect-live # 동시에 두 잡이 찍지 않게. cancel 안 함 — 큐 1개가 이어달리기 주자다
   cancel-in-progress: false
 
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 350 # 반복 루프(최대 ~330분) + 여유
     defaults:
       run:
         working-directory: youtube_analyze_all
@@ -43,25 +50,32 @@ jobs:
       - run: pip install -r requirements.txt
 
       # 차트 라벨이 전부 한글이다. 러너에는 한글 폰트가 없어서, 없으면 matplotlib 이
-      # DejaVu Sans 로 폴백해 모든 글자가 □(tofu)로 렌더된다. 실제로 그렇게 커밋돼
-      # 있었다 — 멤버 이름도 제목도 못 읽는 차트가 결과물에 그대로 들어갔다.
-      # common/viz.py 가 이 경로를 명시적으로 addfont 하므로 캐시 문제도 없다.
+      # DejaVu Sans 로 폴백해 모든 글자가 □(tofu)로 렌더된다.
       - name: 한글 폰트 설치
         run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum
 
       # 08은 치지직 비공식 API만 쓴다 — API 키가 필요 없다.
-      - name: 수집 → 분석 → 사이트 재생성
-        run: python scripts/refresh.py --group live
-
-      # 08은 소급 수집이 불가능하다. 분석이나 사이트 생성이 죽어도 이미 찍은 스냅샷은
-      # 반드시 남겨야 한다 — 이 단계가 skip 되면 그 시점 데이터는 영구 공백이 된다.
-      - name: 변경분 커밋
-        if: always()
+      #
+      # 33회 × (수집·분석 ~40초 + 대기 600초) ≈ 5시간 30분.
+      # 매 반복마다 커밋·푸시한다 — 잡이 러너 회수 등으로 중간에 죽어도 이미 찍은
+      # 스냅샷은 원격에 남아 있어야 한다(소급 불가). 한 반복의 수집 실패는 루프를
+      # 죽이지 않는다: 다음 반복이 다시 시도하는 쪽이 그 시점을 통째로 버리는 것보다
+      # 낫다. 푸시는 daily/weekly 워크플로와 경합할 수 있어 pull --rebase 후 3회
+      # 재시도한다.
+      - name: 수집 루프 (10분 × 33회)
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A 08_live_viewership/
-          # 변경이 없으면 커밋하지 않는다(빈 커밋으로 히스토리를 더럽히지 않도록).
-          git diff --staged --quiet || git commit -m "chore(08): 동시시청자 스냅샷 $(date -u +%Y-%m-%dT%H:%MZ)"
-          git pull --rebase --autostash
-          git push
+          for i in $(seq 1 33); do
+            echo "── 반복 $i/33 · $(date -u +%H:%M)"
+            python scripts/refresh.py --group live || echo "  (이번 반복 실패 — 다음 반복에서 재시도)"
+            git add -A 08_live_viewership/
+            if ! git diff --staged --quiet; then
+              git commit -m "chore(08): 동시시청자 스냅샷 $(date -u +%Y-%m-%dT%H:%MZ)"
+              for try in 1 2 3; do
+                git pull --rebase --autostash && git push && break
+                echo "  push 재시도 $try"; sleep 10
+              done
+            fi
+            [ "$i" -lt 33 ] && sleep 600
+          done
