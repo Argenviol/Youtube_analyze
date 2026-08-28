@@ -1,6 +1,5 @@
--- channels 데이터 (11 rows)
+-- channels 데이터 (10 rows)
 
-INSERT INTO channels (channel_id, name_ko, name_en, unit, role, handle, subscribers, total_views, video_count, created_at, country, uploads_playlist) VALUES ('UCIVFv8AiQLqM9oLHTixrNYw', '강지', 'Kangji', 'STELLIVE', 'founder', 'gangzi1', 762000, 936856431, 2266, '2014-11-11T22:36:14Z', 'KR', 'UUIVFv8AiQLqM9oLHTixrNYw');
 INSERT INTO channels (channel_id, name_ko, name_en, unit, role, handle, subscribers, total_views, video_count, created_at, country, uploads_playlist) VALUES ('UClbYIn9LDbbFZ9w2shX3K0g', '아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', 'talent', 'ayatsunoyuni', 359000, 194794758, 731, '2022-12-20T18:25:09.738437Z', 'KR', 'UUlbYIn9LDbbFZ9w2shX3K0g');
 INSERT INTO channels (channel_id, name_ko, name_en, unit, role, handle, subscribers, total_views, video_count, created_at, country, uploads_playlist) VALUES ('UC0YQnenKBCu5sGb7H61n6HA', '사키하네 후야', 'Sakihane Huya', 'EVERYS', 'talent', 'sakihanechannel', 131000, 51197940, 328, '2025-09-16T10:33:13.484328Z', NULL, 'UU0YQnenKBCu5sGb7H61n6HA');
 INSERT INTO channels (channel_id, name_ko, name_en, unit, role, handle, subscribers, total_views, video_count, created_at, country, uploads_playlist) VALUES ('UC1afpiIuBDcjYlmruAa0HiA', '시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', 'talent', 'shirayukihina', 319000, 189030059, 608, '2023-06-01T11:42:49.359854Z', 'KR', 'UU1afpiIuBDcjYlmruAa0HiA');

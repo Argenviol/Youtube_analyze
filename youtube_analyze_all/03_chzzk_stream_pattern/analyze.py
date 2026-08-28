@@ -25,8 +25,8 @@ WD = ["월", "화", "수", "목", "금", "토", "일"]
 
 
 def build_metrics():
-    df = pd.read_csv(DATA / "streams.csv")
-    ch = pd.read_csv(DATA / "chzzk_channels.csv")
+    df = config.drop_founder(pd.read_csv(DATA / "streams.csv"))
+    ch = config.drop_founder(pd.read_csv(DATA / "chzzk_channels.csv"))
     df["dt"] = pd.to_datetime(df["publish_date"])          # KST naive
     df["hour"] = df["dt"].dt.hour
     df["dow"] = df["dt"].dt.dayofweek

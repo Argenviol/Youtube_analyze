@@ -476,7 +476,7 @@ def build_outputs(raw, status_df, search_df, wide, primary, charts, fandom_ctx, 
     ]
     p1 = fandom_ctx.get("project01"); p8 = fandom_ctx.get("project08")
     if p1:
-        lines.append(f"- 프로젝트1(2026-08 스냅샷): 스텔라이브 11명 합산 구독자 {p1['total_subscribers']:,}명")
+        lines.append(f"- 프로젝트1(2026-08 스냅샷): 스텔라이브 탤런트 합산 구독자 {p1['total_subscribers']:,}명")
     if p8:
         lines.append(f"- 프로젝트8(2026-08 스냅샷): 관측 {p8['coverage']['span_hours']:.1f}시간, "
                       f"팔로워 증감 합계 {p8['total_follower_delta']:+,}명")

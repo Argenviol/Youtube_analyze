@@ -59,7 +59,7 @@ def observed_interval_min(df: pd.DataFrame) -> float:
 
 
 def load() -> pd.DataFrame:
-    df = pd.read_csv(DATA / "snapshots.csv")
+    df = config.drop_founder(pd.read_csv(DATA / "snapshots.csv"))
     df["collected_at"] = pd.to_datetime(df["collected_at"], format="ISO8601", utc=True)
     df["kst"] = df["collected_at"].dt.tz_convert("Asia/Seoul")
     df["is_live"] = df["is_live"].astype(str).str.lower().isin(["true", "1"])

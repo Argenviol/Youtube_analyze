@@ -42,8 +42,8 @@ def dur_seconds(s: str) -> int:
 # 1) 로드 & 파생지표
 # ---------------------------------------------------------------------------
 def build_metrics():
-    ch = pd.read_csv(DATA / "channels.csv")
-    vids = pd.read_csv(DATA / "videos.csv")
+    ch = config.drop_founder(pd.read_csv(DATA / "channels.csv"))
+    vids = config.drop_founder(pd.read_csv(DATA / "videos.csv"))
 
     vids["published_at"] = pd.to_datetime(vids["published_at"], utc=True)
     vids["published_kst"] = vids["published_at"].dt.tz_convert("Asia/Seoul")
@@ -155,8 +155,8 @@ def build_charts(ch, vids, metrics):
         fig.savefig(CHARTS / fname, dpi=140)
         plt.close(fig)
 
-    # 1. 구독자 (전체 11명, 강지 포함)
-    hbar(metrics, "subscribers", "멤버별 구독자 수 (강지=창립자 포함)",
+    # 1. 구독자 (탤런트 10명 — 분석 산출물은 창립자를 제외한다: config.drop_founder)
+    hbar(metrics, "subscribers", "멤버별 구독자 수",
          fmt="{:,.0f}", fname="01_subscribers.png")
     # 2. 최근 영상 평균 조회수 (탤런트)
     hbar(talents, "recent_avg_views", "최근 50개 영상 평균 조회수",
@@ -263,7 +263,7 @@ def build_outputs(ch, vids, metrics):
     md = f"""# 프로젝트 1 · StelLive 멤버별 유튜브 채널 성과 분석
 
 - 데이터 소스: YouTube Data API v3 (수집 {meta['fetched_at'][:10]})
-- 대상: StelLive 멤버 11명(창립자 강지 포함), 채널당 최근 {meta['recent_per_channel']}개 영상
+- 대상: StelLive 탤런트 {len(metrics)}명, 채널당 최근 {meta['recent_per_channel']}개 영상
 - 총 {meta['n_videos']}개 영상 지표 집계
 
 ## 핵심 요약

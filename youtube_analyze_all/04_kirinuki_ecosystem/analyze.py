@@ -24,7 +24,9 @@ SITE = HERE / "site"
 
 
 def build_metrics():
-    df = pd.read_csv(DATA / "clips.csv")
+    # 클립 데이터는 대상 멤버 컬럼이 name_ko 가 아니라 source_member_ko 다 —
+    # 기본 컬럼으로 부르면 필터가 조용히 무시된다(실제로 그랬다).
+    df = config.drop_founder(pd.read_csv(DATA / "clips.csv"), col="source_member_ko")
     for c in ("views", "likes", "comments", "clip_channel_subs"):
         df[c] = pd.to_numeric(df[c], errors="coerce")
 

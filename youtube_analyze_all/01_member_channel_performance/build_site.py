@@ -99,7 +99,7 @@ a{color:var(--s1)}
 <button class="toggle" onclick="toggleTheme()">◐ 테마</button>
 <header>
   <h1>StelLive 멤버별 유튜브 채널 성과 분석</h1>
-  <p>스텔라이브 멤버 11명(창립자 강지 포함)의 채널 지표 · 최근 영상 성과 비교</p>
+  <p>스텔라이브 탤런트 10명의 채널 지표 · 최근 영상 성과 비교</p>
   <div id="tags"></div>
 </header>
 
@@ -169,7 +169,7 @@ const avgViews=Math.round(talents.reduce((a,m)=>a+m.recent_avg_views,0)/talents.
 const avgEng=(talents.reduce((a,m)=>a+m.recent_avg_engagement_rate,0)/talents.length*100).toFixed(1);
 const topReach=[...talents].sort((a,b)=>b.reach_ratio-a.reach_ratio)[0];
 const kpis=[
-  ['탤런트 합산 구독자',fmt(sumSubs),'창립자 강지 제외'],
+  ['탤런트 합산 구독자',fmt(sumSubs),'탤런트 10명'],
   ['평균 조회수(최근)',fmtN(avgViews),'채널당 최근 50영상'],
   ['평균 참여율',avgEng+'%','좋아요+댓글/조회수'],
   ['도달 효율 1위',topReach.name_ko,(topReach.reach_ratio*100).toFixed(0)+'% · 조회수/구독자'],

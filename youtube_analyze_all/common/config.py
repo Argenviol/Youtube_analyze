@@ -48,6 +48,23 @@ OFFICIAL_CHANNEL = ("스텔라이브 공식", "StelLive Official", "UC2b4WRE5BZ6
 
 INCLUDE_FOUNDER = True
 
+# 리포트·차트 등 **분석 산출물**에서 창립자(강지)를 제외한다. 수집은 전 로스터로
+# 계속한다 — 특히 08 동시시청자는 소급 수집이 불가능해서, 표시에서 빼더라도 데이터는
+# 계속 쌓아야 나중에 기준이 바뀌어도 복구할 수 있다. INCLUDE_FOUNDER(수집)와
+# 별개의 스위치인 이유다.
+EXCLUDE_FOUNDER_FROM_ANALYSIS = True
+
+
+def founder_names() -> set:
+    return {m[0] for m in MEMBERS if m[3] == "founder"}
+
+
+def drop_founder(df, col: str = "name_ko"):
+    """분석 산출물용 필터. 스위치가 꺼져 있거나 해당 컬럼이 없으면 그대로 돌려준다."""
+    if not EXCLUDE_FOUNDER_FROM_ANALYSIS or col not in getattr(df, "columns", ()):
+        return df
+    return df[~df[col].isin(founder_names())].reset_index(drop=True)
+
 # ---------------------------------------------------------------------------
 # 경쟁사 비교(프로젝트6)용 로스터 — 모두 YouTube API로 검증한 채널 ID
 # ---------------------------------------------------------------------------

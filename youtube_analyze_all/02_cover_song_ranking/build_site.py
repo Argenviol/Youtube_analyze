@@ -135,7 +135,7 @@ const totViews=DATA.members.reduce((a,m)=>a+m.total_views,0);
 const king=[...DATA.members].sort((a,b)=>b.total_views-a.total_views)[0];
 const topCover=DATA.top_covers[0];
 document.getElementById('kpis').innerHTML=[
-  ['총 커버곡',fmtN(totCovers)+'곡','11명 채널 합산'],
+  ['총 커버곡',fmtN(totCovers)+'곡','탤런트 채널 합산'],
   ['합산 조회수',fmt(totViews),'모든 커버곡 조회수 합'],
   ['총 조회수 1위',king.name_ko,fmt(king.total_views)+' · '+king.cover_count+'곡'],
   ['최고 조회 커버',topCover.name_ko,fmt(topCover.views)+' 조회'],

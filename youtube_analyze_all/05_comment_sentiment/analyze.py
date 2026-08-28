@@ -31,7 +31,7 @@ SENTI_KO = {"positive": "긍정", "negative": "부정", "neutral": "중립"}
 
 
 def build_metrics():
-    df = pd.read_csv(DATA / "comments_labeled.csv")
+    df = config.drop_founder(pd.read_csv(DATA / "comments_labeled.csv"))
     df["topic_ko"] = df["topic"].map(TOPIC_KO).fillna("기타")
     df["sentiment_ko"] = df["sentiment"].map(SENTI_KO).fillna("중립")
 

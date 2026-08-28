@@ -24,7 +24,7 @@ SITE = HERE / "site"
 
 
 def build_metrics():
-    df = pd.read_csv(DATA / "covers.csv")
+    df = config.drop_founder(pd.read_csv(DATA / "covers.csv"))
     df["published_at"] = pd.to_datetime(df["published_at"], utc=True)
     for c in ("views", "likes", "comments"):
         df[c] = pd.to_numeric(df[c], errors="coerce")
