@@ -1,8 +1,8 @@
 {
   "meta": {
-    "fetched_at": "2026-08-22T20:45:41.117115+00:00",
+    "fetched_at": "2026-08-29T22:43:02.801184+00:00",
     "source": "yatta.moe(Project Amber 후신, 캐릭터 마스터) + google-play-scraper(앱스토어 리뷰) + pytrends(Google Trends, 실패)",
-    "n_characters": 203,
+    "n_characters": 205,
     "n_playable_avatars_excluded": 26,
     "n_reviews": 6000,
     "games": [
@@ -12,12 +12,12 @@
     "google_trends_ok": false,
     "google_trends_error": "ModuleNotFoundError: No module named 'pytrends'",
     "n_reviews_requested_per_app": 3000,
-    "n_characters_collected": 229,
-    "n_characters_gacha": 203,
-    "n_characters_note": "수집 229명 중 가챠 캐릭터 203명이 분석 대상. 기본 지급 캐릭터(is_playable_avatar)는 제외했다."
+    "n_characters_collected": 231,
+    "n_characters_gacha": 205,
+    "n_characters_note": "수집 231명 중 가챠 캐릭터 205명이 분석 대상. 기본 지급 캐릭터(is_playable_avatar)는 제외했다."
   },
   "trends_status": {
-    "attempted_at": "2026-08-22T20:45:35.117751+00:00",
+    "attempted_at": "2026-08-29T22:42:56.994407+00:00",
     "ok": false,
     "library": "pytrends",
     "error": "ModuleNotFoundError: No module named 'pytrends'",
@@ -30,9 +30,9 @@
       "name_ko": "원신",
       "package": "com.miHoYo.GenshinImpact",
       "title": "원신-스네즈나야 오픈",
-      "score": 3.895169,
-      "ratings": 5217802,
-      "reviews_total": 45647,
+      "score": 3.898109,
+      "ratings": 5221188,
+      "reviews_total": 45637,
       "installs": "100,000,000+",
       "version": "7.0.0_47144228_47194594"
     },
@@ -41,11 +41,11 @@
       "name_ko": "붕괴:스타레일",
       "package": "com.HoYoverse.hkrpgoversea",
       "title": "붕괴: 스타레일",
-      "score": 3.636244,
-      "ratings": 519970,
-      "reviews_total": 9619,
+      "score": 3.6366813,
+      "ratings": 521091,
+      "reviews_total": 9624,
       "installs": "10,000,000+",
-      "version": "4.4.0"
+      "version": "4.5.0"
     }
   ],
   "characters": [
@@ -69,8 +69,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 114.0,
-      "audience_rank": 130.0
+      "push_rank": 116.0,
+      "audience_rank": 131.0
     },
     {
       "game": "genshin",
@@ -92,7 +92,7 @@
       "mention_rate_per_10k": null,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 124.0,
+      "push_rank": 126.0,
       "audience_rank": null
     },
     {
@@ -116,7 +116,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
       "push_rank": null,
-      "audience_rank": 109.0
+      "audience_rank": 124.0
     },
     {
       "game": "genshin",
@@ -139,7 +139,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 131.0
+      "audience_rank": 130.0
     },
     {
       "game": "genshin",
@@ -184,8 +184,8 @@
       "mention_rate_per_10k": 16.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.37,
-      "push_rank": 128.0,
-      "audience_rank": 45.0
+      "push_rank": 131.0,
+      "audience_rank": 49.0
     },
     {
       "game": "genshin",
@@ -231,7 +231,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.63,
       "push_rank": null,
-      "audience_rank": 108.0
+      "audience_rank": 109.0
     },
     {
       "game": "genshin",
@@ -253,8 +253,8 @@
       "mention_rate_per_10k": 30.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.15,
-      "push_rank": 127.0,
-      "audience_rank": 27.0
+      "push_rank": 130.0,
+      "audience_rank": 26.0
     },
     {
       "game": "genshin",
@@ -277,7 +277,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 129.0
+      "audience_rank": 127.0
     },
     {
       "game": "genshin",
@@ -300,7 +300,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 157.0
+      "audience_rank": 128.0
     },
     {
       "game": "genshin",
@@ -323,7 +323,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 160.0
+      "audience_rank": 129.0
     },
     {
       "game": "genshin",
@@ -345,7 +345,7 @@
       "mention_rate_per_10k": null,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 118.0,
+      "push_rank": 120.0,
       "audience_rank": null
     },
     {
@@ -369,7 +369,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 159.0
+      "audience_rank": 160.0
     },
     {
       "game": "genshin",
@@ -391,8 +391,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 123.0,
-      "audience_rank": 158.0
+      "push_rank": 129.0,
+      "audience_rank": 161.0
     },
     {
       "game": "genshin",
@@ -414,7 +414,7 @@
       "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.1,
-      "push_rank": 121.0,
+      "push_rank": 123.0,
       "audience_rank": 19.0
     },
     {
@@ -438,7 +438,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.37,
       "push_rank": null,
-      "audience_rank": 111.0
+      "audience_rank": 114.0
     },
     {
       "game": "genshin",
@@ -461,7 +461,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.37,
       "push_rank": null,
-      "audience_rank": 110.0
+      "audience_rank": 118.0
     },
     {
       "game": "genshin",
@@ -483,8 +483,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.37,
-      "push_rank": 122.0,
-      "audience_rank": 112.0
+      "push_rank": 124.0,
+      "audience_rank": 108.0
     },
     {
       "game": "genshin",
@@ -524,13 +524,13 @@
       "name_len": 2,
       "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 11.0,
-      "avg_mention_score": 3.64,
-      "mention_rate_per_10k": 36.67,
+      "mention_count": 10.0,
+      "avg_mention_score": 3.9,
+      "mention_rate_per_10k": 33.33,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": 0.01,
-      "push_rank": 129.0,
-      "audience_rank": 20.0
+      "sentiment_vs_baseline": 0.27,
+      "push_rank": 125.0,
+      "audience_rank": 22.0
     },
     {
       "game": "genshin",
@@ -553,7 +553,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 155.0
+      "audience_rank": 162.0
     },
     {
       "game": "genshin",
@@ -575,8 +575,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
-      "push_rank": 119.0,
-      "audience_rank": 114.0
+      "push_rank": 121.0,
+      "audience_rank": 115.0
     },
     {
       "game": "genshin",
@@ -598,8 +598,8 @@
       "mention_rate_per_10k": 6.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
-      "push_rank": 120.0,
-      "audience_rank": 70.0
+      "push_rank": 122.0,
+      "audience_rank": 74.0
     },
     {
       "game": "genshin",
@@ -622,7 +622,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 156.0
+      "audience_rank": 163.0
     },
     {
       "game": "genshin",
@@ -644,8 +644,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -1.63,
-      "push_rank": 126.0,
-      "audience_rank": 120.0
+      "push_rank": 128.0,
+      "audience_rank": 122.0
     },
     {
       "game": "genshin",
@@ -667,8 +667,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -2.63,
-      "push_rank": 125.0,
-      "audience_rank": 121.0
+      "push_rank": 127.0,
+      "audience_rank": 123.0
     },
     {
       "game": "genshin",
@@ -691,7 +691,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 163.0
+      "audience_rank": 159.0
     },
     {
       "game": "genshin",
@@ -714,7 +714,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 164.0
+      "audience_rank": 158.0
     },
     {
       "game": "genshin",
@@ -737,7 +737,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 161.0
+      "audience_rank": 133.0
     },
     {
       "game": "genshin",
@@ -754,13 +754,13 @@
       "name_len": 2,
       "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 11.0,
-      "avg_mention_score": 4.09,
-      "mention_rate_per_10k": 36.67,
+      "mention_count": 10.0,
+      "avg_mention_score": 4.0,
+      "mention_rate_per_10k": 33.33,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": 0.46,
-      "push_rank": 117.0,
-      "audience_rank": 21.0
+      "sentiment_vs_baseline": 0.37,
+      "push_rank": 119.0,
+      "audience_rank": 23.0
     },
     {
       "game": "genshin",
@@ -782,8 +782,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.37,
-      "push_rank": 115.0,
-      "audience_rank": 127.0
+      "push_rank": 117.0,
+      "audience_rank": 119.0
     },
     {
       "game": "genshin",
@@ -806,7 +806,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
       "push_rank": null,
-      "audience_rank": 118.0
+      "audience_rank": 125.0
     },
     {
       "game": "genshin",
@@ -828,8 +828,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
-      "push_rank": 113.0,
-      "audience_rank": 113.0
+      "push_rank": 115.0,
+      "audience_rank": 126.0
     },
     {
       "game": "genshin",
@@ -852,7 +852,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 162.0
+      "audience_rank": 164.0
     },
     {
       "game": "genshin",
@@ -869,13 +869,13 @@
       "name_len": 2,
       "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 2.0,
-      "avg_mention_score": 2.5,
-      "mention_rate_per_10k": 6.67,
+      "mention_count": 1.0,
+      "avg_mention_score": 1.0,
+      "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": -1.13,
-      "push_rank": 116.0,
-      "audience_rank": 71.0
+      "sentiment_vs_baseline": -2.63,
+      "push_rank": 118.0,
+      "audience_rank": 121.0
     },
     {
       "game": "genshin",
@@ -897,8 +897,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.37,
-      "push_rank": 112.0,
-      "audience_rank": 119.0
+      "push_rank": 113.0,
+      "audience_rank": 120.0
     },
     {
       "game": "genshin",
@@ -921,7 +921,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 133.0
+      "audience_rank": 135.0
     },
     {
       "game": "genshin",
@@ -943,7 +943,7 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 110.0,
+      "push_rank": 112.0,
       "audience_rank": 134.0
     },
     {
@@ -961,13 +961,13 @@
       "name_len": 2,
       "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 8.0,
-      "avg_mention_score": 2.5,
-      "mention_rate_per_10k": 26.67,
+      "mention_count": 9.0,
+      "avg_mention_score": 2.78,
+      "mention_rate_per_10k": 30.0,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": -1.13,
+      "sentiment_vs_baseline": -0.85,
       "push_rank": null,
-      "audience_rank": 32.0
+      "audience_rank": 27.0
     },
     {
       "game": "genshin",
@@ -990,7 +990,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 135.0
+      "audience_rank": 136.0
     },
     {
       "game": "genshin",
@@ -1012,8 +1012,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 109.0,
-      "audience_rank": 136.0
+      "push_rank": 111.0,
+      "audience_rank": 137.0
     },
     {
       "game": "genshin",
@@ -1035,8 +1035,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 107.0,
-      "audience_rank": 137.0
+      "push_rank": 109.0,
+      "audience_rank": 138.0
     },
     {
       "game": "genshin",
@@ -1059,7 +1059,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 154.0
+      "audience_rank": 139.0
     },
     {
       "game": "genshin",
@@ -1081,8 +1081,8 @@
       "mention_rate_per_10k": 13.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.63,
-      "push_rank": 105.0,
-      "audience_rank": 53.0
+      "push_rank": 107.0,
+      "audience_rank": 51.0
     },
     {
       "game": "genshin",
@@ -1105,7 +1105,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 150.0
+      "audience_rank": 152.0
     },
     {
       "game": "genshin",
@@ -1127,8 +1127,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.37,
-      "push_rank": 111.0,
-      "audience_rank": 117.0
+      "push_rank": 114.0,
+      "audience_rank": 111.0
     },
     {
       "game": "genshin",
@@ -1150,8 +1150,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 108.0,
-      "audience_rank": 149.0
+      "push_rank": 110.0,
+      "audience_rank": 150.0
     },
     {
       "game": "genshin",
@@ -1174,7 +1174,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 148.0
+      "audience_rank": 151.0
     },
     {
       "game": "genshin",
@@ -1197,7 +1197,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 147.0
+      "audience_rank": 157.0
     },
     {
       "game": "genshin",
@@ -1219,8 +1219,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 106.0,
-      "audience_rank": 146.0
+      "push_rank": 108.0,
+      "audience_rank": 156.0
     },
     {
       "game": "genshin",
@@ -1243,7 +1243,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
       "push_rank": null,
-      "audience_rank": 106.0
+      "audience_rank": 112.0
     },
     {
       "game": "genshin",
@@ -1266,7 +1266,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -2.63,
       "push_rank": null,
-      "audience_rank": 107.0
+      "audience_rank": 117.0
     },
     {
       "game": "genshin",
@@ -1288,7 +1288,7 @@
       "mention_rate_per_10k": 10.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.3,
-      "push_rank": 104.0,
+      "push_rank": 106.0,
       "audience_rank": 63.0
     },
     {
@@ -1311,8 +1311,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -2.63,
-      "push_rank": 102.0,
-      "audience_rank": 126.0
+      "push_rank": 104.0,
+      "audience_rank": 116.0
     },
     {
       "game": "genshin",
@@ -1334,8 +1334,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 103.0,
-      "audience_rank": 151.0
+      "push_rank": 105.0,
+      "audience_rank": 153.0
     },
     {
       "game": "genshin",
@@ -1358,7 +1358,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 152.0
+      "audience_rank": 154.0
     },
     {
       "game": "genshin",
@@ -1380,8 +1380,8 @@
       "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.55,
-      "push_rank": 101.0,
-      "audience_rank": 22.0
+      "push_rank": 103.0,
+      "audience_rank": 20.0
     },
     {
       "game": "genshin",
@@ -1404,7 +1404,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 153.0
+      "audience_rank": 155.0
     },
     {
       "game": "genshin",
@@ -1426,8 +1426,8 @@
       "mention_rate_per_10k": 23.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.37,
-      "push_rank": 100.0,
-      "audience_rank": 38.0
+      "push_rank": 102.0,
+      "audience_rank": 37.0
     },
     {
       "game": "genshin",
@@ -1450,7 +1450,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -2.63,
       "push_rank": null,
-      "audience_rank": 116.0
+      "audience_rank": 113.0
     },
     {
       "game": "genshin",
@@ -1473,7 +1473,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 143.0
+      "audience_rank": 148.0
     },
     {
       "game": "genshin",
@@ -1495,8 +1495,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 99.0,
-      "audience_rank": 142.0
+      "push_rank": 101.0,
+      "audience_rank": 145.0
     },
     {
       "game": "genshin",
@@ -1518,8 +1518,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.63,
-      "push_rank": 98.0,
-      "audience_rank": 115.0
+      "push_rank": 100.0,
+      "audience_rank": 110.0
     },
     {
       "game": "genshin",
@@ -1542,7 +1542,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 144.0
+      "audience_rank": 149.0
     },
     {
       "game": "genshin",
@@ -1565,7 +1565,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 145.0
+      "audience_rank": 146.0
     },
     {
       "game": "genshin",
@@ -1587,7 +1587,7 @@
       "mention_rate_per_10k": 10.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.04,
-      "push_rank": 89.0,
+      "push_rank": 91.0,
       "audience_rank": 62.0
     },
     {
@@ -1611,7 +1611,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 140.0
+      "audience_rank": 147.0
     },
     {
       "game": "genshin",
@@ -1628,12 +1628,12 @@
       "name_len": 2,
       "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 14.0,
-      "avg_mention_score": 2.64,
-      "mention_rate_per_10k": 46.67,
+      "mention_count": 13.0,
+      "avg_mention_score": 2.54,
+      "mention_rate_per_10k": 43.33,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": -0.99,
-      "push_rank": 83.0,
+      "sentiment_vs_baseline": -1.09,
+      "push_rank": 85.0,
       "audience_rank": 10.0
     },
     {
@@ -1657,7 +1657,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 141.0
+      "audience_rank": 144.0
     },
     {
       "game": "genshin",
@@ -1679,8 +1679,8 @@
       "mention_rate_per_10k": 13.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.63,
-      "push_rank": 78.0,
-      "audience_rank": 52.0
+      "push_rank": 80.0,
+      "audience_rank": 50.0
     },
     {
       "game": "genshin",
@@ -1702,8 +1702,8 @@
       "mention_rate_per_10k": 20.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.13,
-      "push_rank": 80.0,
-      "audience_rank": 39.0
+      "push_rank": 82.0,
+      "audience_rank": 42.0
     },
     {
       "game": "genshin",
@@ -1726,7 +1726,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 139.0
+      "audience_rank": 143.0
     },
     {
       "game": "genshin",
@@ -1748,8 +1748,8 @@
       "mention_rate_per_10k": 66.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.92,
-      "push_rank": 76.0,
-      "audience_rank": 4.0
+      "push_rank": 78.0,
+      "audience_rank": 3.0
     },
     {
       "game": "genshin",
@@ -1772,7 +1772,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 138.0
+      "audience_rank": 142.0
     },
     {
       "game": "genshin",
@@ -1794,8 +1794,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 73.0,
-      "audience_rank": 166.0
+      "push_rank": 75.0,
+      "audience_rank": 141.0
     },
     {
       "game": "genshin",
@@ -1812,13 +1812,13 @@
       "name_len": 2,
       "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 1.0,
-      "avg_mention_score": 1.0,
-      "mention_rate_per_10k": 3.33,
+      "mention_count": 0.0,
+      "avg_mention_score": null,
+      "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": -2.63,
+      "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 95.0
+      "audience_rank": 140.0
     },
     {
       "game": "genshin",
@@ -1840,8 +1840,8 @@
       "mention_rate_per_10k": 6.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -1.13,
-      "push_rank": 70.0,
-      "audience_rank": 82.0
+      "push_rank": 72.0,
+      "audience_rank": 80.0
     },
     {
       "game": "genshin",
@@ -1863,8 +1863,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
-      "push_rank": 67.0,
-      "audience_rank": 125.0
+      "push_rank": 69.0,
+      "audience_rank": 106.0
     },
     {
       "game": "genshin",
@@ -1886,8 +1886,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
-      "push_rank": 59.0,
-      "audience_rank": 94.0
+      "push_rank": 61.0,
+      "audience_rank": 96.0
     },
     {
       "game": "genshin",
@@ -1909,8 +1909,8 @@
       "mention_rate_per_10k": 13.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.87,
-      "push_rank": 64.0,
-      "audience_rank": 59.0
+      "push_rank": 66.0,
+      "audience_rank": 54.0
     },
     {
       "game": "genshin",
@@ -1933,7 +1933,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 167.0
+      "audience_rank": 165.0
     },
     {
       "game": "genshin",
@@ -1950,13 +1950,13 @@
       "name_len": 4,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 2.0,
-      "avg_mention_score": 3.5,
-      "mention_rate_per_10k": 6.67,
+      "mention_count": 1.0,
+      "avg_mention_score": 4.0,
+      "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": -0.13,
-      "push_rank": 61.0,
-      "audience_rank": 68.0
+      "sentiment_vs_baseline": 0.37,
+      "push_rank": 63.0,
+      "audience_rank": 98.0
     },
     {
       "game": "genshin",
@@ -1978,8 +1978,8 @@
       "mention_rate_per_10k": 6.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.63,
-      "push_rank": 56.0,
-      "audience_rank": 69.0
+      "push_rank": 58.0,
+      "audience_rank": 71.0
     },
     {
       "game": "genshin",
@@ -2002,7 +2002,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -1.63,
       "push_rank": null,
-      "audience_rank": 65.0
+      "audience_rank": 66.0
     },
     {
       "game": "genshin",
@@ -2024,8 +2024,8 @@
       "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.9,
-      "push_rank": 52.0,
-      "audience_rank": 13.0
+      "push_rank": 54.0,
+      "audience_rank": 12.0
     },
     {
       "game": "genshin",
@@ -2047,8 +2047,8 @@
       "mention_rate_per_10k": 13.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.62,
-      "push_rank": 54.0,
-      "audience_rank": 57.0
+      "push_rank": 56.0,
+      "audience_rank": 59.0
     },
     {
       "game": "genshin",
@@ -2065,13 +2065,13 @@
       "name_len": 3,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 12.0,
+      "mention_count": 11.0,
       "avg_mention_score": 3.0,
-      "mention_rate_per_10k": 40.0,
+      "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.63,
-      "push_rank": 50.0,
-      "audience_rank": 12.0
+      "push_rank": 52.0,
+      "audience_rank": 13.0
     },
     {
       "game": "genshin",
@@ -2088,13 +2088,13 @@
       "name_len": 3,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 8.0,
-      "avg_mention_score": 4.0,
-      "mention_rate_per_10k": 26.67,
+      "mention_count": 7.0,
+      "avg_mention_score": 4.14,
+      "mention_rate_per_10k": 23.33,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": 0.37,
-      "push_rank": 48.0,
-      "audience_rank": 33.0
+      "sentiment_vs_baseline": 0.51,
+      "push_rank": 50.0,
+      "audience_rank": 38.0
     },
     {
       "game": "genshin",
@@ -2117,7 +2117,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.37,
       "push_rank": null,
-      "audience_rank": 128.0
+      "audience_rank": 99.0
     },
     {
       "game": "genshin",
@@ -2134,13 +2134,13 @@
       "name_len": 3,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 20.0,
+      "mention_count": 19.0,
       "avg_mention_score": 3.0,
-      "mention_rate_per_10k": 66.67,
+      "mention_rate_per_10k": 63.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.63,
-      "push_rank": 45.0,
-      "audience_rank": 3.0
+      "push_rank": 46.0,
+      "audience_rank": 4.0
     },
     {
       "game": "genshin",
@@ -2162,8 +2162,8 @@
       "mention_rate_per_10k": 23.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.51,
-      "push_rank": 44.0,
-      "audience_rank": 37.0
+      "push_rank": 47.0,
+      "audience_rank": 33.0
     },
     {
       "game": "genshin",
@@ -2186,7 +2186,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 168.0
+      "audience_rank": 170.0
     },
     {
       "game": "genshin",
@@ -2208,8 +2208,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.63,
-      "push_rank": 41.0,
-      "audience_rank": 101.0
+      "push_rank": 43.0,
+      "audience_rank": 95.0
     },
     {
       "game": "genshin",
@@ -2232,7 +2232,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -2.63,
       "push_rank": null,
-      "audience_rank": 92.0
+      "audience_rank": 94.0
     },
     {
       "game": "genshin",
@@ -2254,8 +2254,8 @@
       "mention_rate_per_10k": 16.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.57,
-      "push_rank": 38.0,
-      "audience_rank": 46.0
+      "push_rank": 40.0,
+      "audience_rank": 48.0
     },
     {
       "game": "genshin",
@@ -2277,8 +2277,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.63,
-      "push_rank": 35.0,
-      "audience_rank": 93.0
+      "push_rank": 37.0,
+      "audience_rank": 103.0
     },
     {
       "game": "genshin",
@@ -2301,7 +2301,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.01,
       "push_rank": null,
-      "audience_rank": 29.0
+      "audience_rank": 31.0
     },
     {
       "game": "genshin",
@@ -2323,7 +2323,7 @@
       "mention_rate_per_10k": 33.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.43,
-      "push_rank": 32.0,
+      "push_rank": 34.0,
       "audience_rank": 24.0
     },
     {
@@ -2347,7 +2347,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 169.0
+      "audience_rank": 171.0
     },
     {
       "game": "genshin",
@@ -2369,8 +2369,8 @@
       "mention_rate_per_10k": 13.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -1.38,
-      "push_rank": 28.0,
-      "audience_rank": 58.0
+      "push_rank": 30.0,
+      "audience_rank": 52.0
     },
     {
       "game": "genshin",
@@ -2392,8 +2392,8 @@
       "mention_rate_per_10k": 6.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
-      "push_rank": 25.0,
-      "audience_rank": 76.0
+      "push_rank": 27.0,
+      "audience_rank": 78.0
     },
     {
       "game": "genshin",
@@ -2415,8 +2415,8 @@
       "mention_rate_per_10k": 23.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.51,
-      "push_rank": 23.0,
-      "audience_rank": 35.0
+      "push_rank": 25.0,
+      "audience_rank": 34.0
     },
     {
       "game": "genshin",
@@ -2439,7 +2439,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
       "push_rank": null,
-      "audience_rank": 91.0
+      "audience_rank": 100.0
     },
     {
       "game": "genshin",
@@ -2461,8 +2461,8 @@
       "mention_rate_per_10k": 16.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.03,
-      "push_rank": 21.0,
-      "audience_rank": 47.0
+      "push_rank": 23.0,
+      "audience_rank": 44.0
     },
     {
       "game": "genshin",
@@ -2484,8 +2484,8 @@
       "mention_rate_per_10k": 16.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.97,
-      "push_rank": 19.0,
-      "audience_rank": 48.0
+      "push_rank": 21.0,
+      "audience_rank": 45.0
     },
     {
       "game": "genshin",
@@ -2508,7 +2508,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
       "push_rank": null,
-      "audience_rank": 122.0
+      "audience_rank": 92.0
     },
     {
       "game": "genshin",
@@ -2525,12 +2525,12 @@
       "name_len": 4,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 15.0,
-      "avg_mention_score": 4.13,
-      "mention_rate_per_10k": 50.0,
+      "mention_count": 14.0,
+      "avg_mention_score": 4.29,
+      "mention_rate_per_10k": 46.67,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": 0.5,
-      "push_rank": 17.0,
+      "sentiment_vs_baseline": 0.66,
+      "push_rank": 19.0,
       "audience_rank": 9.0
     },
     {
@@ -2553,8 +2553,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
-      "push_rank": 16.0,
-      "audience_rank": 90.0
+      "push_rank": 18.0,
+      "audience_rank": 104.0
     },
     {
       "game": "genshin",
@@ -2577,7 +2577,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 180.0
+      "audience_rank": 167.0
     },
     {
       "game": "genshin",
@@ -2599,8 +2599,8 @@
       "mention_rate_per_10k": 16.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.57,
-      "push_rank": 13.0,
-      "audience_rank": 49.0
+      "push_rank": 15.0,
+      "audience_rank": 47.0
     },
     {
       "game": "genshin",
@@ -2622,8 +2622,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
-      "push_rank": 6.0,
-      "audience_rank": 102.0
+      "push_rank": 8.0,
+      "audience_rank": 97.0
     },
     {
       "game": "genshin",
@@ -2645,8 +2645,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.37,
-      "push_rank": 11.0,
-      "audience_rank": 123.0
+      "push_rank": 13.0,
+      "audience_rank": 93.0
     },
     {
       "game": "genshin",
@@ -2668,8 +2668,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 8.0,
-      "audience_rank": 165.0
+      "push_rank": 10.0,
+      "audience_rank": 166.0
     },
     {
       "game": "genshin",
@@ -2692,7 +2692,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 178.0
+      "audience_rank": 181.0
     },
     {
       "game": "genshin",
@@ -2709,12 +2709,12 @@
       "name_len": 4,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 13.0,
-      "avg_mention_score": 3.62,
-      "mention_rate_per_10k": 43.33,
+      "mention_count": 12.0,
+      "avg_mention_score": 3.75,
+      "mention_rate_per_10k": 40.0,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": -0.01,
-      "push_rank": 5.0,
+      "sentiment_vs_baseline": 0.12,
+      "push_rank": 7.0,
       "audience_rank": 11.0
     },
     {
@@ -2738,7 +2738,7 @@
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 176.0
+      "audience_rank": 180.0
     },
     {
       "game": "genshin",
@@ -2760,8 +2760,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 1.0,
-      "audience_rank": 177.0
+      "push_rank": 3.0,
+      "audience_rank": 168.0
     },
     {
       "game": "starrail",
@@ -2784,7 +2784,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 179.0
+      "audience_rank": 169.0
     },
     {
       "game": "starrail",
@@ -2830,7 +2830,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -1.23,
       "push_rank": 94.0,
-      "audience_rank": 40.0
+      "audience_rank": 39.0
     },
     {
       "game": "starrail",
@@ -2875,8 +2875,8 @@
       "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.82,
-      "push_rank": 84.0,
-      "audience_rank": 16.0
+      "push_rank": 86.0,
+      "audience_rank": 14.0
     },
     {
       "game": "starrail",
@@ -2898,7 +2898,7 @@
       "mention_rate_per_10k": 60.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.66,
-      "push_rank": 87.0,
+      "push_rank": 89.0,
       "audience_rank": 5.0
     },
     {
@@ -2922,7 +2922,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 175.0
+      "audience_rank": 179.0
     },
     {
       "game": "starrail",
@@ -2945,7 +2945,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -1.73,
       "push_rank": null,
-      "audience_rank": 124.0
+      "audience_rank": 102.0
     },
     {
       "game": "starrail",
@@ -2968,7 +2968,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.09,
       "push_rank": null,
-      "audience_rank": 18.0
+      "audience_rank": 15.0
     },
     {
       "game": "starrail",
@@ -2990,8 +2990,8 @@
       "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.0,
-      "push_rank": 29.0,
-      "audience_rank": 17.0
+      "push_rank": 31.0,
+      "audience_rank": 18.0
     },
     {
       "game": "starrail",
@@ -3013,8 +3013,8 @@
       "mention_rate_per_10k": 10.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
-      "push_rank": 30.0,
-      "audience_rank": 61.0
+      "push_rank": 32.0,
+      "audience_rank": 67.0
     },
     {
       "game": "starrail",
@@ -3036,8 +3036,8 @@
       "mention_rate_per_10k": 10.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -0.4,
-      "push_rank": 92.0,
-      "audience_rank": 66.0
+      "push_rank": 98.0,
+      "audience_rank": 61.0
     },
     {
       "game": "starrail",
@@ -3059,8 +3059,8 @@
       "mention_rate_per_10k": 26.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -0.11,
-      "push_rank": 96.0,
-      "audience_rank": 30.0
+      "push_rank": 99.0,
+      "audience_rank": 32.0
     },
     {
       "game": "starrail",
@@ -3083,7 +3083,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 174.0
+      "audience_rank": 178.0
     },
     {
       "game": "starrail",
@@ -3105,8 +3105,8 @@
       "mention_rate_per_10k": 10.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -0.73,
-      "push_rank": 90.0,
-      "audience_rank": 67.0
+      "push_rank": 96.0,
+      "audience_rank": 65.0
     },
     {
       "game": "starrail",
@@ -3129,7 +3129,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 172.0
+      "audience_rank": 176.0
     },
     {
       "game": "starrail",
@@ -3152,7 +3152,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 173.0
+      "audience_rank": 177.0
     },
     {
       "game": "starrail",
@@ -3175,7 +3175,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -0.73,
       "push_rank": 97.0,
-      "audience_rank": 56.0
+      "audience_rank": 53.0
     },
     {
       "game": "starrail",
@@ -3198,7 +3198,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
       "push_rank": null,
-      "audience_rank": 105.0
+      "audience_rank": 107.0
     },
     {
       "game": "starrail",
@@ -3221,7 +3221,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 171.0
+      "audience_rank": 175.0
     },
     {
       "game": "starrail",
@@ -3244,7 +3244,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 170.0
+      "audience_rank": 174.0
     },
     {
       "game": "starrail",
@@ -3267,7 +3267,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 194.0
+      "audience_rank": 173.0
     },
     {
       "game": "starrail",
@@ -3289,8 +3289,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 77.0,
-      "audience_rank": 195.0
+      "push_rank": 79.0,
+      "audience_rank": 172.0
     },
     {
       "game": "starrail",
@@ -3313,7 +3313,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 181.0
+      "audience_rank": 183.0
     },
     {
       "game": "starrail",
@@ -3336,7 +3336,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 185.0
+      "audience_rank": 186.0
     },
     {
       "game": "starrail",
@@ -3358,8 +3358,8 @@
       "mention_rate_per_10k": 6.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.77,
-      "push_rank": 86.0,
-      "audience_rank": 74.0
+      "push_rank": 88.0,
+      "audience_rank": 79.0
     },
     {
       "game": "starrail",
@@ -3381,8 +3381,8 @@
       "mention_rate_per_10k": 20.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -0.56,
-      "push_rank": 88.0,
-      "audience_rank": 42.0
+      "push_rank": 90.0,
+      "audience_rank": 43.0
     },
     {
       "game": "starrail",
@@ -3399,12 +3399,12 @@
       "name_len": 4,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 15.0,
-      "avg_mention_score": 4.47,
-      "mention_rate_per_10k": 50.0,
+      "mention_count": 14.0,
+      "avg_mention_score": 4.43,
+      "mention_rate_per_10k": 46.67,
       "game_avg_score": 3.73,
-      "sentiment_vs_baseline": 0.74,
-      "push_rank": 85.0,
+      "sentiment_vs_baseline": 0.7,
+      "push_rank": 87.0,
       "audience_rank": 8.0
     },
     {
@@ -3428,7 +3428,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -0.73,
       "push_rank": null,
-      "audience_rank": 84.0
+      "audience_rank": 91.0
     },
     {
       "game": "starrail",
@@ -3451,7 +3451,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 183.0
+      "audience_rank": 182.0
     },
     {
       "game": "starrail",
@@ -3473,8 +3473,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -2.73,
-      "push_rank": 81.0,
-      "audience_rank": 83.0
+      "push_rank": 83.0,
+      "audience_rank": 90.0
     },
     {
       "game": "starrail",
@@ -3491,13 +3491,13 @@
       "name_len": 2,
       "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 9.0,
-      "avg_mention_score": 2.89,
-      "mention_rate_per_10k": 30.0,
+      "mention_count": 8.0,
+      "avg_mention_score": 2.62,
+      "mention_rate_per_10k": 26.67,
       "game_avg_score": 3.73,
-      "sentiment_vs_baseline": -0.84,
+      "sentiment_vs_baseline": -1.11,
       "push_rank": 93.0,
-      "audience_rank": 26.0
+      "audience_rank": 30.0
     },
     {
       "game": "starrail",
@@ -3520,7 +3520,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 182.0
+      "audience_rank": 187.0
     },
     {
       "game": "starrail",
@@ -3537,13 +3537,13 @@
       "name_len": 2,
       "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 1.0,
-      "avg_mention_score": 5.0,
-      "mention_rate_per_10k": 3.33,
+      "mention_count": 0.0,
+      "avg_mention_score": null,
+      "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
-      "sentiment_vs_baseline": 1.27,
-      "push_rank": 91.0,
-      "audience_rank": 103.0
+      "sentiment_vs_baseline": null,
+      "push_rank": 92.0,
+      "audience_rank": 184.0
     },
     {
       "game": "starrail",
@@ -3565,8 +3565,8 @@
       "mention_rate_per_10k": 26.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.52,
-      "push_rank": 79.0,
-      "audience_rank": 31.0
+      "push_rank": 81.0,
+      "audience_rank": 28.0
     },
     {
       "game": "starrail",
@@ -3588,8 +3588,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 82.0,
-      "audience_rank": 184.0
+      "push_rank": 84.0,
+      "audience_rank": 185.0
     },
     {
       "game": "starrail",
@@ -3612,7 +3612,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 193.0
+      "audience_rank": 194.0
     },
     {
       "game": "starrail",
@@ -3635,7 +3635,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 191.0
+      "audience_rank": 195.0
     },
     {
       "game": "starrail",
@@ -3657,8 +3657,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.27,
-      "push_rank": 75.0,
-      "audience_rank": 104.0
+      "push_rank": 77.0,
+      "audience_rank": 105.0
     },
     {
       "game": "starrail",
@@ -3680,8 +3680,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
-      "push_rank": 55.0,
-      "audience_rank": 89.0
+      "push_rank": 57.0,
+      "audience_rank": 84.0
     },
     {
       "game": "starrail",
@@ -3703,8 +3703,8 @@
       "mention_rate_per_10k": 26.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.15,
-      "push_rank": 53.0,
-      "audience_rank": 28.0
+      "push_rank": 55.0,
+      "audience_rank": 29.0
     },
     {
       "game": "starrail",
@@ -3726,8 +3726,8 @@
       "mention_rate_per_10k": 6.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
-      "push_rank": 57.0,
-      "audience_rank": 81.0
+      "push_rank": 59.0,
+      "audience_rank": 77.0
     },
     {
       "game": "starrail",
@@ -3749,8 +3749,8 @@
       "mention_rate_per_10k": 6.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.77,
-      "push_rank": 51.0,
-      "audience_rank": 80.0
+      "push_rank": 53.0,
+      "audience_rank": 76.0
     },
     {
       "game": "starrail",
@@ -3773,7 +3773,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
       "push_rank": null,
-      "audience_rank": 190.0
+      "audience_rank": 193.0
     },
     {
       "game": "starrail",
@@ -3818,8 +3818,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 46.0,
-      "audience_rank": 188.0
+      "push_rank": 48.0,
+      "audience_rank": 191.0
     },
     {
       "game": "starrail",
@@ -3842,7 +3842,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.77,
       "push_rank": null,
-      "audience_rank": 79.0
+      "audience_rank": 69.0
     },
     {
       "game": "starrail",
@@ -3864,8 +3864,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 74.0,
-      "audience_rank": 189.0
+      "push_rank": 76.0,
+      "audience_rank": 190.0
     },
     {
       "game": "starrail",
@@ -3887,8 +3887,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
-      "push_rank": 72.0,
-      "audience_rank": 100.0
+      "push_rank": 74.0,
+      "audience_rank": 101.0
     },
     {
       "game": "starrail",
@@ -3910,8 +3910,8 @@
       "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.27,
-      "push_rank": 65.0,
-      "audience_rank": 15.0
+      "push_rank": 67.0,
+      "audience_rank": 16.0
     },
     {
       "game": "starrail",
@@ -3933,8 +3933,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 71.0,
-      "audience_rank": 187.0
+      "push_rank": 73.0,
+      "audience_rank": 189.0
     },
     {
       "game": "starrail",
@@ -3956,8 +3956,8 @@
       "mention_rate_per_10k": 20.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.6,
-      "push_rank": 69.0,
-      "audience_rank": 41.0
+      "push_rank": 71.0,
+      "audience_rank": 40.0
     },
     {
       "game": "starrail",
@@ -3979,8 +3979,8 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 68.0,
-      "audience_rank": 186.0
+      "push_rank": 70.0,
+      "audience_rank": 188.0
     },
     {
       "game": "starrail",
@@ -4002,7 +4002,7 @@
       "mention_rate_per_10k": 83.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.31,
-      "push_rank": 66.0,
+      "push_rank": 68.0,
       "audience_rank": 2.0
     },
     {
@@ -4025,8 +4025,8 @@
       "mention_rate_per_10k": 16.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.47,
-      "push_rank": 63.0,
-      "audience_rank": 50.0
+      "push_rank": 65.0,
+      "audience_rank": 46.0
     },
     {
       "game": "starrail",
@@ -4048,7 +4048,7 @@
       "mention_rate_per_10k": 236.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.33,
-      "push_rank": 60.0,
+      "push_rank": 62.0,
       "audience_rank": 1.0
     },
     {
@@ -4072,7 +4072,7 @@
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.27,
       "push_rank": null,
-      "audience_rank": 86.0
+      "audience_rank": 89.0
     },
     {
       "game": "starrail",
@@ -4094,8 +4094,8 @@
       "mention_rate_per_10k": 23.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.41,
-      "push_rank": 47.0,
-      "audience_rank": 34.0
+      "push_rank": 49.0,
+      "audience_rank": 35.0
     },
     {
       "game": "starrail",
@@ -4117,8 +4117,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
-      "push_rank": 58.0,
-      "audience_rank": 87.0
+      "push_rank": 60.0,
+      "audience_rank": 88.0
     },
     {
       "game": "starrail",
@@ -4140,8 +4140,8 @@
       "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.72,
-      "push_rank": 62.0,
-      "audience_rank": 23.0
+      "push_rank": 64.0,
+      "audience_rank": 21.0
     },
     {
       "game": "starrail",
@@ -4163,8 +4163,8 @@
       "mention_rate_per_10k": 13.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.77,
-      "push_rank": 49.0,
-      "audience_rank": 60.0
+      "push_rank": 51.0,
+      "audience_rank": 56.0
     },
     {
       "game": "starrail",
@@ -4186,8 +4186,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -2.73,
-      "push_rank": 18.0,
-      "audience_rank": 85.0
+      "push_rank": 20.0,
+      "audience_rank": 86.0
     },
     {
       "game": "starrail",
@@ -4209,7 +4209,7 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 43.0,
+      "push_rank": 45.0,
       "audience_rank": 196.0
     },
     {
@@ -4232,8 +4232,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
-      "push_rank": 42.0,
-      "audience_rank": 97.0
+      "push_rank": 44.0,
+      "audience_rank": 87.0
     },
     {
       "game": "starrail",
@@ -4255,8 +4255,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
-      "push_rank": 40.0,
-      "audience_rank": 96.0
+      "push_rank": 42.0,
+      "audience_rank": 85.0
     },
     {
       "game": "starrail",
@@ -4278,7 +4278,7 @@
       "mention_rate_per_10k": 23.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -0.44,
-      "push_rank": 39.0,
+      "push_rank": 41.0,
       "audience_rank": 36.0
     },
     {
@@ -4301,8 +4301,8 @@
       "mention_rate_per_10k": 20.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.94,
-      "push_rank": 36.0,
-      "audience_rank": 43.0
+      "push_rank": 38.0,
+      "audience_rank": 41.0
     },
     {
       "game": "starrail",
@@ -4324,8 +4324,8 @@
       "mention_rate_per_10k": 13.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -0.98,
-      "push_rank": 33.0,
-      "audience_rank": 54.0
+      "push_rank": 35.0,
+      "audience_rank": 57.0
     },
     {
       "game": "starrail",
@@ -4347,8 +4347,8 @@
       "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 0.45,
-      "push_rank": 37.0,
-      "audience_rank": 14.0
+      "push_rank": 39.0,
+      "audience_rank": 17.0
     },
     {
       "game": "starrail",
@@ -4370,7 +4370,7 @@
       "mention_rate_per_10k": 53.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -0.42,
-      "push_rank": 31.0,
+      "push_rank": 33.0,
       "audience_rank": 7.0
     },
     {
@@ -4388,13 +4388,13 @@
       "name_len": 3,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 5.0,
-      "avg_mention_score": 2.6,
-      "mention_rate_per_10k": 16.67,
+      "mention_count": 4.0,
+      "avg_mention_score": 2.0,
+      "mention_rate_per_10k": 13.33,
       "game_avg_score": 3.73,
-      "sentiment_vs_baseline": -1.13,
-      "push_rank": 34.0,
-      "audience_rank": 51.0
+      "sentiment_vs_baseline": -1.73,
+      "push_rank": 36.0,
+      "audience_rank": 58.0
     },
     {
       "game": "starrail",
@@ -4416,8 +4416,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -1.73,
-      "push_rank": 27.0,
-      "audience_rank": 88.0
+      "push_rank": 29.0,
+      "audience_rank": 83.0
     },
     {
       "game": "starrail",
@@ -4439,8 +4439,8 @@
       "mention_rate_per_10k": 6.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -0.23,
-      "push_rank": 26.0,
-      "audience_rank": 75.0
+      "push_rank": 28.0,
+      "audience_rank": 70.0
     },
     {
       "game": "starrail",
@@ -4457,13 +4457,13 @@
       "name_len": 5,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 5.0,
-      "avg_mention_score": 4.2,
-      "mention_rate_per_10k": 16.67,
+      "mention_count": 4.0,
+      "avg_mention_score": 4.0,
+      "mention_rate_per_10k": 13.33,
       "game_avg_score": 3.73,
-      "sentiment_vs_baseline": 0.47,
-      "push_rank": 24.0,
-      "audience_rank": 44.0
+      "sentiment_vs_baseline": 0.27,
+      "push_rank": 26.0,
+      "audience_rank": 60.0
     },
     {
       "game": "starrail",
@@ -4485,8 +4485,8 @@
       "mention_rate_per_10k": 6.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
-      "push_rank": 22.0,
-      "audience_rank": 78.0
+      "push_rank": 24.0,
+      "audience_rank": 68.0
     },
     {
       "game": "starrail",
@@ -4508,7 +4508,7 @@
       "mention_rate_per_10k": 60.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -1.23,
-      "push_rank": 20.0,
+      "push_rank": 22.0,
       "audience_rank": 6.0
     },
     {
@@ -4531,7 +4531,7 @@
       "mention_rate_per_10k": 13.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -0.73,
-      "push_rank": 15.0,
+      "push_rank": 16.0,
       "audience_rank": 55.0
     },
     {
@@ -4554,7 +4554,7 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 14.0,
+      "push_rank": 17.0,
       "audience_rank": 197.0
     },
     {
@@ -4577,8 +4577,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
-      "push_rank": 12.0,
-      "audience_rank": 99.0
+      "push_rank": 14.0,
+      "audience_rank": 82.0
     },
     {
       "game": "starrail",
@@ -4600,7 +4600,7 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 9.0,
+      "push_rank": 11.0,
       "audience_rank": 199.0
     },
     {
@@ -4623,7 +4623,7 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 10.0,
+      "push_rank": 12.0,
       "audience_rank": 198.0
     },
     {
@@ -4646,8 +4646,8 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
-      "push_rank": 7.0,
-      "audience_rank": 98.0
+      "push_rank": 9.0,
+      "audience_rank": 81.0
     },
     {
       "game": "starrail",
@@ -4669,7 +4669,7 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 3.0,
+      "push_rank": 5.0,
       "audience_rank": 200.0
     },
     {
@@ -4692,8 +4692,8 @@
       "mention_rate_per_10k": 6.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -2.73,
-      "push_rank": 2.0,
-      "audience_rank": 77.0
+      "push_rank": 4.0,
+      "audience_rank": 75.0
     },
     {
       "game": "starrail",
@@ -4715,11 +4715,101 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 4.0,
+      "push_rank": 6.0,
       "audience_rank": 201.0
+    },
+    {
+      "game": "starrail",
+      "name_ko_game": "붕괴:스타레일",
+      "char_id": "1512",
+      "name_ko": "로빈•서머레토",
+      "route_en": "Robin • Summeretto",
+      "rank": 5,
+      "element": "Wind",
+      "weapon_or_path": "Memory",
+      "is_playable_avatar": false,
+      "release_unix": 1787734800,
+      "release_date": "2026-08-26T09:00:00+00:00",
+      "name_len": 7,
+      "name_ambiguous": false,
+      "matchable": true,
+      "mention_count": 0.0,
+      "avg_mention_score": null,
+      "mention_rate_per_10k": 0.0,
+      "game_avg_score": 3.73,
+      "sentiment_vs_baseline": null,
+      "push_rank": 2.0,
+      "audience_rank": 202.0
+    },
+    {
+      "game": "starrail",
+      "name_ko_game": "붕괴:스타레일",
+      "char_id": "1513",
+      "name_ko": "어벤츄린•웨이브",
+      "route_en": "Aventurine • Waveflair",
+      "rank": 5,
+      "element": "Quantum",
+      "weapon_or_path": "Elation",
+      "is_playable_avatar": false,
+      "release_unix": 1789203600,
+      "release_date": "2026-09-12T09:00:00+00:00",
+      "name_len": 8,
+      "name_ambiguous": false,
+      "matchable": true,
+      "mention_count": 0.0,
+      "avg_mention_score": null,
+      "mention_rate_per_10k": 0.0,
+      "game_avg_score": 3.73,
+      "sentiment_vs_baseline": null,
+      "push_rank": 1.0,
+      "audience_rank": 203.0
     }
   ],
   "push_top": [
+    {
+      "game": "starrail",
+      "name_ko_game": "붕괴:스타레일",
+      "char_id": "1513",
+      "name_ko": "어벤츄린•웨이브",
+      "route_en": "Aventurine • Waveflair",
+      "rank": 5,
+      "element": "Quantum",
+      "weapon_or_path": "Elation",
+      "is_playable_avatar": false,
+      "release_unix": 1789203600,
+      "release_date": "2026-09-12T09:00:00+00:00",
+      "name_len": 8,
+      "name_ambiguous": false,
+      "matchable": true,
+      "mention_count": 0.0,
+      "avg_mention_score": null,
+      "mention_rate_per_10k": 0.0,
+      "game_avg_score": 3.73,
+      "sentiment_vs_baseline": null,
+      "push_rank": 1
+    },
+    {
+      "game": "starrail",
+      "name_ko_game": "붕괴:스타레일",
+      "char_id": "1512",
+      "name_ko": "로빈•서머레토",
+      "route_en": "Robin • Summeretto",
+      "rank": 5,
+      "element": "Wind",
+      "weapon_or_path": "Memory",
+      "is_playable_avatar": false,
+      "release_unix": 1787734800,
+      "release_date": "2026-08-26T09:00:00+00:00",
+      "name_len": 7,
+      "name_ambiguous": false,
+      "matchable": true,
+      "mention_count": 0.0,
+      "avg_mention_score": null,
+      "mention_rate_per_10k": 0.0,
+      "game_avg_score": 3.73,
+      "sentiment_vs_baseline": null,
+      "push_rank": 2
+    },
     {
       "game": "genshin",
       "name_ko_game": "원신",
@@ -4740,7 +4830,7 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 1
+      "push_rank": 3
     },
     {
       "game": "starrail",
@@ -4762,7 +4852,7 @@
       "mention_rate_per_10k": 6.67,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": -2.73,
-      "push_rank": 2
+      "push_rank": 4
     },
     {
       "game": "starrail",
@@ -4784,7 +4874,7 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 3
+      "push_rank": 5
     },
     {
       "game": "starrail",
@@ -4806,7 +4896,7 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 4
+      "push_rank": 6
     },
     {
       "game": "genshin",
@@ -4823,12 +4913,12 @@
       "name_len": 4,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 13.0,
-      "avg_mention_score": 3.62,
-      "mention_rate_per_10k": 43.33,
+      "mention_count": 12.0,
+      "avg_mention_score": 3.75,
+      "mention_rate_per_10k": 40.0,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": -0.01,
-      "push_rank": 5
+      "sentiment_vs_baseline": 0.12,
+      "push_rank": 7
     },
     {
       "game": "genshin",
@@ -4850,7 +4940,7 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 1.37,
-      "push_rank": 6
+      "push_rank": 8
     },
     {
       "game": "starrail",
@@ -4872,7 +4962,7 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
-      "push_rank": 7
+      "push_rank": 9
     },
     {
       "game": "genshin",
@@ -4894,7 +4984,7 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": null,
-      "push_rank": 8
+      "push_rank": 10
     },
     {
       "game": "starrail",
@@ -4916,7 +5006,7 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 9
+      "push_rank": 11
     },
     {
       "game": "starrail",
@@ -4938,7 +5028,7 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 10
+      "push_rank": 12
     },
     {
       "game": "genshin",
@@ -4960,7 +5050,7 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.37,
-      "push_rank": 11
+      "push_rank": 13
     },
     {
       "game": "starrail",
@@ -4982,7 +5072,7 @@
       "mention_rate_per_10k": 3.33,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": 1.27,
-      "push_rank": 12
+      "push_rank": 14
     },
     {
       "game": "genshin",
@@ -5004,50 +5094,6 @@
       "mention_rate_per_10k": 16.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.57,
-      "push_rank": 13
-    },
-    {
-      "game": "starrail",
-      "name_ko_game": "붕괴:스타레일",
-      "char_id": "1502",
-      "name_ko": "효광",
-      "route_en": "Yao Guang",
-      "rank": 5,
-      "element": "Physical",
-      "weapon_or_path": "Elation",
-      "is_playable_avatar": false,
-      "release_unix": 1770976800,
-      "release_date": "2026-02-13T10:00:00+00:00",
-      "name_len": 2,
-      "name_ambiguous": true,
-      "matchable": true,
-      "mention_count": 0.0,
-      "avg_mention_score": null,
-      "mention_rate_per_10k": 0.0,
-      "game_avg_score": 3.73,
-      "sentiment_vs_baseline": null,
-      "push_rank": 14
-    },
-    {
-      "game": "starrail",
-      "name_ko_game": "붕괴:스타레일",
-      "char_id": "1501",
-      "name_ko": "스파키",
-      "route_en": "Sparxie",
-      "rank": 5,
-      "element": "Fire",
-      "weapon_or_path": "Elation",
-      "is_playable_avatar": false,
-      "release_unix": 1770976800,
-      "release_date": "2026-02-13T10:00:00+00:00",
-      "name_len": 3,
-      "name_ambiguous": false,
-      "matchable": true,
-      "mention_count": 4.0,
-      "avg_mention_score": 3.0,
-      "mention_rate_per_10k": 13.33,
-      "game_avg_score": 3.73,
-      "sentiment_vs_baseline": -0.73,
       "push_rank": 15
     }
   ],
@@ -5099,28 +5145,6 @@
     {
       "game": "genshin",
       "name_ko_game": "원신",
-      "char_id": "10000106",
-      "name_ko": "마비카",
-      "route_en": "Mavuika",
-      "rank": 5,
-      "element": "Fire",
-      "weapon_or_path": "WEAPON_CLAYMORE",
-      "is_playable_avatar": false,
-      "release_unix": 1735596000,
-      "release_date": "2024-12-30T22:00:00+00:00",
-      "name_len": 3,
-      "name_ambiguous": false,
-      "matchable": true,
-      "mention_count": 20.0,
-      "avg_mention_score": 3.0,
-      "mention_rate_per_10k": 66.67,
-      "game_avg_score": 3.63,
-      "sentiment_vs_baseline": -0.63,
-      "audience_rank": 3
-    },
-    {
-      "game": "genshin",
-      "name_ko_game": "원신",
       "char_id": "10000089",
       "name_ko": "푸리나",
       "route_en": "Furina",
@@ -5138,6 +5162,28 @@
       "mention_rate_per_10k": 66.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.92,
+      "audience_rank": 3
+    },
+    {
+      "game": "genshin",
+      "name_ko_game": "원신",
+      "char_id": "10000106",
+      "name_ko": "마비카",
+      "route_en": "Mavuika",
+      "rank": 5,
+      "element": "Fire",
+      "weapon_or_path": "WEAPON_CLAYMORE",
+      "is_playable_avatar": false,
+      "release_unix": 1735596000,
+      "release_date": "2024-12-30T22:00:00+00:00",
+      "name_len": 3,
+      "name_ambiguous": false,
+      "matchable": true,
+      "mention_count": 19.0,
+      "avg_mention_score": 3.0,
+      "mention_rate_per_10k": 63.33,
+      "game_avg_score": 3.63,
+      "sentiment_vs_baseline": -0.63,
       "audience_rank": 4
     },
     {
@@ -5221,11 +5267,11 @@
       "name_len": 4,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 15.0,
-      "avg_mention_score": 4.47,
-      "mention_rate_per_10k": 50.0,
+      "mention_count": 14.0,
+      "avg_mention_score": 4.43,
+      "mention_rate_per_10k": 46.67,
       "game_avg_score": 3.73,
-      "sentiment_vs_baseline": 0.74,
+      "sentiment_vs_baseline": 0.7,
       "audience_rank": 8
     },
     {
@@ -5243,11 +5289,11 @@
       "name_len": 4,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 15.0,
-      "avg_mention_score": 4.13,
-      "mention_rate_per_10k": 50.0,
+      "mention_count": 14.0,
+      "avg_mention_score": 4.29,
+      "mention_rate_per_10k": 46.67,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": 0.5,
+      "sentiment_vs_baseline": 0.66,
       "audience_rank": 9
     },
     {
@@ -5265,11 +5311,11 @@
       "name_len": 2,
       "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 14.0,
-      "avg_mention_score": 2.64,
-      "mention_rate_per_10k": 46.67,
+      "mention_count": 13.0,
+      "avg_mention_score": 2.54,
+      "mention_rate_per_10k": 43.33,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": -0.99,
+      "sentiment_vs_baseline": -1.09,
       "audience_rank": 10
     },
     {
@@ -5287,34 +5333,12 @@
       "name_len": 4,
       "name_ambiguous": false,
       "matchable": true,
-      "mention_count": 13.0,
-      "avg_mention_score": 3.62,
-      "mention_rate_per_10k": 43.33,
-      "game_avg_score": 3.63,
-      "sentiment_vs_baseline": -0.01,
-      "audience_rank": 11
-    },
-    {
-      "game": "genshin",
-      "name_ko_game": "원신",
-      "char_id": "10000103",
-      "name_ko": "실로닌",
-      "route_en": "Xilonen",
-      "rank": 5,
-      "element": "Rock",
-      "weapon_or_path": "WEAPON_SWORD_ONE_HAND",
-      "is_playable_avatar": false,
-      "release_unix": 1728334800,
-      "release_date": "2024-10-07T21:00:00+00:00",
-      "name_len": 3,
-      "name_ambiguous": false,
-      "matchable": true,
       "mention_count": 12.0,
-      "avg_mention_score": 3.0,
+      "avg_mention_score": 3.75,
       "mention_rate_per_10k": 40.0,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": -0.63,
-      "audience_rank": 12
+      "sentiment_vs_baseline": 0.12,
+      "audience_rank": 11
     },
     {
       "game": "genshin",
@@ -5336,50 +5360,72 @@
       "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": -0.9,
+      "audience_rank": 12
+    },
+    {
+      "game": "genshin",
+      "name_ko_game": "원신",
+      "char_id": "10000103",
+      "name_ko": "실로닌",
+      "route_en": "Xilonen",
+      "rank": 5,
+      "element": "Rock",
+      "weapon_or_path": "WEAPON_SWORD_ONE_HAND",
+      "is_playable_avatar": false,
+      "release_unix": 1728334800,
+      "release_date": "2024-10-07T21:00:00+00:00",
+      "name_len": 3,
+      "name_ambiguous": false,
+      "matchable": true,
+      "mention_count": 11.0,
+      "avg_mention_score": 3.0,
+      "mention_rate_per_10k": 36.67,
+      "game_avg_score": 3.63,
+      "sentiment_vs_baseline": -0.63,
       "audience_rank": 13
     },
     {
       "game": "starrail",
       "name_ko_game": "붕괴:스타레일",
-      "char_id": "1407",
-      "name_ko": "카스토리스",
-      "route_en": "Castorice",
+      "char_id": "1005",
+      "name_ko": "카프카",
+      "route_en": "Kafka",
       "rank": 5,
-      "element": "Quantum",
-      "weapon_or_path": "Memory",
+      "element": "Thunder",
+      "weapon_or_path": "Warlock",
       "is_playable_avatar": false,
-      "release_unix": 1744189200,
-      "release_date": "2025-04-09T09:00:00+00:00",
-      "name_len": 5,
+      "release_unix": 1689757200,
+      "release_date": "2023-07-19T09:00:00+00:00",
+      "name_len": 3,
       "name_ambiguous": false,
       "matchable": true,
       "mention_count": 11.0,
-      "avg_mention_score": 4.18,
+      "avg_mention_score": 4.55,
       "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.73,
-      "sentiment_vs_baseline": 0.45,
+      "sentiment_vs_baseline": 0.82,
       "audience_rank": 14
     },
     {
       "game": "starrail",
       "name_ko_game": "붕괴:스타레일",
-      "char_id": "1304",
-      "name_ko": "어벤츄린",
-      "route_en": "Aventurine",
-      "rank": 5,
-      "element": "Imaginary",
-      "weapon_or_path": "Knight",
+      "char_id": "1013",
+      "name_ko": "헤르타",
+      "route_en": "Herta",
+      "rank": 4,
+      "element": "Ice",
+      "weapon_or_path": "Mage",
       "is_playable_avatar": false,
-      "release_unix": 1713344400,
-      "release_date": "2024-04-17T09:00:00+00:00",
-      "name_len": 4,
+      "release_unix": 1682460000,
+      "release_date": "2023-04-25T22:00:00+00:00",
+      "name_len": 3,
       "name_ambiguous": false,
       "matchable": true,
       "mention_count": 11.0,
-      "avg_mention_score": 4.0,
+      "avg_mention_score": 4.82,
       "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.73,
-      "sentiment_vs_baseline": 0.27,
+      "sentiment_vs_baseline": 1.09,
       "audience_rank": 15
     }
   ],
@@ -5387,20 +5433,20 @@
     {
       "game": "genshin",
       "month": "2024-09",
-      "avg_score": 4.026,
-      "n_reviews": 38
+      "avg_score": 3.773,
+      "n_reviews": 22
     },
     {
       "game": "genshin",
       "month": "2024-10",
-      "avg_score": 4.024,
-      "n_reviews": 205
+      "avg_score": 4.02,
+      "n_reviews": 204
     },
     {
       "game": "genshin",
       "month": "2024-11",
-      "avg_score": 4.064,
-      "n_reviews": 173
+      "avg_score": 4.058,
+      "n_reviews": 172
     },
     {
       "game": "genshin",
@@ -5417,8 +5463,8 @@
     {
       "game": "genshin",
       "month": "2025-02",
-      "avg_score": 3.497,
-      "n_reviews": 175
+      "avg_score": 3.511,
+      "n_reviews": 174
     },
     {
       "game": "genshin",
@@ -5459,14 +5505,14 @@
     {
       "game": "genshin",
       "month": "2025-09",
-      "avg_score": 3.137,
-      "n_reviews": 190
+      "avg_score": 3.148,
+      "n_reviews": 189
     },
     {
       "game": "genshin",
       "month": "2025-10",
-      "avg_score": 3.118,
-      "n_reviews": 169
+      "avg_score": 3.119,
+      "n_reviews": 168
     },
     {
       "game": "genshin",
@@ -5483,14 +5529,14 @@
     {
       "game": "genshin",
       "month": "2026-01",
-      "avg_score": 3.878,
-      "n_reviews": 180
+      "avg_score": 3.876,
+      "n_reviews": 178
     },
     {
       "game": "genshin",
       "month": "2026-02",
-      "avg_score": 4.038,
-      "n_reviews": 130
+      "avg_score": 4.055,
+      "n_reviews": 128
     },
     {
       "game": "genshin",
@@ -5507,38 +5553,38 @@
     {
       "game": "genshin",
       "month": "2026-05",
-      "avg_score": 3.278,
-      "n_reviews": 115
+      "avg_score": 3.289,
+      "n_reviews": 114
     },
     {
       "game": "genshin",
       "month": "2026-06",
-      "avg_score": 3.681,
-      "n_reviews": 69
+      "avg_score": 3.662,
+      "n_reviews": 68
     },
     {
       "game": "genshin",
       "month": "2026-07",
-      "avg_score": 3.623,
-      "n_reviews": 122
+      "avg_score": 3.62,
+      "n_reviews": 121
     },
     {
       "game": "genshin",
       "month": "2026-08",
-      "avg_score": 3.642,
-      "n_reviews": 123
+      "avg_score": 3.656,
+      "n_reviews": 151
     },
     {
       "game": "starrail",
       "month": "2024-04",
-      "avg_score": 4.1,
-      "n_reviews": 209
+      "avg_score": 4.105,
+      "n_reviews": 200
     },
     {
       "game": "starrail",
       "month": "2024-05",
-      "avg_score": 4.25,
-      "n_reviews": 224
+      "avg_score": 4.247,
+      "n_reviews": 223
     },
     {
       "game": "starrail",
@@ -5585,8 +5631,8 @@
     {
       "game": "starrail",
       "month": "2025-01",
-      "avg_score": 4.107,
-      "n_reviews": 140
+      "avg_score": 4.101,
+      "n_reviews": 139
     },
     {
       "game": "starrail",
@@ -5615,8 +5661,8 @@
     {
       "game": "starrail",
       "month": "2025-06",
-      "avg_score": 3.677,
-      "n_reviews": 62
+      "avg_score": 3.721,
+      "n_reviews": 61
     },
     {
       "game": "starrail",
@@ -5627,14 +5673,14 @@
     {
       "game": "starrail",
       "month": "2025-08",
-      "avg_score": 3.854,
-      "n_reviews": 89
+      "avg_score": 3.841,
+      "n_reviews": 88
     },
     {
       "game": "starrail",
       "month": "2025-09",
-      "avg_score": 3.872,
-      "n_reviews": 47
+      "avg_score": 3.848,
+      "n_reviews": 46
     },
     {
       "game": "starrail",
@@ -5675,8 +5721,8 @@
     {
       "game": "starrail",
       "month": "2026-04",
-      "avg_score": 4.063,
-      "n_reviews": 127
+      "avg_score": 4.056,
+      "n_reviews": 126
     },
     {
       "game": "starrail",
@@ -5687,8 +5733,8 @@
     {
       "game": "starrail",
       "month": "2026-06",
-      "avg_score": 3.551,
-      "n_reviews": 49
+      "avg_score": 3.521,
+      "n_reviews": 48
     },
     {
       "game": "starrail",
@@ -5699,11 +5745,59 @@
     {
       "game": "starrail",
       "month": "2026-08",
-      "avg_score": 3.19,
-      "n_reviews": 42
+      "avg_score": 3.276,
+      "n_reviews": 58
     }
   ],
   "gap_overpushed": [
+    {
+      "game": "starrail",
+      "name_ko_game": "붕괴:스타레일",
+      "char_id": "1513",
+      "name_ko": "어벤츄린•웨이브",
+      "route_en": "Aventurine • Waveflair",
+      "rank": 5,
+      "element": "Quantum",
+      "weapon_or_path": "Elation",
+      "is_playable_avatar": false,
+      "release_unix": 1789203600,
+      "release_date": "2026-09-12T09:00:00+00:00",
+      "name_len": 8,
+      "name_ambiguous": false,
+      "matchable": true,
+      "mention_count": 0.0,
+      "avg_mention_score": null,
+      "mention_rate_per_10k": 0.0,
+      "game_avg_score": 3.73,
+      "sentiment_vs_baseline": null,
+      "push_rank": 1.0,
+      "audience_rank": 203.0,
+      "gap": 202.0
+    },
+    {
+      "game": "starrail",
+      "name_ko_game": "붕괴:스타레일",
+      "char_id": "1512",
+      "name_ko": "로빈•서머레토",
+      "route_en": "Robin • Summeretto",
+      "rank": 5,
+      "element": "Wind",
+      "weapon_or_path": "Memory",
+      "is_playable_avatar": false,
+      "release_unix": 1787734800,
+      "release_date": "2026-08-26T09:00:00+00:00",
+      "name_len": 7,
+      "name_ambiguous": false,
+      "matchable": true,
+      "mention_count": 0.0,
+      "avg_mention_score": null,
+      "mention_rate_per_10k": 0.0,
+      "game_avg_score": 3.73,
+      "sentiment_vs_baseline": null,
+      "push_rank": 2.0,
+      "audience_rank": 202.0,
+      "gap": 200.0
+    },
     {
       "game": "starrail",
       "name_ko_game": "붕괴:스타레일",
@@ -5724,9 +5818,9 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 3.0,
+      "push_rank": 5.0,
       "audience_rank": 200.0,
-      "gap": 197.0
+      "gap": 195.0
     },
     {
       "game": "starrail",
@@ -5748,9 +5842,9 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 4.0,
+      "push_rank": 6.0,
       "audience_rank": 201.0,
-      "gap": 197.0
+      "gap": 195.0
     },
     {
       "game": "starrail",
@@ -5772,83 +5866,35 @@
       "mention_rate_per_10k": 0.0,
       "game_avg_score": 3.73,
       "sentiment_vs_baseline": null,
-      "push_rank": 9.0,
+      "push_rank": 11.0,
       "audience_rank": 199.0,
-      "gap": 190.0
-    },
-    {
-      "game": "starrail",
-      "name_ko_game": "붕괴:스타레일",
-      "char_id": "1506",
-      "name_ko": "은랑 LV.999",
-      "route_en": "Silver Wolf LV.<unbreak>999</unbreak>",
-      "rank": 5,
-      "element": "Imaginary",
-      "weapon_or_path": "Elation",
-      "is_playable_avatar": false,
-      "release_unix": 1776848400,
-      "release_date": "2026-04-22T09:00:00+00:00",
-      "name_len": 9,
-      "name_ambiguous": false,
-      "matchable": true,
-      "mention_count": 0.0,
-      "avg_mention_score": null,
-      "mention_rate_per_10k": 0.0,
-      "game_avg_score": 3.73,
-      "sentiment_vs_baseline": null,
-      "push_rank": 10.0,
-      "audience_rank": 198.0,
       "gap": 188.0
-    },
-    {
-      "game": "starrail",
-      "name_ko_game": "붕괴:스타레일",
-      "char_id": "1502",
-      "name_ko": "효광",
-      "route_en": "Yao Guang",
-      "rank": 5,
-      "element": "Physical",
-      "weapon_or_path": "Elation",
-      "is_playable_avatar": false,
-      "release_unix": 1770976800,
-      "release_date": "2026-02-13T10:00:00+00:00",
-      "name_len": 2,
-      "name_ambiguous": true,
-      "matchable": true,
-      "mention_count": 0.0,
-      "avg_mention_score": null,
-      "mention_rate_per_10k": 0.0,
-      "game_avg_score": 3.73,
-      "sentiment_vs_baseline": null,
-      "push_rank": 14.0,
-      "audience_rank": 197.0,
-      "gap": 183.0
     }
   ],
   "gap_sleeper": [
     {
       "game": "genshin",
       "name_ko_game": "원신",
-      "char_id": "10000035",
-      "name_ko": "치치",
-      "route_en": "Qiqi",
+      "char_id": "10000022",
+      "name_ko": "벤티",
+      "route_en": "Venti",
       "rank": 5,
-      "element": "Ice",
-      "weapon_or_path": "WEAPON_SWORD_ONE_HAND",
+      "element": "Wind",
+      "weapon_or_path": "WEAPON_BOW",
       "is_playable_avatar": false,
       "release_unix": 1601244000,
       "release_date": "2020-09-27T22:00:00+00:00",
       "name_len": 2,
       "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 11.0,
-      "avg_mention_score": 3.64,
-      "mention_rate_per_10k": 36.67,
+      "mention_count": 9.0,
+      "avg_mention_score": 4.78,
+      "mention_rate_per_10k": 30.0,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": 0.01,
-      "push_rank": 129.0,
-      "audience_rank": 20.0,
-      "gap": -109.0
+      "sentiment_vs_baseline": 1.15,
+      "push_rank": 130.0,
+      "audience_rank": 26.0,
+      "gap": -104.0
     },
     {
       "game": "genshin",
@@ -5870,33 +5916,33 @@
       "mention_rate_per_10k": 36.67,
       "game_avg_score": 3.63,
       "sentiment_vs_baseline": 0.1,
-      "push_rank": 121.0,
+      "push_rank": 123.0,
       "audience_rank": 19.0,
-      "gap": -102.0
+      "gap": -104.0
     },
     {
       "game": "genshin",
       "name_ko_game": "원신",
-      "char_id": "10000022",
-      "name_ko": "벤티",
-      "route_en": "Venti",
+      "char_id": "10000035",
+      "name_ko": "치치",
+      "route_en": "Qiqi",
       "rank": 5,
-      "element": "Wind",
-      "weapon_or_path": "WEAPON_BOW",
+      "element": "Ice",
+      "weapon_or_path": "WEAPON_SWORD_ONE_HAND",
       "is_playable_avatar": false,
       "release_unix": 1601244000,
       "release_date": "2020-09-27T22:00:00+00:00",
       "name_len": 2,
       "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 9.0,
-      "avg_mention_score": 4.78,
-      "mention_rate_per_10k": 30.0,
+      "mention_count": 10.0,
+      "avg_mention_score": 3.9,
+      "mention_rate_per_10k": 33.33,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": 1.15,
-      "push_rank": 127.0,
-      "audience_rank": 27.0,
-      "gap": -100.0
+      "sentiment_vs_baseline": 0.27,
+      "push_rank": 125.0,
+      "audience_rank": 22.0,
+      "gap": -103.0
     },
     {
       "game": "genshin",
@@ -5913,38 +5959,38 @@
       "name_len": 2,
       "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 11.0,
-      "avg_mention_score": 4.09,
-      "mention_rate_per_10k": 36.67,
+      "mention_count": 10.0,
+      "avg_mention_score": 4.0,
+      "mention_rate_per_10k": 33.33,
       "game_avg_score": 3.63,
-      "sentiment_vs_baseline": 0.46,
-      "push_rank": 117.0,
-      "audience_rank": 21.0,
+      "sentiment_vs_baseline": 0.37,
+      "push_rank": 119.0,
+      "audience_rank": 23.0,
       "gap": -96.0
     },
     {
-      "game": "genshin",
-      "name_ko_game": "원신",
-      "char_id": "10000016",
-      "name_ko": "다이루크",
-      "route_en": "Diluc",
+      "game": "starrail",
+      "name_ko_game": "붕괴:스타레일",
+      "char_id": "1006",
+      "name_ko": "은랑",
+      "route_en": "Silver Wolf",
       "rank": 5,
-      "element": "Fire",
-      "weapon_or_path": "WEAPON_CLAYMORE",
+      "element": "Quantum",
+      "weapon_or_path": "Warlock",
       "is_playable_avatar": false,
-      "release_unix": 1601244000,
-      "release_date": "2020-09-27T22:00:00+00:00",
-      "name_len": 4,
-      "name_ambiguous": false,
+      "release_unix": 1686128400,
+      "release_date": "2023-06-07T09:00:00+00:00",
+      "name_len": 2,
+      "name_ambiguous": true,
       "matchable": true,
-      "mention_count": 5.0,
-      "avg_mention_score": 4.0,
-      "mention_rate_per_10k": 16.67,
-      "game_avg_score": 3.63,
-      "sentiment_vs_baseline": 0.37,
-      "push_rank": 128.0,
-      "audience_rank": 45.0,
-      "gap": -83.0
+      "mention_count": 18.0,
+      "avg_mention_score": 4.39,
+      "mention_rate_per_10k": 60.0,
+      "game_avg_score": 3.73,
+      "sentiment_vs_baseline": 0.66,
+      "push_rank": 89.0,
+      "audience_rank": 5.0,
+      "gap": -84.0
     }
   ],
   "n_matchable_low_confidence": 81
