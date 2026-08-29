@@ -1,4 +1,4 @@
--- sessions 데이터 (154 rows)
+-- sessions 데이터 (155 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-24 18:29', 528.9, 13, 9915, 5613, '정나나가 돌아왔다요~!! [8시 이리 치지직컵 드래프트]', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-18 19:33', 245.4, 7, 9910, 7725, '감동의 슬픔이었는데 진짜 슬퍼짐 ', 'talk');
@@ -67,7 +67,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-27 19:00', 0.0, 1, 4053, 4053, '2026 피망포커 홀덤 유니 우승 가보쟈ㅑㅑㅑㅑㅑㅑ', '피망 포커 : 카지노 로얄');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-08-24 21:02', 228.5, 5, 4043, 3096, '타비 배고파,,,', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('네네코 마시로', 'Neneko Mashiro', 'UNIVERSE', '2026-08-17 17:55', 244.3, 7, 4017, 2984, '모해', 'talk');
-INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-13 23:07', 323.3, 6, 4003, 3250, '데바데 w. 강지 리제 린 이춘향 [시키샤카샤카슈-와! 100만회 감사합니당]💚', '데드 바이 데이라이트');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-13 23:07', 246.0, 5, 4003, 3292, '데바데 w. 강지 리제 린 이춘향 [시키샤카샤카슈-와! 100만회 감사합니당]💚', '데드 바이 데이라이트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-26 18:06', 296.4, 7, 3932, 3290, '켈룪켈룩떼껄룩캥캥', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('네네코 마시로', 'Neneko Mashiro', 'UNIVERSE', '2026-08-21 19:02', 362.6, 10, 3880, 3436, '머해?', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-23 17:41', 498.7, 17, 3839, 2989, '용 사', 'talk');
@@ -112,6 +112,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('네네코 마시로', 'Neneko Mashiro', 'UNIVERSE', '2026-08-12 15:37', 70.6, 9, 3073, 2448, '하이!', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-29 19:37', 306.1, 31, 3062, 2567, '[떠비큐어] 헨리 배우기', '이터널 리턴');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('네네코 마시로', 'Neneko Mashiro', 'UNIVERSE', '2026-08-18 19:33', 86.9, 4, 3050, 2753, '찌로', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('유즈하 리코', 'Yuzuha Riko', 'CLICHE', '2026-08-14 04:30', 0.0, 1, 3041, 3041, ' [시키샤카샤카슈-와! 100만회 감사합니당]💚', '이터널 리턴');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-25 18:50', 271.4, 7, 3034, 2811, '일어나라.', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-12 16:07', 40.4, 6, 2995, 2286, '휴 일상편이 제일 힘들다', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-08-26 18:06', 360.4, 8, 2979, 2495, '맹', 'talk');
