@@ -38,11 +38,13 @@ GROUPS = {
     "live":     ["08_live_viewership"],
     # 02는 원래 search.list 를 써서 3,300 units 를 먹는 weekly 대상이었으나,
     # 2026-08-12 업로드 재생목록 전량 열거로 바꾸면서 ~173 units 로 떨어져 daily 로 옮겼다.
+    # 12는 01·02·03·08이 모아 둔 데이터에서 이벤트를 추출한다. 자체 API 호출이 없고
+    # 남의 수집 결과를 읽으므로 daily 의 맨 뒤여야 한다.
     # 07은 06의 group_summary.csv 를 읽어 시장 리포트를 만든다. 반드시 06 뒤에 온다
     # (이 리스트 순서가 곧 실행 순서다). 자체 수집은 없고 재분석만 한다 — NO_COLLECT 참고.
     "daily":    ["01_member_channel_performance", "02_cover_song_ranking",
                  "03_chzzk_stream_pattern", "06_competitor_comparison",
-                 "07_market_analysis"],
+                 "07_market_analysis", "12_event_impact"],
     "weekly":   ["04_kirinuki_ecosystem", "05_comment_sentiment",
                  "10_hoyoverse", "11_fan_commerce"],
     # 09는 DART 공시 주기를 따른다. 재무제표는 분기·연간 단위로만 갱신되므로

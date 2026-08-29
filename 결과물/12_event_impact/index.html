@@ -1,0 +1,277 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>프로젝트12 · 이벤트 임팩트</title>
+<style>:root {
+  --primary: #0066FF;
+  --primary-strong: #005EEB;
+  --bg: #ffffff;
+  --bg-alt: #F7F7F8;
+  --bg-elevated: #ffffff;
+  --label: #171719;
+  --label-strong: #000000;
+  --label-neutral: #37383C;
+  --label-alt: #70737C;
+  --label-assistive: #989BA2;
+  --line: #E1E2E4;
+  --line-neutral: #EAEBEC;
+  --line-alt: #F4F4F5;
+  --fill: #F4F4F5;
+  --positive: #00BF40;
+  --cautionary: #FF9200;
+  --negative: #FF4242;
+  --accent-0: #005EEB;
+  --accent-1: #F55A00;
+  --accent-2: #009632;
+  --accent-3: #D17600;
+  --accent-4: #E846CD;
+  --accent-5: #429E00;
+  --accent-6: #5B37ED;
+  --accent-7: #E52222;
+  --accent-8: #0098B2;
+  --accent-9: #AD36E3;
+  --accent-10: #008DCF;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --shadow-xsmall: 0px 1px 2px -1px rgba(23,23,23,0.10);
+  --shadow-small: 0px 2px 4px -2px rgba(23,23,23,0.06), 0px 4px 6px -1px rgba(23,23,23,0.06);
+  --shadow-medium: 0px 4px 6px -2px rgba(23,23,23,0.07), 0px 10px 15px -3px rgba(23,23,23,0.07);
+  --shadow-large: 0px 6px 10px -4px rgba(23,23,23,0.08), 0px 16px 24px -6px rgba(23,23,23,0.08);
+  --font: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  --primary: #3385FF;
+  --primary-strong: #1A75FF;
+  --bg: #1B1C1E;
+  --bg-alt: #0F0F10;
+  --bg-elevated: #212225;
+  --label: #F7F7F8;
+  --label-strong: #ffffff;
+  --label-neutral: #C2C4C8;
+  --label-alt: #AEB0B6;
+  --label-assistive: #989BA2;
+  --line: #37383C;
+  --line-neutral: #333438;
+  --line-alt: #2E2F33;
+  --fill: #2E2F33;
+  --positive: #1ED45A;
+  --cautionary: #FFA938;
+  --negative: #FF6363;
+  --accent-0: #3385FF;
+  --accent-1: #FF7B2E;
+  --accent-2: #1ED45A;
+  --accent-3: #FF9200;
+  --accent-4: #FA73E3;
+  --accent-5: #58CF04;
+  --accent-6: #7D5EF7;
+  --accent-7: #FF6363;
+  --accent-8: #28D0ED;
+  --accent-9: #D478FF;
+  --accent-10: #3DC2FF;
+  }
+}
+:root[data-theme="dark"] {
+  --primary: #3385FF;
+  --primary-strong: #1A75FF;
+  --bg: #1B1C1E;
+  --bg-alt: #0F0F10;
+  --bg-elevated: #212225;
+  --label: #F7F7F8;
+  --label-strong: #ffffff;
+  --label-neutral: #C2C4C8;
+  --label-alt: #AEB0B6;
+  --label-assistive: #989BA2;
+  --line: #37383C;
+  --line-neutral: #333438;
+  --line-alt: #2E2F33;
+  --fill: #2E2F33;
+  --positive: #1ED45A;
+  --cautionary: #FFA938;
+  --negative: #FF6363;
+  --accent-0: #3385FF;
+  --accent-1: #FF7B2E;
+  --accent-2: #1ED45A;
+  --accent-3: #FF9200;
+  --accent-4: #FA73E3;
+  --accent-5: #58CF04;
+  --accent-6: #7D5EF7;
+  --accent-7: #FF6363;
+  --accent-8: #28D0ED;
+  --accent-9: #D478FF;
+  --accent-10: #3DC2FF;
+}
+* { box-sizing: border-box; }
+
+html { color-scheme: light dark; }
+
+body {
+  margin: 0;
+  background: var(--bg-alt);
+  color: var(--label);
+  font-family: var(--font);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 1000px; margin: 0 auto; padding: 48px 20px 80px; }
+
+/* ---- 타이포 ---- */
+h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 6px; }
+h2 {
+  font-size: 18px; font-weight: 700; letter-spacing: -0.01em;
+  margin: 40px 0 16px; color: var(--label);
+}
+.sub { color: var(--label-alt); font-size: 14px; margin-bottom: 32px; }
+.eyebrow {
+  display: inline-block; font-size: 12px; font-weight: 600;
+  color: var(--primary); letter-spacing: 0.02em; margin-bottom: 8px;
+}
+
+/* ---- 카드 ---- */
+.cards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+.card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-xsmall);
+}
+.card .k { color: var(--label-alt); font-size: 12px; font-weight: 500; }
+.card .v {
+  font-size: 24px; font-weight: 700; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums; margin-top: 2px;
+}
+
+/* ---- 뱃지(상태 표시) ---- */
+.pill {
+  display: inline-block; font-size: 11.5px; font-weight: 600;
+  padding: 3px 9px; border-radius: var(--radius-full, 999px);
+  white-space: nowrap;
+}
+.pill-ok { background: color-mix(in srgb, var(--positive) 16%, transparent); color: var(--positive); }
+.pill-warn { background: color-mix(in srgb, var(--cautionary) 16%, transparent); color: var(--cautionary); }
+.pill-no { background: color-mix(in srgb, var(--negative) 16%, transparent); color: var(--negative); }
+
+/* ---- 알림 ---- */
+.warn {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--cautionary);
+  border-radius: var(--radius-md);
+  padding: 14px 18px; font-size: 14px; margin: 24px 0;
+  color: var(--label-neutral);
+}
+.warn strong { color: var(--label); }
+
+/* ---- 바 리스트 ---- */
+.row { display: flex; align-items: center; gap: 12px; margin: 6px 0; font-size: 14px; }
+.nm { width: 108px; flex: none; color: var(--label-neutral); }
+.track {
+  flex: 1; height: 18px; background: var(--fill);
+  border-radius: var(--radius-sm); overflow: hidden;
+}
+.fill { display: block; height: 100%; border-radius: var(--radius-sm); }
+.val {
+  width: 84px; text-align: right; flex: none;
+  font-variant-numeric: tabular-nums; font-weight: 600;
+}
+
+/* ---- 차트 ---- */
+.chart-box {
+  background: var(--bg-elevated); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 20px;
+  overflow-x: auto;
+}
+.chart { width: 100%; height: auto; display: block; }
+.ax { fill: var(--label-assistive); font-size: 11px; }
+.legend {
+  display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px;
+  color: var(--label-alt); margin-top: 12px;
+}
+.lg i {
+  display: inline-block; width: 10px; height: 10px;
+  border-radius: var(--radius-sm); margin-right: 6px; vertical-align: -1px;
+}
+
+/* ---- 표 ---- */
+.table-box {
+  background: var(--bg-elevated); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); overflow: hidden; overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td {
+  text-align: right; padding: 10px 14px;
+  border-bottom: 1px solid var(--line-alt);
+  font-variant-numeric: tabular-nums;
+}
+th:first-child, td:first-child { text-align: left; font-variant-numeric: normal; }
+th {
+  color: var(--label-alt); font-weight: 600; font-size: 12px;
+  background: var(--bg-alt); border-bottom: 1px solid var(--line);
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--fill); }
+
+/* ---- 기타 ---- */
+.empty { color: var(--label-assistive); font-size: 14px; padding: 24px 0; }
+.note {
+  color: var(--label-alt); font-size: 13px; margin-top: 40px;
+  padding-top: 20px; border-top: 1px solid var(--line);
+}
+.note strong { color: var(--label-neutral); }
+code {
+  background: var(--fill); border-radius: var(--radius-sm);
+  padding: 1px 5px; font-size: 0.92em;
+}
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 32px 16px 56px; }
+  h1 { font-size: 23px; }
+  .nm { width: 84px; }
+  .val { width: 68px; }
+}
+</style>
+<div class="wrap">
+<h1>이벤트 임팩트 분석</h1>
+<p class="sub">대규모 합방·커버곡 발매·콘서트를 자동으로 찾아 기억하고, 그 전후로
+팔로워·구독자·동시시청자가 어떻게 움직였는지 붙입니다.</p>
+<p class="sub">2017-06-01 ~ 2026-08-27 · 총 399건 &nbsp; <span class="chip" style="border-color:#70737C;color:#70737C">커버곡 365건</span><span class="chip" style="border-color:#70737C;color:#70737C">합방 33건</span><span class="chip" style="border-color:#70737C;color:#70737C">콘서트 1건</span></p>
+
+<h2>합방 효과 — 이벤트 방송 조회수 ÷ 평소 방송</h2>
+<p class="sub">치지직 VOD 조회수는 과거분이 남아 있어 <b>일일 수집 이전 이벤트도
+크기는 잴 수 있습니다.</b> 1.0 = 평소와 같음.</p>
+<div class="bars"><div class="row"><span class="nm">마인크래프트<i>2025-12-22</i></span><span class="bar"><b style="width:100.0%"></b></span><span class="val">2.91배</span></div><div class="row"><span class="nm">마인크래프트 · 봉켓몬<i>2026-06-23</i></span><span class="bar"><b style="width:91.4%"></b></span><span class="val">2.66배</span></div><div class="row"><span class="nm">마인크래프트<i>2025-10-07</i></span><span class="bar"><b style="width:78.0%"></b></span><span class="val">2.27배</span></div><div class="row"><span class="nm">같이<i>2026-01-01</i></span><span class="bar"><b style="width:76.6%"></b></span><span class="val">2.23배</span></div><div class="row"><span class="nm">2026 FIFA 북중미 월드컵<i>2026-06-12</i></span><span class="bar"><b style="width:75.6%"></b></span><span class="val">2.20배</span></div><div class="row"><span class="nm">팰월드<i>2026-07-13</i></span><span class="bar"><b style="width:73.9%"></b></span><span class="val">2.15배</span></div><div class="row"><span class="nm">마인크래프트 · 모라하지마<i>2026-05-23</i></span><span class="bar"><b style="width:67.0%"></b></span><span class="val">1.95배</span></div><div class="row"><span class="nm">마인크래프트<i>2026-02-22</i></span><span class="bar"><b style="width:64.9%"></b></span><span class="val">1.89배</span></div><div class="row"><span class="nm">오픈런<i>2026-02-22</i></span><span class="bar"><b style="width:61.5%"></b></span><span class="val">1.79배</span></div><div class="row"><span class="nm">리그 오브 레전드<i>2026-02-15</i></span><span class="bar"><b style="width:56.4%"></b></span><span class="val">1.64배</span></div></div>
+
+<h2>이벤트 전후 변화</h2>
+<div class="table-box"><table><thead><tr>
+<th>날짜</th><th>이벤트</th><th>멤버</th><th>지표</th>
+<th>이전(일평균)</th><th>이후(일평균)</th><th>변화</th>
+</tr></thead><tbody>
+<tr><td>2026-08-22</td><td>[4K] 숨바꼭질 かくれんぼ - AliA / 유즈하 리</td><td>유즈하 리코</td><td>치지직 팔로워</td><td>+97</td><td>+152</td><td class="up">+56.7%</td></tr><tr><td>2026-08-22</td><td>[4K] 숨바꼭질 かくれんぼ - AliA / 유즈하 리</td><td>유즈하 리코</td><td>유튜브 구독자</td><td>+143</td><td>+300</td><td class="up">+110.0%</td></tr>
+</tbody></table></div>
+
+<div class="note">
+<strong>수익은 잴 수 없습니다.</strong> 치지직 후원·구독 수익도, 유튜브 광고 수익도
+공개되지 않습니다. 추정치를 지어내는 대신 플랫폼이 실제로 수익을 매기는 축인
+<b>노출량(동시시청자 피크·조회수)</b>을 대리 지표로 냅니다. 회사 단위 실제 수익성은
+프로젝트9(DART 감사보고서)가 연 단위로 답합니다.
+<br><br>
+<strong>측정 가능 시점이 지표마다 다릅니다.</strong> 조회수 배수는 2025-04부터 소급
+가능하지만, 팔로워·구독자·동시시청자 전후 비교는 일일 수집이 시작된 <b>2026-08-12
+이후 이벤트</b>만 가능합니다. 그 이전은 기준선이 없어 계산하지 않습니다 —
+0%가 아니라 측정 불가입니다.
+<br><br>
+<strong>자동 감지의 한계.</strong> 합방은 치지직 방송이 있어야 잡힙니다. 유튜브 전용
+합방·오프라인 행사·오리지널곡 발매는 <code>data/events_manual.csv</code>에 손으로
+등록해야 합니다.
+</div>
+
+</div></body></html>

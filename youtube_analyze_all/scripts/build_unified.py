@@ -56,6 +56,7 @@ CADENCE = {
     "11_fan_commerce": "weekly",
     "09_dart_financials": "monthly",
     "08_live_viewership": "10분 폴링",
+    "12_event_impact": "daily",
 }
 
 
