@@ -66,6 +66,22 @@ RUN_GAP_DAYS = 2
 # 두 신호를 한 이벤트로 볼 날짜 집합 유사도(자카드) 하한.
 MIN_DATE_JACCARD = 0.5
 
+# ── 시리즈 후보(검토 대기열) ──
+#
+# 신호 1·2 는 "같은 날 4명"을 본다. 며칠에 걸쳐 멤버가 번갈아 참여하는 기획은
+# 하루만 떼어 보면 1~2명이라 통째로 빠진다. 실제로 봉누도(8/15~8/28, 4명)가
+# 그렇게 빠졌다.
+#
+# 창을 넓혀 잡아 봤더니 재현율은 올라가는데 정밀도가 무너졌다 — 이벤트가 33건에서
+# 106건으로 늘면서 '오늘'·'광고'·'많이' 같은 말이 이벤트로 올라왔다. 창을 넓히면
+# 흔하지 않은 단어도 여러 날에 걸쳐 멤버를 그러모으기 때문이다.
+#
+# 그래서 이 신호는 events.csv 에 넣지 않고 **후보 파일로 따로 뺀다.** 사람이 보고
+# events_manual.csv 로 올리는 검토 대기열이다. 리포트는 정밀도가 높은 신호 1·2와
+# 사람이 확인한 수동 등록만 쓴다.
+SERIES_WINDOW_DAYS = 21
+SERIES_MAX_DF = 0.03
+
 
 def _tokens(title: str) -> set[str]:
     """제목에서 2~12자 토큰을 뽑는다. 이모지·기호는 버린다."""
@@ -202,6 +218,60 @@ def _merge_overlapping(events: list[dict]) -> list[dict]:
     return merged
 
 
+def _series_tokens(title: str, exclude: set[str]) -> set[str]:
+    """시리즈 후보용 토큰. 일반 토큰과 두 가지가 다르다.
+
+    1) 끝의 숫자를 뗀다 — '봉누도2'(시즌2)를 '봉누도'와 같은 것으로 본다.
+       떼지 않으면 봉누도 3명 + 봉누도2 2명으로 갈려서 둘 다 기준에 못 미친다.
+    2) 멤버·유닛 이름을 뺀다 — 이름은 여러 사람 제목에 자주 등장해서
+       '타비'·'클리셰' 같은 게 이벤트로 잡힌다.
+    """
+    out = set()
+    for w in re.sub(r"[^\w가-힣]+", " ", str(title)).split():
+        if 2 <= len(w) <= 12:
+            out.add(re.sub(r"\d+$", "", w) or w)
+    return {w for w in out if len(w) >= 2 and w not in exclude}
+
+
+def detect_series_candidates(streams: pd.DataFrame) -> list[dict]:
+    """며칠에 걸친 기획 후보를 뽑는다. events.csv 가 아니라 검토 대기열로 나간다."""
+    base = {m[0] for m in config.MEMBERS}
+    exclude = base | {"스텔", "스텔라이브", "클리셰", "유니버스", "에브리스"}
+    exclude |= {n.split()[0] for n in base} | {n.split()[-1] for n in base}
+
+    df = streams.copy()
+    df["date"] = pd.to_datetime(df["publish_date"]).dt.date
+    per_day: dict = {}
+    dfreq: collections.Counter = collections.Counter()
+    for d, g in df.groupby("date"):
+        m: dict = collections.defaultdict(set)
+        for title, name in zip(g["title"], g["name_ko"]):
+            for w in _series_tokens(title, exclude):
+                m[w].add(name)
+        per_day[d] = m
+        for w in m:
+            dfreq[w] += 1
+    ndates = max(len(per_day), 1)
+
+    best: dict = {}
+    for w in dfreq:
+        if dfreq[w] / ndates > SERIES_MAX_DF:
+            continue
+        days = sorted(d for d in per_day if w in per_day[d])
+        for i, anchor in enumerate(days):
+            win = [d for d in days[i:] if (d - anchor).days < SERIES_WINDOW_DAYS]
+            mem = set().union(*[per_day[d][w] for d in win])
+            if len(mem) >= MIN_MEMBERS and len(win) >= 2:
+                cur = {"title": w, "date": win[0], "end_date": win[-1],
+                       "n_members": len(mem), "n_days": len(win),
+                       "members": "|".join(sorted(mem)),
+                       "doc_freq": round(dfreq[w] / ndates, 4)}
+                if w not in best or cur["n_members"] > best[w]["n_members"]:
+                    best[w] = cur
+                break
+    return sorted(best.values(), key=lambda c: (-c["n_members"], c["date"]))
+
+
 def detect_releases(covers: pd.DataFrame) -> list[dict]:
     """커버곡 발매. published_at 이 곧 이벤트 날짜다."""
     df = covers.copy()
@@ -252,7 +322,11 @@ def main() -> int:
         print("  ✗ 03·02의 수집 데이터가 없다. 그 프로젝트를 먼저 돌려야 한다.")
         return 1
 
-    collabs = detect_collabs(pd.read_csv(streams_p))
+    streams = pd.read_csv(streams_p)
+    collabs = detect_collabs(streams)
+    candidates = detect_series_candidates(streams)
+    pd.DataFrame(candidates).to_csv(DATA / "event_candidates.csv",
+                                    index=False, encoding="utf-8-sig")
     releases = detect_releases(pd.read_csv(covers_p))
     manual = load_manual()
 
@@ -289,6 +363,7 @@ def main() -> int:
     print(f"  이벤트 {len(events)}건 · {by_type}")
     print(f"  합방 {len(collabs)}건 (자동) · 커버곡 {len(releases)}건 · 수동 {len(manual)}건")
     print(f"  새로 감지 {len(new)}건 (누적 기억 {len(seen)}건)")
+    print(f"  시리즈 후보 {len(candidates)}건 → event_candidates.csv (검토 후 수동 등록)")
     return 0
 
 
