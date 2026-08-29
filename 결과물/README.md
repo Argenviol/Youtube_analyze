@@ -9,12 +9,12 @@ StelLive 데이터 분석 포트폴리오 **11개 프로젝트의 결과물만**
 
 | # | 프로젝트 | 최신 리포트 | 기준일 | 축적 | 차트 | 대시보드 |
 |---|---|---|---|---|---|---|
-| 1 | 멤버별 유튜브 채널 성과 | [REPORT1 - 20260828.md](01_member_channel_performance/REPORT1%20-%2020260828.md) | 2026-08-28 | 11개 | [8종](01_member_channel_performance/charts/) | [index.html](01_member_channel_performance/index.html) |
-| 2 | 커버곡 성과 랭킹 | [REPORT2 - 20260828.md](02_cover_song_ranking/REPORT2%20-%2020260828.md) | 2026-08-28 | 11개 | [7종](02_cover_song_ranking/charts/) | [index.html](02_cover_song_ranking/index.html) |
-| 3 | 치지직 방송 패턴 | [REPORT3 - 20260828.md](03_chzzk_stream_pattern/REPORT3%20-%2020260828.md) | 2026-08-28 | 11개 | [8종](03_chzzk_stream_pattern/charts/) | [index.html](03_chzzk_stream_pattern/index.html) |
+| 1 | 멤버별 유튜브 채널 성과 | [REPORT1 - 20260829.md](01_member_channel_performance/REPORT1%20-%2020260829.md) | 2026-08-29 | 12개 | [8종](01_member_channel_performance/charts/) | [index.html](01_member_channel_performance/index.html) |
+| 2 | 커버곡 성과 랭킹 | [REPORT2 - 20260829.md](02_cover_song_ranking/REPORT2%20-%2020260829.md) | 2026-08-29 | 12개 | [7종](02_cover_song_ranking/charts/) | [index.html](02_cover_song_ranking/index.html) |
+| 3 | 치지직 방송 패턴 | [REPORT3 - 20260829.md](03_chzzk_stream_pattern/REPORT3%20-%2020260829.md) | 2026-08-29 | 12개 | [8종](03_chzzk_stream_pattern/charts/) | [index.html](03_chzzk_stream_pattern/index.html) |
 | 4 | 키리누키(2차창작) 생태계 | [REPORT.md](04_kirinuki_ecosystem/REPORT.md) | 2026-08-22 | — | [6종](04_kirinuki_ecosystem/charts/) | [index.html](04_kirinuki_ecosystem/index.html) |
 | 5 | 댓글 여론/감성 | [REPORT.md](05_comment_sentiment/REPORT.md) | 2026-08-22 | — | [4종](05_comment_sentiment/charts/) | [index.html](05_comment_sentiment/index.html) |
-| 6 | 경쟁사 비교 | [REPORT6 - 20260828.md](06_competitor_comparison/REPORT6%20-%2020260828.md) | 2026-08-28 | 11개 | [7종](06_competitor_comparison/charts/) | [index.html](06_competitor_comparison/index.html) |
+| 6 | 경쟁사 비교 | [REPORT6 - 20260829.md](06_competitor_comparison/REPORT6%20-%2020260829.md) | 2026-08-29 | 12개 | [7종](06_competitor_comparison/charts/) | [index.html](06_competitor_comparison/index.html) |
 | 7 | 버추얼 크리에이터 시장 | [REPORT.md](07_market_analysis/REPORT.md) | — | — | [5종](07_market_analysis/charts/) | [index.html](07_market_analysis/index.html) |
 | 8 | 동시시청자 시계열 | [REPORT8 - 20260812.md](08_live_viewership/REPORT8%20-%2020260812.md) | 2026-08-12 | 2개 | [4종](08_live_viewership/charts/) | [index.html](08_live_viewership/index.html) |
 | 9 | DART 재무 분석 | [REPORT.md](09_dart_financials/REPORT.md) | 2026-08-13 | — | [5종](09_dart_financials/charts/) | [index.html](09_dart_financials/index.html) |
