@@ -27,6 +27,33 @@
 결과만 모아 본 것은 저장소 루트의 [`결과물/`](../결과물/) 에 있습니다
 (`scripts/build_deliverables.py` 가 생성 — `refresh.py` 가 분석 후 자동 호출).
 
+## 한 파일 종합본 (HTML · PDF)
+
+`결과물/` 은 프로젝트별로 나뉘어 있어 전체 상태를 한눈에 보려면 11개 폴더를 돌아야
+합니다. `scripts/build_unified.py` 가 같은 소스에서 **한 페이지짜리 종합본**을 만듭니다.
+차트 67장을 base64 로 인라인해 파일 하나로 자체완결하므로, 링크나 인터넷 없이 열립니다.
+
+```bash
+python scripts/build_unified.py          # 결과물/_build/ 에 HTML 3종 생성
+chromium --headless=new --no-pdf-header-footer \
+  --print-to-pdf=결과물/_build/StelLive-리포트.pdf \
+  file://$PWD/결과물/_build/_print.html   # 인쇄용 → PDF (71쪽)
+```
+
+| 파일 | 용도 |
+|---|---|
+| `StelLive-리포트.html` | 단독 문서 — doctype·charset·viewport 포함, 모바일에서 그냥 열립니다 |
+| `stellive-analytics.html` | 본문 fragment — 아티팩트로 퍼블리시할 때 |
+| `_print.html` | PDF 렌더 소스 — `<details>` 를 펼치고 웹폰트를 걷어냅니다 |
+
+⚠ PDF 페이지는 A4 가 아니라 **150×210mm** 로 잡았습니다. 휴대폰에서 A4 는 한 줄이 너무
+길어 확대·좌우 스크롤을 하게 되는데, 좁은 페이지는 화면 폭에 맞춰도 글자가 읽힙니다.
+인쇄용 HTML 은 웹폰트를 제거하고 로컬 한글 폰트로 확정합니다 — 렌더러가 네트워크를 못
+쓰면 폰트를 기다리다 결국 폴백해서, 기다린 시간만 버리기 때문입니다 (`fonts-nanum` 필요).
+
+빌드 산출물은 하나가 5.8MB 라 `.gitignore` 로 제외했습니다. 파생물이므로 필요할 때
+다시 만들면 됩니다.
+
 ## 통합 대시보드
 
 `../app/` 에 Next.js 대시보드가 있습니다. 각 프로젝트의 `site/data.json` 을 읽어
