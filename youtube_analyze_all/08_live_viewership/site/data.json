@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-08-29T04:38:32.095765+00:00",
-    "n_snapshots": 6518,
+    "fetched_at": "2026-08-29T04:48:45.228420+00:00",
+    "n_snapshots": 6529,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-08-29T04:38:32.095765+00:00"
+      "2026-08-29T04:48:45.228420+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 5899,
-    "n_timepoints": 590,
-    "span_hours": 406.71,
-    "observed_hours": 324.97,
-    "coverage_ratio": 0.799,
+    "n_snapshots": 5909,
+    "n_timepoints": 591,
+    "span_hours": 406.89,
+    "observed_hours": 325.49,
+    "coverage_ratio": 0.8,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 1367,
+    "n_live_rows": 1368,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-08-29T04:38:32.095765+00:00"
+    "last": "2026-08-29T04:48:45.228420+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "CLICHE",
       "followers": 209842,
       "follower_delta": 2416,
-      "follower_per_day": 142.6,
+      "follower_per_day": 142.5,
       "n_sessions": 13,
       "n_live_points": 135,
       "peak_ccu": 9915,
@@ -44,9 +44,9 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 242876,
-      "follower_delta": 1759,
-      "follower_per_day": 103.8,
+      "followers": 242875,
+      "follower_delta": 1758,
+      "follower_per_day": 103.7,
       "n_sessions": 14,
       "n_live_points": 159,
       "peak_ccu": 9910,
@@ -72,8 +72,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 303328,
-      "follower_delta": 1408,
+      "followers": 303329,
+      "follower_delta": 1409,
       "follower_per_day": 83.1,
       "n_sessions": 16,
       "n_live_points": 156,
@@ -88,7 +88,7 @@
       "unit": "UNIVERSE",
       "followers": 257593,
       "follower_delta": 2267,
-      "follower_per_day": 133.8,
+      "follower_per_day": 133.7,
       "n_sessions": 15,
       "n_live_points": 173,
       "peak_ccu": 7675,
@@ -102,7 +102,7 @@
       "unit": "CLICHE",
       "followers": 221923,
       "follower_delta": 2823,
-      "follower_per_day": 166.6,
+      "follower_per_day": 166.5,
       "n_sessions": 15,
       "n_live_points": 140,
       "peak_ccu": 6964,
@@ -114,13 +114,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 211684,
-      "follower_delta": 2349,
-      "follower_per_day": 138.6,
+      "followers": 211687,
+      "follower_delta": 2352,
+      "follower_per_day": 138.7,
       "n_sessions": 17,
-      "n_live_points": 155,
+      "n_live_points": 156,
       "peak_ccu": 6741,
-      "avg_ccu": 2913,
+      "avg_ccu": 2926,
       "ccu_per_1k_followers": 31.84
     },
     {
@@ -128,23 +128,23 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 254994,
-      "follower_delta": 2092,
-      "follower_per_day": 123.4,
+      "followers": 254995,
+      "follower_delta": 2093,
+      "follower_per_day": 123.5,
       "n_sessions": 11,
       "n_live_points": 100,
       "peak_ccu": 6037,
       "avg_ccu": 3269,
-      "ccu_per_1k_followers": 23.68
+      "ccu_per_1k_followers": 23.67
     },
     {
       "rank": 9,
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 211533,
-      "follower_delta": 1714,
-      "follower_per_day": 101.1,
+      "followers": 211534,
+      "follower_delta": 1715,
+      "follower_per_day": 101.2,
       "n_sessions": 14,
       "n_live_points": 103,
       "peak_ccu": 5055,
@@ -158,7 +158,7 @@
       "unit": "EVERYS",
       "followers": 158377,
       "follower_delta": 1636,
-      "follower_per_day": 96.6,
+      "follower_per_day": 96.5,
       "n_sessions": 10,
       "n_live_points": 61,
       "peak_ccu": 4438,
@@ -603,6 +603,18 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
+      "start_kst": "2026-08-29 13:07",
+      "observed_min": 40.9,
+      "n_points": 5,
+      "peak_ccu": 4948,
+      "avg_ccu": 3566,
+      "title": "[떠비큐어] 이제 모니터 키고 할게요",
+      "category": "이터널 리턴"
+    },
+    {
+      "name_ko": "유즈하 리코",
+      "name_en": "Yuzuha Riko",
+      "unit": "CLICHE",
       "start_kst": "2026-08-22 15:55",
       "observed_min": 511.5,
       "n_points": 17,
@@ -789,18 +801,6 @@
       "peak_ccu": 4251,
       "avg_ccu": 3517,
       "title": "안녕하세요 수동암즈입니다. (W. 린, 하루님, 코치 한동그라미님)",
-      "category": "이터널 리턴"
-    },
-    {
-      "name_ko": "유즈하 리코",
-      "name_en": "Yuzuha Riko",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-29 13:07",
-      "observed_min": 30.7,
-      "n_points": 4,
-      "peak_ccu": 4240,
-      "avg_ccu": 3221,
-      "title": "[떠비큐어] 이제 모니터 키고 할게요",
       "category": "이터널 리턴"
     },
     {
@@ -7388,6 +7388,10 @@
         [
           "2026-08-29 13:38",
           4240
+        ],
+        [
+          "2026-08-29 13:48",
+          4948
         ]
       ]
     }
