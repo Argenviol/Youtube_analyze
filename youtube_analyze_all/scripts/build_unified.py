@@ -182,6 +182,14 @@ def _pct_table(rows, cols):
 def _cls(v):
     return "up" if v > 0.005 else ("dn" if v < -0.005 else "zero")
 
+def _md(iso: str) -> str:
+    """2026-08-28 → 8/28. 제목에서 시작일(8/3)과 표기를 맞춘다."""
+    if not iso:
+        return "현재"
+    y, m, d = iso.split("-")
+    return f"{int(m)}/{int(d)}"
+
+
 def monthly_section() -> str:
     """8/3 보존본 → 현재. 탤런트 10명만 (강지 제외)."""
     o1 = pd.read_csv(ARCHIVE/"01_member_channel_performance/data/channel_metrics.csv").set_index("name_ko")
@@ -218,7 +226,7 @@ def monthly_section() -> str:
     return f"""
 <section id="monthly">
   <header class="sec-head"><span class="num">M</span><div>
-    <h2>월간 변화 — 8/3 → {date_to[5:] if date_to else "현재"}</h2>
+    <h2>월간 변화 — 8/3 → {_md(date_to)}</h2>
     <div class="badges"><span class="badge">보존 스냅샷 대비 약 3주</span>
     <span class="badge acc">탤런트 10명</span></div></div></header>
   <div class="verdict"><p class="verdict-label">읽는 법</p>
