@@ -82,6 +82,18 @@ MIN_DATE_JACCARD = 0.5
 SERIES_WINDOW_DAYS = 21
 SERIES_MAX_DF = 0.03
 
+# 합방으로 인정할 최소 **연속** 방송일.
+#
+# 인원만 보면 하루짜리가 대부분 잡힌다. 그런데 4명이 하루 같은 게임을 한 것과
+# 8명이 열흘 연속 서버를 돈 것은 성격이 다르다 — 앞의 것은 그날 우연히 겹친
+# 것에 가깝고, 뒤의 것이 '대규모 컨텐츠'다.
+#
+# 준비·리액션 방송도 이 기준으로 걸러진다. 봉누도는 설명회·클립 월드컵·명장면
+# 월드컵만 8/15~8/28에 흩어져 있었는데(연속 구간 0일), 본편이 아니라 그것을
+# 이벤트로 등록했다가 되물렸다. 연속 기준을 세우면 준비 구간은 자동으로 빠지고
+# 본편이 시작될 때 잡힌다.
+MIN_CONSECUTIVE_DAYS = 2
+
 
 def _tokens(title: str) -> set[str]:
     """제목에서 2~12자 토큰을 뽑는다. 이모지·기호는 버린다."""
@@ -151,6 +163,16 @@ def _merge_runs(found: list[dict]) -> list[dict]:
     return events
 
 
+def _longest_streak(dates) -> int:
+    """가장 긴 연속 일수. 흩어진 참여와 연속 기획을 가르는 자."""
+    ds = sorted(set(dates))
+    best = cur = 1 if ds else 0
+    for a, b in zip(ds, ds[1:]):
+        cur = cur + 1 if (b - a).days == 1 else 1
+        best = max(best, cur)
+    return best
+
+
 def _fold(key: str, run: list[dict]) -> dict:
     members = sorted({m for r in run for m in r["members"]})
     signals = sorted({r["signal"] for r in run})
@@ -163,6 +185,7 @@ def _fold(key: str, run: list[dict]) -> dict:
         "members": "|".join(members),
         "n_members": len(members),
         "n_days": len({r["date"] for r in run}),
+        "streak_days": _longest_streak([r["date"] for r in run]),
         # 두 신호가 같은 이벤트를 동시에 가리키면 훨씬 확실한 건이다.
         "signal": "+".join(signals),
         "_dates": {r["date"] for r in run},
@@ -214,6 +237,7 @@ def _merge_overlapping(events: list[dict]) -> list[dict]:
         keys = sorted(set(m["_keys"]), key=lambda k: (-k[1], -len(k[0])))
         m["title"] = " · ".join(k[0] for k in keys[:2])
         m["aliases"] = "|".join(k[0] for k in keys[2:])
+        m["streak_days"] = _longest_streak(m["_dates"])
         del m["_keys"], m["_dates"], m["_top"]
     return merged
 
@@ -272,6 +296,32 @@ def detect_series_candidates(streams: pd.DataFrame) -> list[dict]:
     return sorted(best.values(), key=lambda c: (-c["n_members"], c["date"]))
 
 
+def name_from_candidates(events: list[dict], candidates: list[dict]) -> None:
+    """감지된 이벤트에 시리즈 이름을 붙인다.
+
+    같은 날 4명 기준으로는 카테고리 이름('마인크래프트')만 남는 경우가 많다.
+    봉봉팜·픽크타처럼 실제 기획 이름은 하루 4명을 못 넘겨서 이름이 사라진다.
+    넓은 창 신호는 이벤트를 **만들기엔** 정밀도가 부족하지만, 이미 확정된
+    이벤트에 **이름을 붙이는 데는** 안전하다 — 없는 이벤트를 만들지 않는다.
+    """
+    for e in events:
+        e_mem = set(e["members"].split("|"))
+        hits = []
+        for c in candidates:
+            if c.get("doc_freq") is None:      # 연속일 미달로 내려온 건 이름이 아니다
+                continue
+            overlaps = e["date"] <= c["end_date"] and c["date"] <= e["end_date"]
+            if overlaps and len(e_mem & set(c["members"].split("|"))) >= MIN_MEMBERS - 1:
+                hits.append(c)
+        # 겹치는 후보를 전부 붙이면 제목이 '마인크래프트 · 멋사 · RPG · 후기 · 하고 ·
+        # 공책 · 크리스마스'가 된다. 참여 인원이 가장 많고(그 기획의 중심어일 확률이
+        # 높다) 흔하지 않은 것 하나만 고른다.
+        hits.sort(key=lambda c: (-c["n_members"], c["doc_freq"]))
+        for c in hits[:1]:
+            if c["title"] not in e["title"]:
+                e["title"] = f"{e['title']} · {c['title']}"
+
+
 def detect_releases(covers: pd.DataFrame) -> list[dict]:
     """커버곡 발매. published_at 이 곧 이벤트 날짜다."""
     df = covers.copy()
@@ -323,8 +373,17 @@ def main() -> int:
         return 1
 
     streams = pd.read_csv(streams_p)
-    collabs = detect_collabs(streams)
+    detected = detect_collabs(streams)
+    collabs = [c for c in detected if c["streak_days"] >= MIN_CONSECUTIVE_DAYS]
+    short = [c for c in detected if c["streak_days"] < MIN_CONSECUTIVE_DAYS]
     candidates = detect_series_candidates(streams)
+    # 하루짜리 합방은 이벤트가 아니라 후보다(대규모 컨텐츠 기준 미달).
+    name_from_candidates(collabs, candidates)
+    for c in short:
+        candidates.append({"title": c["title"], "date": c["date"],
+                           "end_date": c["end_date"], "n_members": c["n_members"],
+                           "n_days": c["n_days"], "members": c["members"],
+                           "doc_freq": None, "reason": "연속일 미달"})
     pd.DataFrame(candidates).to_csv(DATA / "event_candidates.csv",
                                     index=False, encoding="utf-8-sig")
     releases = detect_releases(pd.read_csv(covers_p))
@@ -361,7 +420,8 @@ def main() -> int:
 
     by_type = events["type"].value_counts().to_dict()
     print(f"  이벤트 {len(events)}건 · {by_type}")
-    print(f"  합방 {len(collabs)}건 (자동) · 커버곡 {len(releases)}건 · 수동 {len(manual)}건")
+    print(f"  합방 {len(collabs)}건 (연속 {MIN_CONSECUTIVE_DAYS}일 이상) · "
+          f"커버곡 {len(releases)}건 · 수동 {len(manual)}건")
     print(f"  새로 감지 {len(new)}건 (누적 기억 {len(seen)}건)")
     print(f"  시리즈 후보 {len(candidates)}건 → event_candidates.csv (검토 후 수동 등록)")
     return 0

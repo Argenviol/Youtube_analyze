@@ -13,6 +13,7 @@ CREATE TABLE events (
     source TEXT,
     note TEXT,
     event_id TEXT,
+    streak_days TEXT,
     aliases TEXT
 );
 
