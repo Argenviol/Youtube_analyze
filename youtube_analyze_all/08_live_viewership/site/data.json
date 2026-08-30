@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-08-30T20:19:26.231600+00:00",
-    "n_snapshots": 7904,
+    "fetched_at": "2026-08-30T20:29:39.077990+00:00",
+    "n_snapshots": 7915,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-08-30T20:19:26.231600+00:00"
+      "2026-08-30T20:29:39.077990+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 7159,
-    "n_timepoints": 716,
-    "span_hours": 446.4,
-    "observed_hours": 336.78,
-    "coverage_ratio": 0.754,
+    "n_snapshots": 7169,
+    "n_timepoints": 717,
+    "span_hours": 446.57,
+    "observed_hours": 337.15,
+    "coverage_ratio": 0.755,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 1867,
+    "n_live_rows": 1868,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-08-30T20:19:26.231600+00:00"
+    "last": "2026-08-30T20:29:39.077990+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 210225,
-      "follower_delta": 2799,
+      "followers": 210226,
+      "follower_delta": 2800,
       "follower_per_day": 150.5,
       "n_sessions": 16,
       "n_live_points": 196,
@@ -44,9 +44,9 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 243208,
-      "follower_delta": 2091,
-      "follower_per_day": 112.4,
+      "followers": 243207,
+      "follower_delta": 2090,
+      "follower_per_day": 112.3,
       "n_sessions": 16,
       "n_live_points": 219,
       "peak_ccu": 9910,
@@ -74,9 +74,9 @@
       "unit": "EVERYS",
       "followers": 303573,
       "follower_delta": 1653,
-      "follower_per_day": 88.9,
+      "follower_per_day": 88.8,
       "n_sessions": 19,
-      "n_live_points": 191,
+      "n_live_points": 192,
       "peak_ccu": 8655,
       "avg_ccu": 3684,
       "ccu_per_1k_followers": 28.51
@@ -130,7 +130,7 @@
       "unit": "UNIVERSE",
       "followers": 255316,
       "follower_delta": 2414,
-      "follower_per_day": 129.8,
+      "follower_per_day": 129.7,
       "n_sessions": 14,
       "n_live_points": 120,
       "peak_ccu": 6037,
@@ -144,7 +144,7 @@
       "unit": "UNIVERSE",
       "followers": 211887,
       "follower_delta": 2068,
-      "follower_per_day": 111.2,
+      "follower_per_day": 111.1,
       "n_sessions": 18,
       "n_live_points": 179,
       "peak_ccu": 5741,
@@ -1224,6 +1224,18 @@
       "category": "이터널 리턴"
     },
     {
+      "name_ko": "아야츠노 유니",
+      "name_en": "Ayatsuno Yuni",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-31 05:09",
+      "observed_min": 20.5,
+      "n_points": 3,
+      "peak_ccu": 3613,
+      "avg_ccu": 3469,
+      "title": "<<<< 스텔 마크 수선 없는사람 ",
+      "category": "마인크래프트"
+    },
+    {
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
@@ -1414,18 +1426,6 @@
       "avg_ccu": 2754,
       "title": "[수동암즈] 이리 대회 연습 2일차",
       "category": "이터널 리턴"
-    },
-    {
-      "name_ko": "아야츠노 유니",
-      "name_en": "Ayatsuno Yuni",
-      "unit": "EVERYS",
-      "start_kst": "2026-08-31 05:09",
-      "observed_min": 10.3,
-      "n_points": 2,
-      "peak_ccu": 3411,
-      "avg_ccu": 3397,
-      "title": "<<<< 스텔 마크 수선 없는사람 ",
-      "category": "마인크래프트"
     },
     {
       "name_ko": "텐코 시부키",
@@ -5090,6 +5090,10 @@
         [
           "2026-08-31 05:19",
           3384
+        ],
+        [
+          "2026-08-31 05:29",
+          3613
         ]
       ]
     },
