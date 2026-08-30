@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-08-30T22:01:31.666194+00:00",
-    "n_snapshots": 8014,
+    "fetched_at": "2026-08-30T22:11:44.107637+00:00",
+    "n_snapshots": 8025,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-08-30T22:01:31.666194+00:00"
+      "2026-08-30T22:11:44.107637+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 7259,
-    "n_timepoints": 726,
-    "span_hours": 448.1,
-    "observed_hours": 336.17,
+    "n_snapshots": 7269,
+    "n_timepoints": 727,
+    "span_hours": 448.27,
+    "observed_hours": 336.24,
     "coverage_ratio": 0.75,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 1877,
+    "n_live_rows": 1878,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-08-30T22:01:31.666194+00:00"
+    "last": "2026-08-30T22:11:44.107637+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "CLICHE",
       "followers": 210228,
       "follower_delta": 2802,
-      "follower_per_day": 150.1,
+      "follower_per_day": 150.0,
       "n_sessions": 18,
       "n_live_points": 196,
       "peak_ccu": 9915,
@@ -46,7 +46,7 @@
       "unit": "CLICHE",
       "followers": 243204,
       "follower_delta": 2087,
-      "follower_per_day": 111.8,
+      "follower_per_day": 111.7,
       "n_sessions": 18,
       "n_live_points": 219,
       "peak_ccu": 9910,
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 237228,
       "follower_delta": 380,
-      "follower_per_day": 20.4,
+      "follower_per_day": 20.3,
       "n_sessions": 21,
       "n_live_points": 240,
       "peak_ccu": 9749,
@@ -72,13 +72,13 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 303598,
-      "follower_delta": 1678,
+      "followers": 303599,
+      "follower_delta": 1679,
       "follower_per_day": 89.9,
       "n_sessions": 19,
-      "n_live_points": 201,
+      "n_live_points": 202,
       "peak_ccu": 8655,
-      "avg_ccu": 3682,
+      "avg_ccu": 3683,
       "ccu_per_1k_followers": 28.51
     },
     {
@@ -86,8 +86,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 257955,
-      "follower_delta": 2629,
+      "followers": 257956,
+      "follower_delta": 2630,
       "follower_per_day": 140.8,
       "n_sessions": 18,
       "n_live_points": 206,
@@ -102,7 +102,7 @@
       "unit": "CLICHE",
       "followers": 222350,
       "follower_delta": 3250,
-      "follower_per_day": 174.1,
+      "follower_per_day": 174.0,
       "n_sessions": 20,
       "n_live_points": 205,
       "peak_ccu": 6964,
@@ -116,7 +116,7 @@
       "unit": "CLICHE",
       "followers": 212109,
       "follower_delta": 2774,
-      "follower_per_day": 148.6,
+      "follower_per_day": 148.5,
       "n_sessions": 22,
       "n_live_points": 243,
       "peak_ccu": 6741,
@@ -144,7 +144,7 @@
       "unit": "UNIVERSE",
       "followers": 211891,
       "follower_delta": 2072,
-      "follower_per_day": 111.0,
+      "follower_per_day": 110.9,
       "n_sessions": 18,
       "n_live_points": 179,
       "peak_ccu": 5741,
@@ -1116,6 +1116,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "아야츠노 유니",
+      "name_en": "Ayatsuno Yuni",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-31 05:09",
+      "observed_min": 122.6,
+      "n_points": 13,
+      "peak_ccu": 3889,
+      "avg_ccu": 3619,
+      "title": "<<<< 스텔 마크 수선 없는사람 ",
+      "category": "마인크래프트"
+    },
+    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -1174,18 +1186,6 @@
       "avg_ccu": 3432,
       "title": "호오오옥",
       "category": "talk"
-    },
-    {
-      "name_ko": "아야츠노 유니",
-      "name_en": "Ayatsuno Yuni",
-      "unit": "EVERYS",
-      "start_kst": "2026-08-31 05:09",
-      "observed_min": 112.3,
-      "n_points": 12,
-      "peak_ccu": 3786,
-      "avg_ccu": 3597,
-      "title": "<<<< 스텔 마크 수선 없는사람 ",
-      "category": "마인크래프트"
     },
     {
       "name_ko": "아카네 리제",
@@ -5298,6 +5298,10 @@
         [
           "2026-08-31 07:01",
           3786
+        ],
+        [
+          "2026-08-31 07:11",
+          3889
         ]
       ]
     },
