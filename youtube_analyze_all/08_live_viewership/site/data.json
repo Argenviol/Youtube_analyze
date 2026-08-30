@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-08-30T20:09:11.007771+00:00",
-    "n_snapshots": 7893,
+    "fetched_at": "2026-08-30T20:19:26.231600+00:00",
+    "n_snapshots": 7904,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-08-30T20:09:11.007771+00:00"
+      "2026-08-30T20:19:26.231600+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 7149,
-    "n_timepoints": 715,
-    "span_hours": 446.23,
-    "observed_hours": 336.59,
+    "n_snapshots": 7159,
+    "n_timepoints": 716,
+    "span_hours": 446.4,
+    "observed_hours": 336.78,
     "coverage_ratio": 0.754,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 1866,
+    "n_live_rows": 1867,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-08-30T20:09:11.007771+00:00"
+    "last": "2026-08-30T20:19:26.231600+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -46,7 +46,7 @@
       "unit": "CLICHE",
       "followers": 243208,
       "follower_delta": 2091,
-      "follower_per_day": 112.5,
+      "follower_per_day": 112.4,
       "n_sessions": 16,
       "n_live_points": 219,
       "peak_ccu": 9910,
@@ -72,13 +72,13 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 303570,
-      "follower_delta": 1650,
-      "follower_per_day": 88.7,
+      "followers": 303573,
+      "follower_delta": 1653,
+      "follower_per_day": 88.9,
       "n_sessions": 19,
-      "n_live_points": 190,
+      "n_live_points": 191,
       "peak_ccu": 8655,
-      "avg_ccu": 3686,
+      "avg_ccu": 3684,
       "ccu_per_1k_followers": 28.51
     },
     {
@@ -88,7 +88,7 @@
       "unit": "UNIVERSE",
       "followers": 257953,
       "follower_delta": 2627,
-      "follower_per_day": 141.3,
+      "follower_per_day": 141.2,
       "n_sessions": 16,
       "n_live_points": 206,
       "peak_ccu": 7675,
@@ -102,7 +102,7 @@
       "unit": "CLICHE",
       "followers": 222350,
       "follower_delta": 3250,
-      "follower_per_day": 174.8,
+      "follower_per_day": 174.7,
       "n_sessions": 18,
       "n_live_points": 205,
       "peak_ccu": 6964,
@@ -116,7 +116,7 @@
       "unit": "CLICHE",
       "followers": 212109,
       "follower_delta": 2774,
-      "follower_per_day": 149.2,
+      "follower_per_day": 149.1,
       "n_sessions": 20,
       "n_live_points": 243,
       "peak_ccu": 6741,
@@ -128,8 +128,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 255315,
-      "follower_delta": 2413,
+      "followers": 255316,
+      "follower_delta": 2414,
       "follower_per_day": 129.8,
       "n_sessions": 14,
       "n_live_points": 120,
@@ -156,9 +156,9 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 158706,
-      "follower_delta": 1965,
-      "follower_per_day": 105.7,
+      "followers": 158705,
+      "follower_delta": 1964,
+      "follower_per_day": 105.6,
       "n_sessions": 12,
       "n_live_points": 68,
       "peak_ccu": 4438,
@@ -1420,10 +1420,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-08-31 05:09",
-      "observed_min": 0.0,
-      "n_points": 1,
+      "observed_min": 10.3,
+      "n_points": 2,
       "peak_ccu": 3411,
-      "avg_ccu": 3411,
+      "avg_ccu": 3397,
       "title": "<<<< 스텔 마크 수선 없는사람 ",
       "category": "마인크래프트"
     },
@@ -5086,6 +5086,10 @@
         [
           "2026-08-31 05:09",
           3411
+        ],
+        [
+          "2026-08-31 05:19",
+          3384
         ]
       ]
     },
