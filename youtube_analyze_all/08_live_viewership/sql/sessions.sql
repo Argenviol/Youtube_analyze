@@ -1,11 +1,12 @@
--- sessions 데이터 (201 rows)
+-- sessions 데이터 (202 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-31 19:03', 51.1, 6, 38402, 29560, '첫 신의상 공개해요... 구경 오실래요...?😳', 'talk');
-INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-08-31 20:05', 30.6, 4, 38237, 34518, '[🏖️스텔 여름 휴가 신의상🏖️] 알아하시는 타비 현재 매우 긴장 중 ㄷㄷㄷஇ௰இ', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-08-31 20:05', 40.8, 5, 38237, 33818, '[🏖️스텔 여름 휴가 신의상🏖️] 알아하시는 타비 현재 매우 긴장 중 ㄷㄷㄷஇ௰இ', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-24 18:29', 153.0, 5, 9915, 6378, '정나나가 돌아왔다요~!! [8시 이리 치지직컵 드래프트]', 'talk');
-INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-18 19:33', 245.4, 7, 9910, 7725, '감동의 슬픔이었는데 진짜 슬퍼짐 ', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-18 22:06', 92.9, 3, 9910, 8245, '봉누도2 ppt 설명회 보기', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-23 19:42', 529.8, 18, 9749, 6265, '초심 찾기 2일챠ㅑ 거북이 게임하고 봉누도 월드컵 하기', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-08-24 22:11', 306.5, 8, 9511, 5135, '정나나가 돌아왔다요~!! [8시 이리 치지직컵 드래프트]', '이터널 리턴');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-18 19:33', 86.9, 4, 9384, 7335, '감동의 슬픔이었는데 진짜 슬퍼짐 ', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-21 19:02', 636.2, 18, 9272, 6787, '히나입니댜', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-22 15:55', 478.8, 16, 8655, 4609, '오 !!!! ', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-17 16:59', 410.1, 11, 8239, 5370, '대회 결승 하는날 무관귀신 탈출 ????????', '오버워치');
