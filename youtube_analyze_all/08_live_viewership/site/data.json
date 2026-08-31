@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-08-31T00:04:03.331507+00:00",
-    "n_snapshots": 8146,
+    "fetched_at": "2026-08-31T00:14:15.694237+00:00",
+    "n_snapshots": 8157,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-08-31T00:04:03.331507+00:00"
+      "2026-08-31T00:14:15.694237+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 7379,
-    "n_timepoints": 738,
-    "span_hours": 450.14,
-    "observed_hours": 338.45,
-    "coverage_ratio": 0.752,
+    "n_snapshots": 7389,
+    "n_timepoints": 739,
+    "span_hours": 450.31,
+    "observed_hours": 337.68,
+    "coverage_ratio": 0.75,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 1889,
+    "n_live_rows": 1890,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-08-31T00:04:03.331507+00:00"
+    "last": "2026-08-31T00:14:15.694237+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -33,7 +33,7 @@
       "followers": 210232,
       "follower_delta": 2806,
       "follower_per_day": 149.6,
-      "n_sessions": 18,
+      "n_sessions": 19,
       "n_live_points": 196,
       "peak_ccu": 9915,
       "avg_ccu": 3243,
@@ -44,8 +44,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 243212,
-      "follower_delta": 2095,
+      "followers": 243213,
+      "follower_delta": 2096,
       "follower_per_day": 111.7,
       "n_sessions": 18,
       "n_live_points": 219,
@@ -72,22 +72,22 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 303630,
-      "follower_delta": 1710,
-      "follower_per_day": 91.2,
+      "followers": 303633,
+      "follower_delta": 1713,
+      "follower_per_day": 91.3,
       "n_sessions": 19,
-      "n_live_points": 213,
+      "n_live_points": 214,
       "peak_ccu": 8655,
-      "avg_ccu": 3703,
-      "ccu_per_1k_followers": 28.51
+      "avg_ccu": 3707,
+      "ccu_per_1k_followers": 28.5
     },
     {
       "rank": 5,
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 257963,
-      "follower_delta": 2637,
+      "followers": 257964,
+      "follower_delta": 2638,
       "follower_per_day": 140.6,
       "n_sessions": 18,
       "n_live_points": 206,
@@ -102,7 +102,7 @@
       "unit": "CLICHE",
       "followers": 222358,
       "follower_delta": 3258,
-      "follower_per_day": 173.7,
+      "follower_per_day": 173.6,
       "n_sessions": 20,
       "n_live_points": 205,
       "peak_ccu": 6964,
@@ -116,7 +116,7 @@
       "unit": "CLICHE",
       "followers": 212120,
       "follower_delta": 2785,
-      "follower_per_day": 148.5,
+      "follower_per_day": 148.4,
       "n_sessions": 22,
       "n_live_points": 243,
       "peak_ccu": 6741,
@@ -156,8 +156,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 158721,
-      "follower_delta": 1980,
+      "followers": 158722,
+      "follower_delta": 1981,
       "follower_per_day": 105.6,
       "n_sessions": 13,
       "n_live_points": 68,
@@ -928,10 +928,10 @@
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
       "start_kst": "2026-08-13 17:39",
-      "observed_min": 176.9,
-      "n_points": 4,
+      "observed_min": 0.0,
+      "n_points": 1,
       "peak_ccu": 4590,
-      "avg_ccu": 3482,
+      "avg_ccu": 4590,
       "title": "포린이 혼자하다가 드디어 방송에서 포챔스키다",
       "category": "포켓몬 챔피언스"
     },
@@ -996,6 +996,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "아야츠노 유니",
+      "name_en": "Ayatsuno Yuni",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-31 05:09",
+      "observed_min": 245.1,
+      "n_points": 25,
+      "peak_ccu": 4392,
+      "avg_ccu": 3853,
+      "title": "<<<< 스텔 마크 수선 없는사람 ",
+      "category": "마인크래프트"
+    },
+    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -1018,18 +1030,6 @@
       "avg_ccu": 4125,
       "title": "안녕하세요 수동암즈입니다. (W. 린, 하루님, 코치 한동그라미님)",
       "category": "이터널 리턴"
-    },
-    {
-      "name_ko": "아야츠노 유니",
-      "name_en": "Ayatsuno Yuni",
-      "unit": "EVERYS",
-      "start_kst": "2026-08-31 05:09",
-      "observed_min": 234.9,
-      "n_points": 24,
-      "peak_ccu": 4233,
-      "avg_ccu": 3830,
-      "title": "<<<< 스텔 마크 수선 없는사람 ",
-      "category": "마인크래프트"
     },
     {
       "name_ko": "네네코 마시로",
@@ -1642,6 +1642,18 @@
       "avg_ccu": 3108,
       "title": "역전재판 3-2 더빙 플레이",
       "category": "역전재판 3"
+    },
+    {
+      "name_ko": "하나코 나나",
+      "name_en": "Hanako Nana",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-13 18:47",
+      "observed_min": 108.4,
+      "n_points": 3,
+      "peak_ccu": 3186,
+      "avg_ccu": 3113,
+      "title": "오늘은 이거저거 게임중독자 데이",
+      "category": "에이펙스 레전드"
     },
     {
       "name_ko": "시라유키 히나",
@@ -5346,6 +5358,10 @@
         [
           "2026-08-31 09:04",
           4233
+        ],
+        [
+          "2026-08-31 09:14",
+          4392
         ]
       ]
     },
