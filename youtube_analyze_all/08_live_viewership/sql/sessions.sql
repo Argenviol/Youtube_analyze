@@ -1,4 +1,4 @@
--- sessions 데이터 (217 rows)
+-- sessions 데이터 (218 rows)
 
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-31 19:03', 51.1, 6, 38402, 29560, '첫 신의상 공개해요... 구경 오실래요...?😳', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-08-31 20:05', 102.1, 11, 38237, 23186, '[🏖️스텔 여름 휴가 신의상🏖️] 알아하시는 타비 현재 매우 긴장 중 ㄷㄷㄷஇ௰இ', 'talk');
@@ -28,7 +28,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-22 19:40', 435.6, 16, 6074, 4637, '초심 찾기 1일차', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-08-20 20:47', 30.4, 2, 6061, 5245, '오랜만에 돌아가는 그 곳', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-08-28 20:39', 326.6, 33, 6053, 5525, '스텔 마끼끼땨', '마인크래프트');
-INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아카네 리제', 'Akane Lize', 'UNIVERSE', '2026-08-19 19:39', 198.7, 6, 6037, 5096, '빠쓰아가씨의 봉누도2 설명회 같이보기', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아카네 리제', 'Akane Lize', 'UNIVERSE', '2026-08-19 22:04', 53.4, 2, 6037, 5973, '빠쓰아가씨의 봉누도2 설명회 같이보기', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-08-30 17:58', 214.2, 22, 6027, 4248, '[수동암즈] 이리 대회 2일차!', '이터널 리턴');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-08-20 22:23', 136.1, 4, 5971, 4899, 'i''m back', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-16 18:31', 420.0, 15, 5870, 4627, '스ㅡㅡㅡㅡㅡㅡ파이더맨보고 먹먹해진ㅇ ㅕ우', 'talk');
@@ -43,6 +43,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-19 19:00', 121.1, 5, 5624, 4259, '하이이이이', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-24 22:11', 392.8, 10, 5621, 4735, '고독방송..', '고독방송:심');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-08-25 18:03', 194.0, 6, 5415, 4725, '캠 위치를 어디에 둬야할지 모르겠어 하루 종일 고민하고 하루종일 세팅하고 일본어 수업듣고 다시 세팅하고 고민하다 방송 킴', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아카네 리제', 'Akane Lize', 'UNIVERSE', '2026-08-19 19:39', 81.9, 4, 5399, 4657, '빠쓰아가씨의 봉누도2 설명회 같이보기', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-08-14 19:08', 108.9, 3, 5391, 5230, '오늘운 옵치 대회 카봉컵 팀 뽑는 날 ~~ ', '오버워치');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-13 18:47', 164.3, 4, 5346, 4438, '오늘은 상상도 못한 ㄴㅇㄱ', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-17 17:55', 379.0, 11, 5336, 4659, '걷고걷고걷고걷고걷고걷고걷고걷고걷고걷는날', 'talk');
