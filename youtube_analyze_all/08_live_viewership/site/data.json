@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-08-31T19:12:07.911967+00:00",
-    "n_snapshots": 8663,
+    "fetched_at": "2026-08-31T19:22:19.930676+00:00",
+    "n_snapshots": 8674,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-08-31T19:12:07.911967+00:00"
+      "2026-08-31T19:22:19.930676+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 7849,
-    "n_timepoints": 785,
-    "span_hours": 469.27,
-    "observed_hours": 339.9,
+    "n_snapshots": 7859,
+    "n_timepoints": 786,
+    "span_hours": 469.44,
+    "observed_hours": 340.04,
     "coverage_ratio": 0.724,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 1925,
+    "n_live_rows": 1926,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-08-31T19:12:07.911967+00:00"
+    "last": "2026-08-31T19:22:19.930676+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,27 +30,27 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 161381,
-      "follower_delta": 4640,
-      "follower_per_day": 237.4,
+      "followers": 161386,
+      "follower_delta": 4645,
+      "follower_per_day": 237.5,
       "n_sessions": 16,
       "n_live_points": 78,
       "peak_ccu": 38402,
       "avg_ccu": 4631,
-      "ccu_per_1k_followers": 237.96
+      "ccu_per_1k_followers": 237.95
     },
     {
       "rank": 2,
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 259388,
-      "follower_delta": 4062,
+      "followers": 259389,
+      "follower_delta": 4063,
       "follower_per_day": 207.7,
       "n_sessions": 21,
-      "n_live_points": 222,
+      "n_live_points": 223,
       "peak_ccu": 38237,
-      "avg_ccu": 5555,
+      "avg_ccu": 5554,
       "ccu_per_1k_followers": 147.41
     },
     {
@@ -60,7 +60,7 @@
       "unit": "CLICHE",
       "followers": 210683,
       "follower_delta": 3257,
-      "follower_per_day": 166.6,
+      "follower_per_day": 166.5,
       "n_sessions": 20,
       "n_live_points": 196,
       "peak_ccu": 9915,
@@ -100,9 +100,9 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 304039,
-      "follower_delta": 2119,
-      "follower_per_day": 108.4,
+      "followers": 304038,
+      "follower_delta": 2118,
+      "follower_per_day": 108.3,
       "n_sessions": 20,
       "n_live_points": 220,
       "peak_ccu": 8655,
@@ -116,7 +116,7 @@
       "unit": "CLICHE",
       "followers": 222787,
       "follower_delta": 3687,
-      "follower_per_day": 188.6,
+      "follower_per_day": 188.5,
       "n_sessions": 23,
       "n_live_points": 205,
       "peak_ccu": 6964,
@@ -130,7 +130,7 @@
       "unit": "CLICHE",
       "followers": 212547,
       "follower_delta": 3212,
-      "follower_per_day": 164.3,
+      "follower_per_day": 164.2,
       "n_sessions": 25,
       "n_live_points": 243,
       "peak_ccu": 6741,
@@ -142,9 +142,9 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 255947,
-      "follower_delta": 3045,
-      "follower_per_day": 155.7,
+      "followers": 255946,
+      "follower_delta": 3044,
+      "follower_per_day": 155.6,
       "n_sessions": 18,
       "n_live_points": 123,
       "peak_ccu": 6037,
@@ -568,10 +568,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-01 03:31",
-      "observed_min": 40.8,
-      "n_points": 5,
+      "observed_min": 51.0,
+      "n_points": 6,
       "peak_ccu": 5844,
-      "avg_ccu": 5654,
+      "avg_ccu": 5606,
       "title": "🏖️시원~하이🏖️스텔 마끼끼 건축하꾸야",
       "category": "마인크래프트"
     },
@@ -4853,6 +4853,10 @@
         [
           "2026-09-01 04:12",
           5401
+        ],
+        [
+          "2026-09-01 04:22",
+          5367
         ]
       ]
     },
