@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-01T19:46:52.460779+00:00",
-    "n_snapshots": 9532,
+    "fetched_at": "2026-09-01T19:57:04.540740+00:00",
+    "n_snapshots": 9543,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-01T19:46:52.460779+00:00"
+      "2026-09-01T19:57:04.540740+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 8639,
-    "n_timepoints": 864,
-    "span_hours": 493.85,
-    "observed_hours": 327.09,
+    "n_snapshots": 8649,
+    "n_timepoints": 865,
+    "span_hours": 494.02,
+    "observed_hours": 327.24,
     "coverage_ratio": 0.662,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 2018,
+    "n_live_rows": 2020,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-01T19:46:52.460779+00:00"
+    "last": "2026-09-01T19:57:04.540740+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 162009,
       "follower_delta": 5268,
-      "follower_per_day": 256.1,
+      "follower_per_day": 256.0,
       "n_sessions": 22,
       "n_live_points": 85,
       "peak_ccu": 38402,
@@ -44,13 +44,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 259838,
-      "follower_delta": 4512,
+      "followers": 259840,
+      "follower_delta": 4514,
       "follower_per_day": 219.3,
       "n_sessions": 29,
-      "n_live_points": 261,
+      "n_live_points": 262,
       "peak_ccu": 38237,
-      "avg_ccu": 5324,
+      "avg_ccu": 5316,
       "ccu_per_1k_followers": 147.16
     },
     {
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 213930,
       "follower_delta": 4111,
-      "follower_per_day": 199.8,
+      "follower_per_day": 199.7,
       "n_sessions": 25,
       "n_live_points": 185,
       "peak_ccu": 28071,
@@ -72,9 +72,9 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 212173,
-      "follower_delta": 4747,
-      "follower_per_day": 230.7,
+      "followers": 212172,
+      "follower_delta": 4746,
+      "follower_per_day": 230.6,
       "n_sessions": 29,
       "n_live_points": 207,
       "peak_ccu": 24385,
@@ -88,7 +88,7 @@
       "unit": "CLICHE",
       "followers": 244100,
       "follower_delta": 2983,
-      "follower_per_day": 145.0,
+      "follower_per_day": 144.9,
       "n_sessions": 29,
       "n_live_points": 231,
       "peak_ccu": 9910,
@@ -116,7 +116,7 @@
       "unit": "EVERYS",
       "followers": 304485,
       "follower_delta": 2565,
-      "follower_per_day": 124.7,
+      "follower_per_day": 124.6,
       "n_sessions": 25,
       "n_live_points": 220,
       "peak_ccu": 8655,
@@ -130,7 +130,7 @@
       "unit": "CLICHE",
       "followers": 223217,
       "follower_delta": 4117,
-      "follower_per_day": 200.1,
+      "follower_per_day": 200.0,
       "n_sessions": 30,
       "n_live_points": 205,
       "peak_ccu": 6964,
@@ -144,11 +144,11 @@
       "unit": "CLICHE",
       "followers": 213129,
       "follower_delta": 3794,
-      "follower_per_day": 184.4,
+      "follower_per_day": 184.3,
       "n_sessions": 39,
-      "n_live_points": 261,
+      "n_live_points": 262,
       "peak_ccu": 6741,
-      "avg_ccu": 3020,
+      "avg_ccu": 3018,
       "ccu_per_1k_followers": 31.63
     },
     {
@@ -1696,10 +1696,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-02 01:53",
-      "observed_min": 173.5,
-      "n_points": 18,
+      "observed_min": 183.7,
+      "n_points": 19,
       "peak_ccu": 3734,
-      "avg_ccu": 2940,
+      "avg_ccu": 2950,
       "title": "스테루 마끽",
       "category": "마인크래프트"
     },
@@ -3148,10 +3148,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-09-02 01:53",
-      "observed_min": 173.5,
-      "n_points": 18,
+      "observed_min": 183.7,
+      "n_points": 19,
       "peak_ccu": 2493,
-      "avg_ccu": 2275,
+      "avg_ccu": 2281,
       "title": "다음 타자인 사람 근데 아직 공개 아닌",
       "category": "마인크래프트"
     },
@@ -5957,6 +5957,10 @@
         [
           "2026-09-02 04:46",
           2982
+        ],
+        [
+          "2026-09-02 04:57",
+          3125
         ]
       ]
     },
@@ -11708,6 +11712,10 @@
         [
           "2026-09-02 04:46",
           2346
+        ],
+        [
+          "2026-09-02 04:57",
+          2393
         ]
       ]
     }
