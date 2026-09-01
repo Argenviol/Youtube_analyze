@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-01T19:16:14.967488+00:00",
-    "n_snapshots": 9499,
+    "fetched_at": "2026-09-01T19:26:28.239640+00:00",
+    "n_snapshots": 9510,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-01T19:16:14.967488+00:00"
+      "2026-09-01T19:26:28.239640+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 8609,
-    "n_timepoints": 861,
-    "span_hours": 493.34,
-    "observed_hours": 327.04,
+    "n_snapshots": 8619,
+    "n_timepoints": 862,
+    "span_hours": 493.51,
+    "observed_hours": 327.34,
     "coverage_ratio": 0.663,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 2012,
+    "n_live_rows": 2014,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-01T19:16:14.967488+00:00"
+    "last": "2026-09-01T19:26:28.239640+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 162008,
       "follower_delta": 5267,
-      "follower_per_day": 256.3,
+      "follower_per_day": 256.2,
       "n_sessions": 22,
       "n_live_points": 85,
       "peak_ccu": 38402,
@@ -48,9 +48,9 @@
       "follower_delta": 4511,
       "follower_per_day": 219.4,
       "n_sessions": 29,
-      "n_live_points": 258,
+      "n_live_points": 259,
       "peak_ccu": 38237,
-      "avg_ccu": 5352,
+      "avg_ccu": 5342,
       "ccu_per_1k_followers": 147.16
     },
     {
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 213926,
       "follower_delta": 4107,
-      "follower_per_day": 199.8,
+      "follower_per_day": 199.7,
       "n_sessions": 25,
       "n_live_points": 185,
       "peak_ccu": 28071,
@@ -72,9 +72,9 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 212173,
-      "follower_delta": 4747,
-      "follower_per_day": 230.9,
+      "followers": 212172,
+      "follower_delta": 4746,
+      "follower_per_day": 230.8,
       "n_sessions": 29,
       "n_live_points": 207,
       "peak_ccu": 24385,
@@ -142,13 +142,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 213126,
-      "follower_delta": 3791,
+      "followers": 213127,
+      "follower_delta": 3792,
       "follower_per_day": 184.4,
       "n_sessions": 39,
-      "n_live_points": 258,
+      "n_live_points": 259,
       "peak_ccu": 6741,
-      "avg_ccu": 3028,
+      "avg_ccu": 3026,
       "ccu_per_1k_followers": 31.63
     },
     {
@@ -158,7 +158,7 @@
       "unit": "UNIVERSE",
       "followers": 256373,
       "follower_delta": 3471,
-      "follower_per_day": 168.9,
+      "follower_per_day": 168.8,
       "n_sessions": 26,
       "n_live_points": 123,
       "peak_ccu": 6037,
@@ -1696,10 +1696,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-02 01:53",
-      "observed_min": 142.9,
-      "n_points": 15,
+      "observed_min": 153.1,
+      "n_points": 16,
       "peak_ccu": 3734,
-      "avg_ccu": 2934,
+      "avg_ccu": 2936,
       "title": "스테루 마끽",
       "category": "마인크래프트"
     },
@@ -3148,10 +3148,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-09-02 01:53",
-      "observed_min": 142.9,
-      "n_points": 15,
+      "observed_min": 153.1,
+      "n_points": 16,
       "peak_ccu": 2493,
-      "avg_ccu": 2260,
+      "avg_ccu": 2266,
       "title": "다음 타자인 사람 근데 아직 공개 아닌",
       "category": "마인크래프트"
     },
@@ -5945,6 +5945,10 @@
         [
           "2026-09-02 04:16",
           2934
+        ],
+        [
+          "2026-09-02 04:26",
+          2959
         ]
       ]
     },
@@ -11684,6 +11688,10 @@
         [
           "2026-09-02 04:16",
           2340
+        ],
+        [
+          "2026-09-02 04:26",
+          2352
         ]
       ]
     }
