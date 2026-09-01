@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-01T18:45:38.291953+00:00",
-    "n_snapshots": 9466,
+    "fetched_at": "2026-09-01T18:55:50.362831+00:00",
+    "n_snapshots": 9477,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-01T18:45:38.291953+00:00"
+      "2026-09-01T18:55:50.362831+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 8579,
-    "n_timepoints": 858,
-    "span_hours": 492.83,
-    "observed_hours": 326.58,
+    "n_snapshots": 8589,
+    "n_timepoints": 859,
+    "span_hours": 493.0,
+    "observed_hours": 326.67,
     "coverage_ratio": 0.663,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 2006,
+    "n_live_rows": 2008,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-01T18:45:38.291953+00:00"
+    "last": "2026-09-01T18:55:50.362831+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 162008,
       "follower_delta": 5267,
-      "follower_per_day": 256.6,
+      "follower_per_day": 256.5,
       "n_sessions": 22,
       "n_live_points": 85,
       "peak_ccu": 38402,
@@ -46,11 +46,11 @@
       "unit": "UNIVERSE",
       "followers": 259835,
       "follower_delta": 4509,
-      "follower_per_day": 219.6,
+      "follower_per_day": 219.5,
       "n_sessions": 29,
-      "n_live_points": 255,
+      "n_live_points": 256,
       "peak_ccu": 38237,
-      "avg_ccu": 5380,
+      "avg_ccu": 5370,
       "ccu_per_1k_followers": 147.16
     },
     {
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 213926,
       "follower_delta": 4107,
-      "follower_per_day": 200.0,
+      "follower_per_day": 199.9,
       "n_sessions": 25,
       "n_live_points": 185,
       "peak_ccu": 28071,
@@ -72,9 +72,9 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 212173,
-      "follower_delta": 4747,
-      "follower_per_day": 231.2,
+      "followers": 212174,
+      "follower_delta": 4748,
+      "follower_per_day": 231.1,
       "n_sessions": 29,
       "n_live_points": 207,
       "peak_ccu": 24385,
@@ -116,7 +116,7 @@
       "unit": "EVERYS",
       "followers": 304484,
       "follower_delta": 2564,
-      "follower_per_day": 124.9,
+      "follower_per_day": 124.8,
       "n_sessions": 25,
       "n_live_points": 220,
       "peak_ccu": 8655,
@@ -146,9 +146,9 @@
       "follower_delta": 3785,
       "follower_per_day": 184.3,
       "n_sessions": 39,
-      "n_live_points": 255,
+      "n_live_points": 256,
       "peak_ccu": 6741,
-      "avg_ccu": 3036,
+      "avg_ccu": 3034,
       "ccu_per_1k_followers": 31.63
     },
     {
@@ -158,7 +158,7 @@
       "unit": "UNIVERSE",
       "followers": 256372,
       "follower_delta": 3470,
-      "follower_per_day": 169.0,
+      "follower_per_day": 168.9,
       "n_sessions": 26,
       "n_live_points": 123,
       "peak_ccu": 6037,
@@ -1696,10 +1696,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-02 01:53",
-      "observed_min": 112.3,
-      "n_points": 12,
+      "observed_min": 122.5,
+      "n_points": 13,
       "peak_ccu": 3734,
-      "avg_ccu": 2939,
+      "avg_ccu": 2932,
       "title": "스테루 마끽",
       "category": "마인크래프트"
     },
@@ -3148,10 +3148,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-09-02 01:53",
-      "observed_min": 112.3,
-      "n_points": 12,
+      "observed_min": 122.5,
+      "n_points": 13,
       "peak_ccu": 2493,
-      "avg_ccu": 2232,
+      "avg_ccu": 2247,
       "title": "다음 타자인 사람 근데 아직 공개 아닌",
       "category": "마인크래프트"
     },
@@ -5933,6 +5933,10 @@
         [
           "2026-09-02 03:45",
           2341
+        ],
+        [
+          "2026-09-02 03:55",
+          2851
         ]
       ]
     },
@@ -11660,6 +11664,10 @@
         [
           "2026-09-02 03:45",
           2120
+        ],
+        [
+          "2026-09-02 03:55",
+          2430
         ]
       ]
     }
