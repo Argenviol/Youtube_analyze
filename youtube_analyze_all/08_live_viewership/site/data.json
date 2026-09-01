@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-01T20:07:16.482732+00:00",
-    "n_snapshots": 9554,
+    "fetched_at": "2026-09-01T20:17:28.868397+00:00",
+    "n_snapshots": 9565,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-01T20:07:16.482732+00:00"
+      "2026-09-01T20:17:28.868397+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 8659,
-    "n_timepoints": 866,
-    "span_hours": 494.19,
-    "observed_hours": 327.38,
+    "n_snapshots": 8669,
+    "n_timepoints": 867,
+    "span_hours": 494.36,
+    "observed_hours": 327.44,
     "coverage_ratio": 0.662,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 2021,
+    "n_live_rows": 2022,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-01T20:07:16.482732+00:00"
+    "last": "2026-09-01T20:17:28.868397+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,13 +44,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 259842,
-      "follower_delta": 4516,
+      "followers": 259844,
+      "follower_delta": 4518,
       "follower_per_day": 219.3,
       "n_sessions": 29,
-      "n_live_points": 263,
+      "n_live_points": 264,
       "peak_ccu": 38237,
-      "avg_ccu": 5308,
+      "avg_ccu": 5301,
       "ccu_per_1k_followers": 147.15
     },
     {
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 212172,
-      "follower_delta": 4746,
+      "followers": 212173,
+      "follower_delta": 4747,
       "follower_per_day": 230.5,
       "n_sessions": 29,
       "n_live_points": 207,
@@ -88,7 +88,7 @@
       "unit": "CLICHE",
       "followers": 244100,
       "follower_delta": 2983,
-      "follower_per_day": 144.9,
+      "follower_per_day": 144.8,
       "n_sessions": 29,
       "n_live_points": 231,
       "peak_ccu": 9910,
@@ -116,7 +116,7 @@
       "unit": "EVERYS",
       "followers": 304485,
       "follower_delta": 2565,
-      "follower_per_day": 124.6,
+      "follower_per_day": 124.5,
       "n_sessions": 25,
       "n_live_points": 220,
       "peak_ccu": 8655,
@@ -144,7 +144,7 @@
       "unit": "CLICHE",
       "followers": 213130,
       "follower_delta": 3795,
-      "follower_per_day": 184.3,
+      "follower_per_day": 184.2,
       "n_sessions": 39,
       "n_live_points": 262,
       "peak_ccu": 6741,
@@ -1696,10 +1696,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-02 01:53",
-      "observed_min": 193.9,
-      "n_points": 20,
+      "observed_min": 204.1,
+      "n_points": 21,
       "peak_ccu": 3734,
-      "avg_ccu": 2968,
+      "avg_ccu": 2991,
       "title": "스테루 마끽",
       "category": "마인크래프트"
     },
@@ -5965,6 +5965,10 @@
         [
           "2026-09-02 05:07",
           3313
+        ],
+        [
+          "2026-09-02 05:17",
+          3454
         ]
       ]
     },
