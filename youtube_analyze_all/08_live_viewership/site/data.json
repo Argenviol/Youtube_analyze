@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-02T18:29:37.394185+00:00",
-    "n_snapshots": 10280,
+    "fetched_at": "2026-09-02T18:39:50.242255+00:00",
+    "n_snapshots": 10291,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-02T18:29:37.394185+00:00"
+      "2026-09-02T18:39:50.242255+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 9319,
-    "n_timepoints": 932,
-    "span_hours": 516.57,
-    "observed_hours": 335.39,
+    "n_snapshots": 9329,
+    "n_timepoints": 933,
+    "span_hours": 516.74,
+    "observed_hours": 335.43,
     "coverage_ratio": 0.649,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 2140,
+    "n_live_rows": 2142,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-02T18:29:37.394185+00:00"
+    "last": "2026-09-02T18:39:50.242255+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 214255,
       "follower_delta": 4436,
-      "follower_per_day": 206.1,
+      "follower_per_day": 206.0,
       "n_sessions": 28,
       "n_live_points": 193,
       "peak_ccu": 28071,
@@ -72,9 +72,9 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 212554,
-      "follower_delta": 5128,
-      "follower_per_day": 238.3,
+      "followers": 212555,
+      "follower_delta": 5129,
+      "follower_per_day": 238.2,
       "n_sessions": 34,
       "n_live_points": 234,
       "peak_ccu": 24385,
@@ -118,9 +118,9 @@
       "follower_delta": 3550,
       "follower_per_day": 164.9,
       "n_sessions": 32,
-      "n_live_points": 240,
+      "n_live_points": 241,
       "peak_ccu": 8655,
-      "avg_ccu": 3717,
+      "avg_ccu": 3715,
       "ccu_per_1k_followers": 28.33
     },
     {
@@ -128,8 +128,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 223735,
-      "follower_delta": 4635,
+      "followers": 223736,
+      "follower_delta": 4636,
       "follower_per_day": 215.3,
       "n_sessions": 35,
       "n_live_points": 220,
@@ -142,13 +142,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 214216,
-      "follower_delta": 4881,
-      "follower_per_day": 226.8,
+      "followers": 214220,
+      "follower_delta": 4885,
+      "follower_per_day": 226.9,
       "n_sessions": 46,
-      "n_live_points": 282,
+      "n_live_points": 283,
       "peak_ccu": 6741,
-      "avg_ccu": 3038,
+      "avg_ccu": 3040,
       "ccu_per_1k_followers": 31.47
     },
     {
@@ -1540,10 +1540,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-09-03 00:15",
-      "observed_min": 194.0,
-      "n_points": 20,
+      "observed_min": 204.2,
+      "n_points": 21,
       "peak_ccu": 4346,
-      "avg_ccu": 3519,
+      "avg_ccu": 3511,
       "title": "프릴은 제거헤드릴수 없음니다",
       "category": "마인크래프트"
     },
@@ -1804,10 +1804,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-09-03 00:15",
-      "observed_min": 194.0,
-      "n_points": 20,
+      "observed_min": 204.2,
+      "n_points": 21,
       "peak_ccu": 3861,
-      "avg_ccu": 3305,
+      "avg_ccu": 3309,
       "title": "드디어 욘사 집 건축하기",
       "category": "마인크래프트"
     },
@@ -7510,6 +7510,10 @@
         [
           "2026-09-03 03:29",
           3300
+        ],
+        [
+          "2026-09-03 03:39",
+          3358
         ]
       ]
     },
@@ -12712,6 +12716,10 @@
         [
           "2026-09-03 03:29",
           3451
+        ],
+        [
+          "2026-09-03 03:39",
+          3399
         ]
       ]
     }
