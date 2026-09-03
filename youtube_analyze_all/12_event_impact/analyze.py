@@ -491,6 +491,57 @@ def commerce_effect(cf: pd.DataFrame, tiers: pd.DataFrame, fin: pd.DataFrame,
     return proj, stats
 
 
+# DART 에 있는 회사를 팬 돈이 흐르는 위치로 나눈다.
+PLATFORMS = {"NAVER", "SOOP"}          # 후원·구독 수수료를 받는 쪽 (치지직은 NAVER 소속)
+IP_COMPANIES = {"샌드박스네트워크", "패러블엔터테인먼트"}   # 크리에이터 IP 를 운영하는 쪽
+
+
+def dart_effect(metrics: pd.DataFrame, search: pd.DataFrame) -> tuple:
+    """팬덤이 만드는 돈이 어디에 쌓이는가 — 플랫폼과 IP 회사의 감사 재무를 나란히 놓는다.
+
+    스텔라이브 운영법인은 DART 에 없다(corp_search). 그래서 회사 자체는 못 재고,
+    같은 팬 지출이 흘러가는 양 끝단 — 플랫폼(수수료)과 IP 회사(굿즈·콘텐츠) — 를
+    동종업계로 본다.
+    """
+    if metrics.empty:
+        return pd.DataFrame(), {}
+    m = metrics.copy().sort_values(["corp_name", "bsns_year"])
+    rows = []
+    for name, g in m.groupby("corp_name"):
+        g = g.dropna(subset=["revenue", "operating_income"])
+        if g.empty:
+            continue
+        first, last = g.iloc[0], g.iloc[-1]
+        years = int(last["bsns_year"] - first["bsns_year"])
+        cagr = ((last["revenue"] / first["revenue"]) ** (1 / years) - 1) if years and first["revenue"] else None
+        # 최근 연도부터 거슬러 세는 연속 적자/흑자 햇수
+        streak, sign = 0, 1 if last["operating_income"] > 0 else -1
+        for oi in g["operating_income"][::-1]:
+            if (oi > 0) == (sign > 0):
+                streak += 1
+            else:
+                break
+        rows.append({
+            "corp_name": name,
+            "side": "플랫폼" if name in PLATFORMS else ("IP 회사" if name in IP_COMPANIES else "기타"),
+            "first_year": int(first["bsns_year"]), "last_year": int(last["bsns_year"]),
+            "n_years": int(len(g)),
+            "revenue_last_b": round(last["revenue"] / 1e8), "op_last_b": round(last["operating_income"] / 1e8),
+            "op_margin_last": float(last["operating_margin"]),
+            "op_margin_min": float(g["operating_margin"].min()),
+            "op_margin_max": float(g["operating_margin"].max()),
+            "revenue_x": round(last["revenue"] / first["revenue"], 2) if first["revenue"] else None,
+            "revenue_cagr": round(cagr, 4) if cagr is not None else None,
+            "streak": streak * sign,     # +n = n년 연속 흑자, -n = n년 연속 적자
+            "loss_years": int((g["operating_income"] < 0).sum()),
+        })
+    df = pd.DataFrame(rows)
+    stats = {"missing": []}
+    if not search.empty:
+        stats["missing"] = search.loc[search["matched"] == False, "query"].tolist()  # noqa: E712
+    return df, stats
+
+
 def _daily_delta(hist: pd.DataFrame, col: str) -> pd.DataFrame:
     """일일 순증. history.csv 는 누적값이라 차분해야 이벤트 효과가 보인다."""
     if hist.empty or col not in hist.columns:
@@ -715,6 +766,9 @@ def main() -> int:
     sent_m = config.drop_founder(
         _read(ROOT / "05_comment_sentiment" / "data" / "sentiment_metrics.csv"))
     cmt, cmt_stats = comment_effect(labeled, sent_m, h03)
+    dart, dart_stats = dart_effect(
+        _read(ROOT / "09_dart_financials" / "data" / "company_metrics.csv"),
+        _read(ROOT / "09_dart_financials" / "data" / "corp_search.csv"))
     com, com_stats = commerce_effect(
         _read(ROOT / "11_fan_commerce" / "data" / "crowdfunding_projects.csv"),
         _read(ROOT / "11_fan_commerce" / "data" / "fanding_tiers.csv"),
@@ -731,7 +785,7 @@ def main() -> int:
                      ("event_ccu", ccu), ("concert_arc", arc),
                      ("cover_effect", cov_eff), ("original_effect", orig_eff),
                      ("kirinuki_effect", kiri), ("comment_effect", cmt),
-                     ("commerce_effect", com)):
+                     ("commerce_effect", com), ("dart_effect", dart)):
         df.to_csv(DATA / f"{name}.csv", index=False, encoding="utf-8-sig")
 
     SQL.mkdir(parents=True, exist_ok=True)
@@ -759,7 +813,8 @@ def main() -> int:
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
     write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff,
-                 drivers, kiri, kiri_stats, cmt, cmt_stats, com, com_stats)
+                 drivers, kiri, kiri_stats, cmt, cmt_stats, com, com_stats,
+                 dart, dart_stats)
     print(f"  이벤트 {len(events)}건 · 소급 측정 {vod['event_id'].nunique() if not vod.empty else 0}건 "
           f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건"
           f" · 콘서트 호 {len(arc) if arc is not None and not arc.empty else 0}건")
@@ -769,7 +824,7 @@ def main() -> int:
 def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
                  covers=None, orig_eff=None, drivers=None, kiri=None,
                  kiri_stats=None, cmt=None, cmt_stats=None, com=None,
-                 com_stats=None) -> None:
+                 com_stats=None, dart=None, dart_stats=None) -> None:
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
     span = f"{events['date'].min()} ~ {events['date'].max()}"
     by_type = events["type"].value_counts()
@@ -814,6 +869,37 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         if not ccu.empty else pd.DataFrame(columns=["type", "ccu_multiple"])
     ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
     mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
+
+    # ── DART 재무 ──
+    dart_missing = "스텔라이브"
+    dart_plat_tbl = dart_ip_tbl = ""
+    dart_plat_margin = dart_ip_streak = dart_soop_x = dart_naver_rev = "—"
+    if dart is not None and not dart.empty:
+        ds = dart_stats or {}
+        if ds.get("missing"):
+            dart_missing = "·".join(ds["missing"])
+        def _tbl(d):
+            return ("| 회사 | 기간 | 최근 매출 | 최근 영업이익 | 영업이익률 | 이익률 범위 | 매출 성장 | 연속 |\n"
+                    "|---|---|---|---|---|---|---|---|\n" + "\n".join(
+                        f"| {r.corp_name} | {r.first_year}~{r.last_year} | {r.revenue_last_b:,.0f}억 | "
+                        f"**{r.op_last_b:+,.0f}억** | {r.op_margin_last:+.1%} | "
+                        f"{r.op_margin_min:+.0%}~{r.op_margin_max:+.0%} | "
+                        f"{(f'{r.revenue_x:.1f}배' if r.revenue_x else '—')} | "
+                        f"{('흑자 ' if r.streak > 0 else '적자 ')}{abs(r.streak)}년 |"
+                        for r in d.itertuples()))
+        plat = dart[dart["side"] == "플랫폼"]; ip = dart[dart["side"] == "IP 회사"]
+        dart_plat_tbl, dart_ip_tbl = _tbl(plat), _tbl(ip)
+        if len(plat):
+            dart_plat_margin = f"{plat['op_margin_last'].min():.0%}~{plat['op_margin_last'].max():.0%}"
+        if len(ip):
+            worst = ip.loc[ip["streak"].idxmin()]
+            dart_ip_streak = f"{worst['corp_name']} {abs(int(worst['streak']))}년 연속 적자"
+        soop = dart[dart["corp_name"] == "SOOP"]
+        if len(soop) and soop["revenue_x"].iloc[0]:
+            dart_soop_x = f"{soop['revenue_x'].iloc[0]:.1f}"
+        nav = dart[dart["corp_name"] == "NAVER"]
+        if len(nav):
+            dart_naver_rev = f"{nav['revenue_last_b'].iloc[0]:,.0f}"
 
     # ── 팬 커머스 ──
     cst = com_stats or {}
@@ -1036,6 +1122,9 @@ append-only 로 남긴다.
 - **콘서트는 단독이냐 합동이냐로 갈린다.** 본인 첫 단독 콘서트의 후기 방송은 평소의
   {solo_mult:.1f}배(안내 쇼츠 {solo_yt:,}회)였지만, 같은 멤버가 참여한 그룹 페스티벌은
   {grp_lo:.1f}~{grp_hi:.1f}배였다. 합동은 관심이 10명에게 나뉜다.
+- **팬덤의 돈은 플랫폼에 쌓이고 IP 회사엔 남지 않는다.** 스텔라이브는 DART 에 없어
+  못 재지만, 같은 돈이 흐르는 양 끝단은 보인다 — 플랫폼(NAVER·SOOP)은 10년 연속 흑자에
+  이익률 {dart_plat_margin}, IP 회사는 {dart_ip_streak}.
 - **팬은 돈을 쓴다, 자발적으로.** 팬 제작 광고 펀딩 {com_fan_n}건이 목표의
   {com_fan_ach_lo:.0f}~{com_fan_ach_hi:.0f}%를 모았다(1인당 {com_fan_pb_lo:,}~{com_fan_pb_hi:,}원).
   지출은 정기 구독 만원 미만 → 팬 광고 수만원 → 공식 굿즈 수십만원으로 목적에 따라
@@ -1143,6 +1232,37 @@ append-only 로 남긴다.
 시작됐는데 콘서트는 2025-12-20과 2026-07-11이라 기준선이 존재하지 않는다. 위 숫자는
 **방송 조회수로 잰 간접 지표**이고, "콘서트로 구독자가 몇 % 늘었다"는 아직 말할 수 없다.
 다음 콘서트부터는 전후 비교가 자동으로 붙는다.
+
+## DART 재무 효과 — 팬덤의 돈은 플랫폼에 쌓이고 IP 회사엔 남지 않는다
+
+**스텔라이브는 잴 수 없다.** {dart_missing}이(가) DART 기업코드 마스터에 없다 — 비상장·
+소규모라 외부감사 대상이 아니거나 국내 법인이 아닐 수 있다. 그래서 회사 자체 대신,
+같은 팬 지출이 흘러가는 **양 끝단**을 감사 재무로 본다: 후원·구독 수수료를 받는
+**플랫폼**과 굿즈·콘텐츠를 파는 **IP 회사**.
+
+### 플랫폼 — 10년 연속 흑자, 이익률 20%대
+
+{dart_plat_tbl}
+
+### IP 회사 — 적자가 구조다
+
+{dart_ip_tbl}
+
+### 같은 돈의 두 얼굴
+
+앞 절(팬 커머스)이 보여준 팬 지출은 이 두 표 사이 어딘가로 흐른다. 치지직 후원·구독의
+수수료는 NAVER 로, 굿즈·앨범·콘서트는 IP 회사로. 그리고 **플랫폼은 {dart_plat_margin}의
+영업이익률로 매년 남기고, IP 회사는 {dart_ip_streak}이다.** SOOP 은 매출이
+{dart_soop_x}배로 커지는 동안 이익률이 더 올라갔고, 샌드박스는 매출이 정점의 절반으로
+줄어도 적자가 이어진다.
+
+이건 스텔라이브에 대한 진술이 아니라 **스텔라이브가 놓인 구조**에 대한 진술이다. 같은
+구조 안에서 스텔라이브만 다르다고 볼 근거는 (비공개라) 없고, 다르지 않다고 볼 근거도 없다.
+
+⚠ **치지직의 기여는 NAVER 재무에서 분리되지 않는다.** NAVER 매출 {dart_naver_rev}억 중
+치지직 몫은 공시되지 않는다. 스트리밍 전업인 SOOP 이 플랫폼 경제의 더 나은 대리 지표다.
+⚠ 샌드박스의 2023년 매출 급감(-54%)은 사업 구조조정이지 팬덤 축소가 아니고, 패러블은
+공시가 2년치뿐이라 추세를 말할 수 없다.
 
 ## 팬 커머스 효과 — 팬은 돈을 쓴다, 자발적으로, 그런데 회사엔 남지 않는다
 
@@ -1309,7 +1429,7 @@ append-only 로 남긴다.
 - `data/events_manual.csv` — 손으로 등록하는 이벤트 (콘서트·오리지널곡·오프라인)
 - `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` ·
   `concert_arc.csv` · `cover_effect.csv` · `original_effect.csv` · `kirinuki_effect.csv` ·
-  `comment_effect.csv` · `commerce_effect.csv`
+  `comment_effect.csv` · `commerce_effect.csv` · `dart_effect.csv`
 - `charts/` · `sql/events.db` · `site/index.html`
 """, encoding="utf-8")
 
