@@ -89,5 +89,11 @@ date,end_date,type,title,members,note,source
 - `data/events.csv` — 감지·등록된 전체 이벤트
 - `data/events_seen.csv` — 처음 감지한 날짜 (append-only 기억)
 - `data/events_manual.csv` — 손으로 등록하는 이벤트
-- `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv`
+- `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` — 이벤트별 효과
+- `data/concert_arc.csv` · `cover_effect.csv` · `original_effect.csv` · `kirinuki_effect.csv` ·
+  `comment_effect.csv` · `commerce_effect.csv` · `dart_effect.csv` · `competitor_effect.csv` ·
+  `hoyo_effect.csv` · `channel_effect.csv` · `stream_pattern_effect.csv` — 렌즈별 효과
+- `data/event_candidates.csv` — 넓은 창 신호 검토 대기열 (리포트에 안 씀)
 - `charts/` · `sql/events.db` · `site/index.html` · `REPORT.md`
+
+REPORT.md 맨 앞 "한눈에 — 15개 렌즈 종합" 표가 전체를 한 장으로 요약한다.

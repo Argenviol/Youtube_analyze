@@ -664,6 +664,77 @@ def hoyo_effect(chars: pd.DataFrame, streams: pd.DataFrame) -> tuple:
     return pd.DataFrame(rows), stats
 
 
+def _growth(hist: pd.DataFrame, col: str) -> tuple:
+    """history.csv 첫 날→마지막 날 성장률 (멤버별 Series, 시작일, 종료일, 일수)."""
+    h = hist.copy(); h["date"] = pd.to_datetime(h["date"])
+    f, l = h["date"].min(), h["date"].max()
+    a = h[h["date"] == f].set_index("name_ko")[col]
+    b = h[h["date"] == l].set_index("name_ko")[col]
+    return (b / a - 1).rename("growth"), str(f.date()), str(l.date()), int((l - f).days)
+
+
+def channel_effect(metrics: pd.DataFrame, hist: pd.DataFrame) -> tuple:
+    """무엇이 유튜브 조회수와 성장을 움직이나 — 업로드 빈도·쇼츠·규모·참여율."""
+    if metrics.empty or hist.empty:
+        return pd.DataFrame(), {}
+    g, f, l, days = _growth(hist, "subscribers")
+    d = metrics.set_index("name_ko")[["subscribers", "recent_avg_views", "uploads_per_week",
+                                       "shorts_share", "recent_avg_engagement_rate"]].join(g).dropna()
+    cols = {"uploads_per_week": "주당 업로드", "shorts_share": "쇼츠 비중",
+            "recent_avg_engagement_rate": "참여율", "subscribers": "구독자 규모"}
+    corr = {ko: {"views": float(d[c].corr(d["recent_avg_views"])),
+                 "growth": float(d[c].corr(d["growth"]))} for c, ko in cols.items()}
+    return d.reset_index().sort_values("growth", ascending=False), \
+        {"corr": corr, "from": f, "to": l, "days": days, "n": int(len(d))}
+
+
+def stream_pattern_effect(metrics: pd.DataFrame, hist: pd.DataFrame) -> tuple:
+    """무엇이 치지직 VOD 조회수와 팔로워 성장을 움직이나 — 시간·길이·심야·게임."""
+    if metrics.empty or hist.empty:
+        return pd.DataFrame(), {}
+    g, f, l, days = _growth(hist, "followers")
+    d = metrics.set_index("name_ko")[["followers", "streams_per_week", "hours_per_week",
+                                       "avg_duration_h", "night_share", "game_share",
+                                       "avg_vod_views"]].join(g).dropna()
+    cols = {"hours_per_week": "주당 방송 시간", "avg_duration_h": "평균 방송 길이",
+            "night_share": "심야 비중", "streams_per_week": "주당 방송 횟수",
+            "game_share": "게임 비중", "followers": "팔로워 규모"}
+    corr = {ko: {"vod": float(d[c].corr(d["avg_vod_views"])),
+                 "growth": float(d[c].corr(d["growth"]))} for c, ko in cols.items()}
+    return d.reset_index().sort_values("growth", ascending=False), \
+        {"corr": corr, "from": f, "to": l, "days": days, "n": int(len(d))}
+
+
+def market_effect(facts: pd.DataFrame, milestones: pd.DataFrame,
+                  archive_metrics: pd.DataFrame, metrics: pd.DataFrame,
+                  archive_label: str) -> dict:
+    """시장이 자라는 속도와 스텔라이브가 자라는 속도를 같은 단위(연율)로 놓는다."""
+    st: dict = {"cagr": [], "facts": []}
+    if not facts.empty:
+        size = facts[facts["category"] == "market_size"].sort_values("year")
+        by_src = {}
+        for _, r in size.iterrows():
+            by_src.setdefault(r["source_name"], []).append((int(r["year"]), float(r["value"])))
+        for src, pts in by_src.items():
+            if len(pts) >= 2:
+                (y0, v0), (y1, v1) = pts[0], pts[-1]
+                st["cagr"].append({"src": src, "y0": y0, "y1": y1, "v0": v0, "v1": v1,
+                                   "cagr": (v1 / v0) ** (1 / (y1 - y0)) - 1})
+        keep = ["구독+후원 매출 비중", "유튜브 매출 비중", "아시아태평양 지역 점유율",
+                "치지직 월간활성이용자(MAU)"]
+        st["facts"] = facts[facts["metric"].isin(keep)][["metric", "value", "unit", "year", "source_name"]].to_dict("records")
+        mau = facts[facts["metric"] == "치지직 월간활성이용자(MAU)"]["value"]
+        st["chzzk_mau"] = float(mau.iloc[0]) if len(mau) else None
+    if not archive_metrics.empty and not metrics.empty:
+        a = archive_metrics[archive_metrics["role"] == "talent"]["subscribers"].sum()
+        b = metrics["subscribers"].sum()
+        st.update({"subs_from": int(a), "subs_to": int(b), "growth": float(b / a - 1),
+                   "archive_label": archive_label})
+    if not milestones.empty:
+        st["milestones"] = milestones.to_dict("records")
+    return st
+
+
 def _daily_delta(hist: pd.DataFrame, col: str) -> pd.DataFrame:
     """일일 순증. history.csv 는 누적값이라 차분해야 이벤트 효과가 보인다."""
     if hist.empty or col not in hist.columns:
@@ -888,6 +959,15 @@ def main() -> int:
     sent_m = config.drop_founder(
         _read(ROOT / "05_comment_sentiment" / "data" / "sentiment_metrics.csv"))
     cmt, cmt_stats = comment_effect(labeled, sent_m, h03)
+    m01 = config.drop_founder(_read(ROOT / "01_member_channel_performance" / "data" / "channel_metrics.csv"))
+    chan, chan_stats = channel_effect(m01, config.drop_founder(h01))
+    m03 = config.drop_founder(_read(ROOT / "03_chzzk_stream_pattern" / "data" / "stream_metrics.csv"))
+    spat, spat_stats = stream_pattern_effect(m03, config.drop_founder(h03))
+    arch = ROOT / "_archive" / "2026-08-03_original" / "01_member_channel_performance" / "data" / "channel_metrics.csv"
+    mkt_stats = market_effect(
+        _read(ROOT / "07_market_analysis" / "data" / "market_facts.csv"),
+        _read(ROOT / "07_market_analysis" / "data" / "stellive_milestones.csv"),
+        _read(arch), m01, "2026-08-03")
     hoyo, hoyo_stats = hoyo_effect(
         _read(ROOT / "10_hoyoverse" / "data" / "character_metrics.csv"),
         config.drop_founder(streams))
@@ -915,7 +995,8 @@ def main() -> int:
                      ("cover_effect", cov_eff), ("original_effect", orig_eff),
                      ("kirinuki_effect", kiri), ("comment_effect", cmt),
                      ("commerce_effect", com), ("dart_effect", dart),
-                     ("competitor_effect", comp), ("hoyo_effect", hoyo)):
+                     ("competitor_effect", comp), ("hoyo_effect", hoyo),
+                     ("channel_effect", chan), ("stream_pattern_effect", spat)):
         df.to_csv(DATA / f"{name}.csv", index=False, encoding="utf-8-sig")
 
     SQL.mkdir(parents=True, exist_ok=True)
@@ -944,7 +1025,8 @@ def main() -> int:
 
     write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff,
                  drivers, kiri, kiri_stats, cmt, cmt_stats, com, com_stats,
-                 dart, dart_stats, comp, comp_stats, hoyo, hoyo_stats)
+                 dart, dart_stats, comp, comp_stats, hoyo, hoyo_stats,
+                 chan, chan_stats, spat, spat_stats, mkt_stats)
     print(f"  이벤트 {len(events)}건 · 소급 측정 {vod['event_id'].nunique() if not vod.empty else 0}건 "
           f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건"
           f" · 콘서트 호 {len(arc) if arc is not None and not arc.empty else 0}건")
@@ -955,7 +1037,8 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
                  covers=None, orig_eff=None, drivers=None, kiri=None,
                  kiri_stats=None, cmt=None, cmt_stats=None, com=None,
                  com_stats=None, dart=None, dart_stats=None, comp=None,
-                 comp_stats=None, hoyo=None, hoyo_stats=None) -> None:
+                 comp_stats=None, hoyo=None, hoyo_stats=None, chan=None,
+                 chan_stats=None, spat=None, spat_stats=None, mkt_stats=None) -> None:
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
     span = f"{events['date'].min()} ~ {events['date'].max()}"
     by_type = events["type"].value_counts()
@@ -1000,6 +1083,52 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         if not ccu.empty else pd.DataFrame(columns=["type", "ccu_multiple"])
     ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
     mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
+
+    # ── 채널 성과 ──
+    cst2 = chan_stats or {}
+    ch_tbl = ch_corr_tbl = ""; ch_days = cst2.get("days", 0); ch_up_v = ch_sub_g = 0.0
+    if chan is not None and not chan.empty:
+        ch_tbl = ("| 멤버 | 구독자 | 평균 조회수 | 주당 업로드 | 쇼츠 | 참여율 | 성장 |\n|---|---|---|---|---|---|---|\n"
+                  + "\n".join(f"| {r.name_ko} | {r.subscribers:,} | {r.recent_avg_views:,.0f} | {r.uploads_per_week:.1f} | "
+                              f"{r.shorts_share:.0%} | {r.recent_avg_engagement_rate:.1%} | **{r.growth:+.2%}** |"
+                              for r in chan.itertuples()))
+        cc = cst2.get("corr", {})
+        ch_corr_tbl = "\n".join(f"| {k} | {v['views']:+.2f} | {v['growth']:+.2f} |" for k, v in cc.items())
+        ch_up_v = cc.get("주당 업로드", {}).get("views", 0.0); ch_sub_g = cc.get("구독자 규모", {}).get("growth", 0.0)
+    # ── 방송 패턴 ──
+    sst = spat_stats or {}
+    sp_tbl = sp_corr_tbl = ""; sp_days = sst.get("days", 0); sp_fol_g = 0.0
+    if spat is not None and not spat.empty:
+        sp_tbl = ("| 멤버 | 팔로워 | 주당 시간 | 평균 길이 | 심야 | 게임 | VOD 조회수 | 성장 |\n|---|---|---|---|---|---|---|---|\n"
+                  + "\n".join(f"| {r.name_ko} | {r.followers:,} | {r.hours_per_week:.0f}h | {r.avg_duration_h:.1f}h | "
+                              f"{r.night_share:.0%} | {r.game_share:.0%} | {r.avg_vod_views:,.0f} | **{r.growth:+.2%}** |"
+                              for r in spat.itertuples()))
+        sc = sst.get("corr", {})
+        sp_corr_tbl = "\n".join(f"| {k} | {v['vod']:+.2f} | {v['growth']:+.2f} |" for k, v in sc.items())
+        sp_fol_g = sc.get("팔로워 규모", {}).get("growth", 0.0)
+    # ── 시장 ──
+    mk = mkt_stats or {}
+    mk_cagr_tbl = mk_facts_tbl = mk_ms_tbl = ""
+    mk_cagr_lo = mk_cagr_hi = mk_growth = mk_annual = mk_peak_share = 0.0
+    mk_from = mk.get("archive_label", "—"); mk_to = today; mk_days = 0
+    mk_subs_from = mk.get("subs_from", 0); mk_subs_to = mk.get("subs_to", 0); mk_mau = mk.get("chzzk_mau") or 0
+    if mk.get("cagr"):
+        cg = [c["cagr"] for c in mk["cagr"]]; mk_cagr_lo, mk_cagr_hi = min(cg), max(cg)
+        mk_cagr_tbl = ("| 출처 | 기간 | 시장 규모 | 연평균 성장률 |\n|---|---|---|---|\n" + "\n".join(
+            f"| {c['src']} | {c['y0']}→{c['y1']} | ${c['v0']/1000:.2f}B → ${c['v1']/1000:.2f}B | **{c['cagr']:+.1%}** |"
+            for c in mk["cagr"]))
+    if mk_subs_from:
+        mk_growth = mk["growth"]
+        mk_days = (pd.Timestamp(today) - pd.Timestamp(mk_from)).days or 1
+        mk_annual = (1 + mk_growth) ** (365 / mk_days) - 1
+    if mk_mau:
+        mk_peak_share = 38402 / mk_mau
+    if mk.get("facts"):
+        mk_facts_tbl = ("| 시장 지표 | 값 | 연도 | 출처 |\n|---|---|---|---|\n" + "\n".join(
+            f"| {f['metric']} | {f['value']:,.0f}{'%' if f['unit']=='pct' else ''} | {int(f['year'])} | {f['source_name']} |"
+            for f in mk["facts"]))
+    if mk.get("milestones"):
+        mk_ms_tbl = ("**스텔라이브 연표** — " + " · ".join(f"{m['date']} {m['event']}" for m in mk["milestones"]))
 
     # ── 호요버스 ──
     hs_ = hoyo_stats or {}
@@ -1369,6 +1498,31 @@ append-only 로 남긴다.
 - **수익은 어떤 방법으로도 잴 수 없다.** 치지직 후원·구독 수익도 유튜브 광고 수익도
   공개되지 않는다. 대리 지표로 노출량(동시시청자 피크·조회수)만 낸다.
 
+## 한눈에 — 15개 렌즈 종합
+
+| 렌즈 | 무엇을 움직이나 | 얼마나 | 기획 가능 | 한계 |
+|---|---|---|---|---|
+| 오리지널곡 MV | 유튜브 조회수 | 일반 영상의 {o_lo:.0f}~{o_hi:.0f}배 | ✅ | 잴 수 있는 곡이 한 앨범 4곡 |
+| 신의상 공개 | 치지직 동시시청자 | 평소 피크의 {ccu_lo:.0f}~{ccu_hi:.0f}배 (조회수 {cos_lo:.1f}~{cos_hi:.1f}배) | ✅ | 연 몇 회짜리 희소 이벤트 |
+| 단독 콘서트 | 주변 방송 조회수 | {solo_mult:.1f}배 (합동 페스티벌 {grp_lo:.1f}~{grp_hi:.1f}배) | ✅ | 구독자 전후 비교 불가(수집 이전) |
+| 커버곡 | 유튜브 조회수 | 일반 영상의 {cov_med:.1f}배 · 콜라보와 솔로 차이 없음 | ✅ | 멤버별 순위는 표본 1~2곡 |
+| 대규모 합방 | 조회수(분량으로) | {col_lo:.1f}~{col_hi:.1f}배 · 동시시청자 {mc_lo:.1f}~{mc_hi:.1f}배 | ✅ | 연속 2일 이상만 이벤트로 인정 |
+| 키리누키 | 공식 채널 밖 도달 | 클립당 본인 영상의 {kiri_ratio:.0%} | ❌ 순간이 만든다 | 검색 표본, 비율은 상한 |
+| 동시시청자 | — | 평소 요인은 최대 {cat_ratio:.1f}배, 이벤트는 7~19배 | — | 2026-08-12 이후만 |
+| 댓글 여론 | — | 부정 {c_neg:.1%}, 신호는 주제(사람 > 콘텐츠) | — | 이벤트별 비교 불가 |
+| 팬 커머스 | 팬 지출 | 구독 만원 미만 → 팬 광고 수만원 → 굿즈 수십만원 | — | 회사 매출 비공개 |
+| DART 재무 | 돈이 남는 곳 | 플랫폼 이익률 {dart_plat_margin} vs IP 회사 적자 | — | 스텔라이브 DART 미등록 |
+| 경쟁사 비교 | 같은 기간 성장 | 스텔라이브 {cp_stel_gain:+,} vs 홀로 {cp_holo_gain:+,} (11분의 1 규모) | — | 21일 · 1,000 반올림 |
+| 호요버스 | 공식 푸시 → 언급 | 상관 {hy_corr_push:+.2f} (없음) | — | 언급은 인기가 아니라 화제성 |
+| 채널 성과 | 유튜브 조회수·성장 | 업로드 빈도 → 조회수 {ch_up_v:+.2f} · 규모 → 성장 {ch_sub_g:+.2f} | ✅ | n=10 상관 |
+| 방송 패턴 | 치지직 VOD·성장 | 시간·심야 → VOD +0.7, 성장은 규모에 딸림 | ✅ | n=10 상관 |
+| 시장 | 배경 속도 | 시장 연 {mk_cagr_lo:.0%}~{mk_cagr_hi:.0%} vs 스텔라이브 {mk_days}일 {mk_growth:+.1%} | — | 한 달 연환산은 거칠다 |
+
+**읽는 법.** 유튜브를 움직이는 것(오리지널곡·커버곡)과 치지직을 움직이는 것(신의상)이
+갈린다. 평소 요인(카테고리·시간대·업로드 빈도)은 상관은 있지만 배수는 2배 안쪽이고,
+이벤트는 자릿수가 다르다. 기획할 수 있는 레버가 대부분이고 키리누키만 예외다.
+수익은 어떤 방법으로도 못 재고, 전후 비교는 2026-08-12 이후 이벤트만 가능하다.
+
 ## 합방 효과 — 이벤트 방송 조회수 ÷ 평소 방송 (소급 가능)
 
 | 날짜 | 이벤트 | 참여자 평균 배수 |
@@ -1454,6 +1608,55 @@ append-only 로 남긴다.
 시작됐는데 콘서트는 2025-12-20과 2026-07-11이라 기준선이 존재하지 않는다. 위 숫자는
 **방송 조회수로 잰 간접 지표**이고, "콘서트로 구독자가 몇 % 늘었다"는 아직 말할 수 없다.
 다음 콘서트부터는 전후 비교가 자동으로 붙는다.
+
+## 채널 성과 효과 — 업로드 빈도가 조회수를 끌고, 규모가 성장을 누른다
+
+{ch_tbl}
+
+| 요인 | → 평균 조회수 | → {ch_days}일 구독자 성장 |
+|---|---|---|
+{ch_corr_tbl}
+
+**업로드 빈도와 평균 조회수의 상관 {ch_up_v:+.2f}** — 이 규모대에서는 물량이 조회수를
+견인한다(01의 결론 그대로). 쇼츠 비중도 같은 방향이다. 반면 **구독자 규모와 성장률은
+{ch_sub_g:+.2f}** — 이미 큰 채널일수록 느리게 큰다. 참여율은 조회수와 음(−), 성장과 양(+)이라
+"팬이 반응하는 채널"과 "많이 보는 채널"이 다른 채널이다.
+
+⚠ n=10 상관이다. 성장 상위 3명(리코·후야·나나) 중 둘이 7/27 cliché EP 발매 멤버라
+업로드 효과와 발매 효과가 섞여 있다. 방향만 읽고 크기는 믿지 말 것.
+
+## 방송 패턴 효과 — 길게·늦게 하면 VOD는 더 보지만, 팔로워 성장은 규모에 딸려간다
+
+{sp_tbl}
+
+| 요인 | → 평균 VOD 조회수 | → {sp_days}일 팔로워 성장 |
+|---|---|---|
+{sp_corr_tbl}
+
+**주당 방송 시간·평균 길이·심야 비중은 VOD 조회수와 +0.7대**로 붙는다 — 길게, 늦게 하는
+방송이 다시보기로 더 소비된다. 그런데 같은 요인이 **팔로워 성장과는 음수**다. 이건
+방송을 많이 해서 덜 크는 게 아니라, **팔로워 규모 → 성장 상관이 {sp_fol_g:+.2f}**로 압도적이라
+큰 채널이 방송도 많이 하고 성장률도 낮은 것이 겹쳐 보이는 것이다. n=10으로는 둘을
+가를 수 없다. 게임 비중은 어느 쪽과도 상관이 없다 — 게임이냐 잡담이냐는 지표를
+안 움직인다.
+
+## 시장 효과 — 배경이 자라는 속도
+
+{mk_cagr_tbl}
+
+스텔라이브 탤런트 10명의 유튜브 구독자 합계는 {mk_from} {mk_subs_from:,} → {mk_to} {mk_subs_to:,}
+(**{mk_growth:+.2%}**, {mk_days}일)이다. 단순 연환산하면 {mk_annual:+.0%}로 시장 성장률의 몇 배지만,
+**한 달을 연환산한 숫자**이고 그 달에 cliché EP 발매가 있었다. 시장보다 빠르게 크고
+있다는 방향까지만 읽어야 한다.
+
+{mk_facts_tbl}
+
+시장 매출의 절반은 구독·후원(치지직 쪽), 절반은 유튜브다. 앞 절들이 찾은 "신의상은
+치지직을, 곡은 유튜브를 움직인다"는 분리가 시장 매출 구조와 같은 모양이다. 치지직
+MAU {mk_mau:,.0f}명 기준으로 사키하네 후야의 신의상 피크 38,402명은 플랫폼 전체 월간
+이용자의 {mk_peak_share:.1%}가 한 방송에 모인 순간이다.
+
+{mk_ms_tbl}
 
 ## 호요버스 캐릭터 인기도 효과 — 공식 푸시는 효과가 없고, 스텔라이브 접점은 한 명이다
 
@@ -1726,7 +1929,7 @@ append-only 로 남긴다.
 - `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` ·
   `concert_arc.csv` · `cover_effect.csv` · `original_effect.csv` · `kirinuki_effect.csv` ·
   `comment_effect.csv` · `commerce_effect.csv` · `dart_effect.csv` · `competitor_effect.csv` ·
-  `hoyo_effect.csv`
+  `hoyo_effect.csv` · `channel_effect.csv` · `stream_pattern_effect.csv`
 - `charts/` · `sql/events.db` · `site/index.html`
 """, encoding="utf-8")
 
