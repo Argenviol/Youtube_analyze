@@ -24,6 +24,7 @@ CREATE TABLE vod_multiple (
     event_id TEXT,
     date TEXT,
     title TEXT,
+    type TEXT,
     name_ko TEXT,
     event_views INTEGER,
     baseline_median REAL,

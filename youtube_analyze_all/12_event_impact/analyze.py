@@ -77,18 +77,47 @@ def _read(p: Path, **kw) -> pd.DataFrame:
     return pd.read_csv(p, **kw) if p.exists() else pd.DataFrame()
 
 
+# 방송으로 효과를 잴 수 있는 이벤트 종류. 곡 발매는 여기 없다 — 유튜브 업로드지
+# 방송이 아니라서, 발매일에 마침 큰 합방이 돌면 그 성과가 곡에 붙는다.
+STREAM_EVENT_TYPES = {"합방", "신의상", "콘서트"}
+
+
+def _event_keys(e) -> list[str]:
+    """이 이벤트의 방송을 알아보는 말. 표시 제목이 아니라 감지·수동 지정된 매칭어다."""
+    raw = str(e.get("match_keys") or "") or str(e["title"])
+    return [k.strip() for k in raw.replace("·", "|").split("|") if k.strip()]
+
+
+def _belongs(rows: pd.DataFrame, keys: list[str], title_col: str,
+             cat_col: str | None) -> pd.DataFrame:
+    """기간이 겹치는 다른 이벤트의 방송을 이 이벤트 것으로 세지 않는다."""
+    if rows.empty or not keys:
+        return rows
+    hit = rows.apply(
+        lambda r: any(k and (k in str(r[title_col])
+                             or (cat_col and k == str(r[cat_col])))
+                      for k in keys), axis=1)
+    return rows[hit]
+
+
 def vod_multiple(events: pd.DataFrame, streams: pd.DataFrame) -> pd.DataFrame:
-    """이벤트 날 방송이 그 멤버의 평소 방송보다 몇 배 봤나 (소급 가능)."""
+    """이벤트 날 방송이 그 멤버의 평소 방송보다 몇 배 봤나 (소급 가능).
+
+    VOD 조회수는 과거분이 남아 있어서, 동시시청자 수집 이전(2026-08-12)의
+    이벤트도 이걸로는 크기를 잴 수 있다. 2025년 신의상 릴레이가 그 경우다.
+    """
     s = streams.copy()
     s["date"] = pd.to_datetime(s["publish_date"]).dt.date
     rows = []
     for _, e in events.iterrows():
-        if e["type"] != "합방":
+        if e["type"] not in STREAM_EVENT_TYPES:
             continue
         d0, d1 = e["date"], e["end_date"]
+        keys = _event_keys(e)
         for name in str(e["members"]).split("|"):
             mine = s[s["name_ko"] == name]
-            during = mine[(mine["date"] >= d0) & (mine["date"] <= d1)]
+            in_span = mine[(mine["date"] >= d0) & (mine["date"] <= d1)]
+            during = _belongs(in_span, keys, "title", "category")
             if during.empty:
                 continue
             lo, hi = d0 - timedelta(days=BASELINE_DAYS), d1 + timedelta(days=BASELINE_DAYS)
@@ -99,6 +128,7 @@ def vod_multiple(events: pd.DataFrame, streams: pd.DataFrame) -> pd.DataFrame:
                 continue
             rows.append({
                 "event_id": e["event_id"], "date": d0, "title": e["title"],
+                "type": e["type"],
                 "name_ko": name, "event_views": int(during["read_count"].sum()),
                 "baseline_median": float(med),
                 "views_multiple": round(during["read_count"].max() / med, 2),
@@ -176,16 +206,11 @@ def ccu_impact(events: pd.DataFrame, sessions: pd.DataFrame) -> pd.DataFrame:
         # 8/29~9/3 마인크래프트 합방과 8/30~9/2 신의상 릴레이가 겹쳐서, 기간만으로
         # 고르면 신의상 공개의 38,237명이 마인크래프트 합방의 성과로 잡혔다.
         # 이벤트 이름이 방송 제목이나 카테고리에 실제로 나타난 세션만 센다.
-        # 표시 제목이 아니라 감지·수동 지정된 매칭어를 쓴다.
-        raw = str(e.get("match_keys") or "") or str(e["title"])
-        keys = [k.strip() for k in raw.replace("·", "|").split("|") if k.strip()]
+        keys = _event_keys(e)
         for name in str(e["members"]).split("|"):
             mine = s[s["name_ko"] == name]
             in_span = mine[(mine["date"] >= d0) & (mine["date"] <= d1)]
-            hit = in_span.apply(
-                lambda r: any(k and (k in str(r["title"]) or k == str(r["category"]))
-                              for k in keys), axis=1)
-            during = in_span[hit] if len(in_span) else in_span
+            during = _belongs(in_span, keys, "title", "category")
             other = mine[~((mine["date"] >= d0) & (mine["date"] <= d1))]
             if during.empty or other.empty:
                 continue
@@ -231,6 +256,35 @@ def charts(events: pd.DataFrame, vod: pd.DataFrame) -> None:
         fig.tight_layout()
         fig.savefig(CHARTS / "collab_views_multiple.png", dpi=140)
         plt.close(fig)
+
+    if not vod.empty and "type" in vod.columns:
+        g = (vod.groupby(["type", "title", "date"])["views_multiple"]
+             .mean().reset_index())
+        g = g[g["type"].isin(["신의상", "합방"])].sort_values("views_multiple")
+        if not g.empty:
+            cmap = {"신의상": config.PALETTE["series"][3],
+                    "합방": config.PALETTE["series"][0]}
+            fig, ax = plt.subplots(figsize=(10, 6))
+            lbl = [f"{r.title[:20]} ({r.date})" for r in g.itertuples()]
+            bars = ax.barh(lbl, g["views_multiple"], height=0.72, zorder=3,
+                           color=[cmap[t] for t in g["type"]])
+            ax.grid(axis="x", zorder=0); ax.grid(axis="y", visible=False)
+            ax.spines["left"].set_visible(False)
+            for b, v in zip(bars, g["views_multiple"]):
+                ax.annotate(f"{v:.2f}배",
+                            (b.get_width(), b.get_y() + b.get_height() / 2),
+                            va="center", ha="left", fontsize=9,
+                            color=config.INK["text"], xytext=(4, 0),
+                            textcoords="offset points")
+            ax.axvline(1.0, color="#999", ls="--", lw=1, zorder=2)
+            ax.margins(x=0.12)
+            handles = [plt.Rectangle((0, 0), 1, 1, color=c) for c in cmap.values()]
+            ax.legend(handles, cmap.keys(), loc="lower right", frameon=False)
+            ax.set_title("이벤트 종류별 효과 · 이벤트 방송 조회수 ÷ 평소 방송")
+            ax.set_xlabel("배수 (1.0 = 평소와 같음)")
+            fig.tight_layout()
+            fig.savefig(CHARTS / "costume_vs_collab.png", dpi=140)
+            plt.close(fig)
 
     if not events.empty:
         yr = events.copy()
@@ -342,6 +396,28 @@ def write_report(events, vod, impact, ccu) -> None:
             for r in i.itertuples())
 
     big = (vod.groupby("event_id")["views_multiple"].mean() >= BIG_MULTIPLE).sum() if not vod.empty else 0
+
+    # ── 신의상 vs 합방 요약 ──
+    def _rng(df, col, default=(0.0, 0.0)):
+        return (float(df[col].min()), float(df[col].max())) if len(df) else default
+
+    vt = vod.groupby(["type", "event_id"])["views_multiple"].mean().reset_index() \
+        if not vod.empty and "type" in vod.columns else pd.DataFrame(columns=["type", "views_multiple"])
+    cos_lo, cos_hi = _rng(vt[vt["type"] == "신의상"], "views_multiple")
+    col_lo, col_hi = _rng(vt[vt["type"] == "합방"], "views_multiple")
+    ct = ccu.merge(events[["event_id", "type"]], on="event_id", how="left") \
+        if not ccu.empty else pd.DataFrame(columns=["type", "ccu_multiple"])
+    ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
+    mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
+
+    costume_tbl = ""
+    if not ct.empty and (ct["type"] == "신의상").any():
+        c = ct[ct["type"] == "신의상"].nlargest(8, "ccu_multiple")
+        costume_tbl = ("| 멤버 | 공개일 피크 | 평소 피크 | 배수 |\n|---|---|---|---|\n"
+                       + "\n".join(
+                           f"| {r.name_ko} | {r.event_peak_ccu:,} | "
+                           f"{r.usual_peak_ccu:,} | **{r.ccu_multiple:.2f}배** |"
+                           for r in c.itertuples()))
     now = pd.Timestamp.now().date()
     pending = int(sum(1 for _, e in events.iterrows()
                       if (now - e["end_date"]).days < MIN_POST_DAYS))
@@ -371,10 +447,10 @@ append-only 로 남긴다.
 - 그 {len(collabs)}건 중 **{big}건이 평소 방송 대비 {BIG_MULTIPLE}배 이상**의 조회수를 냈다.
   하루짜리를 섞었을 때는 이 비율이 절반 수준이었다 — **연속 기획만 남기면 효과가 선명해진다.**
   단발 합방과 며칠짜리 기획은 성격이 다른 이벤트다.
-- **동시시청자를 가장 크게 끌어올리는 건 합방이 아니라 신의상 공개다.** 관측된
-  신의상 릴레이에서 참여 멤버가 평소 피크의 **7~20배**를 찍었다(사키하네 후야 첫
-  신의상 38,402명 = 평소의 20.3배). 같은 기간 나란히 돌던 10인 마인크래프트 합방은
-  1.0~1.7배였다. 합방은 **조회수**를, 신의상은 **동시시청자**를 움직인다.
+- **가장 크게 터지는 이벤트는 합방이 아니라 신의상 공개다.** 조회수는 평소의
+  **{cos_lo:.1f}~{cos_hi:.1f}배**(합방은 {col_lo:.1f}~{col_hi:.1f}배), 동시시청자 피크는
+  **{ccu_lo:.1f}~{ccu_hi:.1f}배**(같은 기간 나란히 돌던 10인 마인크래프트 합방은
+  {mc_lo:.1f}~{mc_hi:.1f}배)였다. 사키하네 후야의 첫 신의상은 38,402명 — 평소 피크의 19배다.
 - 전후 비교(팔로워·구독자·동시시청자)는 **일일 수집이 시작된 2026-08-12 이후 이벤트만**
   가능하다. 그 이전은 기준선이 없어 계산하지 않는다 — 0%가 아니라 측정 불가다.
 - 최근 {pending}건은 **관측 중**이다. 이벤트 후 {MIN_POST_DAYS}일이 지나야 전후 비교를 낸다 —
@@ -387,6 +463,21 @@ append-only 로 남긴다.
 | 날짜 | 이벤트 | 참여자 평균 배수 |
 |---|---|---|
 {top or '| — | 데이터 부족 | — |'}
+
+## 신의상 효과 — 가장 크게 터지는 이벤트
+
+같은 기간에 나란히 돌아도 신의상 공개가 합방을 두 지표 모두에서 앞선다.
+
+| 지표 | 신의상 공개 | 대규모 합방 |
+|---|---|---|
+| VOD 조회수 배수 | **{cos_lo:.1f}~{cos_hi:.1f}배** | {col_lo:.1f}~{col_hi:.1f}배 |
+| 동시시청자 피크 배수 | **{ccu_lo:.1f}~{ccu_hi:.1f}배** | {mc_lo:.1f}~{mc_hi:.1f}배 |
+
+{costume_tbl}
+
+신의상은 **연 몇 회짜리 희소 이벤트**다. 합방은 며칠씩 이어지며 조회수를 꾸준히
+끌어올리는 반면, 신의상은 하루 몇 시간에 평소의 몇 배가 몰린다. 성격이 다른 두
+레버로 봐야 한다 — 합방은 **분량**, 신의상은 **순간 최대치**다.
 
 ## 동시시청자 피크 (2026-08-12 이후)
 
