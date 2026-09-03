@@ -449,6 +449,48 @@ def comment_effect(labeled: pd.DataFrame, metrics: pd.DataFrame,
     return by, stats
 
 
+def commerce_effect(cf: pd.DataFrame, tiers: pd.DataFrame, fin: pd.DataFrame,
+                    streams: pd.DataFrame) -> tuple:
+    """팬이 실제로 돈을 쓰는가, 얼마나, 그리고 그게 회사에 남는가.
+
+    스텔라이브 회사 재무는 비공개(DART 미등록)라 직접 잴 수 없다. 대신 세 겹의
+    간접 지표를 쓴다 — 팬이 자발적으로 모은 광고 펀딩(스텔라이브 특정), 동종업계
+    공식 굿즈 펀딩·구독 가격(지출 규모의 자), 동종업계 감사 재무(회사에 남는가).
+    """
+    stats: dict = {}
+    proj = pd.DataFrame()
+    if not cf.empty:
+        fan = cf[cf["org"].astype(str).str.contains("스텔라이브")].copy()
+        off = cf[~cf["org"].astype(str).str.contains("스텔라이브")].copy()
+        proj = fan[["project_name", "period_start", "raised_krw", "backers",
+                    "per_backer_krw", "achievement_pct"]].sort_values("period_start")
+        stats.update({
+            "fan_n": int(len(fan)), "fan_raised": int(fan["raised_krw"].sum()),
+            "fan_backers": int(fan["backers"].sum()),
+            "fan_pb_lo": int(fan["per_backer_krw"].min()) if len(fan) else 0,
+            "fan_pb_hi": int(fan["per_backer_krw"].max()) if len(fan) else 0,
+            "fan_ach_lo": float(fan["achievement_pct"].min()) if len(fan) else 0,
+            "fan_ach_hi": float(fan["achievement_pct"].max()) if len(fan) else 0,
+            "off_pb_lo": int(off["per_backer_krw"].min()) if len(off) else 0,
+            "off_pb_hi": int(off["per_backer_krw"].max()) if len(off) else 0,
+            "off_raised_hi": int(off["raised_krw"].max()) if len(off) else 0,
+        })
+    if not tiers.empty:
+        stats["tier_med"] = float(tiers["price_krw"].median())
+        stats["tier_p75"] = float(tiers["price_krw"].quantile(.75))
+    if not fin.empty:
+        last = fin.sort_values("bsns_year").groupby("corp_name").tail(1)
+        stats["fin"] = last[["corp_name", "bsns_year", "revenue",
+                             "operating_income", "operating_margin"]].to_dict("records")
+    # 매진 인증 — 방송 제목에 남는 유일한 판매 신호
+    if not streams.empty:
+        st = streams.copy(); st["date"] = pd.to_datetime(st["publish_date"]).dt.date
+        so = st[st["title"].astype(str).str.contains("매진", na=False)]
+        stats["soldout"] = so[["date", "name_ko", "title"]].sort_values("date") \
+            .drop_duplicates(["date", "name_ko"]).to_dict("records")
+    return proj, stats
+
+
 def _daily_delta(hist: pd.DataFrame, col: str) -> pd.DataFrame:
     """일일 순증. history.csv 는 누적값이라 차분해야 이벤트 효과가 보인다."""
     if hist.empty or col not in hist.columns:
@@ -673,6 +715,11 @@ def main() -> int:
     sent_m = config.drop_founder(
         _read(ROOT / "05_comment_sentiment" / "data" / "sentiment_metrics.csv"))
     cmt, cmt_stats = comment_effect(labeled, sent_m, h03)
+    com, com_stats = commerce_effect(
+        _read(ROOT / "11_fan_commerce" / "data" / "crowdfunding_projects.csv"),
+        _read(ROOT / "11_fan_commerce" / "data" / "fanding_tiers.csv"),
+        _read(ROOT / "11_fan_commerce" / "data" / "company_financials.csv"),
+        config.drop_founder(streams))
 
     # 리포트·차트에서는 창립자를 뺀다(수집·감지는 전 로스터 그대로).
     vod, foll, subs, ccu, arc = (config.drop_founder(x)
@@ -683,7 +730,8 @@ def main() -> int:
     for name, df in (("event_vod_multiple", vod), ("event_impact", impact),
                      ("event_ccu", ccu), ("concert_arc", arc),
                      ("cover_effect", cov_eff), ("original_effect", orig_eff),
-                     ("kirinuki_effect", kiri), ("comment_effect", cmt)):
+                     ("kirinuki_effect", kiri), ("comment_effect", cmt),
+                     ("commerce_effect", com)):
         df.to_csv(DATA / f"{name}.csv", index=False, encoding="utf-8-sig")
 
     SQL.mkdir(parents=True, exist_ok=True)
@@ -711,7 +759,7 @@ def main() -> int:
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
     write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff,
-                 drivers, kiri, kiri_stats, cmt, cmt_stats)
+                 drivers, kiri, kiri_stats, cmt, cmt_stats, com, com_stats)
     print(f"  이벤트 {len(events)}건 · 소급 측정 {vod['event_id'].nunique() if not vod.empty else 0}건 "
           f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건"
           f" · 콘서트 호 {len(arc) if arc is not None and not arc.empty else 0}건")
@@ -720,7 +768,8 @@ def main() -> int:
 
 def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
                  covers=None, orig_eff=None, drivers=None, kiri=None,
-                 kiri_stats=None, cmt=None, cmt_stats=None) -> None:
+                 kiri_stats=None, cmt=None, cmt_stats=None, com=None,
+                 com_stats=None) -> None:
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
     span = f"{events['date'].min()} ~ {events['date'].max()}"
     by_type = events["type"].value_counts()
@@ -765,6 +814,39 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         if not ccu.empty else pd.DataFrame(columns=["type", "ccu_multiple"])
     ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
     mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
+
+    # ── 팬 커머스 ──
+    cst = com_stats or {}
+    com_tbl = com_soldout = com_fin_tbl = ""
+    com_fan_n = com_fan_raised = com_fan_backers = com_fan_pb_lo = com_fan_pb_hi = 0
+    com_fan_ach_lo = com_fan_ach_hi = com_tier_med = com_tier_p75 = 0.0
+    com_off_pb_lo = com_off_pb_hi = com_off_raised_hi = com_tier_n = 0
+    if cst:
+        com_fan_n, com_fan_raised = cst.get("fan_n", 0), cst.get("fan_raised", 0)
+        com_fan_backers = cst.get("fan_backers", 0)
+        com_fan_pb_lo, com_fan_pb_hi = cst.get("fan_pb_lo", 0), cst.get("fan_pb_hi", 0)
+        com_fan_ach_lo, com_fan_ach_hi = cst.get("fan_ach_lo", 0), cst.get("fan_ach_hi", 0)
+        com_off_pb_lo, com_off_pb_hi = cst.get("off_pb_lo", 0), cst.get("off_pb_hi", 0)
+        com_off_raised_hi = cst.get("off_raised_hi", 0)
+        com_tier_med, com_tier_p75 = cst.get("tier_med", 0), cst.get("tier_p75", 0)
+        com_tier_n = 67
+        if com is not None and not com.empty:
+            com_tbl = ("| 프로젝트 | 시작 | 모금액 | 후원자 | 1인당 | 달성률 |\n|---|---|---|---|---|---|\n"
+                       + "\n".join(
+                           f"| {str(r.project_name)[:26]} | {r.period_start} | "
+                           f"{int(r.raised_krw):,}원 | {int(r.backers):,}명 | "
+                           f"{int(r.per_backer_krw):,}원 | **{r.achievement_pct:.0f}%** |"
+                           for r in com.itertuples()))
+        so = cst.get("soldout") or []
+        com_soldout = ("\n".join(f"- {r['date']} {r['name_ko']} — 「{str(r['title'])[:40]}」"
+                                  for r in so)
+                       or "- 관측 구간에 매진 인증 방송 없음")
+        fin = cst.get("fin") or []
+        com_fin_tbl = ("| 회사 | 연도 | 매출 | 영업이익 | 영업이익률 |\n|---|---|---|---|---|\n"
+                       + "\n".join(
+                           f"| {f['corp_name']} | FY{int(f['bsns_year'])} | "
+                           f"{f['revenue']/1e8:,.0f}억 | **{f['operating_income']/1e8:+,.0f}억** | "
+                           f"{f['operating_margin']:+.1%} |" for f in fin))
 
     # ── 댓글 여론 ──
     cs = cmt_stats or {}
@@ -954,6 +1036,10 @@ append-only 로 남긴다.
 - **콘서트는 단독이냐 합동이냐로 갈린다.** 본인 첫 단독 콘서트의 후기 방송은 평소의
   {solo_mult:.1f}배(안내 쇼츠 {solo_yt:,}회)였지만, 같은 멤버가 참여한 그룹 페스티벌은
   {grp_lo:.1f}~{grp_hi:.1f}배였다. 합동은 관심이 10명에게 나뉜다.
+- **팬은 돈을 쓴다, 자발적으로.** 팬 제작 광고 펀딩 {com_fan_n}건이 목표의
+  {com_fan_ach_lo:.0f}~{com_fan_ach_hi:.0f}%를 모았다(1인당 {com_fan_pb_lo:,}~{com_fan_pb_hi:,}원).
+  지출은 정기 구독 만원 미만 → 팬 광고 수만원 → 공식 굿즈 수십만원으로 목적에 따라
+  자릿수가 바뀐다. 그런데 동종업계 감사 재무는 연속 영업적자다 — 회사엔 남지 않는다.
 - **댓글 여론은 긍정/부정으로 가를 수 없다.** 긍정 {c_pos:.0%}·부정 {c_neg:.1%}이고 부정
   {c_nneg}건은 전부 야구팀 얘기라 멤버를 향한 부정은 0건이다. 신호는 주제에 있다 —
   **{c_top_name}** 댓글이 가장 많고 가장 긍정적이고 좋아요도 방송내용·게임의
@@ -1057,6 +1143,52 @@ append-only 로 남긴다.
 시작됐는데 콘서트는 2025-12-20과 2026-07-11이라 기준선이 존재하지 않는다. 위 숫자는
 **방송 조회수로 잰 간접 지표**이고, "콘서트로 구독자가 몇 % 늘었다"는 아직 말할 수 없다.
 다음 콘서트부터는 전후 비교가 자동으로 붙는다.
+
+## 팬 커머스 효과 — 팬은 돈을 쓴다, 자발적으로, 그런데 회사엔 남지 않는다
+
+스텔라이브 회사 재무는 **비공개**(DART 미등록)라 매출·굿즈 판매를 직접 잴 수 없다.
+대신 세 겹의 간접 지표를 쓴다.
+
+### ① 팬이 자기 돈으로 광고를 낸다 — 스텔라이브에 특정된 유일한 커머스 데이터
+
+{com_tbl}
+
+이 {com_fan_n}건은 **회사가 판 게 아니다.** 팬들이 텀블벅에서 스스로 돈을 모아 멤버 생일·
+기념일 광고를 낸 것이다. 합계 **{com_fan_raised:,}원 · {com_fan_backers:,}명**, 1인당
+{com_fan_pb_lo:,}~{com_fan_pb_hi:,}원, 목표 대비 **{com_fan_ach_lo:.0f}~{com_fan_ach_hi:.0f}%** 달성.
+굿즈처럼 손에 남는 것도 없이 오직 "내 멤버를 알리는 데" 3~4만원을 내는 사람이
+한 건당 500~1,000명이다. 이건 매출이 아니라 **팬덤 결속력의 직접 측정치**다.
+
+### ② 지출은 목적에 따라 자릿수가 달라진다
+
+| 지출 유형 | 1인당 | 출처 |
+|---|---|---|
+| 정기 구독 (팬딩, 월) | 중앙값 **{com_tier_med:,.0f}원** · 상위 25% {com_tier_p75:,.0f}원 | 버튜버 크리에이터 {com_tier_n}개 티어 |
+| 팬 제작 광고 펀딩 | **{com_fan_pb_lo:,}~{com_fan_pb_hi:,}원** | 스텔라이브 4건 |
+| 공식 굿즈 펀딩 | **{com_off_pb_lo:,}~{com_off_pb_hi:,}원** | 이세계아이돌 2건 (최대 {com_off_raised_hi:,}원) |
+
+같은 팬덤 안에서 정기 구독에는 만원 미만, 자발적 광고에는 수만원, 한정 굿즈에는
+수십만원을 낸다. **정기 지출과 이벤트성 지출 사이에 10~30배 차이**가 있다. 팬 커머스는
+"매달 얼마"가 아니라 "이벤트에 얼마"로 움직인다 — 앞 절들이 보여준 이벤트 중심
+구조와 같은 모양이다.
+
+⚠ 이세계아이돌 펀딩은 공식, 스텔라이브 4건은 비공식 팬 제작이라 **규모를 직접 비교하면
+안 된다.** 88억 대 3.8천만의 차이는 팬덤 크기가 아니라 공식/비공식의 차이다.
+
+### ③ 매진은 확인되지만 금액은 알 수 없다
+
+{com_soldout}
+
+티켓·굿즈 판매액은 어디에도 공개되지 않는다. 방송 제목에 남는 "매진"이 판매 신호의
+전부다.
+
+### ④ 그런데 회사에는 남지 않는다
+
+{com_fin_tbl}
+
+같은 IP 구조로 운영되는 동종업계의 감사받은 재무다. 팬이 이만큼 쓰는데도 영업이익은
+연속 적자다. **팬 지출과 회사 수익성 사이에 구조적 간극**이 있고, 스텔라이브가 다르다고
+말할 근거는 (비공개라) 없다.
 
 ## 댓글 여론 효과 — 긍정/부정은 변별력이 없고, 신호는 '무엇에 반응하나'에 있다
 
@@ -1177,7 +1309,7 @@ append-only 로 남긴다.
 - `data/events_manual.csv` — 손으로 등록하는 이벤트 (콘서트·오리지널곡·오프라인)
 - `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` ·
   `concert_arc.csv` · `cover_effect.csv` · `original_effect.csv` · `kirinuki_effect.csv` ·
-  `comment_effect.csv`
+  `comment_effect.csv` · `commerce_effect.csv`
 - `charts/` · `sql/events.db` · `site/index.html`
 """, encoding="utf-8")
 
