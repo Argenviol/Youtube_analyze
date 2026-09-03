@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-03T07:12:09.619196+00:00",
-    "n_snapshots": 10742,
+    "fetched_at": "2026-09-03T07:22:23.236975+00:00",
+    "n_snapshots": 10753,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-03T07:12:09.619196+00:00"
+      "2026-09-03T07:22:23.236975+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 9739,
-    "n_timepoints": 974,
-    "span_hours": 529.28,
-    "observed_hours": 239.73,
-    "coverage_ratio": 0.453,
+    "n_snapshots": 9749,
+    "n_timepoints": 975,
+    "span_hours": 529.45,
+    "observed_hours": 237.7,
+    "coverage_ratio": 0.449,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 2177,
+    "n_live_rows": 2178,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-03T07:12:09.619196+00:00"
+    "last": "2026-09-03T07:22:23.236975+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -33,7 +33,7 @@
       "followers": 162481,
       "follower_delta": 5740,
       "follower_per_day": 260.3,
-      "n_sessions": 30,
+      "n_sessions": 31,
       "n_live_points": 85,
       "peak_ccu": 38402,
       "avg_ccu": 4651,
@@ -44,10 +44,10 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 260077,
-      "follower_delta": 4751,
+      "followers": 260078,
+      "follower_delta": 4752,
       "follower_per_day": 215.4,
-      "n_sessions": 62,
+      "n_sessions": 63,
       "n_live_points": 264,
       "peak_ccu": 38237,
       "avg_ccu": 5301,
@@ -60,11 +60,11 @@
       "unit": "UNIVERSE",
       "followers": 214395,
       "follower_delta": 4576,
-      "follower_per_day": 207.5,
+      "follower_per_day": 207.4,
       "n_sessions": 55,
-      "n_live_points": 222,
+      "n_live_points": 223,
       "peak_ccu": 28071,
-      "avg_ccu": 4305,
+      "avg_ccu": 4316,
       "ccu_per_1k_followers": 130.93
     },
     {
@@ -72,10 +72,10 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 212601,
-      "follower_delta": 5175,
-      "follower_per_day": 234.7,
-      "n_sessions": 54,
+      "followers": 212602,
+      "follower_delta": 5176,
+      "follower_per_day": 234.6,
+      "n_sessions": 55,
       "n_live_points": 234,
       "peak_ccu": 24385,
       "avg_ccu": 3364,
@@ -100,8 +100,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 239129,
-      "follower_delta": 2281,
+      "followers": 239128,
+      "follower_delta": 2280,
       "follower_per_day": 103.4,
       "n_sessions": 60,
       "n_live_points": 254,
@@ -128,10 +128,10 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 223787,
-      "follower_delta": 4687,
-      "follower_per_day": 212.5,
-      "n_sessions": 56,
+      "followers": 223789,
+      "follower_delta": 4689,
+      "follower_per_day": 212.6,
+      "n_sessions": 57,
       "n_live_points": 220,
       "peak_ccu": 6964,
       "avg_ccu": 3616,
@@ -142,10 +142,10 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 214277,
-      "follower_delta": 4942,
-      "follower_per_day": 224.1,
-      "n_sessions": 75,
+      "followers": 214276,
+      "follower_delta": 4941,
+      "follower_per_day": 224.0,
+      "n_sessions": 76,
       "n_live_points": 286,
       "peak_ccu": 6741,
       "avg_ccu": 3043,
@@ -156,8 +156,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 256734,
-      "follower_delta": 3832,
+      "followers": 256735,
+      "follower_delta": 3833,
       "follower_per_day": 173.8,
       "n_sessions": 39,
       "n_live_points": 123,
@@ -459,18 +459,6 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "start_kst": "2026-08-22 03:43",
-      "observed_min": 115.3,
-      "n_points": 5,
-      "peak_ccu": 7472,
-      "avg_ccu": 6574,
-      "title": "히나입니댜",
-      "category": "더 게임 오브 시시포스"
-    },
-    {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
       "start_kst": "2026-08-15 21:46",
       "observed_min": 282.4,
       "n_points": 11,
@@ -478,6 +466,18 @@
       "avg_ccu": 6458,
       "title": "추억의 애니(추억별로없음) 더빙 월드컵",
       "category": "talk"
+    },
+    {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-22 03:43",
+      "observed_min": 115.3,
+      "n_points": 5,
+      "peak_ccu": 7472,
+      "avg_ccu": 6574,
+      "title": "히나입니댜",
+      "category": "더 게임 오브 시시포스"
     },
     {
       "name_ko": "시라유키 히나",
@@ -580,10 +580,10 @@
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-03 11:25",
-      "observed_min": 286.3,
-      "n_points": 29,
+      "observed_min": 296.6,
+      "n_points": 30,
       "peak_ccu": 6800,
-      "avg_ccu": 5374,
+      "avg_ccu": 5418,
       "title": "깐시로 깐달걀~~",
       "category": "마인크래프트"
     },
@@ -1239,11 +1239,11 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "start_kst": "2026-08-25 20:41",
-      "observed_min": 36.9,
-      "n_points": 2,
+      "start_kst": "2026-08-25 21:17",
+      "observed_min": 0.0,
+      "n_points": 1,
       "peak_ccu": 5277,
-      "avg_ccu": 5142,
+      "avg_ccu": 5277,
       "title": "캠 위치를 어디에 둬야할지 모르겠어 하루 종일 고민하고 하루종일 세팅하고 일본어 수업듣고 다시 세팅하고 고민하다 방송 킴",
       "category": "talk"
     },
@@ -1272,18 +1272,6 @@
       "category": "이터널 리턴"
     },
     {
-      "name_ko": "아오쿠모 린",
-      "name_en": "Aokumo Rin",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-24 23:07",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 5218,
-      "avg_ccu": 5218,
-      "title": "[치지직오픈컵] 이리대회 꼴등 팀장 멋지게 등장",
-      "category": "이터널 리턴"
-    },
-    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -1294,6 +1282,18 @@
       "avg_ccu": 4987,
       "title": "이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상",
       "category": "talk"
+    },
+    {
+      "name_ko": "아오쿠모 린",
+      "name_en": "Aokumo Rin",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-24 23:07",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 5218,
+      "avg_ccu": 5218,
+      "title": "[치지직오픈컵] 이리대회 꼴등 팀장 멋지게 등장",
+      "category": "이터널 리턴"
     },
     {
       "name_ko": "텐코 시부키",
@@ -1462,6 +1462,18 @@
       "avg_ccu": 3935,
       "title": "<<<< 스텔 마크 수선 없는사람 ",
       "category": "마인크래프트"
+    },
+    {
+      "name_ko": "아라하시 타비",
+      "name_en": "Arahashi Tabi",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-25 20:41",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 5008,
+      "avg_ccu": 5008,
+      "title": "캠 위치를 어디에 둬야할지 모르겠어 하루 종일 고민하고 하루종일 세팅하고 일본어 수업듣고 다시 세팅하고 고민하다 방송 킴",
+      "category": "talk"
     },
     {
       "name_ko": "텐코 시부키",
@@ -2043,11 +2055,11 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "start_kst": "2026-08-25 20:41",
-      "observed_min": 36.9,
-      "n_points": 2,
+      "start_kst": "2026-08-25 21:17",
+      "observed_min": 0.0,
+      "n_points": 1,
       "peak_ccu": 4480,
-      "avg_ccu": 4336,
+      "avg_ccu": 4480,
       "title": "[귀여운공주들(ㅎㅎ)] 이리 대회 연습 1일차",
       "category": "이터널 리턴"
     },
@@ -2244,18 +2256,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-19 19:00",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 4266,
-      "avg_ccu": 4266,
-      "title": "김상덕감독의 야구단",
-      "category": "종합 게임"
-    },
-    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -2268,14 +2268,26 @@
       "category": "talk"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-19 19:00",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 4266,
+      "avg_ccu": 4266,
+      "title": "김상덕감독의 야구단",
+      "category": "종합 게임"
+    },
+    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-08-25 20:41",
-      "observed_min": 36.9,
-      "n_points": 2,
+      "observed_min": 0.0,
+      "n_points": 1,
       "peak_ccu": 4263,
-      "avg_ccu": 3951,
+      "avg_ccu": 4263,
       "title": "[떠비큐어] 오늘도 화이팅!!",
       "category": "이터널 리턴"
     },
@@ -2410,6 +2422,18 @@
       "avg_ccu": 4196,
       "title": "치라즈아트 신착 공포겜 하러왔어욧 !!!! ",
       "category": "설장"
+    },
+    {
+      "name_ko": "아오쿠모 린",
+      "name_en": "Aokumo Rin",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-25 20:41",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 4193,
+      "avg_ccu": 4193,
+      "title": "[귀여운공주들(ㅎㅎ)] 이리 대회 연습 1일차",
+      "category": "이터널 리턴"
     },
     {
       "name_ko": "하나코 나나",
@@ -2568,18 +2592,6 @@
       "category": "데드 바이 데이라이트"
     },
     {
-      "name_ko": "유즈하 리코",
-      "name_en": "Yuzuha Riko",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-13 21:31",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 4000,
-      "avg_ccu": 4000,
-      "title": "데바데 w. 강지 리제 린 이춘향 [시키샤카샤카슈-와! 100만회 감사합니당]💚",
-      "category": "데드 바이 데이라이트"
-    },
-    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -2595,13 +2607,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "start_kst": "2026-08-22 17:41",
-      "observed_min": 194.5,
-      "n_points": 8,
-      "peak_ccu": 3979,
-      "avg_ccu": 3366,
-      "title": "대회 연습해야하니까",
-      "category": "이터널 리턴"
+      "start_kst": "2026-08-13 21:31",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 4000,
+      "avg_ccu": 4000,
+      "title": "데바데 w. 강지 리제 린 이춘향 [시키샤카샤카슈-와! 100만회 감사합니당]💚",
+      "category": "데드 바이 데이라이트"
     },
     {
       "name_ko": "아오쿠모 린",
@@ -2613,6 +2625,18 @@
       "peak_ccu": 3979,
       "avg_ccu": 3904,
       "title": "[치지직오픈컵] 이리대회 꼴등 팀장 멋지게 등장",
+      "category": "이터널 리턴"
+    },
+    {
+      "name_ko": "유즈하 리코",
+      "name_en": "Yuzuha Riko",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-22 17:41",
+      "observed_min": 194.5,
+      "n_points": 8,
+      "peak_ccu": 3979,
+      "avg_ccu": 3366,
+      "title": "대회 연습해야하니까",
       "category": "이터널 리턴"
     },
     {
@@ -3060,18 +3084,6 @@
       "category": "낚시 방법"
     },
     {
-      "name_ko": "아카네 리제",
-      "name_en": "Akane Lize",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-23 19:42",
-      "observed_min": 74.0,
-      "n_points": 4,
-      "peak_ccu": 3691,
-      "avg_ccu": 3223,
-      "title": "애들이랑 낚시할거에용",
-      "category": "talk"
-    },
-    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -3082,6 +3094,18 @@
       "avg_ccu": 3691,
       "title": "구스구스덕 합방! 춘스터콜",
       "category": "구스 구스 덕"
+    },
+    {
+      "name_ko": "아카네 리제",
+      "name_en": "Akane Lize",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-23 19:42",
+      "observed_min": 74.0,
+      "n_points": 4,
+      "peak_ccu": 3691,
+      "avg_ccu": 3223,
+      "title": "애들이랑 낚시할거에용",
+      "category": "talk"
     },
     {
       "name_ko": "시라유키 히나",
@@ -3142,6 +3166,18 @@
       "avg_ccu": 3568,
       "title": "춘스터콜 후열 구쑤구쑤덕",
       "category": "구스 구스 덕"
+    },
+    {
+      "name_ko": "유즈하 리코",
+      "name_en": "Yuzuha Riko",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-25 21:17",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3640,
+      "avg_ccu": 3640,
+      "title": "[떠비큐어] 무한섬 연습하기이",
+      "category": "이터널 리턴"
     },
     {
       "name_ko": "하나코 나나",
@@ -3396,18 +3432,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "텐코 시부키",
-      "name_en": "Tenko Shibuki",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-22 18:47",
-      "observed_min": 129.1,
-      "n_points": 6,
-      "peak_ccu": 3503,
-      "avg_ccu": 2910,
-      "title": "뽑기고수부키왔다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",
-      "category": "talk"
-    },
-    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -3417,6 +3441,18 @@
       "peak_ccu": 3503,
       "avg_ccu": 3305,
       "title": "유니버스 하빵날 저희 싸우는거 맞습니다 (w. 타비, 시로, 히나)",
+      "category": "talk"
+    },
+    {
+      "name_ko": "텐코 시부키",
+      "name_en": "Tenko Shibuki",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-22 18:47",
+      "observed_min": 129.1,
+      "n_points": 6,
+      "peak_ccu": 3503,
+      "avg_ccu": 2910,
+      "title": "뽑기고수부키왔다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",
       "category": "talk"
     },
     {
@@ -3504,18 +3540,6 @@
       "category": "데드 바이 데이라이트"
     },
     {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-24 22:11",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3459,
-      "avg_ccu": 3459,
-      "title": "히 잼 민",
-      "category": "로블록스"
-    },
-    {
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
@@ -3526,6 +3550,18 @@
       "avg_ccu": 3237,
       "title": "끝끝끝 ",
       "category": "talk"
+    },
+    {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-24 22:11",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3459,
+      "avg_ccu": 3459,
+      "title": "히 잼 민",
+      "category": "로블록스"
     },
     {
       "name_ko": "아오쿠모 린",
@@ -3900,18 +3936,6 @@
       "category": "오버워치"
     },
     {
-      "name_ko": "유즈하 리코",
-      "name_en": "Yuzuha Riko",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-22 22:35",
-      "observed_min": 110.9,
-      "n_points": 5,
-      "peak_ccu": 3308,
-      "avg_ccu": 3100,
-      "title": "수아님.",
-      "category": "이터널 리턴"
-    },
-    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -3922,6 +3946,18 @@
       "avg_ccu": 3262,
       "title": "유니버스 하빵날 저희 싸우는거 맞습니다 (w. 타비, 시로, 히나)",
       "category": "갬블 위드 유어 프렌즈"
+    },
+    {
+      "name_ko": "유즈하 리코",
+      "name_en": "Yuzuha Riko",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-22 22:35",
+      "observed_min": 110.9,
+      "n_points": 5,
+      "peak_ccu": 3308,
+      "avg_ccu": 3100,
+      "title": "수아님.",
+      "category": "이터널 리턴"
     },
     {
       "name_ko": "유즈하 리코",
@@ -4203,18 +4239,6 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "start_kst": "2026-08-17 21:59",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3187,
-      "avg_ccu": 3187,
-      "title": "도박게임 유니버스",
-      "category": "갬블 위드 유어 프렌즈"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
       "start_kst": "2026-08-26 17:10",
       "observed_min": 0.0,
       "n_points": 1,
@@ -4222,6 +4246,18 @@
       "avg_ccu": 3187,
       "title": "헬테이커 드갸쟛",
       "category": "헬테이커"
+    },
+    {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-17 21:59",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3187,
+      "avg_ccu": 3187,
+      "title": "도박게임 유니버스",
+      "category": "갬블 위드 유어 프렌즈"
     },
     {
       "name_ko": "하나코 나나",
@@ -4236,16 +4272,16 @@
       "category": "이터널 리턴"
     },
     {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-12 19:54",
-      "observed_min": 224.0,
-      "n_points": 27,
+      "name_ko": "하나코 나나",
+      "name_en": "Hanako Nana",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-13 20:35",
+      "observed_min": 0.0,
+      "n_points": 1,
       "peak_ccu": 3172,
-      "avg_ccu": 2734,
-      "title": "오늘 밤에 시간당100개의 별동뼐이쏟아지는걸아시나요",
-      "category": "talk"
+      "avg_ccu": 3172,
+      "title": "우효오오오오오옹ㅇ오ㅗ옸",
+      "category": "이터널 리턴"
     },
     {
       "name_ko": "하나코 나나",
@@ -4260,16 +4296,16 @@
       "category": "빅 워크"
     },
     {
-      "name_ko": "하나코 나나",
-      "name_en": "Hanako Nana",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-13 20:35",
-      "observed_min": 0.0,
-      "n_points": 1,
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-12 19:54",
+      "observed_min": 224.0,
+      "n_points": 27,
       "peak_ccu": 3172,
-      "avg_ccu": 3172,
-      "title": "우효오오오오오옹ㅇ오ㅗ옸",
-      "category": "이터널 리턴"
+      "avg_ccu": 2734,
+      "title": "오늘 밤에 시간당100개의 별동뼐이쏟아지는걸아시나요",
+      "category": "talk"
     },
     {
       "name_ko": "네네코 마시로",
@@ -4756,10 +4792,10 @@
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
       "start_kst": "2026-08-25 20:41",
-      "observed_min": 36.9,
-      "n_points": 2,
+      "observed_min": 0.0,
+      "n_points": 1,
       "peak_ccu": 2948,
-      "avg_ccu": 2931,
+      "avg_ccu": 2948,
       "title": "친추 안 받습니다.",
       "category": "로블록스"
     },
@@ -4836,6 +4872,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-25 21:17",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 2914,
+      "avg_ccu": 2914,
+      "title": "친추 안 받습니다.",
+      "category": "로블록스"
+    },
+    {
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
@@ -4851,12 +4899,12 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "start_kst": "2026-08-25 20:41",
-      "observed_min": 36.9,
-      "n_points": 2,
+      "start_kst": "2026-08-25 21:17",
+      "observed_min": 0.0,
+      "n_points": 1,
       "peak_ccu": 2900,
-      "avg_ccu": 2446,
-      "title": "귀여운공주들팀입니다. (W. 린, 하루님, 코치 한동그라미님)",
+      "avg_ccu": 2900,
+      "title": "치지직컵 열심히 배우기. (W. 린, 하루님, 코치 한동그라미님)",
       "category": "이터널 리턴"
     },
     {
@@ -5208,18 +5256,6 @@
       "category": "MLB 더 쇼 26"
     },
     {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-28 20:39",
-      "observed_min": 326.6,
-      "n_points": 33,
-      "peak_ccu": 2752,
-      "avg_ccu": 2545,
-      "title": "스텔 마크 서버 오픈런............!!!!!!!! 동물 잡자 고래 잡자",
-      "category": "마인크래프트"
-    },
-    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -5230,6 +5266,18 @@
       "avg_ccu": 2295,
       "title": "다 디지는거야ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ",
       "category": "종합 게임"
+    },
+    {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-28 20:39",
+      "observed_min": 326.6,
+      "n_points": 33,
+      "peak_ccu": 2752,
+      "avg_ccu": 2545,
+      "title": "스텔 마크 서버 오픈런............!!!!!!!! 동물 잡자 고래 잡자",
+      "category": "마인크래프트"
     },
     {
       "name_ko": "유즈하 리코",
@@ -5700,18 +5748,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "아카네 리제",
-      "name_en": "Akane Lize",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-16 22:10",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 2465,
-      "avg_ccu": 2465,
-      "title": "스텔데바데내전 으마무시한 살인마 등장",
-      "category": "데드 바이 데이라이트"
-    },
-    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -5722,6 +5758,18 @@
       "avg_ccu": 2465,
       "title": "김상덕 감독의 야구단 한일전 제 2회차",
       "category": "종합 게임"
+    },
+    {
+      "name_ko": "아카네 리제",
+      "name_en": "Akane Lize",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-16 22:10",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 2465,
+      "avg_ccu": 2465,
+      "title": "스텔데바데내전 으마무시한 살인마 등장",
+      "category": "데드 바이 데이라이트"
     },
     {
       "name_ko": "유즈하 리코",
@@ -6141,6 +6189,18 @@
       "peak_ccu": 2009,
       "avg_ccu": 2009,
       "title": "[떠비큐어] 다 찌발라야해 (연습 2일차)",
+      "category": "이터널 리턴"
+    },
+    {
+      "name_ko": "하나코 나나",
+      "name_en": "Hanako Nana",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-25 20:41",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 1993,
+      "avg_ccu": 1993,
+      "title": "귀여운공주들팀입니다. (W. 린, 하루님, 코치 한동그라미님)",
       "category": "이터널 리턴"
     },
     {
@@ -11880,6 +11940,10 @@
         [
           "2026-09-03 16:12",
           6724
+        ],
+        [
+          "2026-09-03 16:22",
+          6676
         ]
       ]
     },
