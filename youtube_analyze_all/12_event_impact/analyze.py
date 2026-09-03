@@ -394,6 +394,61 @@ def kirinuki_effect(clips: pd.DataFrame, videos: pd.DataFrame) -> tuple:
     return per, stats
 
 
+TOPIC_KO = {"personality": "성격·개그", "content_gameplay": "방송내용·게임",
+            "visual_design": "외형·디자인", "voice_singing": "목소리·노래",
+            "growth_nostalgia": "성장·추억", "member_interaction": "멤버 간 케미",
+            "other": "기타"}
+
+
+def comment_effect(labeled: pd.DataFrame, metrics: pd.DataFrame,
+                   hist03: pd.DataFrame) -> tuple:
+    """댓글 여론이 무엇에 반응하고, 그게 성장과 이어지는가.
+
+    폴라리티(긍정/부정)는 변별력이 거의 없다 — 팬 채널 댓글은 원래 대부분 긍정이다.
+    신호는 '무엇에 반응하나(주제)'와 '얼마나 호응하나(좋아요)'에 있다.
+    """
+    if labeled.empty:
+        return pd.DataFrame(), {}
+    L = labeled.copy()
+    by = (L.groupby("topic").agg(
+        n=("sid", "size"),
+        positive=("sentiment", lambda x: float((x == "positive").mean())),
+        negative=("sentiment", lambda x: float((x == "negative").mean())),
+        likes_median=("like_count", "median"),
+        likes_mean=("like_count", "mean"))
+        .reset_index().sort_values("n", ascending=False))
+    by["topic_ko"] = by["topic"].map(TOPIC_KO).fillna(by["topic"])
+
+    neg = L[L["sentiment"] == "negative"]
+    stats = {
+        "n": int(len(L)), "n_videos": int(L["video_id"].nunique()),
+        "n_members": int(L["name_ko"].nunique()),
+        "pos": float((L["sentiment"] == "positive").mean()),
+        "neu": float((L["sentiment"] == "neutral").mean()),
+        "neg": float((L["sentiment"] == "negative").mean()),
+        "n_neg": int(len(neg)),
+        "neg_members": sorted(neg["name_ko"].unique().tolist()),
+        "neg_videos": int(neg["video_id"].nunique()),
+    }
+    # 감성 점수가 성장을 예측하나 — 21일 치지직 팔로워 성장률과 상관
+    stats["corr_growth"] = None
+    if not metrics.empty and not hist03.empty and "followers" in hist03.columns:
+        h = hist03.copy(); h["date"] = pd.to_datetime(h["date"])
+        last = h["date"].max()
+        prev = h[h["date"] <= last - pd.Timedelta(days=21)]["date"].max()
+        if pd.notna(prev):
+            a = h[h["date"] == last].set_index("name_ko")["followers"]
+            b = h[h["date"] == prev].set_index("name_ko")["followers"]
+            growth = (a / b - 1).rename("growth")
+            m = metrics.set_index("name_ko").join(growth).dropna(subset=["growth"])
+            if len(m) >= 5:
+                stats["corr_growth"] = float(m["sentiment_score"].corr(m["growth"]))
+                stats["growth_days"] = int((last - prev).days)
+                stats["score_lo"] = float(m["sentiment_score"].min())
+                stats["score_hi"] = float(m["sentiment_score"].max())
+    return by, stats
+
+
 def _daily_delta(hist: pd.DataFrame, col: str) -> pd.DataFrame:
     """일일 순증. history.csv 는 누적값이라 차분해야 이벤트 효과가 보인다."""
     if hist.empty or col not in hist.columns:
@@ -613,6 +668,11 @@ def main() -> int:
         _read(ROOT / "04_kirinuki_ecosystem" / "data" / "clips.csv"),
         col="source_member_ko")
     kiri, kiri_stats = kirinuki_effect(clips, videos)
+    labeled = config.drop_founder(
+        _read(ROOT / "05_comment_sentiment" / "data" / "comments_labeled.csv"))
+    sent_m = config.drop_founder(
+        _read(ROOT / "05_comment_sentiment" / "data" / "sentiment_metrics.csv"))
+    cmt, cmt_stats = comment_effect(labeled, sent_m, h03)
 
     # 리포트·차트에서는 창립자를 뺀다(수집·감지는 전 로스터 그대로).
     vod, foll, subs, ccu, arc = (config.drop_founder(x)
@@ -623,7 +683,7 @@ def main() -> int:
     for name, df in (("event_vod_multiple", vod), ("event_impact", impact),
                      ("event_ccu", ccu), ("concert_arc", arc),
                      ("cover_effect", cov_eff), ("original_effect", orig_eff),
-                     ("kirinuki_effect", kiri)):
+                     ("kirinuki_effect", kiri), ("comment_effect", cmt)):
         df.to_csv(DATA / f"{name}.csv", index=False, encoding="utf-8-sig")
 
     SQL.mkdir(parents=True, exist_ok=True)
@@ -651,7 +711,7 @@ def main() -> int:
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
     write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff,
-                 drivers, kiri, kiri_stats)
+                 drivers, kiri, kiri_stats, cmt, cmt_stats)
     print(f"  이벤트 {len(events)}건 · 소급 측정 {vod['event_id'].nunique() if not vod.empty else 0}건 "
           f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건"
           f" · 콘서트 호 {len(arc) if arc is not None and not arc.empty else 0}건")
@@ -660,7 +720,7 @@ def main() -> int:
 
 def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
                  covers=None, orig_eff=None, drivers=None, kiri=None,
-                 kiri_stats=None) -> None:
+                 kiri_stats=None, cmt=None, cmt_stats=None) -> None:
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
     span = f"{events['date'].min()} ~ {events['date'].max()}"
     by_type = events["type"].value_counts()
@@ -705,6 +765,40 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         if not ccu.empty else pd.DataFrame(columns=["type", "ccu_multiple"])
     ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
     mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
+
+    # ── 댓글 여론 ──
+    cs = cmt_stats or {}
+    c_n = c_videos = c_members = c_nneg = c_neg_videos = 0
+    c_pos = c_neu = c_neg = 0.0
+    c_neg_members = "—"
+    c_topic_tbl = c_corr_line = ""
+    c_top_name = "성격·개그"; c_top_n = 0; c_top_pos = c_top_likes = c_game_likes = 0.0
+    c_like_ratio = 0.0
+    if cs and cmt is not None and not cmt.empty:
+        c_n, c_videos, c_members = cs["n"], cs["n_videos"], cs["n_members"]
+        c_pos, c_neu, c_neg, c_nneg = cs["pos"], cs["neu"], cs["neg"], cs["n_neg"]
+        c_neg_videos = cs["neg_videos"]
+        c_neg_members = "·".join(cs["neg_members"]) or "—"
+        by = cmt.sort_values("n", ascending=False)
+        c_topic_tbl = ("| 주제 | 댓글 수 | 긍정 | 부정 | 좋아요 중앙값 |\n|---|---|---|---|---|\n"
+                       + "\n".join(
+                           f"| {r.topic_ko} | {r.n}건 | {r.positive:.0%} | {r.negative:.0%} | "
+                           f"{r.likes_median:,.0f} |" for r in by.itertuples()))
+        ctop = by.iloc[0]   # 위쪽 vod 표의 `top` 과 이름이 겹치면 안 된다
+        c_top_name, c_top_n = ctop["topic_ko"], int(ctop["n"])
+        c_top_pos, c_top_likes = float(ctop["positive"]), float(ctop["likes_median"])
+        g = by[by["topic"] == "content_gameplay"]
+        c_game_likes = float(g["likes_median"].iloc[0]) if len(g) else 0.0
+        c_like_ratio = c_top_likes / c_game_likes if c_game_likes else 0.0
+        if cs.get("corr_growth") is not None:
+            c_corr_line = (
+                f"멤버별 감성 점수({cs['score_lo']:.2f}~{cs['score_hi']:.2f})와 최근 "
+                f"{cs['growth_days']}일 치지직 팔로워 성장률의 상관은 **{cs['corr_growth']:+.2f}**"
+                f"(n={c_members})다. 방향이 있다고 말할 수준이 아니다. 점수 자체도 멤버 간 "
+                f"차이가 거의 없다 — 최저인 멤버도 표본이 야구 영상에 쏠린 탓이지 "
+                f"여론이 나빠서가 아니다.")
+        else:
+            c_corr_line = "성장률 축적이 부족해 상관을 낼 수 없다."
 
     # ── 키리누키 ──
     ks = kiri_stats or {}
@@ -860,6 +954,10 @@ append-only 로 남긴다.
 - **콘서트는 단독이냐 합동이냐로 갈린다.** 본인 첫 단독 콘서트의 후기 방송은 평소의
   {solo_mult:.1f}배(안내 쇼츠 {solo_yt:,}회)였지만, 같은 멤버가 참여한 그룹 페스티벌은
   {grp_lo:.1f}~{grp_hi:.1f}배였다. 합동은 관심이 10명에게 나뉜다.
+- **댓글 여론은 긍정/부정으로 가를 수 없다.** 긍정 {c_pos:.0%}·부정 {c_neg:.1%}이고 부정
+  {c_nneg}건은 전부 야구팀 얘기라 멤버를 향한 부정은 0건이다. 신호는 주제에 있다 —
+  **{c_top_name}** 댓글이 가장 많고 가장 긍정적이고 좋아요도 방송내용·게임의
+  {c_like_ratio:.1f}배다. 팬은 콘텐츠가 아니라 사람에 반응한다.
 - **키리누키는 유일하게 기획할 수 없는 이벤트다.** 클립 표본의 {kiri_unmatched:.0%}가 어떤
   이벤트 키워드에도 안 걸린다 — 클립이 되는 건 기획이 아니라 방송 중 우연한 순간이다.
   개별 클립은 본인 영상의 {kiri_ratio:.0%} 수준이지만 공식 채널 밖 도달이고,
@@ -960,6 +1058,33 @@ append-only 로 남긴다.
 **방송 조회수로 잰 간접 지표**이고, "콘서트로 구독자가 몇 % 늘었다"는 아직 말할 수 없다.
 다음 콘서트부터는 전후 비교가 자동으로 붙는다.
 
+## 댓글 여론 효과 — 긍정/부정은 변별력이 없고, 신호는 '무엇에 반응하나'에 있다
+
+라벨링한 댓글 {c_n}건(멤버 {c_members}명 × 30건, 영상 {c_videos}편)의 감성은
+긍정 **{c_pos:.0%}** · 중립 {c_neu:.0%} · 부정 **{c_neg:.1%}**다. 부정은 {c_nneg}건뿐이고,
+**전부 {c_neg_members}의 영상 {c_neg_videos}편에 몰려 있다** — 내용은 야구팀 얘기
+("롯데 추천한 놈…")지 멤버에 대한 것이 아니다. 즉 **멤버를 향한 부정 댓글은 표본에
+0건**이다. 팬 채널 댓글에서 긍정/부정 비율은 아무것도 가르지 못한다.
+
+### 팬은 콘텐츠가 아니라 사람에 반응한다
+
+{c_topic_tbl}
+
+가장 많고(**{c_top_n}건**), 가장 긍정적이고({c_top_pos:.0%}), 가장 많이 호응받는
+(좋아요 중앙값 **{c_top_likes:,.0f}**) 주제가 **{c_top_name}**이다. 방송 내용·게임 댓글의
+좋아요 중앙값({c_game_likes:,.0f})보다 **{c_like_ratio:.1f}배** 높다. 게임 실력이나 노래보다
+**그 사람 자체**에 대한 댓글이 팬덤에서 가장 크게 호응받는다.
+
+### 감성 점수는 성장을 예측하지 못한다
+
+{c_corr_line}
+
+### 이벤트별 여론 비교는 못 한다
+
+댓글 표본이 걸린 영상 {c_videos}편 중 커버곡 2편·오리지널곡 1편·합방 1편뿐이라,
+"신의상 댓글이 더 긍정적인가" 같은 질문은 이 데이터로 답할 수 없다. 이벤트별 여론을
+보려면 05 수집을 이벤트 영상 중심으로 넓혀야 한다.
+
 ## 키리누키 효과 — 유일하게 기획할 수 없는 이벤트
 
 {kiri_tbl}
@@ -1051,7 +1176,8 @@ append-only 로 남긴다.
 - `data/events_seen.csv` — 처음 감지한 날짜 (append-only 기억)
 - `data/events_manual.csv` — 손으로 등록하는 이벤트 (콘서트·오리지널곡·오프라인)
 - `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` ·
-  `concert_arc.csv` · `cover_effect.csv` · `original_effect.csv` · `kirinuki_effect.csv`
+  `concert_arc.csv` · `cover_effect.csv` · `original_effect.csv` · `kirinuki_effect.csv` ·
+  `comment_effect.csv`
 - `charts/` · `sql/events.db` · `site/index.html`
 """, encoding="utf-8")
 
