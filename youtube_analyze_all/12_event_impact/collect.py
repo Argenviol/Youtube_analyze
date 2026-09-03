@@ -56,6 +56,19 @@ MIN_MEMBERS = 4
 # 토큰이 전체 방송일 중 이 비율을 넘게 등장하면 고유명사가 아니라 흔한 말로 본다.
 MAX_TOKEN_DF = 0.10
 
+# ── 신의상 공개 ──
+#
+# 제목만 보면 안 된다. '신의상'이 들어간 방송의 절반은 예고("내일 8시에 공개")·
+# 대기방·남의 공개 시청이다. 실제 공개는 **조회수로 갈린다** — 실측에서 예고·대기방은
+# 평소 대비 0.29~1.60배에 몰려 있고 실제 공개는 2.01배부터 시작한다. 그 사이가
+# 비어 있어서 2.0을 경계로 쓴다.
+COSTUME_TOKEN = re.compile(r"신의상|새\s*의상|신\s*의상")
+COSTUME_MIN_MULTIPLE = 2.0
+# 릴레이 공개는 며칠에 걸쳐 이어진다. 이 간격 안이면 한 이벤트로 묶는다.
+COSTUME_GAP_DAYS = 3
+# 이벤트 이름을 뽑을 때 버릴 말 — 어느 공개 방송에나 들어간다.
+COSTUME_STOPWORDS = {"신의상", "공개", "공개해요", "오늘", "내일", "차례", "의상"}
+
 # 치지직 기본 카테고리. "같은 날 다들 잡담함"은 합방의 증거가 아니다.
 DEFAULT_CATEGORIES = {"talk", "TALK", "", "nan"}
 
@@ -93,6 +106,9 @@ SERIES_MAX_DF = 0.03
 # 이벤트로 등록했다가 되물렸다. 연속 기준을 세우면 준비 구간은 자동으로 빠지고
 # 본편이 시작될 때 잡힌다.
 MIN_CONSECUTIVE_DAYS = 2
+
+# 조회수 배수의 '평소'를 정의하는 창(일). analyze.py 와 같은 기준을 쓴다.
+BASELINE_DAYS = 30
 
 
 def _tokens(title: str) -> set[str]:
@@ -301,7 +317,7 @@ def detect_series_candidates(streams: pd.DataFrame) -> list[dict]:
 
 
 def name_from_candidates(events: list[dict], candidates: list[dict],
-                         manual: list[dict] | None = None) -> None:
+                         others: list[dict] | None = None) -> None:
     """감지된 이벤트에 시리즈 이름을 붙인다.
 
     같은 날 4명 기준으로는 카테고리 이름('마인크래프트')만 남는 경우가 많다.
@@ -309,14 +325,14 @@ def name_from_candidates(events: list[dict], candidates: list[dict],
     넓은 창 신호는 이벤트를 **만들기엔** 정밀도가 부족하지만, 이미 확정된
     이벤트에 **이름을 붙이는 데는** 안전하다 — 없는 이벤트를 만들지 않는다.
     """
-    manual = manual or []
+    others = others or []
     for e in events:
         e_mem = set(e["members"].split("|"))
-        # 사람이 이미 이름 붙인 이벤트와 기간이 겹치면 보강하지 않는다. 겹친
-        # 구간에서 나온 단어는 그쪽 이벤트의 것일 수 있다 — 실제로 8/29 마인크래프트
+        # 이미 따로 잡힌 이벤트(신의상·수동 등록)와 기간이 겹치면 보강하지 않는다.
+        # 겹친 구간에서 나온 단어는 그쪽 이벤트의 것이다 — 실제로 8/29 마인크래프트
         # 합방이 같은 기간 신의상 릴레이의 '휴가'를 이름으로 가져왔다.
-        if any(e["date"] <= m["end_date"] and m["date"] <= e["end_date"]
-               for m in manual):
+        if any(e["date"] <= o["end_date"] and o["date"] <= e["end_date"]
+               for o in others):
             continue
         hits = []
         for c in candidates:
@@ -332,6 +348,86 @@ def name_from_candidates(events: list[dict], candidates: list[dict],
         for c in hits[:1]:
             if c["title"] not in e["title"]:
                 e["title"] = f"{e['title']} · {c['title']}"
+
+
+def detect_costume_reveals(streams: pd.DataFrame) -> list[dict]:
+    """신의상 공개를 찾는다. 예고·대기방은 조회수 배수로 걸러낸다."""
+    df = streams.copy()
+    df["date"] = pd.to_datetime(df["publish_date"]).dt.date
+    hits = df[df["title"].astype(str).str.contains(COSTUME_TOKEN, na=False)]
+
+    reveals = []
+    for _, r in hits.iterrows():
+        mine = df[df["name_ko"] == r["name_ko"]]
+        lo = r["date"] - timedelta(days=BASELINE_DAYS)
+        hi = r["date"] + timedelta(days=BASELINE_DAYS)
+        base = mine[(mine["date"] >= lo) & (mine["date"] <= hi)
+                    & (mine["date"] != r["date"])]
+        med = base["read_count"].median()
+        if not med or pd.isna(med):
+            continue
+        if r["read_count"] / med >= COSTUME_MIN_MULTIPLE:
+            reveals.append({"date": r["date"], "name": r["name_ko"],
+                            "title": str(r["title"])})
+    if not reveals:
+        return []
+
+    # 날짜가 가까운 것끼리 묶어 릴레이 하나로 본다.
+    reveals.sort(key=lambda x: x["date"])
+    groups, cur = [], [reveals[0]]
+    for r in reveals[1:]:
+        if (r["date"] - cur[-1]["date"]).days <= COSTUME_GAP_DAYS:
+            cur.append(r)
+        else:
+            groups.append(cur)
+            cur = [r]
+    groups.append(cur)
+
+    out = []
+    for g in groups:
+        members = sorted({r["name"] for r in g})
+        out.append({
+            "date": g[0]["date"], "end_date": g[-1]["date"], "type": "신의상",
+            "title": _costume_name(g, members), "members": "|".join(members),
+            "n_members": len(members),
+            "n_days": len({r["date"] for r in g}),
+            "signal": "제목+조회수", "match_keys": "신의상",
+            "source": "자동(치지직 VOD)",
+        })
+    return out
+
+
+def _tokens_in_order(title: str) -> list[str]:
+    """제목에 나온 순서 그대로의 토큰."""
+    return [w for w in re.sub(r"[^\w가-힣]+", " ", str(title)).split()
+            if 2 <= len(w) <= 12]
+
+
+def _costume_name(group: list[dict], members: list[str]) -> str:
+    """공개 방송 제목들이 공유하는 말로 이벤트 이름을 만든다.
+
+    '[🏖️스텔 여름 휴가 신의상🏖️]' 처럼 시즌 이름이 제목에 들어가는 경우가 많다.
+    두 명 이상이 함께 쓴 말만 골라야 개인 제목의 잡담이 이름에 끼지 않는다.
+    """
+    counts: collections.Counter = collections.Counter()
+    for r in group:
+        for w in set(_tokens(r["title"])):
+            if w not in COSTUME_STOPWORDS:
+                counts[w] += 1
+    shared = {w for w, c in counts.items() if c >= 2}
+    # 빈도순으로 이어붙이면 '여름 스텔 휴가'처럼 원래 어순이 깨진다.
+    # 실제 제목에 나온 순서를 따른다.
+    order, seen = [], set()
+    for r in group:
+        for w in _tokens_in_order(r["title"]):
+            if w in shared and w not in seen:
+                seen.add(w)
+                order.append(w)
+    label = " ".join(order[:3])
+    if len(members) == 1:
+        return f"{members[0]} 신의상 공개" + (f" ({label})" if label else "")
+    base = f"{label} 신의상 릴레이 공개" if label else "신의상 릴레이 공개"
+    return f"{base} ({len(members)}명)"
 
 
 def detect_releases(covers: pd.DataFrame) -> list[dict]:
@@ -392,9 +488,10 @@ def main() -> int:
     detected = detect_collabs(streams)
     collabs = [c for c in detected if c["streak_days"] >= MIN_CONSECUTIVE_DAYS]
     short = [c for c in detected if c["streak_days"] < MIN_CONSECUTIVE_DAYS]
+    costumes = detect_costume_reveals(streams)
     candidates = detect_series_candidates(streams)
     # 하루짜리 합방은 이벤트가 아니라 후보다(대규모 컨텐츠 기준 미달).
-    name_from_candidates(collabs, candidates, manual)
+    name_from_candidates(collabs, candidates, costumes + manual)
     for c in short:
         candidates.append({"title": c["title"], "date": c["date"],
                            "end_date": c["end_date"], "n_members": c["n_members"],
@@ -404,7 +501,7 @@ def main() -> int:
                                     index=False, encoding="utf-8-sig")
     releases = detect_releases(pd.read_csv(covers_p))
 
-    auto = collabs + releases
+    auto = collabs + costumes + releases
     for e in auto:
         e["event_id"] = event_id(e)
     for e in manual:
@@ -436,7 +533,7 @@ def main() -> int:
     by_type = events["type"].value_counts().to_dict()
     print(f"  이벤트 {len(events)}건 · {by_type}")
     print(f"  합방 {len(collabs)}건 (연속 {MIN_CONSECUTIVE_DAYS}일 이상) · "
-          f"커버곡 {len(releases)}건 · 수동 {len(manual)}건")
+          f"신의상 {len(costumes)}건 · 커버곡 {len(releases)}건 · 수동 {len(manual)}건")
     print(f"  새로 감지 {len(new)}건 (누적 기억 {len(seen)}건)")
     print(f"  시리즈 후보 {len(candidates)}건 → event_candidates.csv (검토 후 수동 등록)")
     return 0
