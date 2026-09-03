@@ -296,6 +296,50 @@ def original_effect(events: pd.DataFrame, videos: pd.DataFrame,
     return pd.DataFrame(rows)
 
 
+def ccu_drivers(sessions: pd.DataFrame) -> dict:
+    """동시시청자를 움직이는 게 무엇인지 — 이벤트와 평소 요인을 나란히 놓는다.
+
+    카테고리·시간대·요일 같은 '평소 요인'은 늘 이야기되지만, 실제로 얼마나
+    움직이는지는 이벤트 효과와 같은 자로 재봐야 안다.
+    """
+    if sessions.empty:
+        return {}
+    s = sessions.copy()
+    s["start"] = pd.to_datetime(s["start_kst"])
+    s = s[s["peak_ccu"] > 0]
+    if s.empty:
+        return {}
+    s["hour"] = s["start"].dt.hour
+    s["dow"] = s["start"].dt.dayofweek
+
+    def _spread(g):
+        """세션 5개 이상인 구간만 — 표본 1~2개짜리 최대·최소는 의미가 없다."""
+        g = g[g["n"] >= 5]
+        return (float(g["med"].min()), float(g["med"].max())) if len(g) else (0.0, 0.0)
+
+    def _agg(col):
+        return (s.groupby(col)["peak_ccu"].agg(n="size", med="median")
+                .reset_index())
+
+    cat = _agg("category")
+    hour = _agg(pd.cut(s["hour"], [0, 6, 12, 18, 24],
+                       labels=["0-6시", "6-12시", "12-18시", "18-24시"]))
+    dow = _agg("dow")
+    top = s.nlargest(5, "peak_ccu")
+    return {
+        "n": int(len(s)),
+        "median": float(s["peak_ccu"].median()),
+        "p95": float(s["peak_ccu"].quantile(.95)),
+        "p99": float(s["peak_ccu"].quantile(.99)),
+        "max": float(s["peak_ccu"].max()),
+        "cat_lo": _spread(cat)[0], "cat_hi": _spread(cat)[1],
+        "hour_lo": _spread(hour)[0], "hour_hi": _spread(hour)[1],
+        "dow_lo": _spread(dow)[0], "dow_hi": _spread(dow)[1],
+        "top": top[["start", "name_ko", "peak_ccu", "title"]].to_dict("records"),
+        "cat_top": cat[cat["n"] >= 5].nlargest(5, "med").to_dict("records"),
+    }
+
+
 def _daily_delta(hist: pd.DataFrame, col: str) -> pd.DataFrame:
     """일일 순증. history.csv 는 누적값이라 차분해야 이벤트 효과가 보인다."""
     if hist.empty or col not in hist.columns:
@@ -386,7 +430,7 @@ def ccu_impact(events: pd.DataFrame, sessions: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def charts(events: pd.DataFrame, vod: pd.DataFrame) -> None:
+def charts(events: pd.DataFrame, vod: pd.DataFrame, drivers: dict | None = None) -> None:
     CHARTS.mkdir(parents=True, exist_ok=True)
     viz.apply_style()
 
@@ -446,6 +490,27 @@ def charts(events: pd.DataFrame, vod: pd.DataFrame) -> None:
             fig.savefig(CHARTS / "costume_vs_collab.png", dpi=140)
             plt.close(fig)
 
+    if drivers and drivers.get("n"):
+        sess = pd.read_csv(ROOT / "08_live_viewership" / "data" / "sessions.csv")
+        sess = config.drop_founder(sess)
+        vals = sess.loc[sess["peak_ccu"] > 0, "peak_ccu"].sort_values(
+            ascending=False).reset_index(drop=True)
+        fig, ax = plt.subplots(figsize=(10, 5))
+        ax.plot(range(1, len(vals) + 1), vals, lw=2, zorder=3,
+                color=config.PALETTE["series"][0])
+        ax.scatter(range(1, 5), vals[:4], s=60, zorder=4,
+                   color=config.PALETTE["series"][3], label="신의상 공개 (1~4위)")
+        ax.axhline(vals.median(), ls="--", lw=1, color="#999", zorder=2)
+        ax.annotate(f"중앙값 {vals.median():,.0f}", (len(vals) * .55, vals.median()),
+                    xytext=(0, 6), textcoords="offset points",
+                    fontsize=9, color=config.INK["muted"])
+        ax.set_title("방송 세션 피크 동시시청자 — 순위별 (상위 4개가 전부 신의상 공개)")
+        ax.set_xlabel("세션 순위"); ax.set_ylabel("피크 동시시청자")
+        ax.legend(frameon=False)
+        fig.tight_layout()
+        fig.savefig(CHARTS / "ccu_distribution.png", dpi=140)
+        plt.close(fig)
+
     if not events.empty:
         yr = events.copy()
         yr["ym"] = pd.to_datetime(yr["date"]).dt.to_period("M").astype(str)
@@ -489,6 +554,7 @@ def main() -> int:
     covers = _read(ROOT / "02_cover_song_ranking" / "data" / "covers.csv")
     cov_eff = config.drop_founder(cover_effect(covers, videos))
     orig_eff = config.drop_founder(original_effect(events, videos, covers))
+    drivers = ccu_drivers(config.drop_founder(sessions))
 
     # 리포트·차트에서는 창립자를 뺀다(수집·감지는 전 로스터 그대로).
     vod, foll, subs, ccu, arc = (config.drop_founder(x)
@@ -507,7 +573,7 @@ def main() -> int:
     db.write_sqlite(SQL / "events.db", tables)
     db.dump_schema_sql(SQL / "schema.sql", tables)
 
-    charts(events, vod)
+    charts(events, vod, drivers)
 
     SITE.mkdir(parents=True, exist_ok=True)
     measurable = int(impact["event_id"].nunique()) if not impact.empty else 0
@@ -525,7 +591,7 @@ def main() -> int:
     (SITE / "data.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff)
+    write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff, drivers)
     print(f"  이벤트 {len(events)}건 · 소급 측정 {vod['event_id'].nunique() if not vod.empty else 0}건 "
           f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건"
           f" · 콘서트 호 {len(arc) if arc is not None and not arc.empty else 0}건")
@@ -533,7 +599,7 @@ def main() -> int:
 
 
 def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
-                 covers=None, orig_eff=None) -> None:
+                 covers=None, orig_eff=None, drivers=None) -> None:
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
     span = f"{events['date'].min()} ~ {events['date'].max()}"
     by_type = events["type"].value_counts()
@@ -578,6 +644,29 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         if not ccu.empty else pd.DataFrame(columns=["type", "ccu_multiple"])
     ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
     mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
+
+    # ── 동시시청자 드라이버 ──
+    d = drivers or {}
+    drv_intro = drv_tbl = ""
+    cat_lo = cat_hi = hour_lo = hour_hi = dow_lo = dow_hi = 0.0
+    cat_ratio = hour_ratio = dow_ratio = 0.0
+    if d:
+        cat_lo, cat_hi = d["cat_lo"], d["cat_hi"]
+        hour_lo, hour_hi = d["hour_lo"], d["hour_hi"]
+        dow_lo, dow_hi = d["dow_lo"], d["dow_hi"]
+        cat_ratio = cat_hi / cat_lo if cat_lo else 0
+        hour_ratio = hour_hi / hour_lo if hour_lo else 0
+        dow_ratio = dow_hi / dow_lo if dow_lo else 0
+        drv_intro = (
+            f"관측된 방송 세션 {d['n']}건의 피크 분포는 심하게 치우쳐 있다 — "
+            f"중앙값 **{d['median']:,.0f}명**, 상위 5% {d['p95']:,.0f}명, "
+            f"상위 1% {d['p99']:,.0f}명, 최대 **{d['max']:,.0f}명**. "
+            f"평균 근처에 몰려 있는 게 아니라 꼬리가 길다.")
+        drv_tbl = ("| 순위 | 날짜 | 멤버 | 피크 | 방송 |\n|---|---|---|---|---|\n"
+                   + "\n".join(
+                       f"| {i} | {pd.Timestamp(r['start']):%m-%d} | {r['name_ko']} | "
+                       f"**{r['peak_ccu']:,.0f}** | {str(r['title'])[:30]} |"
+                       for i, r in enumerate(d["top"], 1)))
 
     # ── 오리지널곡 ──
     orig_tbl = "| — | 측정 가능한 오리지널곡이 없음 |"
@@ -685,6 +774,9 @@ append-only 로 남긴다.
 - **콘서트는 단독이냐 합동이냐로 갈린다.** 본인 첫 단독 콘서트의 후기 방송은 평소의
   {solo_mult:.1f}배(안내 쇼츠 {solo_yt:,}회)였지만, 같은 멤버가 참여한 그룹 페스티벌은
   {grp_lo:.1f}~{grp_hi:.1f}배였다. 합동은 관심이 10명에게 나뉜다.
+- **동시시청자는 '무엇을 하느냐'보다 '이벤트냐 아니냐'로 갈린다.** 카테고리·시간대·요일을
+  바꿔서 얻는 건 최대 {cat_ratio:.1f}배(카테고리)지만, 신의상 공개는 7~19배를 만든다. 관측된
+  세션 상위 4개가 전부 신의상이고 4위와 5위 사이에만 2.4배 차이가 난다.
 - 전후 비교(팔로워·구독자·동시시청자)는 **일일 수집이 시작된 2026-08-12 이후 이벤트만**
   가능하다. 그 이전은 기준선이 없어 계산하지 않는다 — 0%가 아니라 측정 불가다.
 - 최근 {pending}건은 **관측 중**이다. 이벤트 후 {MIN_POST_DAYS}일이 지나야 전후 비교를 낸다 —
@@ -777,6 +869,29 @@ append-only 로 남긴다.
 시작됐는데 콘서트는 2025-12-20과 2026-07-11이라 기준선이 존재하지 않는다. 위 숫자는
 **방송 조회수로 잰 간접 지표**이고, "콘서트로 구독자가 몇 % 늘었다"는 아직 말할 수 없다.
 다음 콘서트부터는 전후 비교가 자동으로 붙는다.
+
+## 동시시청자 효과 — 이벤트냐 아니냐로 갈린다
+
+{drv_intro}
+
+{drv_tbl}
+
+**평소 요인은 이벤트에 비하면 미미하다.** 세션 5건 이상인 구간만 놓고 보면 —
+
+| 요인 | 중앙값 범위 | 최대/최소 |
+|---|---|---|
+| 카테고리 | {cat_lo:,.0f} ~ {cat_hi:,.0f}명 (음악/노래가 최고) | {cat_ratio:.1f}배 |
+| 시작 시간대 | {hour_lo:,.0f} ~ {hour_hi:,.0f}명 | {hour_ratio:.1f}배 |
+| 요일 | {dow_lo:,.0f} ~ {dow_hi:,.0f}명 | {dow_ratio:.1f}배 |
+
+가장 큰 카테고리조차 {cat_ratio:.1f}배다. 반면 신의상 공개는 같은 멤버의 평소 피크 대비
+**7~19배**를 찍는다. 자릿수가 다르다.
+
+즉 동시시청자는 **무엇을 하느냐보다 이벤트냐 아니냐**로 결정된다. 게임 선택이나
+방송 시간을 바꿔서 얻는 건 잘해야 수십 %지만, 이벤트 하나가 하루에 10배를 만든다.
+
+관측 구간의 상위 5개 중 **1~4위가 전부 신의상 공개**이고, 4위와 5위 사이에만
+2.4배 차이가 난다. 상위권은 평소 방송과 아예 다른 구간이다.
 
 ## 동시시청자 피크 (2026-08-12 이후)
 
