@@ -136,6 +136,66 @@ def vod_multiple(events: pd.DataFrame, streams: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+# 콘서트 전후로 관련 방송을 훑는 창(일).
+#
+# 콘서트는 오프라인·유료라 **행사 중에는 방송이 없다.** 그래서 다른 이벤트처럼
+# 기간 안의 방송을 세면 0건이 나온다. 효과는 그 주변에 나타난다 — 선예매·매진
+# 인증·D-3 카운트다운·후기 방송. 이 창이 그 호(arc)를 담는다.
+CONCERT_PRE_DAYS = 7
+CONCERT_POST_DAYS = 7
+
+
+def concert_arc(events: pd.DataFrame, streams: pd.DataFrame,
+                videos: pd.DataFrame) -> pd.DataFrame:
+    """콘서트 전후 관련 방송·영상이 평소보다 몇 배 나왔나."""
+    if streams.empty:
+        return pd.DataFrame()
+    s = streams.copy()
+    s["date"] = pd.to_datetime(s["publish_date"]).dt.date
+    v = videos.copy()
+    if not v.empty:
+        v["date"] = pd.to_datetime(v["published_at"], format="mixed",
+                                   utc=True).dt.tz_convert("Asia/Seoul").dt.date
+
+    rows = []
+    for _, e in events[events["type"] == "콘서트"].iterrows():
+        d0, d1 = e["date"], e["end_date"]
+        lo = d0 - timedelta(days=CONCERT_PRE_DAYS)
+        hi = d1 + timedelta(days=CONCERT_POST_DAYS)
+        keys = _event_keys(e)
+        for name in str(e["members"]).split("|"):
+            mine = s[s["name_ko"] == name]
+            arc = _belongs(mine[(mine["date"] >= lo) & (mine["date"] <= hi)],
+                           keys, "title", "category")
+            if arc.empty:
+                continue
+            base = mine[(mine["date"] >= d0 - timedelta(days=BASELINE_DAYS))
+                        & (mine["date"] <= d1 + timedelta(days=BASELINE_DAYS))]
+            base = base[~base.index.isin(arc.index)]
+            med = base["read_count"].median()
+            if not med or pd.isna(med):
+                continue
+            top = arc.loc[arc["read_count"].idxmax()]
+            yt = pd.DataFrame()
+            if not v.empty:
+                yt = _belongs(v[(v["name_ko"] == name) & (v["date"] >= lo)
+                                & (v["date"] <= hi)], keys, "title", None)
+            rows.append({
+                "event_id": e["event_id"], "date": d0, "title": e["title"],
+                "name_ko": name, "n_streams": int(len(arc)),
+                "peak_stream_views": int(top["read_count"]),
+                "peak_stream_title": str(top["title"])[:40],
+                "baseline_median": float(med),
+                "arc_multiple": round(top["read_count"] / med, 2),
+                "yt_videos": int(len(yt)),
+                "yt_top_views": int(yt["views"].max()) if len(yt) else 0,
+                # 단독/합동은 참여 인원으로 가른다. 유튜브 영상 유무로 가르면
+                # videos.csv 가 멤버당 최근 50개만 담는다는 사정에 결과가 딸려간다.
+                "solo": int(e["n_members"]) == 1,
+            })
+    return pd.DataFrame(rows)
+
+
 def _daily_delta(hist: pd.DataFrame, col: str) -> pd.DataFrame:
     """일일 순증. history.csv 는 누적값이라 차분해야 이벤트 효과가 보인다."""
     if hist.empty or col not in hist.columns:
@@ -324,14 +384,17 @@ def main() -> int:
     foll = before_after(events, h03, "followers", "치지직 팔로워")
     subs = before_after(events, h01, "subscribers", "유튜브 구독자")
     ccu = ccu_impact(events, sessions)
+    videos = _read(ROOT / "01_member_channel_performance" / "data" / "videos.csv")
+    arc = concert_arc(events, streams, videos)
 
     # 리포트·차트에서는 창립자를 뺀다(수집·감지는 전 로스터 그대로).
-    vod, foll, subs, ccu = (config.drop_founder(x) for x in (vod, foll, subs, ccu))
+    vod, foll, subs, ccu, arc = (config.drop_founder(x)
+                                 for x in (vod, foll, subs, ccu, arc))
     impact = pd.concat([foll, subs], ignore_index=True)
 
     DATA.mkdir(parents=True, exist_ok=True)
     for name, df in (("event_vod_multiple", vod), ("event_impact", impact),
-                     ("event_ccu", ccu)):
+                     ("event_ccu", ccu), ("concert_arc", arc)):
         df.to_csv(DATA / f"{name}.csv", index=False, encoding="utf-8-sig")
 
     SQL.mkdir(parents=True, exist_ok=True)
@@ -358,13 +421,14 @@ def main() -> int:
     (SITE / "data.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    write_report(events, vod, impact, ccu)
+    write_report(events, vod, impact, ccu, arc)
     print(f"  이벤트 {len(events)}건 · 소급 측정 {vod['event_id'].nunique() if not vod.empty else 0}건 "
-          f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건")
+          f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건"
+          f" · 콘서트 호 {len(arc) if arc is not None and not arc.empty else 0}건")
     return 0
 
 
-def write_report(events, vod, impact, ccu) -> None:
+def write_report(events, vod, impact, ccu, arc=None) -> None:
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
     span = f"{events['date'].min()} ~ {events['date'].max()}"
     by_type = events["type"].value_counts()
@@ -410,6 +474,22 @@ def write_report(events, vod, impact, ccu) -> None:
     ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
     mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
 
+    arc_tbl, solo_mult, solo_yt, grp_lo, grp_hi = "| — | 데이터 없음 |", 0.0, 0, 0.0, 0.0
+    if arc is not None and not arc.empty:
+        a = arc.sort_values(["date", "arc_multiple"], ascending=[False, False])
+        arc_tbl = ("| 콘서트 | 멤버 | 관련 방송 | 최고 조회수 | 평소 | 배수 |\n"
+                   "|---|---|---|---|---|---|\n" + "\n".join(
+                       f"| {r.date} {str(r.title)[:22]} | {r.name_ko} | {r.n_streams}건 | "
+                       f"{r.peak_stream_views:,} | {r.baseline_median:,.0f} | "
+                       f"**{r.arc_multiple:.2f}배** |" for r in a.itertuples()))
+        solo = a[a["solo"]] if "solo" in a.columns else a.iloc[0:0]
+        if len(solo):
+            solo_mult = float(solo["arc_multiple"].max())
+            solo_yt = int(solo["yt_top_views"].max())
+        grp = a[~a["solo"]] if "solo" in a.columns else a.iloc[0:0]
+        if len(grp):
+            grp_lo, grp_hi = float(grp["arc_multiple"].min()), float(grp["arc_multiple"].max())
+
     costume_tbl = ""
     if not ct.empty and (ct["type"] == "신의상").any():
         c = ct[ct["type"] == "신의상"].nlargest(8, "ccu_multiple")
@@ -451,6 +531,9 @@ append-only 로 남긴다.
   **{cos_lo:.1f}~{cos_hi:.1f}배**(합방은 {col_lo:.1f}~{col_hi:.1f}배), 동시시청자 피크는
   **{ccu_lo:.1f}~{ccu_hi:.1f}배**(같은 기간 나란히 돌던 10인 마인크래프트 합방은
   {mc_lo:.1f}~{mc_hi:.1f}배)였다. 사키하네 후야의 첫 신의상은 38,402명 — 평소 피크의 19배다.
+- **콘서트는 단독이냐 합동이냐로 갈린다.** 본인 첫 단독 콘서트의 후기 방송은 평소의
+  {solo_mult:.1f}배(안내 쇼츠 {solo_yt:,}회)였지만, 같은 멤버가 참여한 그룹 페스티벌은
+  {grp_lo:.1f}~{grp_hi:.1f}배였다. 합동은 관심이 10명에게 나뉜다.
 - 전후 비교(팔로워·구독자·동시시청자)는 **일일 수집이 시작된 2026-08-12 이후 이벤트만**
   가능하다. 그 이전은 기준선이 없어 계산하지 않는다 — 0%가 아니라 측정 불가다.
 - 최근 {pending}건은 **관측 중**이다. 이벤트 후 {MIN_POST_DAYS}일이 지나야 전후 비교를 낸다 —
@@ -478,6 +561,25 @@ append-only 로 남긴다.
 신의상은 **연 몇 회짜리 희소 이벤트**다. 합방은 며칠씩 이어지며 조회수를 꾸준히
 끌어올리는 반면, 신의상은 하루 몇 시간에 평소의 몇 배가 몰린다. 성격이 다른 두
 레버로 봐야 한다 — 합방은 **분량**, 신의상은 **순간 최대치**다.
+
+## 콘서트 효과 — 단독과 합동은 다르다
+
+콘서트는 오프라인·유료라 **행사 중에는 방송이 없다.** 그래서 기간 안을 세면 0건이다.
+효과는 주변에 나타난다 — 선예매·매진 인증·D-3 카운트다운·후기 방송. 콘서트 전후
+{CONCERT_PRE_DAYS}일의 관련 방송을 그 멤버의 평소 방송과 비교했다.
+
+{arc_tbl}
+
+**본인 단독 콘서트가 그룹 합동보다 훨씬 크게 남는다.** 아카네 리제의 첫 단독 콘서트
+후기 방송은 평소의 {solo_mult:.1f}배였고, 콘서트 안내 쇼츠는 **{solo_yt:,}회**로 그 채널
+최상위권이다. 반면 같은 멤버가 참여한 그룹 페스티벌(2025-12-20)의 후기 방송은
+{grp_lo:.1f}~{grp_hi:.1f}배에 그쳤다. 합동 무대는 관심이 10명에게 나뉘지만 단독 콘서트는
+그 멤버에게 몰린다.
+
+⚠ **구독자·팔로워 전후 비교는 두 콘서트 모두 불가능하다.** 일일 축적이 2026-08-12에
+시작됐는데 콘서트는 2025-12-20과 2026-07-11이라 기준선이 존재하지 않는다. 위 숫자는
+**방송 조회수로 잰 간접 지표**이고, "콘서트로 구독자가 몇 % 늘었다"는 아직 말할 수 없다.
+다음 콘서트부터는 전후 비교가 자동으로 붙는다.
 
 ## 동시시청자 피크 (2026-08-12 이후)
 
@@ -513,7 +615,7 @@ append-only 로 남긴다.
 - `data/events.csv` — 감지·등록된 전체 이벤트
 - `data/events_seen.csv` — 처음 감지한 날짜 (append-only 기억)
 - `data/events_manual.csv` — 손으로 등록하는 이벤트 (콘서트·오리지널곡·오프라인)
-- `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv`
+- `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` · `concert_arc.csv`
 - `charts/` · `sql/events.db` · `site/index.html`
 """, encoding="utf-8")
 
