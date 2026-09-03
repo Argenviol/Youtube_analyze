@@ -240,6 +240,62 @@ def cover_effect(covers: pd.DataFrame, videos: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def original_effect(events: pd.DataFrame, videos: pd.DataFrame,
+                    covers: pd.DataFrame) -> pd.DataFrame:
+    """오리지널곡 MV 가 그 멤버의 일반 영상·커버곡보다 몇 배 보나.
+
+    커버와 같은 규율을 쓴다 — 같은 기간, 성숙한 영상만. 다른 점은 곡을 특정할 수
+    있다는 것이다(match 컬럼). 커버는 '그 기간 커버들의 중앙값'이지만 오리지널은
+    **그 곡의 MV 한 편**을 집어서 잰다.
+    """
+    if events.empty or videos.empty:
+        return pd.DataFrame()
+    v = videos.copy()
+    v["date"] = pd.to_datetime(v["published_at"], format="mixed", utc=True) \
+        .dt.tz_convert("Asia/Seoul").dt.date
+    cover_ids = set(covers["video_id"]) if not covers.empty else set()
+    asof = v["date"].max()
+    cut = asof - timedelta(days=COVER_MATURE_DAYS)
+
+    cov = covers.copy()
+    if not cov.empty:
+        cov["date"] = pd.to_datetime(cov["published_at"], format="mixed", utc=True) \
+            .dt.tz_convert("Asia/Seoul").dt.date
+
+    rows = []
+    for _, e in events[events["type"] == "오리지널곡"].iterrows():
+        keys = [k for k in str(e.get("match_keys") or "").split("|") if k]
+        if not keys:
+            continue          # 매칭어가 없으면 어느 영상이 그 곡인지 알 수 없다
+        for name in str(e["members"]).split("|"):
+            mine = v[v["name_ko"] == name]
+            hit = _belongs(mine[mine["date"] <= cut], keys, "title", None)
+            if hit.empty:
+                continue
+            # 티저·홍보 쇼츠가 아니라 MV 본편을 잡는다 — 조회수 최대가 본편이다.
+            mv = hit.loc[hit["views"].idxmax()]
+            normal = mine[(~mine["video_id"].isin(cover_ids))
+                          & (~mine["video_id"].isin(set(hit["video_id"])))
+                          & (mine["date"] <= cut)]
+            if len(normal) < 5:
+                continue
+            nm = normal["views"].median()
+            mine_cov = cov[(cov["name_ko"] == name)
+                           & (cov["date"] >= mine["date"].min())
+                           & (cov["date"] <= cut)] if not cov.empty else pd.DataFrame()
+            cm = mine_cov["views"].median() if len(mine_cov) else None
+            rows.append({
+                "date": e["date"], "title": e["title"], "name_ko": name,
+                "mv_views": int(mv["views"]), "mv_title": str(mv["title"])[:40],
+                "n_related": int(len(hit)),
+                "normal_median": int(nm),
+                "vs_normal": round(mv["views"] / nm, 2),
+                "cover_median": int(cm) if cm and cm == cm else 0,
+                "vs_cover": round(mv["views"] / cm, 2) if cm and cm == cm else None,
+            })
+    return pd.DataFrame(rows)
+
+
 def _daily_delta(hist: pd.DataFrame, col: str) -> pd.DataFrame:
     """일일 순증. history.csv 는 누적값이라 차분해야 이벤트 효과가 보인다."""
     if hist.empty or col not in hist.columns:
@@ -432,6 +488,7 @@ def main() -> int:
     arc = concert_arc(events, streams, videos)
     covers = _read(ROOT / "02_cover_song_ranking" / "data" / "covers.csv")
     cov_eff = config.drop_founder(cover_effect(covers, videos))
+    orig_eff = config.drop_founder(original_effect(events, videos, covers))
 
     # 리포트·차트에서는 창립자를 뺀다(수집·감지는 전 로스터 그대로).
     vod, foll, subs, ccu, arc = (config.drop_founder(x)
@@ -441,7 +498,7 @@ def main() -> int:
     DATA.mkdir(parents=True, exist_ok=True)
     for name, df in (("event_vod_multiple", vod), ("event_impact", impact),
                      ("event_ccu", ccu), ("concert_arc", arc),
-                     ("cover_effect", cov_eff)):
+                     ("cover_effect", cov_eff), ("original_effect", orig_eff)):
         df.to_csv(DATA / f"{name}.csv", index=False, encoding="utf-8-sig")
 
     SQL.mkdir(parents=True, exist_ok=True)
@@ -468,7 +525,7 @@ def main() -> int:
     (SITE / "data.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    write_report(events, vod, impact, ccu, arc, cov_eff, covers)
+    write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff)
     print(f"  이벤트 {len(events)}건 · 소급 측정 {vod['event_id'].nunique() if not vod.empty else 0}건 "
           f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건"
           f" · 콘서트 호 {len(arc) if arc is not None and not arc.empty else 0}건")
@@ -476,7 +533,7 @@ def main() -> int:
 
 
 def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
-                 covers=None) -> None:
+                 covers=None, orig_eff=None) -> None:
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
     span = f"{events['date'].min()} ~ {events['date'].max()}"
     by_type = events["type"].value_counts()
@@ -521,6 +578,25 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         if not ccu.empty else pd.DataFrame(columns=["type", "ccu_multiple"])
     ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
     mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
+
+    # ── 오리지널곡 ──
+    orig_tbl = "| — | 측정 가능한 오리지널곡이 없음 |"
+    o_lo = o_hi = oc_lo = oc_hi = riko_vc = 0.0
+    if orig_eff is not None and not orig_eff.empty:
+        oe = orig_eff.sort_values("vs_normal", ascending=False)
+        o_lo, o_hi = float(oe["vs_normal"].min()), float(oe["vs_normal"].max())
+        vc = oe["vs_cover"].dropna()
+        if len(vc):
+            oc_lo, oc_hi = float(vc.min()), float(vc.max())
+        r = oe[oe["name_ko"] == "유즈하 리코"]["vs_cover"]
+        riko_vc = float(r.iloc[0]) if len(r) and r.iloc[0] == r.iloc[0] else 0.0
+        orig_tbl = ("| 곡 | 멤버 | 공개일 | MV 조회수 | 일반 중앙 | 일반 대비 | 커버 대비 |\n"
+                    "|---|---|---|---|---|---|---|\n" + "\n".join(
+                        f"| {str(r.title).split('「')[-1].rstrip('」')} | {r.name_ko} | "
+                        f"{r.date} | {r.mv_views:,} | {r.normal_median:,} | "
+                        f"**{r.vs_normal:.1f}배** | "
+                        f"{(f'{r.vs_cover:.1f}배' if r.vs_cover == r.vs_cover else '—')} |"
+                        for r in oe.itertuples()))
 
     # ── 커버곡 ──
     cover_tbl, cov_med, riko = "| — | 데이터 없음 |", 0.0, 0.0
@@ -601,6 +677,9 @@ append-only 로 남긴다.
   **{cos_lo:.1f}~{cos_hi:.1f}배**(합방은 {col_lo:.1f}~{col_hi:.1f}배), 동시시청자 피크는
   **{ccu_lo:.1f}~{ccu_hi:.1f}배**(같은 기간 나란히 돌던 10인 마인크래프트 합방은
   {mc_lo:.1f}~{mc_hi:.1f}배)였다. 사키하네 후야의 첫 신의상은 38,402명 — 평소 피크의 19배다.
+- **천장이 가장 높은 건 오리지널곡이다.** MV 가 일반 영상의 {o_lo:.1f}~{o_hi:.1f}배,
+  같은 멤버의 커버곡과 비교해도 {oc_lo:.1f}~{oc_hi:.1f}배다. 다만 잴 수 있는 곡이
+  한 앨범(4곡)뿐이라 **경향이 아니라 사례**로 읽어야 한다.
 - **커버곡은 평소 영상의 {cov_med:.1f}배 본다**(같은 기간·성숙 영상만 비교). 콜라보 커버가
   더 잘 되지는 않는다 — 2026년 기준 솔로와 콜라보의 조회수 중앙값이 같다.
 - **콘서트는 단독이냐 합동이냐로 갈린다.** 본인 첫 단독 콘서트의 후기 방송은 평소의
@@ -633,6 +712,24 @@ append-only 로 남긴다.
 신의상은 **연 몇 회짜리 희소 이벤트**다. 합방은 며칠씩 이어지며 조회수를 꾸준히
 끌어올리는 반면, 신의상은 하루 몇 시간에 평소의 몇 배가 몰린다. 성격이 다른 두
 레버로 봐야 한다 — 합방은 **분량**, 신의상은 **순간 최대치**다.
+
+## 오리지널곡 효과 — 가장 높은 천장
+
+{orig_tbl}
+
+오리지널곡 MV 는 그 멤버의 일반 영상보다 **{o_lo:.1f}~{o_hi:.1f}배** 본다. 같은 멤버의
+커버곡과 비교해도 **{oc_lo:.1f}~{oc_hi:.1f}배**다. 지금까지 잰 이벤트 중 단일 콘텐츠로는
+천장이 가장 높다.
+
+발매는 한 편이 아니라 **묶음으로 굴러간다.** 곡마다 관련 영상이 7~11편 붙는다 —
+티저(2~3일 전) → MV → 홍보 쇼츠 5~6편. 유즈하 리코의 「악당주의보」는 발매 한 달
+뒤에도 댄스 챌린지 쇼츠(8/27·9/1)로 다시 20만 회씩 나왔다.
+
+⚠ **표본은 한 앨범뿐이다.** 잴 수 있는 오리지널곡은 cliché 1st EP 「Colorful Strokes」
+수록곡 4개가 전부다. 나머지 오리지널곡(2023~2026)은 일반 영상 목록이 멤버당 최근
+50개뿐이라 데이터에 없다. **"오리지널곡은 커버의 2배"가 아니라 "이 앨범은 그랬다"**로
+읽어야 한다. 유즈하 리코의 커버 대비 배수({riko_vc:.1f}배)가 유독 큰 것도 곡이 세서가
+아니라 그의 커버 중앙값이 낮은 탓이다(아래 커버곡 절 참고).
 
 ## 커버곡 효과 — 평소 영상의 4배
 
@@ -716,7 +813,7 @@ append-only 로 남긴다.
 - `data/events_seen.csv` — 처음 감지한 날짜 (append-only 기억)
 - `data/events_manual.csv` — 손으로 등록하는 이벤트 (콘서트·오리지널곡·오프라인)
 - `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` ·
-  `concert_arc.csv` · `cover_effect.csv`
+  `concert_arc.csv` · `cover_effect.csv` · `original_effect.csv`
 - `charts/` · `sql/events.db` · `site/index.html`
 """, encoding="utf-8")
 
