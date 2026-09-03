@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-03T03:16:59.413737+00:00",
-    "n_snapshots": 10489,
+    "fetched_at": "2026-09-03T03:27:12.762494+00:00",
+    "n_snapshots": 10500,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-03T03:16:59.413737+00:00"
+      "2026-09-03T03:27:12.762494+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 9509,
-    "n_timepoints": 951,
-    "span_hours": 525.36,
-    "observed_hours": 331.64,
+    "n_snapshots": 9519,
+    "n_timepoints": 952,
+    "span_hours": 525.53,
+    "observed_hours": 331.61,
     "coverage_ratio": 0.631,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 2154,
+    "n_live_rows": 2155,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-03T03:16:59.413737+00:00"
+    "last": "2026-09-03T03:27:12.762494+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 162461,
       "follower_delta": 5720,
-      "follower_per_day": 261.4,
+      "follower_per_day": 261.3,
       "n_sessions": 23,
       "n_live_points": 85,
       "peak_ccu": 38402,
@@ -58,14 +58,14 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 214290,
-      "follower_delta": 4471,
+      "followers": 214293,
+      "follower_delta": 4474,
       "follower_per_day": 204.3,
       "n_sessions": 30,
-      "n_live_points": 199,
+      "n_live_points": 200,
       "peak_ccu": 28071,
-      "avg_ccu": 4111,
-      "ccu_per_1k_followers": 131.0
+      "avg_ccu": 4113,
+      "ccu_per_1k_followers": 130.99
     },
     {
       "rank": 4,
@@ -74,7 +74,7 @@
       "unit": "CLICHE",
       "followers": 212581,
       "follower_delta": 5155,
-      "follower_per_day": 235.5,
+      "follower_per_day": 235.4,
       "n_sessions": 35,
       "n_live_points": 234,
       "peak_ccu": 24385,
@@ -88,7 +88,7 @@
       "unit": "CLICHE",
       "followers": 244978,
       "follower_delta": 3861,
-      "follower_per_day": 176.4,
+      "follower_per_day": 176.3,
       "n_sessions": 35,
       "n_live_points": 245,
       "peak_ccu": 9910,
@@ -100,9 +100,9 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 239111,
-      "follower_delta": 2263,
-      "follower_per_day": 103.4,
+      "followers": 239110,
+      "follower_delta": 2262,
+      "follower_per_day": 103.3,
       "n_sessions": 38,
       "n_live_points": 254,
       "peak_ccu": 9749,
@@ -116,7 +116,7 @@
       "unit": "EVERYS",
       "followers": 305509,
       "follower_delta": 3589,
-      "follower_per_day": 164.0,
+      "follower_per_day": 163.9,
       "n_sessions": 33,
       "n_live_points": 244,
       "peak_ccu": 8655,
@@ -128,8 +128,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 223768,
-      "follower_delta": 4668,
+      "followers": 223769,
+      "follower_delta": 4669,
       "follower_per_day": 213.2,
       "n_sessions": 35,
       "n_live_points": 220,
@@ -144,7 +144,7 @@
       "unit": "CLICHE",
       "followers": 214258,
       "follower_delta": 4923,
-      "follower_per_day": 224.9,
+      "follower_per_day": 224.8,
       "n_sessions": 48,
       "n_live_points": 286,
       "peak_ccu": 6741,
@@ -1383,6 +1383,18 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
+      "start_kst": "2026-09-03 11:25",
+      "observed_min": 61.4,
+      "n_points": 7,
+      "peak_ccu": 4662,
+      "avg_ccu": 3260,
+      "title": "깐시로 깐달걀~~",
+      "category": "마인크래프트"
+    },
+    {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
       "start_kst": "2026-08-29 19:37",
       "observed_min": 244.9,
       "n_points": 25,
@@ -1581,18 +1593,6 @@
       "peak_ccu": 4346,
       "avg_ccu": 3436,
       "title": "프릴은 제거헤드릴수 없음니다",
-      "category": "마인크래프트"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-03 11:25",
-      "observed_min": 51.2,
-      "n_points": 6,
-      "peak_ccu": 4342,
-      "avg_ccu": 3026,
-      "title": "깐시로 깐달걀~~",
       "category": "마인크래프트"
     },
     {
@@ -9388,6 +9388,10 @@
         [
           "2026-09-03 12:16",
           4342
+        ],
+        [
+          "2026-09-03 12:27",
+          4662
         ]
       ]
     },
