@@ -340,6 +340,60 @@ def ccu_drivers(sessions: pd.DataFrame) -> dict:
     }
 
 
+# 키리누키 제목을 이벤트 종류로 분류할 때 쓰는 말.
+CLIP_TOPICS = {
+    "커버·노래": r"커버|cover|노래|가창|불러|라이브|Live",
+    "신의상": r"신의상",
+    "합방·서버": r"합방|콜라보|서버|마인크래프트|마크|봉켓|봉봉",
+    "콘서트": r"콘서트|공연|페스",
+    "게임": r"게임|공포겜|공겜|롤|배그|옵치|이터널",
+}
+
+
+def kirinuki_effect(clips: pd.DataFrame, videos: pd.DataFrame) -> tuple:
+    """팬 클립이 멤버 도달에 얼마나 보태고, 무엇이 클립이 되는가.
+
+    ⚠ clips.csv 는 검색으로 모은 **표본**이다(전수가 아니다). 멤버별 클립 수는
+    실제 생산량이 아니라 검색이 건진 양이고, 인기 클립 쪽으로 치우쳐 있다.
+    그래서 아래 비율은 **상한**으로 읽어야 한다 — 전수라면 더 낮아진다.
+    """
+    if clips.empty or videos.empty:
+        return pd.DataFrame(), {}
+    c, v = clips.copy(), videos.copy()
+    rows = []
+    for m, g in c.groupby("source_member_ko"):
+        own = v[v["name_ko"] == m]
+        if own.empty:
+            continue
+        om = own["views"].median()
+        rows.append({
+            "name_ko": m, "n_clips": int(len(g)),
+            "clip_views_sum": int(g["views"].sum()),
+            "clip_median": int(g["views"].median()),
+            "own_median": int(om),
+            "clip_vs_own": round(g["views"].median() / om, 2) if om else None,
+            "n_channels": int(g["clip_channel_id"].nunique()),
+        })
+    per = pd.DataFrame(rows)
+
+    topics, matched = {}, pd.Series(False, index=c.index)
+    for name, pat in CLIP_TOPICS.items():
+        hit = c["title"].astype(str).str.contains(pat, case=False, na=False)
+        matched |= hit
+        if hit.sum():
+            topics[name] = {"n": int(hit.sum()), "share": float(hit.mean()),
+                            "median_views": float(c.loc[hit, "views"].median())}
+    ch = c.groupby("clip_channel_title")["views"].sum().sort_values(ascending=False)
+    stats = {
+        "n_clips": int(len(c)), "n_channels": int(c["clip_channel_id"].nunique()),
+        "topics": topics, "unmatched_share": float((~matched).mean()),
+        "top3_share": float(ch.head(3).sum() / ch.sum()) if ch.sum() else 0.0,
+        "top10_share": float(ch.head(10).sum() / ch.sum()) if ch.sum() else 0.0,
+        "median_ratio": float(per["clip_vs_own"].median()) if len(per) else 0.0,
+    }
+    return per, stats
+
+
 def _daily_delta(hist: pd.DataFrame, col: str) -> pd.DataFrame:
     """일일 순증. history.csv 는 누적값이라 차분해야 이벤트 효과가 보인다."""
     if hist.empty or col not in hist.columns:
@@ -555,6 +609,10 @@ def main() -> int:
     cov_eff = config.drop_founder(cover_effect(covers, videos))
     orig_eff = config.drop_founder(original_effect(events, videos, covers))
     drivers = ccu_drivers(config.drop_founder(sessions))
+    clips = config.drop_founder(
+        _read(ROOT / "04_kirinuki_ecosystem" / "data" / "clips.csv"),
+        col="source_member_ko")
+    kiri, kiri_stats = kirinuki_effect(clips, videos)
 
     # 리포트·차트에서는 창립자를 뺀다(수집·감지는 전 로스터 그대로).
     vod, foll, subs, ccu, arc = (config.drop_founder(x)
@@ -564,7 +622,8 @@ def main() -> int:
     DATA.mkdir(parents=True, exist_ok=True)
     for name, df in (("event_vod_multiple", vod), ("event_impact", impact),
                      ("event_ccu", ccu), ("concert_arc", arc),
-                     ("cover_effect", cov_eff), ("original_effect", orig_eff)):
+                     ("cover_effect", cov_eff), ("original_effect", orig_eff),
+                     ("kirinuki_effect", kiri)):
         df.to_csv(DATA / f"{name}.csv", index=False, encoding="utf-8-sig")
 
     SQL.mkdir(parents=True, exist_ok=True)
@@ -591,7 +650,8 @@ def main() -> int:
     (SITE / "data.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff, drivers)
+    write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff,
+                 drivers, kiri, kiri_stats)
     print(f"  이벤트 {len(events)}건 · 소급 측정 {vod['event_id'].nunique() if not vod.empty else 0}건 "
           f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건"
           f" · 콘서트 호 {len(arc) if arc is not None and not arc.empty else 0}건")
@@ -599,7 +659,8 @@ def main() -> int:
 
 
 def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
-                 covers=None, orig_eff=None, drivers=None) -> None:
+                 covers=None, orig_eff=None, drivers=None, kiri=None,
+                 kiri_stats=None) -> None:
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
     span = f"{events['date'].min()} ~ {events['date'].max()}"
     by_type = events["type"].value_counts()
@@ -644,6 +705,31 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         if not ccu.empty else pd.DataFrame(columns=["type", "ccu_multiple"])
     ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
     mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
+
+    # ── 키리누키 ──
+    ks = kiri_stats or {}
+    kiri_tbl = topic_tbl = ""
+    kiri_ratio = kiri_unmatched = cover_clip_share = top3 = top10 = 0.0
+    kiri_n = kiri_ch = kiri_lo = kiri_hi = 0
+    if ks and kiri is not None and not kiri.empty:
+        k = kiri.sort_values("clip_views_sum", ascending=False)
+        kiri_n, kiri_ch = ks["n_clips"], ks["n_channels"]
+        kiri_lo, kiri_hi = int(k["n_clips"].min()), int(k["n_clips"].max())
+        kiri_ratio, kiri_unmatched = ks["median_ratio"], ks["unmatched_share"]
+        top3, top10 = ks["top3_share"], ks["top10_share"]
+        cover_clip_share = ks["topics"].get("커버·노래", {}).get("share", 0.0)
+        kiri_tbl = ("| 멤버 | 클립 | 클립 총조회 | 클립 중앙 | 본인 영상 중앙 | 비율 | 채널 |\n"
+                    "|---|---|---|---|---|---|---|\n" + "\n".join(
+                        f"| {r.name_ko} | {r.n_clips}편 | {r.clip_views_sum:,} | "
+                        f"{r.clip_median:,} | {r.own_median:,} | "
+                        f"{r.clip_vs_own:.2f}배 | {r.n_channels}개 |"
+                        for r in k.itertuples()))
+        topic_tbl = ("| 주제 | 클립 수 | 비중 | 조회수 중앙값 |\n|---|---|---|---|\n"
+                     + "\n".join(
+                         f"| {n} | {t['n']}편 | {t['share']:.1%} | {t['median_views']:,.0f} |"
+                         for n, t in sorted(ks["topics"].items(),
+                                            key=lambda x: -x[1]["n"]))
+                     + f"\n| **어느 것도 아님** | — | **{kiri_unmatched:.1%}** | — |")
 
     # ── 동시시청자 드라이버 ──
     d = drivers or {}
@@ -774,6 +860,10 @@ append-only 로 남긴다.
 - **콘서트는 단독이냐 합동이냐로 갈린다.** 본인 첫 단독 콘서트의 후기 방송은 평소의
   {solo_mult:.1f}배(안내 쇼츠 {solo_yt:,}회)였지만, 같은 멤버가 참여한 그룹 페스티벌은
   {grp_lo:.1f}~{grp_hi:.1f}배였다. 합동은 관심이 10명에게 나뉜다.
+- **키리누키는 유일하게 기획할 수 없는 이벤트다.** 클립 표본의 {kiri_unmatched:.0%}가 어떤
+  이벤트 키워드에도 안 걸린다 — 클립이 되는 건 기획이 아니라 방송 중 우연한 순간이다.
+  개별 클립은 본인 영상의 {kiri_ratio:.0%} 수준이지만 공식 채널 밖 도달이고,
+  상위 3개 채널이 조회수의 {top3:.0%}를 가져간다.
 - **동시시청자는 '무엇을 하느냐'보다 '이벤트냐 아니냐'로 갈린다.** 카테고리·시간대·요일을
   바꿔서 얻는 건 최대 {cat_ratio:.1f}배(카테고리)지만, 신의상 공개는 7~19배를 만든다. 관측된
   세션 상위 4개가 전부 신의상이고 4위와 5위 사이에만 2.4배 차이가 난다.
@@ -870,6 +960,39 @@ append-only 로 남긴다.
 **방송 조회수로 잰 간접 지표**이고, "콘서트로 구독자가 몇 % 늘었다"는 아직 말할 수 없다.
 다음 콘서트부터는 전후 비교가 자동으로 붙는다.
 
+## 키리누키 효과 — 유일하게 기획할 수 없는 이벤트
+
+{kiri_tbl}
+
+**클립 하나는 작지만 수가 많고, 공식 채널 밖에 있다.** 클립 조회수 중앙값은 그 멤버
+영상의 **{kiri_ratio:.0%}** 수준이다(멤버별로 2%~67%로 편차가 크다 — 사키하네 후야가
+0.02배로 최저인 건 2025-09 데뷔라 클립 생태계가 아직 얇기 때문이고, 텐코 시부키가
+0.67배로 최고인 건 역대 1위 클립을 포함한 소수의 큰 클립이 끌어올린 결과다). 대신 멤버당 {kiri_lo}~{kiri_hi}편이 {kiri_ch}개 채널에서
+나오고, 이건 전부 **본인이 올리지 않은 도달**이다.
+
+### 무엇이 클립이 되나 — 이벤트가 아니라 순간이다
+
+{topic_tbl}
+
+여기가 다른 이벤트와 갈리는 지점이다. 표본 {kiri_n}건 중 **{kiri_unmatched:.0%}가 어떤
+이벤트 키워드에도 걸리지 않는다.** 상위 클립 제목이 「말 실수한 유니」·「하이요 얼굴
+공개 ㄷㄷ」·「힘드신군뇨」처럼 **방송 중 우연한 순간**이다. 커버·노래만 예외적으로
+{cover_clip_share:.0%}를 차지하고, 실제로 역대 1위 클립도 커버 라이브다.
+
+오리지널곡·신의상·콘서트는 **기획해서 만들 수 있다.** 키리누키는 그럴 수 없다 —
+날짜를 잡을 수도, 무엇이 클립이 될지 고를 수도 없다. 지금까지 정리한 이벤트 중
+**유일하게 통제 밖에 있는 레버**다.
+
+### 생태계는 소수 채널이 끈다
+
+클립 {kiri_n}건이 {kiri_ch}개 채널에서 나오는데, **상위 3개 채널이 조회수의
+{top3:.0%}, 상위 10개가 {top10:.0%}**를 가져간다. 2차창작이 넓게 퍼져 있다기보다
+몇 개의 전문 채널이 생태계를 끌고 간다.
+
+⚠ `clips.csv` 는 검색으로 모은 **표본**이지 전수가 아니다. 멤버별 클립 수는 실제
+생산량이 아니라 검색이 건진 양이고, 인기 클립 쪽으로 치우쳐 있다. 위 비율은
+**상한**으로 읽어야 한다 — 전수라면 더 낮아진다.
+
 ## 동시시청자 효과 — 이벤트냐 아니냐로 갈린다
 
 {drv_intro}
@@ -928,7 +1051,7 @@ append-only 로 남긴다.
 - `data/events_seen.csv` — 처음 감지한 날짜 (append-only 기억)
 - `data/events_manual.csv` — 손으로 등록하는 이벤트 (콘서트·오리지널곡·오프라인)
 - `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` ·
-  `concert_arc.csv` · `cover_effect.csv` · `original_effect.csv`
+  `concert_arc.csv` · `cover_effect.csv` · `original_effect.csv` · `kirinuki_effect.csv`
 - `charts/` · `sql/events.db` · `site/index.html`
 """, encoding="utf-8")
 
