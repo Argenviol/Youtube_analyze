@@ -597,6 +597,73 @@ def competitor_effect(hist: pd.DataFrame, videos: pd.DataFrame,
     return df, stats
 
 
+HOYO_RE = r"원신|스타레일|젠레스|젠존제|붕괴|Genshin|Star Rail|Zenless|HoYo"
+HOYO_MIN_STREAMS = 3      # 이보다 적으면 멤버별 배수를 내지 않는다
+
+
+def hoyo_effect(chars: pd.DataFrame, streams: pd.DataFrame) -> tuple:
+    """두 질문. (1) 게임사의 공식 푸시가 유저 언급으로 이어지는가.
+    (2) 스텔라이브 멤버가 호요버스 게임을 방송하면 평소보다 더 보나.
+
+    10은 원래 스텔라이브와 다른 도메인이다. 접점은 방송 카테고리뿐이라 그것만 잰다.
+    """
+    stats: dict = {}
+    # ── (1) 공식 푸시 vs 언급 ──
+    if not chars.empty:
+        m = chars[chars["matchable"] == True].copy()  # noqa: E712
+        stats["n_chars"] = int(len(m))
+        stats["mentioned_share"] = float((m["mention_count"] > 0).mean())
+        stats["corr_push"] = float(m["push_rank"].corr(m["mention_rate_per_10k"]))
+        stats["corr_recency"] = float(pd.Series(m["release_unix"]).corr(m["mention_rate_per_10k"]))
+        r = m.groupby("rank")["mention_count"].agg(["size", "median", "mean"])
+        stats["rarity"] = {int(k): {"n": int(v["size"]), "med": float(v["median"]), "mean": float(v["mean"])}
+                           for k, v in r.iterrows()}
+        top = m.nlargest(8, "mention_count")
+        stats["top"] = [{"game": t["name_ko_game"], "name": t["name_ko"], "rank": int(t["rank"]),
+                         "release": str(t["release_date"])[:10], "mentions": int(t["mention_count"]),
+                         "push": int(t["push_rank"]) if t["push_rank"] == t["push_rank"] else None,
+                         "sent": float(t["sentiment_vs_baseline"]) if t["sentiment_vs_baseline"] == t["sentiment_vs_baseline"] else None}
+                        for _, t in top.iterrows()]
+        pushed = m.nsmallest(5, "push_rank")
+        stats["pushed"] = [{"name": t["name_ko"], "push": int(t["push_rank"]), "mentions": int(t["mention_count"]),
+                            "sent": float(t["sentiment_vs_baseline"]) if t["sentiment_vs_baseline"] == t["sentiment_vs_baseline"] else None}
+                           for _, t in pushed.iterrows()]
+        stats["top_median_push"] = float(top["push_rank"].median())
+        stats["pushed_median_mentions"] = float(pushed["mention_count"].median())
+        stats["top_median_mentions"] = float(top["mention_count"].median())
+
+    # ── (2) 스텔라이브 접점 ──
+    rows = []
+    if not streams.empty:
+        st = streams.copy(); st["date"] = pd.to_datetime(st["publish_date"]).dt.date
+        is_h = (st["category"].astype(str).str.contains(HOYO_RE, case=False, na=False)
+                | st["title"].astype(str).str.contains(HOYO_RE, case=False, na=False))
+        st["is_hoyo"] = is_h
+        st["is_ad"] = st["title"].astype(str).str.contains(r"\[광고\]|광고", na=False)
+        stats["hoyo_streams"] = int(is_h.sum()); stats["all_streams"] = int(len(st))
+        for name, g in st.groupby("name_ko"):
+            hs = g[g["is_hoyo"]]
+            if len(hs) < HOYO_MIN_STREAMS:
+                continue
+            lo = hs["date"].min() - timedelta(days=BASELINE_DAYS)
+            hi = hs["date"].max() + timedelta(days=BASELINE_DAYS)
+            base = g[(~g["is_hoyo"]) & (g["date"] >= lo) & (g["date"] <= hi)]
+            if len(base) < 5:
+                continue
+            bm = base["read_count"].median()
+            ad, org = hs[hs["is_ad"]], hs[~hs["is_ad"]]
+            rows.append({
+                "name_ko": name, "n_hoyo": int(len(hs)),
+                "games": "·".join(sorted({c for c in hs["category"].astype(str) if c != "talk"})) or "talk",
+                "hoyo_median": int(hs["read_count"].median()), "base_median": int(bm),
+                "multiple": round(hs["read_count"].median() / bm, 2),
+                "n_ad": int(len(ad)),
+                "ad_multiple": round(ad["read_count"].median() / bm, 2) if len(ad) else None,
+                "organic_multiple": round(org["read_count"].median() / bm, 2) if len(org) else None,
+            })
+    return pd.DataFrame(rows), stats
+
+
 def _daily_delta(hist: pd.DataFrame, col: str) -> pd.DataFrame:
     """일일 순증. history.csv 는 누적값이라 차분해야 이벤트 효과가 보인다."""
     if hist.empty or col not in hist.columns:
@@ -821,6 +888,9 @@ def main() -> int:
     sent_m = config.drop_founder(
         _read(ROOT / "05_comment_sentiment" / "data" / "sentiment_metrics.csv"))
     cmt, cmt_stats = comment_effect(labeled, sent_m, h03)
+    hoyo, hoyo_stats = hoyo_effect(
+        _read(ROOT / "10_hoyoverse" / "data" / "character_metrics.csv"),
+        config.drop_founder(streams))
     comp, comp_stats = competitor_effect(
         _read(ROOT / "06_competitor_comparison" / "data" / "history.csv"),
         _read(ROOT / "06_competitor_comparison" / "data" / "videos.csv"),
@@ -845,7 +915,7 @@ def main() -> int:
                      ("cover_effect", cov_eff), ("original_effect", orig_eff),
                      ("kirinuki_effect", kiri), ("comment_effect", cmt),
                      ("commerce_effect", com), ("dart_effect", dart),
-                     ("competitor_effect", comp)):
+                     ("competitor_effect", comp), ("hoyo_effect", hoyo)):
         df.to_csv(DATA / f"{name}.csv", index=False, encoding="utf-8-sig")
 
     SQL.mkdir(parents=True, exist_ok=True)
@@ -874,7 +944,7 @@ def main() -> int:
 
     write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff,
                  drivers, kiri, kiri_stats, cmt, cmt_stats, com, com_stats,
-                 dart, dart_stats, comp, comp_stats)
+                 dart, dart_stats, comp, comp_stats, hoyo, hoyo_stats)
     print(f"  이벤트 {len(events)}건 · 소급 측정 {vod['event_id'].nunique() if not vod.empty else 0}건 "
           f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건"
           f" · 콘서트 호 {len(arc) if arc is not None and not arc.empty else 0}건")
@@ -885,7 +955,7 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
                  covers=None, orig_eff=None, drivers=None, kiri=None,
                  kiri_stats=None, cmt=None, cmt_stats=None, com=None,
                  com_stats=None, dart=None, dart_stats=None, comp=None,
-                 comp_stats=None) -> None:
+                 comp_stats=None, hoyo=None, hoyo_stats=None) -> None:
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
     span = f"{events['date'].min()} ~ {events['date'].max()}"
     by_type = events["type"].value_counts()
@@ -930,6 +1000,53 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         if not ccu.empty else pd.DataFrame(columns=["type", "ccu_multiple"])
     ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
     mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
+
+    # ── 호요버스 ──
+    hs_ = hoyo_stats or {}
+    hy_n = hs_.get("n_chars", 0); hy_mentioned = hs_.get("mentioned_share", 0.0)
+    hy_corr_push = hs_.get("corr_push", 0.0); hy_corr_recency = hs_.get("corr_recency", 0.0)
+    hy_top_push = hs_.get("top_median_push", 0.0)
+    hy_pushed_mentions = hs_.get("pushed_median_mentions", 0.0)
+    hy_top_mentions = hs_.get("top_median_mentions", 0.0)
+    hy_streams = hs_.get("hoyo_streams", 0); hy_all = hs_.get("all_streams", 0)
+    hy_share = hy_streams / hy_all if hy_all else 0.0
+    hy_rarity_tbl = "\n".join(
+        f"| {k}성 | {v['n']}명 | {v['med']:.0f} | {v['mean']:.1f} |"
+        for k, v in sorted((hs_.get("rarity") or {}).items(), reverse=True)) or "| — | | | |"
+    hy_top_tbl = ""
+    if hs_.get("top"):
+        hy_top_tbl = ("| 게임 | 캐릭터 | 출시 | 언급 | 푸시 순위 | 감성(게임 평균 대비) |\n|---|---|---|---|---|---|\n"
+                      + "\n".join(
+                          f"| {t['game']} | {t['name']} | {t['release']} | **{t['mentions']}** | "
+                          f"{t['push'] if t['push'] is not None else '—'}위 | "
+                          f"{(f'{t[chr(115)+chr(101)+chr(110)+chr(116)]:+.2f}' if t['sent'] is not None else '—')} |"
+                          for t in hs_["top"]))
+    hy_member_tbl = hy_member_line = ""
+    if hoyo is not None and not hoyo.empty:
+        h = hoyo.sort_values("multiple", ascending=False)
+        hy_member_tbl = ("| 멤버 | 게임 | 방송 | 호요 방송 중앙 | 평소 중앙 | 배수 | [광고] | 광고 배수 | 비광고 배수 |\n"
+                         "|---|---|---|---|---|---|---|---|---|\n" + "\n".join(
+                             f"| {r.name_ko} | {r.games} | {r.n_hoyo}회 | {r.hoyo_median:,} | {r.base_median:,} | "
+                             f"**{r.multiple:.2f}배** | {r.n_ad}회 | "
+                             f"{(f'{r.ad_multiple:.2f}배' if r.ad_multiple == r.ad_multiple and r.ad_multiple is not None else '—')} | "
+                             f"{(f'{r.organic_multiple:.2f}배' if r.organic_multiple == r.organic_multiple and r.organic_multiple is not None else '—')} |"
+                             for r in h.itertuples()))
+        best = h.iloc[0]
+        others = h.iloc[1:]
+        hy_member_line = (
+            f"방송 {HOYO_MIN_STREAMS}회 이상인 멤버 {len(h)}명 중 **{best['name_ko']}만 평소보다 확실히 더 본다**"
+            f"({best['multiple']:.2f}배, {best['games']} {best['n_hoyo']}회). 나머지는 "
+            + ("·".join(f"{r.name_ko} {r.multiple:.2f}배" for r in others.itertuples()) if len(others) else "없음")
+            + "로 평소와 같거나 낮다. 게임 자체가 시청자를 끌지는 않고, 그 멤버의 주력 콘텐츠일 때만 세다.")
+        # [광고] 방송이 같은 게임의 비광고 방송보다 덜 보이는지 — 둘 다 있는 멤버만
+        both = h[h["ad_multiple"].notna() & h["organic_multiple"].notna() & (h["n_ad"] >= 2)]
+        if len(both):
+            lower = both[both["ad_multiple"] < both["organic_multiple"]]
+            hy_member_line += (
+                f" 또 하나 — **[광고] 방송은 같은 게임의 비광고 방송보다 덜 본다.** 광고 2회 이상인 "
+                f"{len(both)}명 중 {len(lower)}명이 그렇고("
+                + "·".join(f"{r.name_ko} {r.ad_multiple:.2f}배 vs {r.organic_multiple:.2f}배" for r in lower.itertuples())
+                + "), 광고 방송은 게임을 '하는' 게 아니라 '보여주는' 방송이라 시청자가 덜 붙는 것으로 읽힌다.")
 
     # ── 경쟁사 비교 ──
     cs2 = comp_stats or {}
@@ -1220,6 +1337,9 @@ append-only 로 남긴다.
 - **콘서트는 단독이냐 합동이냐로 갈린다.** 본인 첫 단독 콘서트의 후기 방송은 평소의
   {solo_mult:.1f}배(안내 쇼츠 {solo_yt:,}회)였지만, 같은 멤버가 참여한 그룹 페스티벌은
   {grp_lo:.1f}~{grp_hi:.1f}배였다. 합동은 관심이 10명에게 나뉜다.
+- **게임사의 공식 푸시는 유저 언급을 만들지 못한다**(상관 {hy_corr_push:+.2f}). 희귀도(5성)는
+  효과가 있지만 푸시 순서는 없고, 인기는 구작 5성에 쌓여 있다. 스텔라이브 접점은 방송의
+  {hy_share:.1%}뿐이며, 게임이 시청자를 끄는 게 아니라 그 멤버의 주력일 때만 평소를 넘는다.
 - **같은 {cp_days}일에 스텔라이브만 전원이 올랐다.** 구독자 {cp_stel_gain:+,}명으로 11분의 1 규모의
   홀로라이브({cp_holo_gain:+,}명)와 같은 수를 더했고, 이세계아이돌은 전원 감소했다. 커버가 내는
   배수는 그룹이 같은데 스텔라이브가 커버 비중이 가장 높다 — 레버가 아니라 당기는 빈도가 다르다.
@@ -1334,6 +1454,42 @@ append-only 로 남긴다.
 시작됐는데 콘서트는 2025-12-20과 2026-07-11이라 기준선이 존재하지 않는다. 위 숫자는
 **방송 조회수로 잰 간접 지표**이고, "콘서트로 구독자가 몇 % 늘었다"는 아직 말할 수 없다.
 다음 콘서트부터는 전후 비교가 자동으로 붙는다.
+
+## 호요버스 캐릭터 인기도 효과 — 공식 푸시는 효과가 없고, 스텔라이브 접점은 한 명이다
+
+10은 원래 스텔라이브와 다른 도메인(가챠 게임)이다. 두 가지만 묻는다 — 게임사가 미는
+캐릭터가 실제로 이야기되는가, 그리고 스텔라이브 멤버가 이 게임을 방송하면 더 보는가.
+
+### ① 공식 푸시 → 유저 언급: 상관 {hy_corr_push:+.2f}
+
+매칭 가능한 캐릭터 {hy_n}명 중 {hy_mentioned:.0%}만 리뷰에 한 번이라도 언급된다.
+공식 푸시 순위(5성·최신순)와 언급률의 상관은 **{hy_corr_push:+.2f}** — 없다. 출시 최신순과의
+상관도 {hy_corr_recency:+.2f}로 약하다.
+
+| 구분 | 캐릭터 수 | 언급 중앙값 | 언급 평균 |
+|---|---|---|---|
+{hy_rarity_tbl}
+
+**희귀도는 효과가 있고, 푸시 순서는 없다.** 5성은 4성보다 확실히 더 이야기되지만,
+5성 안에서 "얼마나 최근에 밀었나"는 언급을 만들지 못한다.
+
+{hy_top_tbl}
+
+언급 상위 8명의 푸시 순위 중앙값은 **{hy_top_push:.0f}위**(낮을수록 강한 푸시)이고 출시는
+대부분 1~2년 전이다. 반대로 지금 가장 세게 미는 5명의 언급 중앙값은 **{hy_pushed_mentions:.0f}건**
+(상위 8명은 {hy_top_mentions:.0f}건)이며 감성은 게임 평균보다 낮은 쪽이 많다. **인기는 구작
+5성에 쌓여 있고, 신작 푸시는 언급을 만들지 못한 채 불만만 만든다.**
+
+### ② 스텔라이브 접점 — 방송 {hy_streams}건 / {hy_all}건 ({hy_share:.1%})
+
+{hy_member_tbl}
+
+{hy_member_line}
+
+⚠ **언급량은 인기가 아니라 화제성이다.** 리뷰는 불만을 쓰러 오는 곳이라 언급이 많은
+캐릭터가 사랑받는 캐릭터가 아닐 수 있다(감성 열이 그걸 보여준다). Google Trends 는
+매 호출 429 로 실패해 설계에서 뺐다(10 참고). 멤버별 배수는 {HOYO_MIN_STREAMS}회 미만이면
+내지 않았고, [광고] 표시 방송은 따로 셌다.
 
 ## 경쟁사 비교 효과 — 같은 21일, 스텔라이브만 전원이 올랐다
 
@@ -1569,7 +1725,8 @@ append-only 로 남긴다.
 - `data/events_manual.csv` — 손으로 등록하는 이벤트 (콘서트·오리지널곡·오프라인)
 - `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` ·
   `concert_arc.csv` · `cover_effect.csv` · `original_effect.csv` · `kirinuki_effect.csv` ·
-  `comment_effect.csv` · `commerce_effect.csv` · `dart_effect.csv` · `competitor_effect.csv`
+  `comment_effect.csv` · `commerce_effect.csv` · `dart_effect.csv` · `competitor_effect.csv` ·
+  `hoyo_effect.csv`
 - `charts/` · `sql/events.db` · `site/index.html`
 """, encoding="utf-8")
 
