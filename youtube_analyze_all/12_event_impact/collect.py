@@ -237,6 +237,10 @@ def _merge_overlapping(events: list[dict]) -> list[dict]:
         keys = sorted(set(m["_keys"]), key=lambda k: (-k[1], -len(k[0])))
         m["title"] = " · ".join(k[0] for k in keys[:2])
         m["aliases"] = "|".join(k[0] for k in keys[2:])
+        # 표시용 제목과 별개로, **감지 단계에서 실제로 매칭된 키**만 남긴다.
+        # 이름 보강(name_from_candidates)이 붙이는 말은 이 이벤트의 방송에서 나온
+        # 것이 아닐 수 있다 — 겹쳐 돌던 다른 이벤트의 단어일 수 있다.
+        m["match_keys"] = "|".join(k[0] for k in keys)
         m["streak_days"] = _longest_streak(m["_dates"])
         del m["_keys"], m["_dates"], m["_top"]
     return merged
@@ -296,7 +300,8 @@ def detect_series_candidates(streams: pd.DataFrame) -> list[dict]:
     return sorted(best.values(), key=lambda c: (-c["n_members"], c["date"]))
 
 
-def name_from_candidates(events: list[dict], candidates: list[dict]) -> None:
+def name_from_candidates(events: list[dict], candidates: list[dict],
+                         manual: list[dict] | None = None) -> None:
     """감지된 이벤트에 시리즈 이름을 붙인다.
 
     같은 날 4명 기준으로는 카테고리 이름('마인크래프트')만 남는 경우가 많다.
@@ -304,8 +309,15 @@ def name_from_candidates(events: list[dict], candidates: list[dict]) -> None:
     넓은 창 신호는 이벤트를 **만들기엔** 정밀도가 부족하지만, 이미 확정된
     이벤트에 **이름을 붙이는 데는** 안전하다 — 없는 이벤트를 만들지 않는다.
     """
+    manual = manual or []
     for e in events:
         e_mem = set(e["members"].split("|"))
+        # 사람이 이미 이름 붙인 이벤트와 기간이 겹치면 보강하지 않는다. 겹친
+        # 구간에서 나온 단어는 그쪽 이벤트의 것일 수 있다 — 실제로 8/29 마인크래프트
+        # 합방이 같은 기간 신의상 릴레이의 '휴가'를 이름으로 가져왔다.
+        if any(e["date"] <= m["end_date"] and m["date"] <= e["end_date"]
+               for m in manual):
+            continue
         hits = []
         for c in candidates:
             if c.get("doc_freq") is None:      # 연속일 미달로 내려온 건 이름이 아니다
@@ -354,6 +366,9 @@ def load_manual() -> list[dict]:
             "members": members, "n_members": len(members.split("|")),
             "n_days": (end - d).days + 1, "signal": "수동",
             "source": "수동", "note": r.get("note", ""),
+            # 긴 제목은 방송 제목과 그대로 일치하지 않는다. match 컬럼에 실제
+            # 방송 제목에 나타나는 말을 적어 두면 그걸로 귀속한다.
+            "match_keys": str(r.get("match", "") or ""),
         })
     return out
 
@@ -372,13 +387,14 @@ def main() -> int:
         print("  ✗ 03·02의 수집 데이터가 없다. 그 프로젝트를 먼저 돌려야 한다.")
         return 1
 
+    manual = load_manual()
     streams = pd.read_csv(streams_p)
     detected = detect_collabs(streams)
     collabs = [c for c in detected if c["streak_days"] >= MIN_CONSECUTIVE_DAYS]
     short = [c for c in detected if c["streak_days"] < MIN_CONSECUTIVE_DAYS]
     candidates = detect_series_candidates(streams)
     # 하루짜리 합방은 이벤트가 아니라 후보다(대규모 컨텐츠 기준 미달).
-    name_from_candidates(collabs, candidates)
+    name_from_candidates(collabs, candidates, manual)
     for c in short:
         candidates.append({"title": c["title"], "date": c["date"],
                            "end_date": c["end_date"], "n_members": c["n_members"],
@@ -387,7 +403,6 @@ def main() -> int:
     pd.DataFrame(candidates).to_csv(DATA / "event_candidates.csv",
                                     index=False, encoding="utf-8-sig")
     releases = detect_releases(pd.read_csv(covers_p))
-    manual = load_manual()
 
     auto = collabs + releases
     for e in auto:

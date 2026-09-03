@@ -153,18 +153,39 @@ def before_after(events: pd.DataFrame, hist: pd.DataFrame, col: str,
     return pd.DataFrame(rows)
 
 
+# 동시시청자로 효과를 잴 수 있는 이벤트 종류.
+#
+# 곡 발매는 유튜브 업로드지 방송이 아니다. 그런데 발매일에 그 멤버가 방송을 했다면
+# 그 방송의 피크가 곡의 효과로 잡힌다. 실제로 8/31 사키하네 후야 커버가 '평소 대비
+# 18.4배'로 나왔는데, 그 피크(38,402)는 같은 날 돌던 10인 마인크래프트 합방의 것이었다.
+# 곡의 효과는 조회수·구독자로 재고, 동시시청자는 방송형 이벤트에만 붙인다.
+CCU_EVENT_TYPES = {"합방", "콘서트", "신의상"}
+
+
 def ccu_impact(events: pd.DataFrame, sessions: pd.DataFrame) -> pd.DataFrame:
     """이벤트 기간 동시시청자 피크 vs 그 멤버의 평소 피크 중앙값."""
     if sessions.empty:
         return pd.DataFrame()
+    events = events[events["type"].isin(CCU_EVENT_TYPES)]
     s = sessions.copy()
     s["date"] = pd.to_datetime(s["start_kst"]).dt.date
     rows = []
     for _, e in events.iterrows():
         d0, d1 = e["date"], e["end_date"]
+        # 기간이 겹치는 다른 이벤트의 방송을 이 이벤트의 효과로 세면 안 된다.
+        # 8/29~9/3 마인크래프트 합방과 8/30~9/2 신의상 릴레이가 겹쳐서, 기간만으로
+        # 고르면 신의상 공개의 38,237명이 마인크래프트 합방의 성과로 잡혔다.
+        # 이벤트 이름이 방송 제목이나 카테고리에 실제로 나타난 세션만 센다.
+        # 표시 제목이 아니라 감지·수동 지정된 매칭어를 쓴다.
+        raw = str(e.get("match_keys") or "") or str(e["title"])
+        keys = [k.strip() for k in raw.replace("·", "|").split("|") if k.strip()]
         for name in str(e["members"]).split("|"):
             mine = s[s["name_ko"] == name]
-            during = mine[(mine["date"] >= d0) & (mine["date"] <= d1)]
+            in_span = mine[(mine["date"] >= d0) & (mine["date"] <= d1)]
+            hit = in_span.apply(
+                lambda r: any(k and (k in str(r["title"]) or k == str(r["category"]))
+                              for k in keys), axis=1)
+            during = in_span[hit] if len(in_span) else in_span
             other = mine[~((mine["date"] >= d0) & (mine["date"] <= d1))]
             if during.empty or other.empty:
                 continue
@@ -240,6 +261,11 @@ def main() -> int:
     h01 = _read(ROOT / "01_member_channel_performance" / "data" / "history.csv")
     sessions = _read(ROOT / "08_live_viewership" / "data" / "sessions.csv")
 
+    # 관측 마지막 날까지 이어지는 이벤트는 아직 진행 중이다. VOD 조회수가 계속
+    # 쌓이는 중이라 배수가 과소평가된다 — 숫자를 빼진 않되 표시는 해 둔다.
+    last_stream = pd.to_datetime(streams["publish_date"]).dt.date.max() if not streams.empty else None
+    events["ongoing"] = (events["end_date"] >= last_stream) if last_stream else False
+
     vod = vod_multiple(events, streams)
     foll = before_after(events, h03, "followers", "치지직 팔로워")
     subs = before_after(events, h01, "subscribers", "유튜브 구독자")
@@ -294,8 +320,11 @@ def write_report(events, vod, impact, ccu) -> None:
     if not vod.empty:
         t = (vod.groupby(["title", "date"])["views_multiple"].mean()
              .nlargest(10).round(2).reset_index())
-        top = "\n".join(f"| {r.date} | {str(r.title)[:34]} | {r.views_multiple:.2f}배 |"
-                        for r in t.itertuples())
+        ongoing = set(events.loc[events["ongoing"], "title"])
+        top = "\n".join(
+            f"| {r.date} | {str(r.title)[:34]}"
+            f"{' *(진행 중)*' if r.title in ongoing else ''} | {r.views_multiple:.2f}배 |"
+            for r in t.itertuples())
 
     ccu_tbl = ""
     if not ccu.empty:
@@ -342,6 +371,10 @@ append-only 로 남긴다.
 - 그 {len(collabs)}건 중 **{big}건이 평소 방송 대비 {BIG_MULTIPLE}배 이상**의 조회수를 냈다.
   하루짜리를 섞었을 때는 이 비율이 절반 수준이었다 — **연속 기획만 남기면 효과가 선명해진다.**
   단발 합방과 며칠짜리 기획은 성격이 다른 이벤트다.
+- **동시시청자를 가장 크게 끌어올리는 건 합방이 아니라 신의상 공개다.** 관측된
+  신의상 릴레이에서 참여 멤버가 평소 피크의 **7~20배**를 찍었다(사키하네 후야 첫
+  신의상 38,402명 = 평소의 20.3배). 같은 기간 나란히 돌던 10인 마인크래프트 합방은
+  1.0~1.7배였다. 합방은 **조회수**를, 신의상은 **동시시청자**를 움직인다.
 - 전후 비교(팔로워·구독자·동시시청자)는 **일일 수집이 시작된 2026-08-12 이후 이벤트만**
   가능하다. 그 이전은 기준선이 없어 계산하지 않는다 — 0%가 아니라 측정 불가다.
 - 최근 {pending}건은 **관측 중**이다. 이벤트 후 {MIN_POST_DAYS}일이 지나야 전후 비교를 낸다 —
@@ -379,7 +412,10 @@ append-only 로 남긴다.
 - **유튜브 구독자는 1,000 단위 반올림**이라 이벤트 다음날 변화가 계단으로만 보인다.
   {WINDOW}일 창으로만 낸 이유다. 짧은 창은 치지직 팔로워(정확한 정수)를 볼 것.
 - **조회수 배수는 시간이 지날수록 커진다.** VOD 조회수는 누적이라 오래된 이벤트가
-  유리하다. 같은 시기 이벤트끼리 비교할 것.
+  유리하다. 같은 시기 이벤트끼리 비교할 것. *(진행 중)* 표시가 붙은 건 아직 조회수가
+  쌓이는 중이라 실제보다 낮게 나온다.
+- **동시시청자는 방송형 이벤트(합방·콘서트)에만 붙인다.** 곡 발매는 유튜브 업로드지
+  방송이 아니라서, 발매일에 마침 큰 합방이 돌면 그 피크가 곡의 효과로 둔갑한다.
 
 ## 산출물
 

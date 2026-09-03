@@ -12,9 +12,11 @@ CREATE TABLE events (
     signal TEXT,
     source TEXT,
     note TEXT,
+    match_keys TEXT,
     event_id TEXT,
     streak_days TEXT,
-    aliases TEXT
+    aliases TEXT,
+    ongoing TEXT
 );
 
 DROP TABLE IF EXISTS vod_multiple;
