@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-03T03:47:39.723754+00:00",
-    "n_snapshots": 10522,
+    "fetched_at": "2026-09-03T03:57:53.183604+00:00",
+    "n_snapshots": 10533,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-03T03:47:39.723754+00:00"
+      "2026-09-03T03:57:53.183604+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 9539,
-    "n_timepoints": 954,
-    "span_hours": 525.87,
-    "observed_hours": 328.49,
-    "coverage_ratio": 0.625,
+    "n_snapshots": 9549,
+    "n_timepoints": 955,
+    "span_hours": 526.04,
+    "observed_hours": 328.15,
+    "coverage_ratio": 0.624,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 2157,
+    "n_live_rows": 2158,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-03T03:47:39.723754+00:00"
+    "last": "2026-09-03T03:57:53.183604+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,14 +30,14 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 162462,
-      "follower_delta": 5721,
-      "follower_per_day": 261.2,
+      "followers": 162463,
+      "follower_delta": 5722,
+      "follower_per_day": 261.1,
       "n_sessions": 23,
       "n_live_points": 85,
       "peak_ccu": 38402,
       "avg_ccu": 4651,
-      "ccu_per_1k_followers": 236.38
+      "ccu_per_1k_followers": 236.37
     },
     {
       "rank": 2,
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 214301,
-      "follower_delta": 4482,
-      "follower_per_day": 204.6,
+      "followers": 214306,
+      "follower_delta": 4487,
+      "follower_per_day": 204.7,
       "n_sessions": 31,
-      "n_live_points": 202,
+      "n_live_points": 203,
       "peak_ccu": 28071,
-      "avg_ccu": 4121,
+      "avg_ccu": 4126,
       "ccu_per_1k_followers": 130.99
     },
     {
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 212582,
-      "follower_delta": 5156,
+      "followers": 212583,
+      "follower_delta": 5157,
       "follower_per_day": 235.3,
       "n_sessions": 36,
       "n_live_points": 234,
@@ -86,8 +86,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 244977,
-      "follower_delta": 3860,
+      "followers": 244978,
+      "follower_delta": 3861,
       "follower_per_day": 176.2,
       "n_sessions": 36,
       "n_live_points": 245,
@@ -156,8 +156,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 256719,
-      "follower_delta": 3817,
+      "followers": 256721,
+      "follower_delta": 3819,
       "follower_per_day": 174.2,
       "n_sessions": 28,
       "n_live_points": 123,
@@ -1008,6 +1008,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-03 11:25",
+      "observed_min": 92.0,
+      "n_points": 10,
+      "peak_ccu": 5180,
+      "avg_ccu": 3777,
+      "title": "깐시로 깐달걀~~",
+      "category": "마인크래프트"
+    },
+    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -1138,18 +1150,6 @@
       "avg_ccu": 4990,
       "title": "팀장 유즈하 리코입니다 [치지직 오픈컵] 드래프트 날🥺💚",
       "category": "이터널 리턴"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-03 11:25",
-      "observed_min": 81.8,
-      "n_points": 9,
-      "peak_ccu": 4989,
-      "avg_ccu": 3622,
-      "title": "깐시로 깐달걀~~",
-      "category": "마인크래프트"
     },
     {
       "name_ko": "시라유키 히나",
@@ -9484,6 +9484,10 @@
         [
           "2026-09-03 12:47",
           4989
+        ],
+        [
+          "2026-09-03 12:57",
+          5180
         ]
       ]
     },
