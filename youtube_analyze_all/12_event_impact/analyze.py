@@ -956,9 +956,10 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
                       + "\n".join(
                           f"| {r.group} | {r.uploads_per_week:.1f}편 | "
                           f"**{r.cover_share:.1%}** ({r.n_covers}편) | "
-                          f"{(f'{r.cover_multiple:.2f}배' if r.cover_multiple else '커버 없음')} |"
+                          f"{(f'{r.cover_multiple:.2f}배' if r.cover_multiple == r.cover_multiple else '커버 없음')} |"
                           for r in c.itertuples()))
-        cm = [f"{r.group} {r.cover_multiple:.2f}배" for r in c.itertuples() if r.cover_multiple]
+        cm = [f"{r.group} {r.cover_multiple:.2f}배" for r in c.itertuples()
+              if r.cover_multiple == r.cover_multiple]   # None 이 NaN 이 돼 truthy 로 새던 것
         cp_cover_line = " · ".join(cm) + "로 거의 같다" if len(cm) >= 2 else "비교 불가"
         cp_reach_tbl = "\n".join(
             f"| {r.group} | {r.subs_median:,} | **{r.reach_ratio:.2f}** | {r.engagement:.1%} |"
