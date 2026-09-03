@@ -542,6 +542,61 @@ def dart_effect(metrics: pd.DataFrame, search: pd.DataFrame) -> tuple:
     return df, stats
 
 
+COVER_RE = r"cover|커버|歌ってみた|うたってみた"
+
+
+def competitor_effect(hist: pd.DataFrame, videos: pd.DataFrame,
+                      metrics: pd.DataFrame) -> tuple:
+    """같은 기간에 세 그룹이 어떻게 움직였나, 그리고 이벤트 밀도가 다른가.
+
+    경쟁사는 치지직 데이터가 없어 합방·신의상은 못 본다. 볼 수 있는 건 유튜브다 —
+    같은 21일의 구독자 성장, 최근 업로드 중 커버 비중, 커버가 일반 영상 대비 몇 배인지.
+    앞 절들이 스텔라이브에서 찾은 '이벤트 중심 구조'가 경쟁사에도 있는지를 묻는다.
+    """
+    if hist.empty or metrics.empty:
+        return pd.DataFrame(), {}
+    h = hist[hist["name_ko"] != "강지"].copy()
+    h["date"] = pd.to_datetime(h["date"])
+    f, l = h["date"].min(), h["date"].max()
+    a = h[h["date"] == f].set_index("name_ko")
+    b = h[h["date"] == l].set_index("name_ko")
+    j = a[["group", "subscribers"]].join(b[["subscribers"]], rsuffix="_last").dropna()
+    j["growth"] = j["subscribers_last"] / j["subscribers"] - 1
+    j["gain"] = j["subscribers_last"] - j["subscribers"]
+
+    v = videos[videos["name_ko"] != "강지"].copy()
+    v["is_cover"] = v["title"].astype(str).str.contains(COVER_RE, case=False, na=False)
+    m = metrics[metrics["name_ko"] != "강지"]
+
+    rows = []
+    for grp, g in j.groupby("group"):
+        vv = v[v["group"] == grp]
+        cov, nor = vv[vv["is_cover"]]["views"].median(), vv[~vv["is_cover"]]["views"].median()
+        mm = m[m["group"] == grp]
+        rows.append({
+            "group": grp, "n_members": int(len(g)),
+            "subs_first": int(g["subscribers"].sum()), "subs_last": int(g["subscribers_last"].sum()),
+            "gain_total": int(g["gain"].sum()),
+            "growth_total": round(float(g["subscribers_last"].sum() / g["subscribers"].sum() - 1), 4),
+            "growth_median": round(float(g["growth"].median()), 4),
+            "members_up": int((g["gain"] > 0).sum()), "members_down": int((g["gain"] < 0).sum()),
+            "cover_share": round(float(vv["is_cover"].mean()), 3) if len(vv) else None,
+            "n_covers": int(vv["is_cover"].sum()),
+            "cover_multiple": round(float(cov / nor), 2) if nor and cov == cov else None,
+            "uploads_per_week": round(float(mm["uploads_per_week"].median()), 2) if len(mm) else None,
+            "reach_ratio": round(float(mm["reach_ratio"].median()), 3) if len(mm) else None,
+            "engagement": round(float(mm["recent_avg_engagement_rate"].median()), 4) if len(mm) else None,
+            "subs_median": int(mm["subscribers"].median()) if len(mm) else None,
+        })
+    df = pd.DataFrame(rows)
+    stats = {"from": str(f.date()), "to": str(l.date()), "days": int((l - f).days),
+             "top": j.sort_values("growth", ascending=False).head(4)
+                     .reset_index()[["name_ko", "group", "growth"]].to_dict("records"),
+             "bottom": j.sort_values("growth").head(4)
+                     .reset_index()[["name_ko", "group", "growth"]].to_dict("records")}
+    return df, stats
+
+
 def _daily_delta(hist: pd.DataFrame, col: str) -> pd.DataFrame:
     """일일 순증. history.csv 는 누적값이라 차분해야 이벤트 효과가 보인다."""
     if hist.empty or col not in hist.columns:
@@ -766,6 +821,10 @@ def main() -> int:
     sent_m = config.drop_founder(
         _read(ROOT / "05_comment_sentiment" / "data" / "sentiment_metrics.csv"))
     cmt, cmt_stats = comment_effect(labeled, sent_m, h03)
+    comp, comp_stats = competitor_effect(
+        _read(ROOT / "06_competitor_comparison" / "data" / "history.csv"),
+        _read(ROOT / "06_competitor_comparison" / "data" / "videos.csv"),
+        _read(ROOT / "06_competitor_comparison" / "data" / "member_metrics.csv"))
     dart, dart_stats = dart_effect(
         _read(ROOT / "09_dart_financials" / "data" / "company_metrics.csv"),
         _read(ROOT / "09_dart_financials" / "data" / "corp_search.csv"))
@@ -785,7 +844,8 @@ def main() -> int:
                      ("event_ccu", ccu), ("concert_arc", arc),
                      ("cover_effect", cov_eff), ("original_effect", orig_eff),
                      ("kirinuki_effect", kiri), ("comment_effect", cmt),
-                     ("commerce_effect", com), ("dart_effect", dart)):
+                     ("commerce_effect", com), ("dart_effect", dart),
+                     ("competitor_effect", comp)):
         df.to_csv(DATA / f"{name}.csv", index=False, encoding="utf-8-sig")
 
     SQL.mkdir(parents=True, exist_ok=True)
@@ -814,7 +874,7 @@ def main() -> int:
 
     write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff,
                  drivers, kiri, kiri_stats, cmt, cmt_stats, com, com_stats,
-                 dart, dart_stats)
+                 dart, dart_stats, comp, comp_stats)
     print(f"  이벤트 {len(events)}건 · 소급 측정 {vod['event_id'].nunique() if not vod.empty else 0}건 "
           f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건"
           f" · 콘서트 호 {len(arc) if arc is not None and not arc.empty else 0}건")
@@ -824,7 +884,8 @@ def main() -> int:
 def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
                  covers=None, orig_eff=None, drivers=None, kiri=None,
                  kiri_stats=None, cmt=None, cmt_stats=None, com=None,
-                 com_stats=None, dart=None, dart_stats=None) -> None:
+                 com_stats=None, dart=None, dart_stats=None, comp=None,
+                 comp_stats=None) -> None:
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
     span = f"{events['date'].min()} ~ {events['date'].max()}"
     by_type = events["type"].value_counts()
@@ -869,6 +930,42 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         if not ccu.empty else pd.DataFrame(columns=["type", "ccu_multiple"])
     ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
     mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
+
+    # ── 경쟁사 비교 ──
+    cs2 = comp_stats or {}
+    cp_from = cs2.get("from", "—"); cp_to = cs2.get("to", "—"); cp_days = cs2.get("days", 0)
+    cp_growth_tbl = cp_growth_line = cp_mix_tbl = cp_reach_tbl = cp_cover_line = ""
+    cp_top_groups = cp_bot_groups = "—"
+    cp_stel_gain = cp_holo_gain = 0
+    if comp is not None and not comp.empty:
+        order = {"StelLive": 0, "홀로라이브": 1, "이세계아이돌": 2}
+        c = comp.assign(_o=comp["group"].map(order).fillna(9)).sort_values("_o")
+        cp_growth_tbl = ("| 그룹 | 구독자 합계 | 증감 | 성장률 | 멤버 중앙값 | 오른 멤버 | 내린 멤버 |\n"
+                         "|---|---|---|---|---|---|---|\n" + "\n".join(
+                             f"| {r.group} | {r.subs_last:,} | **{r.gain_total:+,}** | "
+                             f"**{r.growth_total:+.2%}** | {r.growth_median:+.2%} | "
+                             f"{r.members_up}/{r.n_members} | {r.members_down}/{r.n_members} |"
+                             for r in c.itertuples()))
+        st = c[c["group"] == "StelLive"]; ho = c[c["group"] == "홀로라이브"]; ise = c[c["group"] == "이세계아이돌"]
+        if len(st) and len(ho) and len(ise):
+            cp_stel_gain, cp_holo_gain = int(st["gain_total"].iloc[0]), int(ho["gain_total"].iloc[0])
+            cp_growth_line = (
+                f"스텔라이브는 {int(st['members_up'].iloc[0])}명 전원이 올랐고, 이세계아이돌은 "
+                f"{int(ise['members_down'].iloc[0])}명이 내렸으며, 홀로라이브는 사실상 제자리다.")
+        cp_mix_tbl = ("| 그룹 | 주당 업로드 | 최근 업로드 중 커버 | 커버 ÷ 일반 영상 |\n|---|---|---|---|\n"
+                      + "\n".join(
+                          f"| {r.group} | {r.uploads_per_week:.1f}편 | "
+                          f"**{r.cover_share:.1%}** ({r.n_covers}편) | "
+                          f"{(f'{r.cover_multiple:.2f}배' if r.cover_multiple else '커버 없음')} |"
+                          for r in c.itertuples()))
+        cm = [f"{r.group} {r.cover_multiple:.2f}배" for r in c.itertuples() if r.cover_multiple]
+        cp_cover_line = " · ".join(cm) + "로 거의 같다" if len(cm) >= 2 else "비교 불가"
+        cp_reach_tbl = "\n".join(
+            f"| {r.group} | {r.subs_median:,} | **{r.reach_ratio:.2f}** | {r.engagement:.1%} |"
+            for r in c.itertuples())
+        tg = sorted({r["group"] for r in cs2.get("top", [])}); bg = sorted({r["group"] for r in cs2.get("bottom", [])})
+        cp_top_groups = "전부 " + tg[0] if len(tg) == 1 else "·".join(tg)
+        cp_bot_groups = "전부 " + bg[0] if len(bg) == 1 else "·".join(bg)
 
     # ── DART 재무 ──
     dart_missing = "스텔라이브"
@@ -1122,6 +1219,10 @@ append-only 로 남긴다.
 - **콘서트는 단독이냐 합동이냐로 갈린다.** 본인 첫 단독 콘서트의 후기 방송은 평소의
   {solo_mult:.1f}배(안내 쇼츠 {solo_yt:,}회)였지만, 같은 멤버가 참여한 그룹 페스티벌은
   {grp_lo:.1f}~{grp_hi:.1f}배였다. 합동은 관심이 10명에게 나뉜다.
+- **같은 {cp_days}일에 스텔라이브만 전원이 올랐다.** 구독자 {cp_stel_gain:+,}명으로 11분의 1 규모의
+  홀로라이브({cp_holo_gain:+,}명)와 같은 수를 더했고, 이세계아이돌은 전원 감소했다. 커버가 내는
+  배수는 그룹이 같은데 스텔라이브가 커버 비중이 가장 높다 — 레버가 아니라 당기는 빈도가 다르다.
+  다만 참여율은 셋 중 가장 낮다: 도달은 넓고 참여는 얕다.
 - **팬덤의 돈은 플랫폼에 쌓이고 IP 회사엔 남지 않는다.** 스텔라이브는 DART 에 없어
   못 재지만, 같은 돈이 흐르는 양 끝단은 보인다 — 플랫폼(NAVER·SOOP)은 10년 연속 흑자에
   이익률 {dart_plat_margin}, IP 회사는 {dart_ip_streak}.
@@ -1232,6 +1333,44 @@ append-only 로 남긴다.
 시작됐는데 콘서트는 2025-12-20과 2026-07-11이라 기준선이 존재하지 않는다. 위 숫자는
 **방송 조회수로 잰 간접 지표**이고, "콘서트로 구독자가 몇 % 늘었다"는 아직 말할 수 없다.
 다음 콘서트부터는 전후 비교가 자동으로 붙는다.
+
+## 경쟁사 비교 효과 — 같은 21일, 스텔라이브만 전원이 올랐다
+
+경쟁사는 치지직 데이터가 없어 합방·신의상은 볼 수 없다. 볼 수 있는 건 유튜브다 —
+같은 기간의 구독자 성장, 최근 업로드 중 커버 비중, 커버가 일반 영상 대비 몇 배인지.
+앞 절들이 스텔라이브에서 찾은 **이벤트 중심 구조가 경쟁사에도 있는가**를 묻는다.
+
+### 같은 기간 성장 ({cp_from} → {cp_to}, {cp_days}일)
+
+{cp_growth_tbl}
+
+{cp_growth_line}
+
+성장률 상위 4명은 {cp_top_groups}, 하위 4명은 {cp_bot_groups}이다. 그룹이 섞이지 않는다.
+
+### 이벤트 밀도 — 커버는 스텔라이브가 가장 많이, 효과는 똑같이
+
+{cp_mix_tbl}
+
+스텔라이브는 세 그룹 중 **업로드는 가장 적게 하면서 커버 비중은 가장 높다.** 그리고
+커버가 일반 영상 대비 내는 배수는 {cp_cover_line} — **커버라는 레버 자체는 그룹을 가리지
+않는다.** 차이는 레버의 세기가 아니라 **얼마나 자주 당기느냐**다.
+
+### 도달은 넓고 참여는 얕다
+
+| 그룹 | 구독자 중앙값 | 도달 효율 | 참여율 |
+|---|---|---|---|
+{cp_reach_tbl}
+
+스텔라이브는 도달 효율(평균 조회수/구독자)이 압도적으로 높지만 **참여율은 셋 중 가장
+낮다.** 조회수가 깊은 팬의 반복 시청이 아니라 넓은 도달에서 온다는 뜻이다. 앞 절의
+"팬은 사람에 반응한다"(댓글)와 "신의상이 동시시청자를 10배 만든다"(치지직)는 이 얕은
+유튜브 참여를 치지직 쪽 깊이가 보완하는 그림으로 읽힌다.
+
+⚠ **{cp_days}일·그룹당 6명·1,000 단위 반올림**이다. 홀로라이브 270만 채널은 +999명이
+늘어도 0으로 보이므로 상대 성장률 비교는 스텔라이브에 유리하다. 절대 증가로는
+스텔라이브 {cp_stel_gain:+,}명 · 홀로라이브 {cp_holo_gain:+,}명으로 **11분의 1 규모에서 같은
+수를 더했다**가 정확한 진술이다.
 
 ## DART 재무 효과 — 팬덤의 돈은 플랫폼에 쌓이고 IP 회사엔 남지 않는다
 
@@ -1429,7 +1568,7 @@ append-only 로 남긴다.
 - `data/events_manual.csv` — 손으로 등록하는 이벤트 (콘서트·오리지널곡·오프라인)
 - `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` ·
   `concert_arc.csv` · `cover_effect.csv` · `original_effect.csv` · `kirinuki_effect.csv` ·
-  `comment_effect.csv` · `commerce_effect.csv` · `dart_effect.csv`
+  `comment_effect.csv` · `commerce_effect.csv` · `dart_effect.csv` · `competitor_effect.csv`
 - `charts/` · `sql/events.db` · `site/index.html`
 """, encoding="utf-8")
 
