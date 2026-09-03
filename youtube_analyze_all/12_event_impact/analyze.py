@@ -196,6 +196,50 @@ def concert_arc(events: pd.DataFrame, streams: pd.DataFrame,
     return pd.DataFrame(rows)
 
 
+# 커버곡 효과를 잴 때 제외할 '너무 새 영상'의 나이(일).
+#
+# 업로드 직후 영상은 조회수가 아직 안 붙었다. 커버와 일반 영상 **양쪽 모두**에서
+# 빼야 공정하다. 14일과 21일 결과가 거의 같아 14일로 둔다.
+COVER_MATURE_DAYS = 14
+
+
+def cover_effect(covers: pd.DataFrame, videos: pd.DataFrame) -> pd.DataFrame:
+    """커버곡이 그 멤버의 일반 영상보다 몇 배 보나.
+
+    비교는 **같은 기간 안에서만** 한다. 커버는 2017년부터 있고 videos.csv 는 멤버당
+    최근 50개뿐이라, 그냥 비교하면 오래 쌓인 커버가 최근 일반 영상을 이기는 게
+    당연해진다 — 효과가 아니라 누적 시간을 재게 된다.
+    """
+    if covers.empty or videos.empty:
+        return pd.DataFrame()
+    c, v = covers.copy(), videos.copy()
+    for df, col in ((c, "published_at"), (v, "published_at")):
+        df["date"] = pd.to_datetime(df[col], format="mixed", utc=True) \
+            .dt.tz_convert("Asia/Seoul").dt.date
+    asof = max(v["date"].max(), c["date"].max())
+    cut = asof - timedelta(days=COVER_MATURE_DAYS)
+    cover_ids = set(c["video_id"])
+    v["is_cover"] = v["video_id"].isin(cover_ids)
+
+    rows = []
+    for name, g in v.groupby("name_ko"):
+        lo, hi = g["date"].min(), min(g["date"].max(), cut)
+        normal = g[(~g["is_cover"]) & (g["date"] <= cut)]
+        mine = c[(c["name_ko"] == name) & (c["date"] >= lo) & (c["date"] <= hi)]
+        if len(normal) < 5 or mine.empty:
+            continue
+        nm, cm = normal["views"].median(), mine["views"].median()
+        if not nm:
+            continue
+        rows.append({
+            "name_ko": name, "window_from": lo, "window_to": hi,
+            "n_covers": int(len(mine)), "cover_median_views": int(cm),
+            "n_normal": int(len(normal)), "normal_median_views": int(nm),
+            "views_multiple": round(cm / nm, 2),
+        })
+    return pd.DataFrame(rows)
+
+
 def _daily_delta(hist: pd.DataFrame, col: str) -> pd.DataFrame:
     """일일 순증. history.csv 는 누적값이라 차분해야 이벤트 효과가 보인다."""
     if hist.empty or col not in hist.columns:
@@ -386,6 +430,8 @@ def main() -> int:
     ccu = ccu_impact(events, sessions)
     videos = _read(ROOT / "01_member_channel_performance" / "data" / "videos.csv")
     arc = concert_arc(events, streams, videos)
+    covers = _read(ROOT / "02_cover_song_ranking" / "data" / "covers.csv")
+    cov_eff = config.drop_founder(cover_effect(covers, videos))
 
     # 리포트·차트에서는 창립자를 뺀다(수집·감지는 전 로스터 그대로).
     vod, foll, subs, ccu, arc = (config.drop_founder(x)
@@ -394,7 +440,8 @@ def main() -> int:
 
     DATA.mkdir(parents=True, exist_ok=True)
     for name, df in (("event_vod_multiple", vod), ("event_impact", impact),
-                     ("event_ccu", ccu), ("concert_arc", arc)):
+                     ("event_ccu", ccu), ("concert_arc", arc),
+                     ("cover_effect", cov_eff)):
         df.to_csv(DATA / f"{name}.csv", index=False, encoding="utf-8-sig")
 
     SQL.mkdir(parents=True, exist_ok=True)
@@ -421,14 +468,15 @@ def main() -> int:
     (SITE / "data.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    write_report(events, vod, impact, ccu, arc)
+    write_report(events, vod, impact, ccu, arc, cov_eff, covers)
     print(f"  이벤트 {len(events)}건 · 소급 측정 {vod['event_id'].nunique() if not vod.empty else 0}건 "
           f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건"
           f" · 콘서트 호 {len(arc) if arc is not None and not arc.empty else 0}건")
     return 0
 
 
-def write_report(events, vod, impact, ccu, arc=None) -> None:
+def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
+                 covers=None) -> None:
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
     span = f"{events['date'].min()} ~ {events['date'].max()}"
     by_type = events["type"].value_counts()
@@ -473,6 +521,28 @@ def write_report(events, vod, impact, ccu, arc=None) -> None:
         if not ccu.empty else pd.DataFrame(columns=["type", "ccu_multiple"])
     ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
     mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
+
+    # ── 커버곡 ──
+    cover_tbl, cov_med, riko = "| — | 데이터 없음 |", 0.0, 0.0
+    if cov_eff is not None and not cov_eff.empty:
+        ce = cov_eff.sort_values("views_multiple", ascending=False)
+        cov_med = float(ce["views_multiple"].median())
+        r = ce[ce["name_ko"] == "유즈하 리코"]["views_multiple"]
+        riko = float(r.iloc[0]) if len(r) else 0.0
+        cover_tbl = ("| 멤버 | 커버 | 커버 중앙 조회수 | 일반 중앙 조회수 | 배수 |\n"
+                     "|---|---|---|---|---|\n" + "\n".join(
+                         f"| {r.name_ko} | {r.n_covers}곡 | {r.cover_median_views:,} | "
+                         f"{r.normal_median_views:,} | **{r.views_multiple:.2f}배** |"
+                         for r in ce.itertuples()))
+    solo_med = collab_med = 0
+    if covers is not None and not covers.empty:
+        cc = covers.copy()
+        cc["yr"] = pd.to_datetime(cc["published_at"], format="mixed", utc=True).dt.year
+        recent = cc[cc["yr"] == cc["yr"].max()]
+        if len(recent):
+            g = recent.groupby("is_collab")["views"].median()
+            solo_med = int(g.get(False, 0))
+            collab_med = int(g.get(True, 0))
 
     arc_tbl, solo_mult, solo_yt, grp_lo, grp_hi = "| — | 데이터 없음 |", 0.0, 0, 0.0, 0.0
     if arc is not None and not arc.empty:
@@ -531,6 +601,8 @@ append-only 로 남긴다.
   **{cos_lo:.1f}~{cos_hi:.1f}배**(합방은 {col_lo:.1f}~{col_hi:.1f}배), 동시시청자 피크는
   **{ccu_lo:.1f}~{ccu_hi:.1f}배**(같은 기간 나란히 돌던 10인 마인크래프트 합방은
   {mc_lo:.1f}~{mc_hi:.1f}배)였다. 사키하네 후야의 첫 신의상은 38,402명 — 평소 피크의 19배다.
+- **커버곡은 평소 영상의 {cov_med:.1f}배 본다**(같은 기간·성숙 영상만 비교). 콜라보 커버가
+  더 잘 되지는 않는다 — 2026년 기준 솔로와 콜라보의 조회수 중앙값이 같다.
 - **콘서트는 단독이냐 합동이냐로 갈린다.** 본인 첫 단독 콘서트의 후기 방송은 평소의
   {solo_mult:.1f}배(안내 쇼츠 {solo_yt:,}회)였지만, 같은 멤버가 참여한 그룹 페스티벌은
   {grp_lo:.1f}~{grp_hi:.1f}배였다. 합동은 관심이 10명에게 나뉜다.
@@ -561,6 +633,34 @@ append-only 로 남긴다.
 신의상은 **연 몇 회짜리 희소 이벤트**다. 합방은 며칠씩 이어지며 조회수를 꾸준히
 끌어올리는 반면, 신의상은 하루 몇 시간에 평소의 몇 배가 몰린다. 성격이 다른 두
 레버로 봐야 한다 — 합방은 **분량**, 신의상은 **순간 최대치**다.
+
+## 커버곡 효과 — 평소 영상의 4배
+
+커버는 2017년부터 있고 일반 영상 목록은 멤버당 최근 50개뿐이다. 그냥 비교하면
+오래 쌓인 커버가 최근 일반 영상을 이기는 게 당연해진다 — 효과가 아니라 **누적 시간**을
+재게 된다. 그래서 **같은 기간 안에서만**, 그리고 업로드 {COVER_MATURE_DAYS}일이 안 지난 영상은
+커버·일반 **양쪽 모두에서** 빼고 비교했다.
+
+{cover_tbl}
+
+커버곡은 그 멤버의 일반 영상보다 **중앙값 {cov_med:.1f}배** 본다. 10명 중 9명이 2.8~7.4배에
+들어간다.
+
+**콜라보 커버가 더 잘 되지는 않는다.** 2026년 커버만 놓고 보면 솔로 {solo_med:,}회 ·
+콜라보 {collab_med:,}회로 차이가 없다. 전체 기간으로는 콜라보가 높아 보이는데, 콜라보 커버가
+**2024년부터만 존재해서** 생기는 착시다(그 이전 카탈로그는 전부 솔로).
+
+### 읽을 때 주의
+
+유즈하 리코만 {riko:.2f}배로 유일하게 1배 미만이고, 동시에 커버를 가장 자주 올린다
+(월 4.5곡 · 다른 멤버는 0.3~1.2곡). "자주 올리면 효과가 희석된다"로 읽고 싶어지고
+실제로 빈도와 배수의 상관은 -0.53이다. **그런데 리코 한 명을 빼면 +0.32로 뒤집힌다.**
+표본 하나가 만든 상관이라 인과로 말할 수 없다.
+
+더 그럴듯한 설명은 표본 수다. 다른 멤버는 창 안에 커버가 1~2곡뿐이라 그 중앙값이
+"잘 된 한 곡"일 수 있는 반면, 리코는 7곡이라 평범한 곡까지 포함된 중앙값이다.
+멤버별 배수 **순위**는 이 이유로 신뢰하지 말고, "커버는 일반 영상보다 몇 배 본다"는
+**전체 경향**만 읽는 편이 안전하다.
 
 ## 콘서트 효과 — 단독과 합동은 다르다
 
@@ -615,7 +715,8 @@ append-only 로 남긴다.
 - `data/events.csv` — 감지·등록된 전체 이벤트
 - `data/events_seen.csv` — 처음 감지한 날짜 (append-only 기억)
 - `data/events_manual.csv` — 손으로 등록하는 이벤트 (콘서트·오리지널곡·오프라인)
-- `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` · `concert_arc.csv`
+- `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` ·
+  `concert_arc.csv` · `cover_effect.csv`
 - `charts/` · `sql/events.db` · `site/index.html`
 """, encoding="utf-8")
 
