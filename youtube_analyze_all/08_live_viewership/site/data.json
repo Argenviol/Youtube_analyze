@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-04T16:55:47.635171+00:00",
-    "n_snapshots": 11842,
+    "fetched_at": "2026-09-04T17:05:59.870036+00:00",
+    "n_snapshots": 11853,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-04T16:55:47.635171+00:00"
+      "2026-09-04T17:05:59.870036+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 10739,
-    "n_timepoints": 1074,
-    "span_hours": 563.0,
-    "observed_hours": 183.0,
+    "n_snapshots": 10749,
+    "n_timepoints": 1075,
+    "span_hours": 563.17,
+    "observed_hours": 183.16,
     "coverage_ratio": 0.325,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 2478,
+    "n_live_rows": 2480,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-04T16:55:47.635171+00:00"
+    "last": "2026-09-04T17:05:59.870036+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,9 +44,9 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 260311,
-      "follower_delta": 4985,
-      "follower_per_day": 212.5,
+      "followers": 260308,
+      "follower_delta": 4982,
+      "follower_per_day": 212.3,
       "n_sessions": 99,
       "n_live_points": 264,
       "peak_ccu": 38237,
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 214844,
       "follower_delta": 5025,
-      "follower_per_day": 214.2,
+      "follower_per_day": 214.1,
       "n_sessions": 88,
       "n_live_points": 247,
       "peak_ccu": 28071,
@@ -74,7 +74,7 @@
       "unit": "CLICHE",
       "followers": 212950,
       "follower_delta": 5524,
-      "follower_per_day": 235.5,
+      "follower_per_day": 235.4,
       "n_sessions": 74,
       "n_live_points": 254,
       "peak_ccu": 24385,
@@ -88,11 +88,11 @@
       "unit": "CLICHE",
       "followers": 245362,
       "follower_delta": 4245,
-      "follower_per_day": 181.0,
+      "follower_per_day": 180.9,
       "n_sessions": 85,
-      "n_live_points": 275,
+      "n_live_points": 276,
       "peak_ccu": 9910,
-      "avg_ccu": 5314,
+      "avg_ccu": 5318,
       "ccu_per_1k_followers": 40.39
     },
     {
@@ -102,7 +102,7 @@
       "unit": "UNIVERSE",
       "followers": 239432,
       "follower_delta": 2584,
-      "follower_per_day": 110.2,
+      "follower_per_day": 110.1,
       "n_sessions": 104,
       "n_live_points": 311,
       "peak_ccu": 9749,
@@ -128,13 +128,13 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 258245,
-      "follower_delta": 5343,
-      "follower_per_day": 227.8,
+      "followers": 258243,
+      "follower_delta": 5341,
+      "follower_per_day": 227.6,
       "n_sessions": 64,
-      "n_live_points": 186,
+      "n_live_points": 187,
       "peak_ccu": 8585,
-      "avg_ccu": 3946,
+      "avg_ccu": 3952,
       "ccu_per_1k_followers": 33.24
     },
     {
@@ -158,7 +158,7 @@
       "unit": "CLICHE",
       "followers": 214620,
       "follower_delta": 5285,
-      "follower_per_day": 225.3,
+      "follower_per_day": 225.2,
       "n_sessions": 106,
       "n_live_points": 315,
       "peak_ccu": 6741,
@@ -580,10 +580,10 @@
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
       "start_kst": "2026-09-04 20:59",
-      "observed_min": 296.2,
-      "n_points": 30,
+      "observed_min": 306.4,
+      "n_points": 31,
       "peak_ccu": 7267,
-      "avg_ccu": 6691,
+      "avg_ccu": 6688,
       "title": "부키부키가와싸",
       "category": "마인크래프트"
     },
@@ -1564,10 +1564,10 @@
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-04 20:59",
-      "observed_min": 296.2,
-      "n_points": 30,
+      "observed_min": 306.4,
+      "n_points": 31,
       "peak_ccu": 5509,
-      "avg_ccu": 4472,
+      "avg_ccu": 4490,
       "title": "사랑니 빼구왔지.. 겁나아프지8ㅁ8 미친마취도안풀렸지ㅠㅁㅠ",
       "category": "talk"
     },
@@ -10887,6 +10887,10 @@
         [
           "2026-09-05 01:55",
           5190
+        ],
+        [
+          "2026-09-05 02:05",
+          5018
         ]
       ]
     },
@@ -18835,6 +18839,10 @@
         [
           "2026-09-05 01:55",
           6761
+        ],
+        [
+          "2026-09-05 02:05",
+          6609
         ]
       ]
     },
