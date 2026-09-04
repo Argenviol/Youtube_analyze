@@ -17,7 +17,7 @@ StelLive 데이터 분석 포트폴리오 **11개 프로젝트의 결과물만**
 | 6 | 경쟁사 비교 | [REPORT6 - 20260904.md](06_competitor_comparison/REPORT6%20-%2020260904.md) | 2026-09-04 | 18개 | [7종](06_competitor_comparison/charts/) | [index.html](06_competitor_comparison/index.html) |
 | 7 | 버추얼 크리에이터 시장 | [REPORT.md](07_market_analysis/REPORT.md) | — | — | [5종](07_market_analysis/charts/) | [index.html](07_market_analysis/index.html) |
 | 8 | 동시시청자 시계열 | [REPORT8 - 20260812.md](08_live_viewership/REPORT8%20-%2020260812.md) | 2026-08-12 | 2개 | [4종](08_live_viewership/charts/) | [index.html](08_live_viewership/index.html) |
-| 9 | DART 재무 분석 | [REPORT.md](09_dart_financials/REPORT.md) | 2026-08-13 | — | [5종](09_dart_financials/charts/) | [index.html](09_dart_financials/index.html) |
+| 9 | DART 재무 분석 | [REPORT.md](09_dart_financials/REPORT.md) | 2026-09-04 | — | [5종](09_dart_financials/charts/) | [index.html](09_dart_financials/index.html) |
 | 10 | 호요버스 캐릭터 인기도 | [REPORT.md](10_hoyoverse/REPORT.md) | 2026-08-29 | — | [8종](10_hoyoverse/charts/) | [index.html](10_hoyoverse/index.html) |
 | 11 | 팬 커머스 | [REPORT.md](11_fan_commerce/REPORT.md) | 2026-08-29 | — | [5종](11_fan_commerce/charts/) | [index.html](11_fan_commerce/index.html) |
 | 12 | 이벤트 임팩트 | [REPORT12 - 20260904.md](12_event_impact/REPORT12%20-%2020260904.md) | 2026-09-04 | 7개 | [4종](12_event_impact/charts/) | [index.html](12_event_impact/index.html) |
