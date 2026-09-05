@@ -63,7 +63,7 @@ INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_
 INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('camellia1225', '동백 camellia', 0, '🐣아가 동박새', 6490);
 INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('camellia1225', '동백 camellia', 1, '🐥성숙한 동박새', 10890);
 INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('_marimo', '_마리모0', 0, '심해마을 주민(한정 50명)', 16390);
-INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('stellive', '스텔라이브', 0, '스텔라이브 공식 팬클럽 [파스텔] 6기', 24000);
+INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('stellive', '스텔라이브', 0, '스텔라이브 공식 팬클럽 [파스텔] 7기', 24000);
 INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('kavy2020', 'KAVY 카비', 0, '한 컵', 2200);
 INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('kavy2020', 'KAVY 카비', 1, '두 컵', 11000);
 INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('kavy2020', 'KAVY 카비', 2, '세 컵', 55000);
