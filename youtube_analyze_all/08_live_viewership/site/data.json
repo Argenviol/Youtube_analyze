@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-07T08:08:03.904662+00:00",
-    "n_snapshots": 13954,
+    "fetched_at": "2026-09-07T08:18:17.148780+00:00",
+    "n_snapshots": 13965,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-07T08:08:03.904662+00:00"
+      "2026-09-07T08:18:17.148780+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 12659,
-    "n_timepoints": 1266,
-    "span_hours": 626.21,
-    "observed_hours": 215.68,
-    "coverage_ratio": 0.344,
+    "n_snapshots": 12669,
+    "n_timepoints": 1267,
+    "span_hours": 626.38,
+    "observed_hours": 215.85,
+    "coverage_ratio": 0.345,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 2917,
+    "n_live_rows": 2918,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-07T08:08:03.904662+00:00"
+    "last": "2026-09-07T08:18:17.148780+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 163504,
-      "follower_delta": 6763,
+      "followers": 163505,
+      "follower_delta": 6764,
       "follower_per_day": 259.2,
       "n_sessions": 47,
       "n_live_points": 124,
@@ -44,14 +44,14 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 260869,
-      "follower_delta": 5543,
-      "follower_per_day": 212.4,
+      "followers": 260873,
+      "follower_delta": 5547,
+      "follower_per_day": 212.5,
       "n_sessions": 101,
       "n_live_points": 330,
       "peak_ccu": 38237,
       "avg_ccu": 5597,
-      "ccu_per_1k_followers": 146.58
+      "ccu_per_1k_followers": 146.57
     },
     {
       "rank": 3,
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 215180,
       "follower_delta": 5361,
-      "follower_per_day": 205.5,
+      "follower_per_day": 205.4,
       "n_sessions": 89,
       "n_live_points": 273,
       "peak_ccu": 28071,
@@ -74,7 +74,7 @@
       "unit": "CLICHE",
       "followers": 213336,
       "follower_delta": 5910,
-      "follower_per_day": 226.5,
+      "follower_per_day": 226.4,
       "n_sessions": 77,
       "n_live_points": 315,
       "peak_ccu": 24385,
@@ -100,27 +100,27 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 245754,
-      "follower_delta": 4637,
-      "follower_per_day": 177.7,
+      "followers": 245752,
+      "follower_delta": 4635,
+      "follower_per_day": 177.6,
       "n_sessions": 87,
       "n_live_points": 339,
       "peak_ccu": 9910,
       "avg_ccu": 5367,
-      "ccu_per_1k_followers": 40.32
+      "ccu_per_1k_followers": 40.33
     },
     {
       "rank": 7,
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 239610,
-      "follower_delta": 2762,
-      "follower_per_day": 105.9,
+      "followers": 239614,
+      "follower_delta": 2766,
+      "follower_per_day": 106.0,
       "n_sessions": 107,
-      "n_live_points": 343,
+      "n_live_points": 344,
       "peak_ccu": 9749,
-      "avg_ccu": 3586,
+      "avg_ccu": 3596,
       "ccu_per_1k_followers": 40.69
     },
     {
@@ -128,8 +128,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 306149,
-      "follower_delta": 4229,
+      "followers": 306150,
+      "follower_delta": 4230,
       "follower_per_day": 162.1,
       "n_sessions": 86,
       "n_live_points": 310,
@@ -156,9 +156,9 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 225300,
-      "follower_delta": 6200,
-      "follower_per_day": 237.6,
+      "followers": 225299,
+      "follower_delta": 6199,
+      "follower_per_day": 237.5,
       "n_sessions": 83,
       "n_live_points": 280,
       "peak_ccu": 6964,
@@ -460,10 +460,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-07 16:16",
-      "observed_min": 51.1,
-      "n_points": 6,
+      "observed_min": 61.3,
+      "n_points": 7,
       "peak_ccu": 7972,
-      "avg_ccu": 4776,
+      "avg_ccu": 5088,
       "title": "면접있어요",
       "category": "talk"
     },
@@ -19194,6 +19194,10 @@
         [
           "2026-09-07 17:08",
           7972
+        ],
+        [
+          "2026-09-07 17:18",
+          6964
         ]
       ]
     },
