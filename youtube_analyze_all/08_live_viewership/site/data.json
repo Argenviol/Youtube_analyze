@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-07T07:47:37.027919+00:00",
-    "n_snapshots": 13932,
+    "fetched_at": "2026-09-07T07:57:50.378290+00:00",
+    "n_snapshots": 13943,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-07T07:47:37.027919+00:00"
+      "2026-09-07T07:57:50.378290+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 12639,
-    "n_timepoints": 1264,
-    "span_hours": 625.87,
-    "observed_hours": 215.34,
+    "n_snapshots": 12649,
+    "n_timepoints": 1265,
+    "span_hours": 626.04,
+    "observed_hours": 215.51,
     "coverage_ratio": 0.344,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 2915,
+    "n_live_rows": 2916,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-07T07:47:37.027919+00:00"
+    "last": "2026-09-07T07:57:50.378290+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 163504,
-      "follower_delta": 6763,
+      "followers": 163505,
+      "follower_delta": 6764,
       "follower_per_day": 259.4,
       "n_sessions": 47,
       "n_live_points": 124,
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 260865,
-      "follower_delta": 5539,
+      "followers": 260867,
+      "follower_delta": 5541,
       "follower_per_day": 212.4,
       "n_sessions": 101,
       "n_live_points": 330,
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 215180,
-      "follower_delta": 5361,
+      "followers": 215181,
+      "follower_delta": 5362,
       "follower_per_day": 205.6,
       "n_sessions": 89,
       "n_live_points": 273,
@@ -102,7 +102,7 @@
       "unit": "CLICHE",
       "followers": 245755,
       "follower_delta": 4638,
-      "follower_per_day": 177.9,
+      "follower_per_day": 177.8,
       "n_sessions": 87,
       "n_live_points": 339,
       "peak_ccu": 9910,
@@ -114,13 +114,13 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 239600,
-      "follower_delta": 2752,
-      "follower_per_day": 105.5,
+      "followers": 239606,
+      "follower_delta": 2758,
+      "follower_per_day": 105.7,
       "n_sessions": 107,
-      "n_live_points": 341,
+      "n_live_points": 342,
       "peak_ccu": 9749,
-      "avg_ccu": 3567,
+      "avg_ccu": 3573,
       "ccu_per_1k_followers": 40.69
     },
     {
@@ -130,7 +130,7 @@
       "unit": "EVERYS",
       "followers": 306149,
       "follower_delta": 4229,
-      "follower_per_day": 162.2,
+      "follower_per_day": 162.1,
       "n_sessions": 86,
       "n_live_points": 310,
       "peak_ccu": 8655,
@@ -142,9 +142,9 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 258743,
-      "follower_delta": 5841,
-      "follower_per_day": 224.0,
+      "followers": 258742,
+      "follower_delta": 5840,
+      "follower_per_day": 223.9,
       "n_sessions": 65,
       "n_live_points": 222,
       "peak_ccu": 8585,
@@ -158,7 +158,7 @@
       "unit": "CLICHE",
       "followers": 225301,
       "follower_delta": 6201,
-      "follower_per_day": 237.8,
+      "follower_per_day": 237.7,
       "n_sessions": 83,
       "n_live_points": 280,
       "peak_ccu": 6964,
@@ -1476,6 +1476,18 @@
       "category": "마인크래프트"
     },
     {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-07 16:16",
+      "observed_min": 40.9,
+      "n_points": 5,
+      "peak_ccu": 5726,
+      "avg_ccu": 4137,
+      "title": "면접있어요",
+      "category": "talk"
+    },
+    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -1944,18 +1956,6 @@
       "category": "이터널 리턴"
     },
     {
-      "name_ko": "아오쿠모 린",
-      "name_en": "Aokumo Rin",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-24 23:07",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 5218,
-      "avg_ccu": 5218,
-      "title": "[치지직오픈컵] 이리대회 꼴등 팀장 멋지게 등장",
-      "category": "이터널 리턴"
-    },
-    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -1966,6 +1966,18 @@
       "avg_ccu": 5218,
       "title": "이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상은 이 세상",
       "category": "talk"
+    },
+    {
+      "name_ko": "아오쿠모 린",
+      "name_en": "Aokumo Rin",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-24 23:07",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 5218,
+      "avg_ccu": 5218,
+      "title": "[치지직오픈컵] 이리대회 꼴등 팀장 멋지게 등장",
+      "category": "이터널 리턴"
     },
     {
       "name_ko": "텐코 시부키",
@@ -2448,18 +2460,6 @@
       "category": "데드 스페이스"
     },
     {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-07 16:16",
-      "observed_min": 30.7,
-      "n_points": 4,
-      "peak_ccu": 4861,
-      "avg_ccu": 3739,
-      "title": "면접있어요",
-      "category": "talk"
-    },
-    {
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
@@ -2844,18 +2844,6 @@
       "category": "오버워치"
     },
     {
-      "name_ko": "유즈하 리코",
-      "name_en": "Yuzuha Riko",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-22 16:36",
-      "observed_min": 24.2,
-      "n_points": 2,
-      "peak_ccu": 4705,
-      "avg_ccu": 4571,
-      "title": "부키랑 놀다 왔어여",
-      "category": "talk"
-    },
-    {
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
@@ -2866,6 +2854,18 @@
       "avg_ccu": 4705,
       "title": "춘스터콜! 후열 구구덕",
       "category": "구스 구스 덕"
+    },
+    {
+      "name_ko": "유즈하 리코",
+      "name_en": "Yuzuha Riko",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-22 16:36",
+      "observed_min": 24.2,
+      "n_points": 2,
+      "peak_ccu": 4705,
+      "avg_ccu": 4571,
+      "title": "부키랑 놀다 왔어여",
+      "category": "talk"
     },
     {
       "name_ko": "아야츠노 유니",
@@ -19186,6 +19186,10 @@
         [
           "2026-09-07 16:47",
           4861
+        ],
+        [
+          "2026-09-07 16:57",
+          5726
         ]
       ]
     },
