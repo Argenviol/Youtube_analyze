@@ -541,7 +541,12 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
   .finding h3 {{ font-size:11pt; }}
   .finding p {{ font-size:8.4pt; }}
 
-  section {{ break-before:page; padding:0 0 10px; border-bottom:none; }}
+  section {{ break-before:page; padding:0; border-bottom:none; }}
+  /* 섹션 끝의 여백이 다음 장으로 넘쳐 빈 페이지를 만들지 않게 */
+  section > :last-child, .charts > :last-child, details.more > :last-child {{ margin-bottom:0 !important; padding-bottom:0 !important; }}
+  #fixes table {{ font-size:8.2pt; }}
+  #fixes th, #fixes td {{ padding:3px 6px; }}
+  #fixes .note {{ break-before:avoid; margin-top:6px; }}
   .sec-head {{ margin-bottom:12px; break-after:avoid; }}
   .sec-head .num {{ font-size:20pt; }}
   .sec-head h2 {{ font-size:15pt; }}
