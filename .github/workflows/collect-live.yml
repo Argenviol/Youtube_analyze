@@ -16,6 +16,28 @@
 #
 # 공개 저장소는 Actions 러너 시간이 무료라 장시간 잡의 비용 문제는 없다.
 # (비공개로 전환하면 월 2,000분 무료를 하루 만에 소진하니 이 설계를 버려야 한다.)
+#
+# ## 2026-09-08 · 잡의 절반이 조용히 아무것도 안 남기던 문제
+#
+# 9/4~9/8 나흘 동안 스냅샷의 54%가 비어 있었다. 성공으로 끝난 잡이 5시간 반 동안
+# 단 한 줄도 푸시하지 못한 채 exit 0 으로 끝나고 있었다. 원인은 체크아웃 시점이다.
+#
+# GitHub 은 잡이 **큐에 들어간 순간의 sha** 를 체크아웃한다. 앞 잡이 돌고 있는 동안
+# 큐에 들어간 잡은 앞 잡이 끝날 때까지 몇 시간을 기다리는데, 그동안 앞 잡이
+# snapshots.csv 에 30여 커밋을 밀어 넣는다. 뒤 잡이 시작해서 첫 스냅샷을 커밋하고
+# `git pull --rebase` 를 하면, **같은 CSV 의 같은 끝자리에 양쪽이 줄을 붙인 상태**라
+# 반드시 충돌한다. rebase 가 멈추면 HEAD 가 분리되고, 그다음부터 매 반복이
+#   - analyze.py: "Time data <<<<<<< HEAD is not ISO8601"  (충돌 마커가 CSV 에 남음)
+#   - git commit: 분리된 HEAD 에 커밋 (아무 데도 안 감)
+#   - git pull:   "You are not currently on a branch"      (푸시 영영 실패)
+# 로 5시간을 돌다 끝난다. 잡은 실패하지 않으므로 알림도 없었다 — 9/6 의 실패 알림은
+# 러너가 셧다운 신호(exit 143)를 받은 단 한 번뿐이었고, 그것이 이 문제를 드러냈다.
+#
+# 고친 것 두 가지.
+#   1) 잡 시작 시 origin/main 으로 강제 동기화한다. 큐에서 몇 시간을 기다렸든 첫
+#      커밋은 최신 위에 올라간다.
+#   2) 푸시가 3회 실패하면 **그 스냅샷 하나를 버리고** origin/main 으로 돌아간다.
+#      10분치를 잃는 쪽이 5시간치를 잃는 것보다 낫다.
 
 name: collect-live
 
@@ -54,6 +76,14 @@ jobs:
       - name: 한글 폰트 설치
         run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum
 
+      # 체크아웃은 큐에 들어간 시점의 sha 다(위 2026-09-08 메모). 큐에서 기다리는 동안
+      # 앞 잡이 밀어 넣은 커밋 위에 올라서야 첫 rebase 가 충돌하지 않는다.
+      - name: 최신 main 으로 동기화
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+          echo "시작 sha: $(git rev-parse --short HEAD) (체크아웃 sha ${GITHUB_SHA:0:7})"
+
       # 08은 치지직 비공식 API만 쓴다 — API 키가 필요 없다.
       #
       # 33회 × (수집·분석 ~40초 + 대기 600초) ≈ 5시간 30분.
@@ -72,10 +102,23 @@ jobs:
             git add -A 08_live_viewership/
             if ! git diff --staged --quiet; then
               git commit -m "chore(08): 동시시청자 스냅샷 $(date -u +%Y-%m-%dT%H:%MZ)"
+              pushed=0
               for try in 1 2 3; do
-                git pull --rebase --autostash && git push && break
-                echo "  push 재시도 $try"; sleep 10
+                if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+                  pushed=1; break
+                fi
+                echo "  push 재시도 $try"
+                git rebase --abort 2>/dev/null || true
+                sleep 10
               done
+              if [ "$pushed" = 0 ]; then
+                # 이 스냅샷 하나를 버리고 깨끗한 origin/main 으로 돌아간다.
+                # 여기서 버티면 남은 반복 전부가 분리된 HEAD 에 쌓여 통째로 사라진다.
+                echo "  ⚠ 푸시 3회 실패 — 이번 스냅샷을 버리고 origin/main 으로 복귀"
+                git rebase --abort 2>/dev/null || true
+                git reset --hard
+                git fetch origin main && git checkout -B main origin/main
+              fi
             fi
             # ⚠️ `[ cond ] && sleep` 를 루프의 마지막 명령으로 두면, 마지막 반복(i=33)에서
             #    조건이 거짓이라 그 줄의 종료 코드가 1이 되고 → 스크립트 전체가 exit 1 →

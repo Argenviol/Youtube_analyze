@@ -88,5 +88,12 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           git diff --staged --quiet || git commit -m "chore: ${{ steps.pick.outputs.group }} 갱신 $(date -u +%Y-%m-%d)"
-          git pull --rebase --autostash
-          git push
+          # collect-live 가 10분마다 main 을 밀어 넣으므로 첫 시도는 자주 밀린다.
+          # 실패한 rebase 를 abort 하지 않고 재시도하면 "not currently on a branch" 로
+          # 영영 못 나간다(collect-live.yml 의 2026-09-08 메모). 매번 abort 하고 다시 한다.
+          for try in 1 2 3; do
+            git pull --rebase --autostash origin main && git push origin HEAD:main && break
+            echo "push 재시도 $try"
+            git rebase --abort 2>/dev/null || true
+            sleep 15
+          done
