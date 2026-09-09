@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-09T17:04:30.805209+00:00",
-    "n_snapshots": 16979,
+    "fetched_at": "2026-09-09T17:14:45.165668+00:00",
+    "n_snapshots": 16990,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-09T17:04:30.805209+00:00"
+      "2026-09-09T17:14:45.165668+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 15409,
-    "n_timepoints": 1541,
-    "span_hours": 683.15,
-    "observed_hours": 262.61,
-    "coverage_ratio": 0.384,
+    "n_snapshots": 15419,
+    "n_timepoints": 1542,
+    "span_hours": 683.32,
+    "observed_hours": 262.79,
+    "coverage_ratio": 0.385,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3640,
+    "n_live_rows": 3641,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-09T17:04:30.805209+00:00"
+    "last": "2026-09-09T17:14:45.165668+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -46,7 +46,7 @@
       "unit": "UNIVERSE",
       "followers": 261439,
       "follower_delta": 6113,
-      "follower_per_day": 214.8,
+      "follower_per_day": 214.7,
       "n_sessions": 104,
       "n_live_points": 405,
       "peak_ccu": 38237,
@@ -72,13 +72,13 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 213644,
-      "follower_delta": 6218,
-      "follower_per_day": 218.4,
+      "followers": 213648,
+      "follower_delta": 6222,
+      "follower_per_day": 218.5,
       "n_sessions": 79,
-      "n_live_points": 434,
+      "n_live_points": 435,
       "peak_ccu": 24385,
-      "avg_ccu": 3255,
+      "avg_ccu": 3256,
       "ccu_per_1k_followers": 114.14
     },
     {
@@ -100,9 +100,9 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 215475,
-      "follower_delta": 6140,
-      "follower_per_day": 215.7,
+      "followers": 215474,
+      "follower_delta": 6139,
+      "follower_per_day": 215.6,
       "n_sessions": 110,
       "n_live_points": 494,
       "peak_ccu": 10461,
@@ -114,9 +114,9 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 239737,
-      "follower_delta": 2889,
-      "follower_per_day": 101.5,
+      "followers": 239736,
+      "follower_delta": 2888,
+      "follower_per_day": 101.4,
       "n_sessions": 110,
       "n_live_points": 461,
       "peak_ccu": 9749,
@@ -130,7 +130,7 @@
       "unit": "EVERYS",
       "followers": 306411,
       "follower_delta": 4491,
-      "follower_per_day": 157.8,
+      "follower_per_day": 157.7,
       "n_sessions": 89,
       "n_live_points": 427,
       "peak_ccu": 8655,
@@ -144,7 +144,7 @@
       "unit": "UNIVERSE",
       "followers": 259033,
       "follower_delta": 6131,
-      "follower_per_day": 215.4,
+      "follower_per_day": 215.3,
       "n_sessions": 66,
       "n_live_points": 229,
       "peak_ccu": 8585,
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 225560,
-      "follower_delta": 6460,
+      "followers": 225559,
+      "follower_delta": 6459,
       "follower_per_day": 226.9,
       "n_sessions": 85,
       "n_live_points": 316,
@@ -4560,6 +4560,18 @@
       "category": "종합 게임"
     },
     {
+      "name_ko": "하나코 나나",
+      "name_en": "Hanako Nana",
+      "unit": "CLICHE",
+      "start_kst": "2026-09-09 17:10",
+      "observed_min": 544.1,
+      "n_points": 56,
+      "peak_ccu": 3848,
+      "avg_ccu": 2866,
+      "title": "왔다... 역재3 마지막이...",
+      "category": "talk"
+    },
+    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -4860,18 +4872,6 @@
       "category": "낚시 방법"
     },
     {
-      "name_ko": "텐코 시부키",
-      "name_en": "Tenko Shibuki",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-26 20:51",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3716,
-      "avg_ccu": 3716,
-      "title": "켈룪켈룩떼껄룩캥캥",
-      "category": "영주님은 방치중: 중세 도시 키우기"
-    },
-    {
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
@@ -4882,6 +4882,18 @@
       "avg_ccu": 3313,
       "title": "[수동암즈] 이리 대회 후 다시 연습",
       "category": "이터널 리턴"
+    },
+    {
+      "name_ko": "텐코 시부키",
+      "name_en": "Tenko Shibuki",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-26 20:51",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3716,
+      "avg_ccu": 3716,
+      "title": "켈룪켈룩떼껄룩캥캥",
+      "category": "영주님은 방치중: 중세 도시 키우기"
     },
     {
       "name_ko": "아라하시 타비",
@@ -4905,18 +4917,6 @@
       "peak_ccu": 3707,
       "avg_ccu": 3582,
       "title": "일찍 일어날 수 있을까 내가",
-      "category": "talk"
-    },
-    {
-      "name_ko": "하나코 나나",
-      "name_en": "Hanako Nana",
-      "unit": "CLICHE",
-      "start_kst": "2026-09-09 17:10",
-      "observed_min": 533.8,
-      "n_points": 55,
-      "peak_ccu": 3704,
-      "avg_ccu": 2848,
-      "title": "왔다... 역재3 마지막이...",
       "category": "talk"
     },
     {
@@ -17863,6 +17863,10 @@
         [
           "2026-09-10 02:04",
           3416
+        ],
+        [
+          "2026-09-10 02:14",
+          3848
         ]
       ]
     },
