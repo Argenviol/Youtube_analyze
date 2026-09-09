@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-09T11:24:48.149029+00:00",
-    "n_snapshots": 16594,
+    "fetched_at": "2026-09-09T11:25:37.425987+00:00",
+    "n_snapshots": 16605,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-09T11:24:48.149029+00:00"
+      "2026-09-09T11:25:37.425987+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 15059,
-    "n_timepoints": 1506,
-    "span_hours": 677.49,
-    "observed_hours": 256.62,
+    "n_snapshots": 15069,
+    "n_timepoints": 1507,
+    "span_hours": 677.5,
+    "observed_hours": 256.79,
     "coverage_ratio": 0.379,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3404,
+    "n_live_rows": 3411,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-09T11:24:48.149029+00:00"
+    "last": "2026-09-09T11:25:37.425987+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -62,9 +62,9 @@
       "follower_delta": 5514,
       "follower_per_day": 195.3,
       "n_sessions": 90,
-      "n_live_points": 282,
+      "n_live_points": 283,
       "peak_ccu": 28071,
-      "avg_ccu": 4225,
+      "avg_ccu": 4221,
       "ccu_per_1k_followers": 130.36
     },
     {
@@ -72,13 +72,13 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 213591,
-      "follower_delta": 6165,
+      "followers": 213592,
+      "follower_delta": 6166,
       "follower_per_day": 218.4,
       "n_sessions": 79,
-      "n_live_points": 399,
+      "n_live_points": 400,
       "peak_ccu": 24385,
-      "avg_ccu": 3282,
+      "avg_ccu": 3283,
       "ccu_per_1k_followers": 114.17
     },
     {
@@ -86,13 +86,13 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 246031,
-      "follower_delta": 4914,
-      "follower_per_day": 174.1,
+      "followers": 246030,
+      "follower_delta": 4913,
+      "follower_per_day": 174.0,
       "n_sessions": 88,
-      "n_live_points": 368,
+      "n_live_points": 369,
       "peak_ccu": 13363,
-      "avg_ccu": 5621,
+      "avg_ccu": 5622,
       "ccu_per_1k_followers": 54.31
     },
     {
@@ -100,13 +100,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 215428,
-      "follower_delta": 6093,
-      "follower_per_day": 215.8,
+      "followers": 215429,
+      "follower_delta": 6094,
+      "follower_per_day": 215.9,
       "n_sessions": 110,
-      "n_live_points": 459,
+      "n_live_points": 460,
       "peak_ccu": 10461,
-      "avg_ccu": 3513,
+      "avg_ccu": 3515,
       "ccu_per_1k_followers": 48.56
     },
     {
@@ -114,13 +114,13 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 239712,
-      "follower_delta": 2864,
+      "followers": 239713,
+      "follower_delta": 2865,
       "follower_per_day": 101.5,
       "n_sessions": 110,
-      "n_live_points": 430,
+      "n_live_points": 431,
       "peak_ccu": 9749,
-      "avg_ccu": 3631,
+      "avg_ccu": 3633,
       "ccu_per_1k_followers": 40.67
     },
     {
@@ -132,9 +132,9 @@
       "follower_delta": 4473,
       "follower_per_day": 158.5,
       "n_sessions": 89,
-      "n_live_points": 392,
+      "n_live_points": 393,
       "peak_ccu": 8655,
-      "avg_ccu": 3508,
+      "avg_ccu": 3505,
       "ccu_per_1k_followers": 28.25
     },
     {
@@ -160,9 +160,9 @@
       "follower_delta": 6410,
       "follower_per_day": 227.1,
       "n_sessions": 85,
-      "n_live_points": 285,
+      "n_live_points": 286,
       "peak_ccu": 6964,
-      "avg_ccu": 3687,
+      "avg_ccu": 3682,
       "ccu_per_1k_followers": 30.88
     }
   ],
@@ -232,10 +232,10 @@
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
       "start_kst": "2026-09-09 15:38",
-      "observed_min": 286.1,
-      "n_points": 29,
+      "observed_min": 286.9,
+      "n_points": 30,
       "peak_ccu": 13363,
-      "avg_ccu": 8582,
+      "avg_ccu": 8507,
       "title": "4시..에 예 경찰 면접",
       "category": "talk"
     },
@@ -604,10 +604,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-09-09 17:41",
-      "observed_min": 163.5,
-      "n_points": 17,
+      "observed_min": 164.3,
+      "n_points": 18,
       "peak_ccu": 7472,
-      "avg_ccu": 4748,
+      "avg_ccu": 4709,
       "title": "오늘 기자 면접 결과 나와요.. 같이 봐요",
       "category": "talk"
     },
@@ -1528,10 +1528,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-09 15:18",
-      "observed_min": 306.5,
-      "n_points": 31,
+      "observed_min": 307.3,
+      "n_points": 32,
       "peak_ccu": 5754,
-      "avg_ccu": 3864,
+      "avg_ccu": 3878,
       "title": "마크아줌마 부활",
       "category": "마인크래프트"
     },
@@ -5896,10 +5896,10 @@
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
       "start_kst": "2026-09-09 17:10",
-      "observed_min": 194.1,
-      "n_points": 20,
+      "observed_min": 194.9,
+      "n_points": 21,
       "peak_ccu": 3386,
-      "avg_ccu": 2680,
+      "avg_ccu": 2712,
       "title": "왔다... 역재3 마지막이...",
       "category": "talk"
     },
@@ -6604,10 +6604,10 @@
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-09 19:03",
-      "observed_min": 81.7,
-      "n_points": 9,
+      "observed_min": 82.6,
+      "n_points": 10,
       "peak_ccu": 3193,
-      "avg_ccu": 2813,
+      "avg_ccu": 2848,
       "title": "안녕하세요 마시로 입니다...",
       "category": "talk"
     },
@@ -9444,6 +9444,18 @@
       "category": "귀무자 Way of the Sword"
     },
     {
+      "name_ko": "아오쿠모 린",
+      "name_en": "Aokumo Rin",
+      "unit": "CLICHE",
+      "start_kst": "2026-09-09 20:04",
+      "observed_min": 21.3,
+      "n_points": 4,
+      "peak_ccu": 2252,
+      "avg_ccu": 1851,
+      "title": "GTA 스토리 타임(쏴리 베이비 쿠리미...)",
+      "category": "talk"
+    },
+    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -9454,18 +9466,6 @@
       "avg_ccu": 2237,
       "title": "[떠비큐어] 코치님 전 칭찬 양파에요 (연습 2일차)",
       "category": "이터널 리턴"
-    },
-    {
-      "name_ko": "아오쿠모 린",
-      "name_en": "Aokumo Rin",
-      "unit": "CLICHE",
-      "start_kst": "2026-09-09 20:04",
-      "observed_min": 20.4,
-      "n_points": 3,
-      "peak_ccu": 2214,
-      "avg_ccu": 1717,
-      "title": "GTA 스토리 타임(쏴리 베이비 쿠리미...)",
-      "category": "talk"
     },
     {
       "name_ko": "시라유키 히나",
@@ -9552,6 +9552,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "아야츠노 유니",
+      "name_en": "Ayatsuno Yuni",
+      "unit": "EVERYS",
+      "start_kst": "2026-09-09 19:13",
+      "observed_min": 72.3,
+      "n_points": 8,
+      "peak_ccu": 2177,
+      "avg_ccu": 1840,
+      "title": "집 만들어야해 !!!!!!!!!<대형동물 나왔떄 ",
+      "category": "talk"
+    },
+    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -9621,18 +9633,6 @@
       "peak_ccu": 2149,
       "avg_ccu": 2149,
       "title": "찌로",
-      "category": "talk"
-    },
-    {
-      "name_ko": "아야츠노 유니",
-      "name_en": "Ayatsuno Yuni",
-      "unit": "EVERYS",
-      "start_kst": "2026-09-09 19:13",
-      "observed_min": 71.5,
-      "n_points": 7,
-      "peak_ccu": 2149,
-      "avg_ccu": 1792,
-      "title": "집 만들어야해 !!!!!!!!!<대형동물 나왔떄 ",
       "category": "talk"
     },
     {
@@ -12660,6 +12660,10 @@
         [
           "2026-09-09 20:24",
           2214
+        ],
+        [
+          "2026-09-09 20:25",
+          2252
         ]
       ]
     },
@@ -15858,6 +15862,10 @@
         [
           "2026-09-09 20:24",
           2149
+        ],
+        [
+          "2026-09-09 20:25",
+          2177
         ]
       ]
     },
@@ -17459,6 +17467,10 @@
         [
           "2026-09-09 20:24",
           3337
+        ],
+        [
+          "2026-09-09 20:25",
+          3356
         ]
       ]
     },
@@ -18592,6 +18604,10 @@
         [
           "2026-09-09 20:24",
           3193
+        ],
+        [
+          "2026-09-09 20:25",
+          3163
         ]
       ]
     },
@@ -20942,6 +20958,10 @@
         [
           "2026-09-09 20:24",
           4368
+        ],
+        [
+          "2026-09-09 20:25",
+          4322
         ]
       ]
     },
@@ -22419,6 +22439,10 @@
         [
           "2026-09-09 20:24",
           6313
+        ],
+        [
+          "2026-09-09 20:25",
+          6332
         ]
       ]
     },
@@ -24260,6 +24284,10 @@
         [
           "2026-09-09 20:24",
           4053
+        ],
+        [
+          "2026-09-09 20:25",
+          4061
         ]
       ]
     }
