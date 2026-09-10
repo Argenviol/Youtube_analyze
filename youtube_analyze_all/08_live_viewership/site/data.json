@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-10T09:17:38.100337+00:00",
-    "n_snapshots": 18046,
+    "fetched_at": "2026-09-10T09:18:30.651805+00:00",
+    "n_snapshots": 18057,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-10T09:17:38.100337+00:00"
+      "2026-09-10T09:18:30.651805+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 16379,
-    "n_timepoints": 1638,
-    "span_hours": 699.37,
-    "observed_hours": 279.13,
+    "n_snapshots": 16389,
+    "n_timepoints": 1639,
+    "span_hours": 699.38,
+    "observed_hours": 279.3,
     "coverage_ratio": 0.399,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3716,
+    "n_live_rows": 3720,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-10T09:17:38.100337+00:00"
+    "last": "2026-09-10T09:18:30.651805+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -76,9 +76,9 @@
       "follower_delta": 6285,
       "follower_per_day": 215.7,
       "n_sessions": 80,
-      "n_live_points": 445,
+      "n_live_points": 446,
       "peak_ccu": 24385,
-      "avg_ccu": 3247,
+      "avg_ccu": 3246,
       "ccu_per_1k_followers": 114.1
     },
     {
@@ -86,8 +86,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 246103,
-      "follower_delta": 4986,
+      "followers": 246104,
+      "follower_delta": 4987,
       "follower_per_day": 171.1,
       "n_sessions": 88,
       "n_live_points": 403,
@@ -104,7 +104,7 @@
       "follower_delta": 6197,
       "follower_per_day": 212.7,
       "n_sessions": 111,
-      "n_live_points": 508,
+      "n_live_points": 509,
       "peak_ccu": 10461,
       "avg_ccu": 3458,
       "ccu_per_1k_followers": 48.54
@@ -128,13 +128,13 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 306428,
-      "follower_delta": 4508,
+      "followers": 306427,
+      "follower_delta": 4507,
       "follower_per_day": 154.7,
       "n_sessions": 90,
-      "n_live_points": 429,
+      "n_live_points": 430,
       "peak_ccu": 8655,
-      "avg_ccu": 3385,
+      "avg_ccu": 3381,
       "ccu_per_1k_followers": 28.24
     },
     {
@@ -142,13 +142,13 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 259158,
-      "follower_delta": 6256,
-      "follower_per_day": 214.7,
+      "followers": 259157,
+      "follower_delta": 6255,
+      "follower_per_day": 214.6,
       "n_sessions": 67,
-      "n_live_points": 246,
+      "n_live_points": 247,
       "peak_ccu": 8585,
-      "avg_ccu": 4208,
+      "avg_ccu": 4214,
       "ccu_per_1k_followers": 33.13
     },
     {
@@ -808,10 +808,10 @@
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-10 15:34",
-      "observed_min": 163.4,
-      "n_points": 17,
+      "observed_min": 164.3,
+      "n_points": 18,
       "peak_ccu": 7028,
-      "avg_ccu": 5383,
+      "avg_ccu": 5401,
       "title": "경찰면접보러 왔씁니다. 크아아악",
       "category": "talk"
     },
@@ -6168,6 +6168,18 @@
       "category": "명조:워더링 웨이브"
     },
     {
+      "name_ko": "유즈하 리코",
+      "name_en": "Yuzuha Riko",
+      "unit": "CLICHE",
+      "start_kst": "2026-09-10 16:04",
+      "observed_min": 133.6,
+      "n_points": 15,
+      "peak_ccu": 3323,
+      "avg_ccu": 2423,
+      "title": "오늘은 재밌는거 해야징",
+      "category": "talk"
+    },
+    {
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
@@ -6196,10 +6208,10 @@
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
       "start_kst": "2026-09-10 17:06",
-      "observed_min": 71.5,
-      "n_points": 8,
+      "observed_min": 72.4,
+      "n_points": 9,
       "peak_ccu": 3314,
-      "avg_ccu": 2466,
+      "avg_ccu": 2528,
       "title": "나 왔다",
       "category": "talk"
     },
@@ -6228,18 +6240,6 @@
       "category": "오버워치"
     },
     {
-      "name_ko": "아카네 리제",
-      "name_en": "Akane Lize",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-17 20:30",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3308,
-      "avg_ccu": 3308,
-      "title": "유니버스 하빵날 저희 싸우는거 맞습니다 (w. 타비, 시로, 히나)",
-      "category": "갬블 위드 유어 프렌즈"
-    },
-    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -6250,6 +6250,18 @@
       "avg_ccu": 3135,
       "title": "수아님.",
       "category": "이터널 리턴"
+    },
+    {
+      "name_ko": "아카네 리제",
+      "name_en": "Akane Lize",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-17 20:30",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3308,
+      "avg_ccu": 3308,
+      "title": "유니버스 하빵날 저희 싸우는거 맞습니다 (w. 타비, 시로, 히나)",
+      "category": "갬블 위드 유어 프렌즈"
     },
     {
       "name_ko": "유즈하 리코",
@@ -6322,18 +6334,6 @@
       "avg_ccu": 3206,
       "title": "칠라스 아트 신작",
       "category": "종합 게임"
-    },
-    {
-      "name_ko": "유즈하 리코",
-      "name_en": "Yuzuha Riko",
-      "unit": "CLICHE",
-      "start_kst": "2026-09-10 16:04",
-      "observed_min": 132.8,
-      "n_points": 14,
-      "peak_ccu": 3272,
-      "avg_ccu": 2359,
-      "title": "오늘은 재밌는거 해야징",
-      "category": "talk"
     },
     {
       "name_ko": "네네코 마시로",
@@ -10092,6 +10092,18 @@
       "category": "로블록스"
     },
     {
+      "name_ko": "아야츠노 유니",
+      "name_en": "Ayatsuno Yuni",
+      "unit": "EVERYS",
+      "start_kst": "2026-09-10 18:07",
+      "observed_min": 11.1,
+      "n_points": 3,
+      "peak_ccu": 1789,
+      "avg_ccu": 1608,
+      "title": "익명으로 받은 질문에게 답장을 헤줄게 !!!!!!!!!!!!!!!",
+      "category": "talk"
+    },
+    {
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
@@ -10125,18 +10137,6 @@
       "peak_ccu": 1753,
       "avg_ccu": 1753,
       "title": "모해",
-      "category": "talk"
-    },
-    {
-      "name_ko": "아야츠노 유니",
-      "name_en": "Ayatsuno Yuni",
-      "unit": "EVERYS",
-      "start_kst": "2026-09-10 18:07",
-      "observed_min": 10.2,
-      "n_points": 2,
-      "peak_ccu": 1733,
-      "avg_ccu": 1518,
-      "title": "익명으로 받은 질문에게 답장을 헤줄게 !!!!!!!!!!!!!!!",
       "category": "talk"
     },
     {
@@ -11643,6 +11643,10 @@
         [
           "2026-09-10 18:17",
           5658
+        ],
+        [
+          "2026-09-10 18:18",
+          5705
         ]
       ]
     },
@@ -16258,6 +16262,10 @@
         [
           "2026-09-10 18:17",
           1733
+        ],
+        [
+          "2026-09-10 18:18",
+          1789
         ]
       ]
     },
@@ -18043,6 +18051,10 @@
         [
           "2026-09-10 18:17",
           3077
+        ],
+        [
+          "2026-09-10 18:18",
+          3030
         ]
       ]
     },
@@ -25568,6 +25580,10 @@
         [
           "2026-09-10 18:17",
           3272
+        ],
+        [
+          "2026-09-10 18:18",
+          3323
         ]
       ]
     }
