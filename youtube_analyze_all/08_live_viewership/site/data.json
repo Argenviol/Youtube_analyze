@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-10T20:44:50.132279+00:00",
-    "n_snapshots": 18816,
+    "fetched_at": "2026-09-10T20:55:04.858261+00:00",
+    "n_snapshots": 18827,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-10T20:44:50.132279+00:00"
+      "2026-09-10T20:55:04.858261+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 17079,
-    "n_timepoints": 1708,
-    "span_hours": 710.82,
-    "observed_hours": 291.03,
-    "coverage_ratio": 0.409,
+    "n_snapshots": 17089,
+    "n_timepoints": 1709,
+    "span_hours": 710.99,
+    "observed_hours": 291.2,
+    "coverage_ratio": 0.41,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3980,
+    "n_live_rows": 3981,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-10T20:44:50.132279+00:00"
+    "last": "2026-09-10T20:55:04.858261+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 163914,
-      "follower_delta": 7173,
+      "followers": 163915,
+      "follower_delta": 7174,
       "follower_per_day": 242.2,
       "n_sessions": 48,
       "n_live_points": 155,
@@ -46,7 +46,7 @@
       "unit": "UNIVERSE",
       "followers": 261482,
       "follower_delta": 6156,
-      "follower_per_day": 207.9,
+      "follower_per_day": 207.8,
       "n_sessions": 104,
       "n_live_points": 405,
       "peak_ccu": 38237,
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 213815,
-      "follower_delta": 6389,
+      "followers": 213816,
+      "follower_delta": 6390,
       "follower_per_day": 215.7,
       "n_sessions": 80,
       "n_live_points": 497,
@@ -114,13 +114,13 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 239828,
-      "follower_delta": 2980,
+      "followers": 239829,
+      "follower_delta": 2981,
       "follower_per_day": 100.6,
       "n_sessions": 111,
-      "n_live_points": 524,
+      "n_live_points": 525,
       "peak_ccu": 9749,
-      "avg_ccu": 3528,
+      "avg_ccu": 3527,
       "ccu_per_1k_followers": 40.65
     },
     {
@@ -128,9 +128,9 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 225730,
-      "follower_delta": 6630,
-      "follower_per_day": 223.9,
+      "followers": 225729,
+      "follower_delta": 6629,
+      "follower_per_day": 223.8,
       "n_sessions": 86,
       "n_live_points": 358,
       "peak_ccu": 9414,
@@ -2140,8 +2140,8 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-10 19:30",
-      "observed_min": 614.8,
-      "n_points": 63,
+      "observed_min": 625.1,
+      "n_points": 64,
       "peak_ccu": 5179,
       "avg_ccu": 3150,
       "title": "라스트댄스",
@@ -22754,6 +22754,10 @@
         [
           "2026-09-11 05:44",
           3036
+        ],
+        [
+          "2026-09-11 05:55",
+          3112
         ]
       ]
     },
