@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-10T07:15:05.794909+00:00",
-    "n_snapshots": 17914,
+    "fetched_at": "2026-09-10T07:25:18.306941+00:00",
+    "n_snapshots": 17925,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-10T07:15:05.794909+00:00"
+      "2026-09-10T07:25:18.306941+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 16259,
-    "n_timepoints": 1626,
-    "span_hours": 697.32,
-    "observed_hours": 277.1,
-    "coverage_ratio": 0.397,
+    "n_snapshots": 16269,
+    "n_timepoints": 1627,
+    "span_hours": 697.49,
+    "observed_hours": 277.27,
+    "coverage_ratio": 0.398,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3678,
+    "n_live_rows": 3681,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-10T07:15:05.794909+00:00"
+    "last": "2026-09-10T07:25:18.306941+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 163841,
       "follower_delta": 7100,
-      "follower_per_day": 244.4,
+      "follower_per_day": 244.3,
       "n_sessions": 48,
       "n_live_points": 155,
       "peak_ccu": 38402,
@@ -58,14 +58,14 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 215472,
-      "follower_delta": 5653,
+      "followers": 215475,
+      "follower_delta": 5656,
       "follower_per_day": 194.6,
       "n_sessions": 91,
-      "n_live_points": 344,
+      "n_live_points": 345,
       "peak_ccu": 28071,
       "avg_ccu": 4112,
-      "ccu_per_1k_followers": 130.28
+      "ccu_per_1k_followers": 130.27
     },
     {
       "rank": 4,
@@ -100,13 +100,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 215498,
-      "follower_delta": 6163,
-      "follower_per_day": 212.1,
+      "followers": 215501,
+      "follower_delta": 6166,
+      "follower_per_day": 212.2,
       "n_sessions": 111,
-      "n_live_points": 496,
+      "n_live_points": 497,
       "peak_ccu": 10461,
-      "avg_ccu": 3480,
+      "avg_ccu": 3476,
       "ccu_per_1k_followers": 48.54
     },
     {
@@ -128,8 +128,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 306413,
-      "follower_delta": 4493,
+      "followers": 306414,
+      "follower_delta": 4494,
       "follower_per_day": 154.6,
       "n_sessions": 89,
       "n_live_points": 427,
@@ -142,13 +142,13 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 259067,
-      "follower_delta": 6165,
+      "followers": 259070,
+      "follower_delta": 6168,
       "follower_per_day": 212.2,
       "n_sessions": 67,
-      "n_live_points": 234,
+      "n_live_points": 235,
       "peak_ccu": 8585,
-      "avg_ccu": 4100,
+      "avg_ccu": 4112,
       "ccu_per_1k_followers": 33.14
     },
     {
@@ -158,7 +158,7 @@
       "unit": "CLICHE",
       "followers": 225584,
       "follower_delta": 6484,
-      "follower_per_day": 223.2,
+      "follower_per_day": 223.1,
       "n_sessions": 85,
       "n_live_points": 316,
       "peak_ccu": 6964,
@@ -852,6 +852,18 @@
       "category": "이터널 리턴"
     },
     {
+      "name_ko": "아카네 리제",
+      "name_en": "Akane Lize",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-10 15:34",
+      "observed_min": 51.1,
+      "n_points": 6,
+      "peak_ccu": 6943,
+      "avg_ccu": 3805,
+      "title": "경찰면접보러 왔씁니다. 크아아악",
+      "category": "talk"
+    },
+    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -1516,10 +1528,10 @@
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-10 11:48",
-      "observed_min": 266.4,
-      "n_points": 28,
+      "observed_min": 276.6,
+      "n_points": 29,
       "peak_ccu": 5789,
-      "avg_ccu": 4486,
+      "avg_ccu": 4473,
       "title": "오늘 날씨 머야ㅑㅑㅑㅑ",
       "category": "talk"
     },
@@ -1786,18 +1798,6 @@
       "avg_ccu": 5493,
       "title": "오랜만에 돌아가는 그 곳",
       "category": "이터널 리턴"
-    },
-    {
-      "name_ko": "아카네 리제",
-      "name_en": "Akane Lize",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-10 15:34",
-      "observed_min": 40.9,
-      "n_points": 5,
-      "peak_ccu": 5467,
-      "avg_ccu": 3178,
-      "title": "경찰면접보러 왔씁니다. 크아아악",
-      "category": "talk"
     },
     {
       "name_ko": "아라하시 타비",
@@ -10335,6 +10335,18 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
+      "start_kst": "2026-09-10 16:04",
+      "observed_min": 20.4,
+      "n_points": 3,
+      "peak_ccu": 1512,
+      "avg_ccu": 1264,
+      "title": "오늘은 재밌는거 해야징",
+      "category": "talk"
+    },
+    {
+      "name_ko": "유즈하 리코",
+      "name_en": "Yuzuha Riko",
+      "unit": "CLICHE",
       "start_kst": "2026-08-25 16:26",
       "observed_min": 0.0,
       "n_points": 1,
@@ -10425,18 +10437,6 @@
       "peak_ccu": 1409,
       "avg_ccu": 1409,
       "title": "팔척귀신눈나랑 공포연애?미연시???게임",
-      "category": "talk"
-    },
-    {
-      "name_ko": "유즈하 리코",
-      "name_en": "Yuzuha Riko",
-      "unit": "CLICHE",
-      "start_kst": "2026-09-10 16:04",
-      "observed_min": 10.2,
-      "n_points": 2,
-      "peak_ccu": 1356,
-      "avg_ccu": 1140,
-      "title": "오늘은 재밌는거 해야징",
       "category": "talk"
     },
     {
@@ -11571,6 +11571,10 @@
         [
           "2026-09-10 16:15",
           5467
+        ],
+        [
+          "2026-09-10 16:25",
+          6943
         ]
       ]
     },
@@ -19312,6 +19316,10 @@
         [
           "2026-09-10 16:15",
           4296
+        ],
+        [
+          "2026-09-10 16:25",
+          4117
         ]
       ]
     },
@@ -25392,6 +25400,10 @@
         [
           "2026-09-10 16:15",
           1356
+        ],
+        [
+          "2026-09-10 16:25",
+          1512
         ]
       ]
     }
