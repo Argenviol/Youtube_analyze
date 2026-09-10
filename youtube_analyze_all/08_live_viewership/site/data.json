@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-10T20:24:21.425039+00:00",
-    "n_snapshots": 18794,
+    "fetched_at": "2026-09-10T20:34:35.767628+00:00",
+    "n_snapshots": 18805,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-10T20:24:21.425039+00:00"
+      "2026-09-10T20:34:35.767628+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 17059,
-    "n_timepoints": 1706,
-    "span_hours": 710.48,
-    "observed_hours": 290.69,
+    "n_snapshots": 17069,
+    "n_timepoints": 1707,
+    "span_hours": 710.65,
+    "observed_hours": 290.86,
     "coverage_ratio": 0.409,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3978,
+    "n_live_rows": 3979,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-10T20:24:21.425039+00:00"
+    "last": "2026-09-10T20:34:35.767628+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -46,7 +46,7 @@
       "unit": "UNIVERSE",
       "followers": 261482,
       "follower_delta": 6156,
-      "follower_per_day": 208.0,
+      "follower_per_day": 207.9,
       "n_sessions": 104,
       "n_live_points": 405,
       "peak_ccu": 38237,
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 215556,
       "follower_delta": 5737,
-      "follower_per_day": 193.8,
+      "follower_per_day": 193.7,
       "n_sessions": 91,
       "n_live_points": 348,
       "peak_ccu": 28071,
@@ -74,7 +74,7 @@
       "unit": "CLICHE",
       "followers": 213814,
       "follower_delta": 6388,
-      "follower_per_day": 215.8,
+      "follower_per_day": 215.7,
       "n_sessions": 80,
       "n_live_points": 497,
       "peak_ccu": 24385,
@@ -114,13 +114,13 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 239825,
-      "follower_delta": 2977,
+      "followers": 239827,
+      "follower_delta": 2979,
       "follower_per_day": 100.6,
       "n_sessions": 111,
-      "n_live_points": 522,
+      "n_live_points": 523,
       "peak_ccu": 9749,
-      "avg_ccu": 3530,
+      "avg_ccu": 3529,
       "ccu_per_1k_followers": 40.65
     },
     {
@@ -130,7 +130,7 @@
       "unit": "CLICHE",
       "followers": 225730,
       "follower_delta": 6630,
-      "follower_per_day": 224.0,
+      "follower_per_day": 223.9,
       "n_sessions": 86,
       "n_live_points": 358,
       "peak_ccu": 9414,
@@ -144,7 +144,7 @@
       "unit": "EVERYS",
       "followers": 306502,
       "follower_delta": 4582,
-      "follower_per_day": 154.8,
+      "follower_per_day": 154.7,
       "n_sessions": 90,
       "n_live_points": 472,
       "peak_ccu": 8655,
@@ -2140,10 +2140,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-10 19:30",
-      "observed_min": 594.3,
-      "n_points": 61,
+      "observed_min": 604.6,
+      "n_points": 62,
       "peak_ccu": 5179,
-      "avg_ccu": 3154,
+      "avg_ccu": 3152,
       "title": "라스트댄스",
       "category": "마인크래프트"
     },
@@ -22746,6 +22746,10 @@
         [
           "2026-09-11 05:24",
           3077
+        ],
+        [
+          "2026-09-11 05:34",
+          3041
         ]
       ]
     },
