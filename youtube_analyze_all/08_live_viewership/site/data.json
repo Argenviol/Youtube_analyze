@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-10T02:48:41.691406+00:00",
-    "n_snapshots": 17617,
+    "fetched_at": "2026-09-10T02:58:54.951442+00:00",
+    "n_snapshots": 17628,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-10T02:48:41.691406+00:00"
+      "2026-09-10T02:58:54.951442+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 15989,
-    "n_timepoints": 1599,
-    "span_hours": 692.88,
-    "observed_hours": 272.51,
+    "n_snapshots": 15999,
+    "n_timepoints": 1600,
+    "span_hours": 693.05,
+    "observed_hours": 272.68,
     "coverage_ratio": 0.393,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3644,
+    "n_live_rows": 3645,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-10T02:48:41.691406+00:00"
+    "last": "2026-09-10T02:58:54.951442+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 163833,
       "follower_delta": 7092,
-      "follower_per_day": 245.7,
+      "follower_per_day": 245.6,
       "n_sessions": 48,
       "n_live_points": 155,
       "peak_ccu": 38402,
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 215399,
-      "follower_delta": 5580,
-      "follower_per_day": 193.3,
+      "followers": 215398,
+      "follower_delta": 5579,
+      "follower_per_day": 193.2,
       "n_sessions": 91,
-      "n_live_points": 317,
+      "n_live_points": 318,
       "peak_ccu": 28071,
-      "avg_ccu": 4069,
+      "avg_ccu": 4062,
       "ccu_per_1k_followers": 130.32
     },
     {
@@ -88,7 +88,7 @@
       "unit": "CLICHE",
       "followers": 246087,
       "follower_delta": 4970,
-      "follower_per_day": 172.2,
+      "follower_per_day": 172.1,
       "n_sessions": 88,
       "n_live_points": 403,
       "peak_ccu": 13363,
@@ -100,8 +100,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 215485,
-      "follower_delta": 6150,
+      "followers": 215486,
+      "follower_delta": 6151,
       "follower_per_day": 213.0,
       "n_sessions": 110,
       "n_live_points": 494,
@@ -142,8 +142,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 259035,
-      "follower_delta": 6133,
+      "followers": 259036,
+      "follower_delta": 6134,
       "follower_per_day": 212.4,
       "n_sessions": 66,
       "n_live_points": 229,
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 225570,
-      "follower_delta": 6470,
+      "followers": 225571,
+      "follower_delta": 6471,
       "follower_per_day": 224.1,
       "n_sessions": 85,
       "n_live_points": 316,
@@ -10008,6 +10008,18 @@
       "category": "데드 바이 데이라이트"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-10 11:48",
+      "observed_min": 10.2,
+      "n_points": 2,
+      "peak_ccu": 1854,
+      "avg_ccu": 1299,
+      "title": "오늘 날씨 머야ㅑㅑㅑㅑ",
+      "category": "talk"
+    },
+    {
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
@@ -10116,18 +10128,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-08-14 20:08",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 1716,
-      "avg_ccu": 1716,
-      "title": "감기용가리의 늙크크 수리점...(´。＿。｀)",
-      "category": "리스토리: 칠 일렉트로닉스 리페어스"
-    },
-    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -10143,11 +10143,11 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "start_kst": "2026-08-14 20:57",
+      "start_kst": "2026-08-14 20:08",
       "observed_min": 0.0,
       "n_points": 1,
-      "peak_ccu": 1700,
-      "avg_ccu": 1700,
+      "peak_ccu": 1716,
+      "avg_ccu": 1716,
       "title": "감기용가리의 늙크크 수리점...(´。＿。｀)",
       "category": "리스토리: 칠 일렉트로닉스 리페어스"
     },
@@ -10162,6 +10162,18 @@
       "avg_ccu": 1700,
       "title": "방제모",
       "category": "talk"
+    },
+    {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-14 20:57",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 1700,
+      "avg_ccu": 1700,
+      "title": "감기용가리의 늙크크 수리점...(´。＿。｀)",
+      "category": "리스토리: 칠 일렉트로닉스 리페어스"
     },
     {
       "name_ko": "아야츠노 유니",
@@ -10497,18 +10509,6 @@
       "peak_ccu": 936,
       "avg_ccu": 936,
       "title": "스텔라가 ~~라면? 망상컨텐츠",
-      "category": "talk"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-10 11:48",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 744,
-      "avg_ccu": 744,
-      "title": "오늘 날씨 머야ㅑㅑㅑㅑ",
       "category": "talk"
     },
     {
@@ -19160,6 +19160,10 @@
         [
           "2026-09-10 11:48",
           744
+        ],
+        [
+          "2026-09-10 11:58",
+          1854
         ]
       ]
     },
