@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-10T04:31:43.506623+00:00",
-    "n_snapshots": 17738,
+    "fetched_at": "2026-09-10T04:41:56.262339+00:00",
+    "n_snapshots": 17749,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-10T04:31:43.506623+00:00"
+      "2026-09-10T04:41:56.262339+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 16099,
-    "n_timepoints": 1610,
-    "span_hours": 694.6,
-    "observed_hours": 274.38,
+    "n_snapshots": 16109,
+    "n_timepoints": 1611,
+    "span_hours": 694.77,
+    "observed_hours": 274.55,
     "coverage_ratio": 0.395,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3655,
+    "n_live_rows": 3656,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-10T04:31:43.506623+00:00"
+    "last": "2026-09-10T04:41:56.262339+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -46,7 +46,7 @@
       "unit": "UNIVERSE",
       "followers": 261447,
       "follower_delta": 6121,
-      "follower_per_day": 211.5,
+      "follower_per_day": 211.4,
       "n_sessions": 104,
       "n_live_points": 405,
       "peak_ccu": 38237,
@@ -62,9 +62,9 @@
       "follower_delta": 5612,
       "follower_per_day": 193.9,
       "n_sessions": 91,
-      "n_live_points": 328,
+      "n_live_points": 329,
       "peak_ccu": 28071,
-      "avg_ccu": 4058,
+      "avg_ccu": 4060,
       "ccu_per_1k_followers": 130.3
     },
     {
@@ -100,8 +100,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 215489,
-      "follower_delta": 6154,
+      "followers": 215490,
+      "follower_delta": 6155,
       "follower_per_day": 212.6,
       "n_sessions": 110,
       "n_live_points": 494,
@@ -144,7 +144,7 @@
       "unit": "UNIVERSE",
       "followers": 259043,
       "follower_delta": 6141,
-      "follower_per_day": 212.2,
+      "follower_per_day": 212.1,
       "n_sessions": 66,
       "n_live_points": 229,
       "peak_ccu": 8585,
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 225575,
-      "follower_delta": 6475,
+      "followers": 225577,
+      "follower_delta": 6477,
       "follower_per_day": 223.7,
       "n_sessions": 85,
       "n_live_points": 316,
@@ -2536,10 +2536,10 @@
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-10 11:48",
-      "observed_min": 103.0,
-      "n_points": 12,
+      "observed_min": 113.2,
+      "n_points": 13,
       "peak_ccu": 4882,
-      "avg_ccu": 3491,
+      "avg_ccu": 3597,
       "title": "오늘 날씨 머야ㅑㅑㅑㅑ",
       "category": "talk"
     },
@@ -19204,6 +19204,10 @@
         [
           "2026-09-10 13:31",
           4882
+        ],
+        [
+          "2026-09-10 13:41",
+          4871
         ]
       ]
     },
