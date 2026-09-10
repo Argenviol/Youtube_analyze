@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-10T05:02:21.495721+00:00",
-    "n_snapshots": 17771,
+    "fetched_at": "2026-09-10T05:12:34.073492+00:00",
+    "n_snapshots": 17782,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-10T05:02:21.495721+00:00"
+      "2026-09-10T05:12:34.073492+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 16129,
-    "n_timepoints": 1613,
-    "span_hours": 695.11,
-    "observed_hours": 274.89,
-    "coverage_ratio": 0.395,
+    "n_snapshots": 16139,
+    "n_timepoints": 1614,
+    "span_hours": 695.28,
+    "observed_hours": 275.06,
+    "coverage_ratio": 0.396,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3658,
+    "n_live_rows": 3659,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-10T05:02:21.495721+00:00"
+    "last": "2026-09-10T05:12:34.073492+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -58,14 +58,14 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 215438,
-      "follower_delta": 5619,
-      "follower_per_day": 194.0,
+      "followers": 215442,
+      "follower_delta": 5623,
+      "follower_per_day": 194.1,
       "n_sessions": 91,
-      "n_live_points": 331,
+      "n_live_points": 332,
       "peak_ccu": 28071,
-      "avg_ccu": 4066,
-      "ccu_per_1k_followers": 130.3
+      "avg_ccu": 4069,
+      "ccu_per_1k_followers": 130.29
     },
     {
       "rank": 4,
@@ -74,7 +74,7 @@
       "unit": "CLICHE",
       "followers": 213681,
       "follower_delta": 6255,
-      "follower_per_day": 216.0,
+      "follower_per_day": 215.9,
       "n_sessions": 79,
       "n_live_points": 437,
       "peak_ccu": 24385,
@@ -88,7 +88,7 @@
       "unit": "CLICHE",
       "followers": 246092,
       "follower_delta": 4975,
-      "follower_per_day": 171.8,
+      "follower_per_day": 171.7,
       "n_sessions": 88,
       "n_live_points": 403,
       "peak_ccu": 13363,
@@ -116,7 +116,7 @@
       "unit": "UNIVERSE",
       "followers": 239743,
       "follower_delta": 2895,
-      "follower_per_day": 100.0,
+      "follower_per_day": 99.9,
       "n_sessions": 110,
       "n_live_points": 461,
       "peak_ccu": 9749,
@@ -128,8 +128,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 306411,
-      "follower_delta": 4491,
+      "followers": 306412,
+      "follower_delta": 4492,
       "follower_per_day": 155.1,
       "n_sessions": 89,
       "n_live_points": 427,
@@ -156,9 +156,9 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 225578,
-      "follower_delta": 6478,
-      "follower_per_day": 223.7,
+      "followers": 225579,
+      "follower_delta": 6479,
+      "follower_per_day": 223.6,
       "n_sessions": 85,
       "n_live_points": 316,
       "peak_ccu": 6964,
@@ -2160,6 +2160,18 @@
       "category": "데드 바이 데이라이트"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-10 11:48",
+      "observed_min": 143.9,
+      "n_points": 16,
+      "peak_ccu": 5092,
+      "avg_ccu": 3864,
+      "title": "오늘 날씨 머야ㅑㅑㅑㅑ",
+      "category": "talk"
+    },
+    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -2289,18 +2301,6 @@
       "peak_ccu": 5024,
       "avg_ccu": 5024,
       "title": "로또에당첨된다면",
-      "category": "talk"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-10 11:48",
-      "observed_min": 133.7,
-      "n_points": 15,
-      "peak_ccu": 5022,
-      "avg_ccu": 3782,
-      "title": "오늘 날씨 머야ㅑㅑㅑㅑ",
       "category": "talk"
     },
     {
@@ -19216,6 +19216,10 @@
         [
           "2026-09-10 14:02",
           5022
+        ],
+        [
+          "2026-09-10 14:12",
+          5092
         ]
       ]
     },
