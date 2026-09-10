@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-10T18:31:03.886366+00:00",
-    "n_snapshots": 18662,
+    "fetched_at": "2026-09-10T18:41:17.586903+00:00",
+    "n_snapshots": 18673,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-10T18:31:03.886366+00:00"
+      "2026-09-10T18:41:17.586903+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 16939,
-    "n_timepoints": 1694,
-    "span_hours": 708.59,
-    "observed_hours": 288.65,
+    "n_snapshots": 16949,
+    "n_timepoints": 1695,
+    "span_hours": 708.76,
+    "observed_hours": 288.82,
     "coverage_ratio": 0.407,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3962,
+    "n_live_rows": 3964,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-10T18:31:03.886366+00:00"
+    "last": "2026-09-10T18:41:17.586903+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 163913,
       "follower_delta": 7172,
-      "follower_per_day": 243.0,
+      "follower_per_day": 242.9,
       "n_sessions": 48,
       "n_live_points": 155,
       "peak_ccu": 38402,
@@ -74,7 +74,7 @@
       "unit": "CLICHE",
       "followers": 213812,
       "follower_delta": 6386,
-      "follower_per_day": 216.3,
+      "follower_per_day": 216.2,
       "n_sessions": 80,
       "n_live_points": 497,
       "peak_ccu": 24385,
@@ -100,13 +100,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 215660,
-      "follower_delta": 6325,
+      "followers": 215661,
+      "follower_delta": 6326,
       "follower_per_day": 214.2,
       "n_sessions": 111,
-      "n_live_points": 564,
+      "n_live_points": 565,
       "peak_ccu": 10461,
-      "avg_ccu": 3566,
+      "avg_ccu": 3567,
       "ccu_per_1k_followers": 48.51
     },
     {
@@ -116,11 +116,11 @@
       "unit": "UNIVERSE",
       "followers": 239817,
       "follower_delta": 2969,
-      "follower_per_day": 100.6,
+      "follower_per_day": 100.5,
       "n_sessions": 111,
-      "n_live_points": 510,
+      "n_live_points": 511,
       "peak_ccu": 9749,
-      "avg_ccu": 3546,
+      "avg_ccu": 3544,
       "ccu_per_1k_followers": 40.65
     },
     {
@@ -130,7 +130,7 @@
       "unit": "CLICHE",
       "followers": 225734,
       "follower_delta": 6634,
-      "follower_per_day": 224.7,
+      "follower_per_day": 224.6,
       "n_sessions": 86,
       "n_live_points": 358,
       "peak_ccu": 9414,
@@ -1804,10 +1804,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-09-10 16:04",
-      "observed_min": 686.2,
-      "n_points": 70,
+      "observed_min": 696.4,
+      "n_points": 71,
       "peak_ccu": 5499,
-      "avg_ccu": 4111,
+      "avg_ccu": 4106,
       "title": "오늘은 재밌는거 해야징",
       "category": "talk"
     },
@@ -2140,10 +2140,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-10 19:30",
-      "observed_min": 481.1,
-      "n_points": 49,
+      "observed_min": 491.3,
+      "n_points": 50,
       "peak_ccu": 5179,
-      "avg_ccu": 3232,
+      "avg_ccu": 3217,
       "title": "라스트댄스",
       "category": "마인크래프트"
     },
@@ -22698,6 +22698,10 @@
         [
           "2026-09-11 03:31",
           2519
+        ],
+        [
+          "2026-09-11 03:41",
+          2512
         ]
       ]
     },
@@ -26576,6 +26580,10 @@
         [
           "2026-09-11 03:31",
           3828
+        ],
+        [
+          "2026-09-11 03:41",
+          3766
         ]
       ]
     }
