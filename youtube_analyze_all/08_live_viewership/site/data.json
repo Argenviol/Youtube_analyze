@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-10T18:41:17.586903+00:00",
-    "n_snapshots": 18673,
+    "fetched_at": "2026-09-10T18:51:30.870812+00:00",
+    "n_snapshots": 18684,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-10T18:41:17.586903+00:00"
+      "2026-09-10T18:51:30.870812+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 16949,
-    "n_timepoints": 1695,
-    "span_hours": 708.76,
-    "observed_hours": 288.82,
-    "coverage_ratio": 0.407,
+    "n_snapshots": 16959,
+    "n_timepoints": 1696,
+    "span_hours": 708.93,
+    "observed_hours": 288.99,
+    "coverage_ratio": 0.408,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3964,
+    "n_live_rows": 3966,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-10T18:41:17.586903+00:00"
+    "last": "2026-09-10T18:51:30.870812+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 163913,
       "follower_delta": 7172,
-      "follower_per_day": 242.9,
+      "follower_per_day": 242.8,
       "n_sessions": 48,
       "n_live_points": 155,
       "peak_ccu": 38402,
@@ -44,9 +44,9 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 261479,
-      "follower_delta": 6153,
-      "follower_per_day": 208.4,
+      "followers": 261480,
+      "follower_delta": 6154,
+      "follower_per_day": 208.3,
       "n_sessions": 104,
       "n_live_points": 405,
       "peak_ccu": 38237,
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 215553,
       "follower_delta": 5734,
-      "follower_per_day": 194.2,
+      "follower_per_day": 194.1,
       "n_sessions": 91,
       "n_live_points": 348,
       "peak_ccu": 28071,
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 213812,
-      "follower_delta": 6386,
+      "followers": 213813,
+      "follower_delta": 6387,
       "follower_per_day": 216.2,
       "n_sessions": 80,
       "n_live_points": 497,
@@ -86,8 +86,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 246140,
-      "follower_delta": 5023,
+      "followers": 246141,
+      "follower_delta": 5024,
       "follower_per_day": 170.1,
       "n_sessions": 88,
       "n_live_points": 403,
@@ -104,7 +104,7 @@
       "follower_delta": 6326,
       "follower_per_day": 214.2,
       "n_sessions": 111,
-      "n_live_points": 565,
+      "n_live_points": 566,
       "peak_ccu": 10461,
       "avg_ccu": 3567,
       "ccu_per_1k_followers": 48.51
@@ -114,13 +114,13 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 239817,
-      "follower_delta": 2969,
+      "followers": 239816,
+      "follower_delta": 2968,
       "follower_per_day": 100.5,
       "n_sessions": 111,
-      "n_live_points": 511,
+      "n_live_points": 512,
       "peak_ccu": 9749,
-      "avg_ccu": 3544,
+      "avg_ccu": 3542,
       "ccu_per_1k_followers": 40.65
     },
     {
@@ -144,7 +144,7 @@
       "unit": "EVERYS",
       "followers": 306502,
       "follower_delta": 4582,
-      "follower_per_day": 155.2,
+      "follower_per_day": 155.1,
       "n_sessions": 90,
       "n_live_points": 472,
       "peak_ccu": 8655,
@@ -158,7 +158,7 @@
       "unit": "UNIVERSE",
       "followers": 259215,
       "follower_delta": 6313,
-      "follower_per_day": 213.8,
+      "follower_per_day": 213.7,
       "n_sessions": 67,
       "n_live_points": 250,
       "peak_ccu": 8585,
@@ -1804,10 +1804,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-09-10 16:04",
-      "observed_min": 696.4,
-      "n_points": 71,
+      "observed_min": 706.6,
+      "n_points": 72,
       "peak_ccu": 5499,
-      "avg_ccu": 4106,
+      "avg_ccu": 4101,
       "title": "오늘은 재밌는거 해야징",
       "category": "talk"
     },
@@ -2140,10 +2140,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-10 19:30",
-      "observed_min": 491.3,
-      "n_points": 50,
+      "observed_min": 501.5,
+      "n_points": 51,
       "peak_ccu": 5179,
-      "avg_ccu": 3217,
+      "avg_ccu": 3202,
       "title": "라스트댄스",
       "category": "마인크래프트"
     },
@@ -22702,6 +22702,10 @@
         [
           "2026-09-11 03:41",
           2512
+        ],
+        [
+          "2026-09-11 03:51",
+          2451
         ]
       ]
     },
@@ -26584,6 +26588,10 @@
         [
           "2026-09-11 03:41",
           3766
+        ],
+        [
+          "2026-09-11 03:51",
+          3799
         ]
       ]
     }
