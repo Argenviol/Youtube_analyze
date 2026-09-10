@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-10T06:13:49.192316+00:00",
-    "n_snapshots": 17848,
+    "fetched_at": "2026-09-10T06:24:02.212986+00:00",
+    "n_snapshots": 17859,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-10T06:13:49.192316+00:00"
+      "2026-09-10T06:24:02.212986+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 16199,
-    "n_timepoints": 1620,
-    "span_hours": 696.3,
-    "observed_hours": 276.08,
-    "coverage_ratio": 0.396,
+    "n_snapshots": 16209,
+    "n_timepoints": 1621,
+    "span_hours": 696.47,
+    "observed_hours": 276.25,
+    "coverage_ratio": 0.397,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3665,
+    "n_live_rows": 3666,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-10T06:13:49.192316+00:00"
+    "last": "2026-09-10T06:24:02.212986+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 163839,
-      "follower_delta": 7098,
+      "followers": 163841,
+      "follower_delta": 7100,
       "follower_per_day": 244.7,
       "n_sessions": 48,
       "n_live_points": 155,
@@ -44,9 +44,9 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 261450,
-      "follower_delta": 6124,
-      "follower_per_day": 211.1,
+      "followers": 261448,
+      "follower_delta": 6122,
+      "follower_per_day": 211.0,
       "n_sessions": 104,
       "n_live_points": 405,
       "peak_ccu": 38237,
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 215463,
-      "follower_delta": 5644,
-      "follower_per_day": 194.5,
+      "followers": 215466,
+      "follower_delta": 5647,
+      "follower_per_day": 194.6,
       "n_sessions": 91,
-      "n_live_points": 338,
+      "n_live_points": 339,
       "peak_ccu": 28071,
-      "avg_ccu": 4093,
+      "avg_ccu": 4098,
       "ccu_per_1k_followers": 130.28
     },
     {
@@ -72,9 +72,9 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 213681,
-      "follower_delta": 6255,
-      "follower_per_day": 215.6,
+      "followers": 213680,
+      "follower_delta": 6254,
+      "follower_per_day": 215.5,
       "n_sessions": 79,
       "n_live_points": 437,
       "peak_ccu": 24385,
@@ -88,7 +88,7 @@
       "unit": "CLICHE",
       "followers": 246092,
       "follower_delta": 4975,
-      "follower_per_day": 171.5,
+      "follower_per_day": 171.4,
       "n_sessions": 88,
       "n_live_points": 403,
       "peak_ccu": 13363,
@@ -100,9 +100,9 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 215494,
-      "follower_delta": 6159,
-      "follower_per_day": 212.3,
+      "followers": 215493,
+      "follower_delta": 6158,
+      "follower_per_day": 212.2,
       "n_sessions": 110,
       "n_live_points": 494,
       "peak_ccu": 10461,
@@ -114,8 +114,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 239746,
-      "follower_delta": 2898,
+      "followers": 239747,
+      "follower_delta": 2899,
       "follower_per_day": 99.9,
       "n_sessions": 110,
       "n_live_points": 461,
@@ -156,9 +156,9 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 225581,
-      "follower_delta": 6481,
-      "follower_per_day": 223.4,
+      "followers": 225579,
+      "follower_delta": 6479,
+      "follower_per_day": 223.3,
       "n_sessions": 85,
       "n_live_points": 316,
       "peak_ccu": 6964,
@@ -1560,6 +1560,18 @@
       "category": "마인크래프트"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-10 11:48",
+      "observed_min": 215.3,
+      "n_points": 23,
+      "peak_ccu": 5730,
+      "avg_ccu": 4354,
+      "title": "오늘 날씨 머야ㅑㅑㅑㅑ",
+      "category": "talk"
+    },
+    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -1582,18 +1594,6 @@
       "avg_ccu": 5164,
       "title": "✨도태녀 탈출 기원 (ﾉ*ФωФ)ﾉ✨",
       "category": "마인크래프트"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-10 11:48",
-      "observed_min": 205.1,
-      "n_points": 22,
-      "peak_ccu": 5690,
-      "avg_ccu": 4291,
-      "title": "오늘 날씨 머야ㅑㅑㅑㅑ",
-      "category": "talk"
     },
     {
       "name_ko": "시라유키 히나",
@@ -19244,6 +19244,10 @@
         [
           "2026-09-10 15:13",
           5690
+        ],
+        [
+          "2026-09-10 15:24",
+          5730
         ]
       ]
     },
