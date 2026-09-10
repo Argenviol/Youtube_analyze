@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-10T04:41:56.262339+00:00",
-    "n_snapshots": 17749,
+    "fetched_at": "2026-09-10T04:52:08.785471+00:00",
+    "n_snapshots": 17760,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-10T04:41:56.262339+00:00"
+      "2026-09-10T04:52:08.785471+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 16109,
-    "n_timepoints": 1611,
-    "span_hours": 694.77,
-    "observed_hours": 274.55,
+    "n_snapshots": 16119,
+    "n_timepoints": 1612,
+    "span_hours": 694.94,
+    "observed_hours": 274.72,
     "coverage_ratio": 0.395,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 3656,
+    "n_live_rows": 3657,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-10T04:41:56.262339+00:00"
+    "last": "2026-09-10T04:52:08.785471+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 163837,
       "follower_delta": 7096,
-      "follower_per_day": 245.2,
+      "follower_per_day": 245.1,
       "n_sessions": 48,
       "n_live_points": 155,
       "peak_ccu": 38402,
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 215431,
-      "follower_delta": 5612,
-      "follower_per_day": 193.9,
+      "followers": 215435,
+      "follower_delta": 5616,
+      "follower_per_day": 194.0,
       "n_sessions": 91,
-      "n_live_points": 329,
+      "n_live_points": 330,
       "peak_ccu": 28071,
-      "avg_ccu": 4060,
+      "avg_ccu": 4063,
       "ccu_per_1k_followers": 130.3
     },
     {
@@ -74,7 +74,7 @@
       "unit": "CLICHE",
       "followers": 213678,
       "follower_delta": 6252,
-      "follower_per_day": 216.0,
+      "follower_per_day": 215.9,
       "n_sessions": 79,
       "n_live_points": 437,
       "peak_ccu": 24385,
@@ -88,7 +88,7 @@
       "unit": "CLICHE",
       "followers": 246092,
       "follower_delta": 4975,
-      "follower_per_day": 171.9,
+      "follower_per_day": 171.8,
       "n_sessions": 88,
       "n_live_points": 403,
       "peak_ccu": 13363,
@@ -114,9 +114,9 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 239745,
-      "follower_delta": 2897,
-      "follower_per_day": 100.1,
+      "followers": 239744,
+      "follower_delta": 2896,
+      "follower_per_day": 100.0,
       "n_sessions": 110,
       "n_live_points": 461,
       "peak_ccu": 9749,
@@ -128,8 +128,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 306410,
-      "follower_delta": 4490,
+      "followers": 306411,
+      "follower_delta": 4491,
       "follower_per_day": 155.1,
       "n_sessions": 89,
       "n_live_points": 427,
@@ -2448,6 +2448,18 @@
       "category": "마인크래프트"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-10 11:48",
+      "observed_min": 123.5,
+      "n_points": 14,
+      "peak_ccu": 4941,
+      "avg_ccu": 3693,
+      "title": "오늘 날씨 머야ㅑㅑㅑㅑ",
+      "category": "talk"
+    },
+    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -2530,18 +2542,6 @@
       "avg_ccu": 4551,
       "title": "면접 망한 것 같아요",
       "category": "음악/노래"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-10 11:48",
-      "observed_min": 113.2,
-      "n_points": 13,
-      "peak_ccu": 4882,
-      "avg_ccu": 3597,
-      "title": "오늘 날씨 머야ㅑㅑㅑㅑ",
-      "category": "talk"
     },
     {
       "name_ko": "유즈하 리코",
@@ -19208,6 +19208,10 @@
         [
           "2026-09-10 13:41",
           4871
+        ],
+        [
+          "2026-09-10 13:52",
+          4941
         ]
       ]
     },
