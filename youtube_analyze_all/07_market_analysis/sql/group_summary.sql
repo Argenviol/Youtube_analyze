@@ -1,5 +1,5 @@
 -- group_summary 데이터 (3 rows)
 
-INSERT INTO group_summary (group, n_members, avg_subscribers, median_subscribers, total_subscribers, avg_recent_views, avg_engagement_rate, avg_uploads_per_week, avg_reach_ratio) VALUES ('StelLive', 6, 269166.6667, 290500.0, 1615000, 165727.5, 0.0362, 3.44, 0.6588);
-INSERT INTO group_summary (group, n_members, avg_subscribers, median_subscribers, total_subscribers, avg_recent_views, avg_engagement_rate, avg_uploads_per_week, avg_reach_ratio) VALUES ('이세계아이돌', 6, 412166.6667, 415000.0, 2473000, 98337.35, 0.057, 3.335, 0.2433);
-INSERT INTO group_summary (group, n_members, avg_subscribers, median_subscribers, total_subscribers, avg_recent_views, avg_engagement_rate, avg_uploads_per_week, avg_reach_ratio) VALUES ('홀로라이브', 6, 3010000.0, 2715000.0, 18060000, 533901.8833, 0.0604, 4.9317, 0.1557);
+INSERT INTO group_summary (group, n_members, avg_subscribers, median_subscribers, total_subscribers, avg_recent_views, avg_engagement_rate, avg_uploads_per_week, avg_reach_ratio) VALUES ('StelLive', 6, 269166.6667, 290500.0, 1615000, 168878.0, 0.0359, 3.44, 0.6705);
+INSERT INTO group_summary (group, n_members, avg_subscribers, median_subscribers, total_subscribers, avg_recent_views, avg_engagement_rate, avg_uploads_per_week, avg_reach_ratio) VALUES ('이세계아이돌', 6, 412166.6667, 415000.0, 2473000, 99559.5833, 0.0564, 3.3233, 0.2463);
+INSERT INTO group_summary (group, n_members, avg_subscribers, median_subscribers, total_subscribers, avg_recent_views, avg_engagement_rate, avg_uploads_per_week, avg_reach_ratio) VALUES ('홀로라이브', 6, 3010000.0, 2715000.0, 18060000, 518793.3167, 0.0601, 4.8517, 0.1527);
