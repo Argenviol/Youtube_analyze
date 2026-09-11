@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-11T20:09:55.008809+00:00",
-    "n_snapshots": 20367,
+    "fetched_at": "2026-09-11T20:20:08.619602+00:00",
+    "n_snapshots": 20378,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-11T20:09:55.008809+00:00"
+      "2026-09-11T20:20:08.619602+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 18489,
-    "n_timepoints": 1849,
-    "span_hours": 734.24,
-    "observed_hours": 315.07,
+    "n_snapshots": 18499,
+    "n_timepoints": 1850,
+    "span_hours": 734.41,
+    "observed_hours": 315.24,
     "coverage_ratio": 0.429,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 4190,
+    "n_live_rows": 4192,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-11T20:09:55.008809+00:00"
+    "last": "2026-09-11T20:20:08.619602+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 164015,
       "follower_delta": 7274,
-      "follower_per_day": 237.8,
+      "follower_per_day": 237.7,
       "n_sessions": 48,
       "n_live_points": 155,
       "peak_ccu": 38402,
@@ -102,7 +102,7 @@
       "unit": "CLICHE",
       "followers": 215787,
       "follower_delta": 6452,
-      "follower_per_day": 210.9,
+      "follower_per_day": 210.8,
       "n_sessions": 111,
       "n_live_points": 568,
       "peak_ccu": 10461,
@@ -114,13 +114,13 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 239923,
-      "follower_delta": 3075,
+      "followers": 239922,
+      "follower_delta": 3074,
       "follower_per_day": 100.5,
       "n_sessions": 112,
-      "n_live_points": 591,
+      "n_live_points": 592,
       "peak_ccu": 9749,
-      "avg_ccu": 3491,
+      "avg_ccu": 3489,
       "ccu_per_1k_followers": 40.63
     },
     {
@@ -130,7 +130,7 @@
       "unit": "CLICHE",
       "followers": 225809,
       "follower_delta": 6709,
-      "follower_per_day": 219.3,
+      "follower_per_day": 219.2,
       "n_sessions": 86,
       "n_live_points": 358,
       "peak_ccu": 9414,
@@ -146,9 +146,9 @@
       "follower_delta": 4767,
       "follower_per_day": 155.8,
       "n_sessions": 91,
-      "n_live_points": 547,
+      "n_live_points": 548,
       "peak_ccu": 8655,
-      "avg_ccu": 3509,
+      "avg_ccu": 3508,
       "ccu_per_1k_followers": 28.22
     },
     {
@@ -2176,10 +2176,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-09-11 16:51",
-      "observed_min": 738.2,
-      "n_points": 75,
+      "observed_min": 748.4,
+      "n_points": 76,
       "peak_ccu": 5167,
-      "avg_ccu": 4215,
+      "avg_ccu": 4200,
       "title": "주술회전 콜라보 뽑기ㅣㅣㅣㅣㅣ7시 치킨 경왕 w 히나 ",
       "category": "talk"
     },
@@ -4516,10 +4516,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-11 18:34",
-      "observed_min": 635.9,
-      "n_points": 65,
+      "observed_min": 646.1,
+      "n_points": 66,
       "peak_ccu": 3923,
-      "avg_ccu": 3207,
+      "avg_ccu": 3193,
       "title": "유니선배랑 치킨 ㄴ켠왕그",
       "category": "talk"
     },
@@ -16998,6 +16998,10 @@
         [
           "2026-09-12 05:09",
           3132
+        ],
+        [
+          "2026-09-12 05:20",
+          3090
         ]
       ]
     },
@@ -23430,6 +23434,10 @@
         [
           "2026-09-12 05:09",
           2345
+        ],
+        [
+          "2026-09-12 05:20",
+          2315
         ]
       ]
     },
