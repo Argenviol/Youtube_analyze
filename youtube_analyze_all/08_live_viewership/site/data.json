@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-12T17:31:40.861108+00:00",
-    "n_snapshots": 21786,
+    "fetched_at": "2026-09-12T17:41:54.668283+00:00",
+    "n_snapshots": 21797,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-12T17:31:40.861108+00:00"
+      "2026-09-12T17:41:54.668283+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 19779,
-    "n_timepoints": 1978,
-    "span_hours": 755.6,
-    "observed_hours": 337.05,
+    "n_snapshots": 19789,
+    "n_timepoints": 1979,
+    "span_hours": 755.77,
+    "observed_hours": 337.22,
     "coverage_ratio": 0.446,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 4519,
+    "n_live_rows": 4521,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-12T17:31:40.861108+00:00"
+    "last": "2026-09-12T17:41:54.668283+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,9 +30,9 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 164217,
-      "follower_delta": 7476,
-      "follower_per_day": 237.5,
+      "followers": 164216,
+      "follower_delta": 7475,
+      "follower_per_day": 237.4,
       "n_sessions": 49,
       "n_live_points": 185,
       "peak_ccu": 38402,
@@ -44,13 +44,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 261709,
-      "follower_delta": 6383,
+      "followers": 261708,
+      "follower_delta": 6382,
       "follower_per_day": 202.7,
       "n_sessions": 105,
-      "n_live_points": 447,
+      "n_live_points": 448,
       "peak_ccu": 38237,
-      "avg_ccu": 5398,
+      "avg_ccu": 5399,
       "ccu_per_1k_followers": 146.11
     },
     {
@@ -74,11 +74,11 @@
       "unit": "CLICHE",
       "followers": 214097,
       "follower_delta": 6671,
-      "follower_per_day": 211.9,
+      "follower_per_day": 211.8,
       "n_sessions": 81,
-      "n_live_points": 540,
+      "n_live_points": 541,
       "peak_ccu": 24385,
-      "avg_ccu": 3249,
+      "avg_ccu": 3247,
       "ccu_per_1k_followers": 113.9
     },
     {
@@ -88,7 +88,7 @@
       "unit": "CLICHE",
       "followers": 246651,
       "follower_delta": 5534,
-      "follower_per_day": 175.8,
+      "follower_per_day": 175.7,
       "n_sessions": 90,
       "n_live_points": 497,
       "peak_ccu": 13363,
@@ -114,9 +114,9 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 240078,
-      "follower_delta": 3230,
-      "follower_per_day": 102.6,
+      "followers": 240077,
+      "follower_delta": 3229,
+      "follower_per_day": 102.5,
       "n_sessions": 114,
       "n_live_points": 650,
       "peak_ccu": 9749,
@@ -130,7 +130,7 @@
       "unit": "CLICHE",
       "followers": 225916,
       "follower_delta": 6816,
-      "follower_per_day": 216.5,
+      "follower_per_day": 216.4,
       "n_sessions": 86,
       "n_live_points": 358,
       "peak_ccu": 9414,
@@ -142,8 +142,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 306787,
-      "follower_delta": 4867,
+      "followers": 306788,
+      "follower_delta": 4868,
       "follower_per_day": 154.6,
       "n_sessions": 91,
       "n_live_points": 555,
@@ -1428,6 +1428,18 @@
       "category": "낚시 방법"
     },
     {
+      "name_ko": "아라하시 타비",
+      "name_en": "Arahashi Tabi",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-12 19:41",
+      "observed_min": 420.1,
+      "n_points": 43,
+      "peak_ccu": 5999,
+      "avg_ccu": 4312,
+      "title": "ㅎ흐아ㅏㅇ",
+      "category": "talk"
+    },
+    {
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
@@ -1522,18 +1534,6 @@
       "avg_ccu": 5870,
       "title": "삐부님과 함께하는 스텔라이브 데바데 ",
       "category": "데드 바이 데이라이트"
-    },
-    {
-      "name_ko": "아라하시 타비",
-      "name_en": "Arahashi Tabi",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-12 19:41",
-      "observed_min": 409.9,
-      "n_points": 42,
-      "peak_ccu": 5861,
-      "avg_ccu": 4272,
-      "title": "ㅎ흐아ㅏㅇ",
-      "category": "talk"
     },
     {
       "name_ko": "아라하시 타비",
@@ -5800,10 +5800,10 @@
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
       "start_kst": "2026-09-12 19:31",
-      "observed_min": 420.1,
-      "n_points": 43,
+      "observed_min": 430.3,
+      "n_points": 44,
       "peak_ccu": 3481,
-      "avg_ccu": 2506,
+      "avg_ccu": 2502,
       "title": "8시에 커버곡 나와~!!",
       "category": "talk"
     },
@@ -15197,6 +15197,10 @@
         [
           "2026-09-13 02:31",
           5704
+        ],
+        [
+          "2026-09-13 02:41",
+          5999
         ]
       ]
     },
@@ -19587,6 +19591,10 @@
         [
           "2026-09-13 02:31",
           2446
+        ],
+        [
+          "2026-09-13 02:41",
+          2365
         ]
       ]
     },
