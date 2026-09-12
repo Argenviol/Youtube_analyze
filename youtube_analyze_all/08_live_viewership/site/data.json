@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-12T18:02:21.715813+00:00",
-    "n_snapshots": 21819,
+    "fetched_at": "2026-09-12T18:12:34.989121+00:00",
+    "n_snapshots": 21830,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-12T18:02:21.715813+00:00"
+      "2026-09-12T18:12:34.989121+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 19809,
-    "n_timepoints": 1981,
-    "span_hours": 756.11,
-    "observed_hours": 337.56,
-    "coverage_ratio": 0.446,
+    "n_snapshots": 19819,
+    "n_timepoints": 1982,
+    "span_hours": 756.28,
+    "observed_hours": 337.73,
+    "coverage_ratio": 0.447,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 4523,
+    "n_live_rows": 4524,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-12T18:02:21.715813+00:00"
+    "last": "2026-09-12T18:12:34.989121+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 164220,
-      "follower_delta": 7479,
+      "followers": 164221,
+      "follower_delta": 7480,
       "follower_per_day": 237.4,
       "n_sessions": 49,
       "n_live_points": 185,
@@ -44,13 +44,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 261711,
-      "follower_delta": 6385,
+      "followers": 261713,
+      "follower_delta": 6387,
       "follower_per_day": 202.7,
       "n_sessions": 105,
-      "n_live_points": 450,
+      "n_live_points": 451,
       "peak_ccu": 38237,
-      "avg_ccu": 5401,
+      "avg_ccu": 5402,
       "ccu_per_1k_followers": 146.1
     },
     {
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 214098,
-      "follower_delta": 6672,
+      "followers": 214099,
+      "follower_delta": 6673,
       "follower_per_day": 211.8,
       "n_sessions": 81,
       "n_live_points": 541,
@@ -100,8 +100,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 216084,
-      "follower_delta": 6749,
+      "followers": 216085,
+      "follower_delta": 6750,
       "follower_per_day": 214.2,
       "n_sessions": 112,
       "n_live_points": 608,
@@ -130,7 +130,7 @@
       "unit": "CLICHE",
       "followers": 225917,
       "follower_delta": 6817,
-      "follower_per_day": 216.4,
+      "follower_per_day": 216.3,
       "n_sessions": 86,
       "n_live_points": 358,
       "peak_ccu": 9414,
@@ -144,7 +144,7 @@
       "unit": "EVERYS",
       "followers": 306790,
       "follower_delta": 4870,
-      "follower_per_day": 154.6,
+      "follower_per_day": 154.5,
       "n_sessions": 91,
       "n_live_points": 555,
       "peak_ccu": 8655,
@@ -1432,10 +1432,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-12 19:41",
-      "observed_min": 440.5,
-      "n_points": 45,
+      "observed_min": 450.8,
+      "n_points": 46,
       "peak_ccu": 5999,
-      "avg_ccu": 4384,
+      "avg_ccu": 4414,
       "title": "ㅎ흐아ㅏㅇ",
       "category": "talk"
     },
@@ -15209,6 +15209,10 @@
         [
           "2026-09-13 03:02",
           5932
+        ],
+        [
+          "2026-09-13 03:12",
+          5778
         ]
       ]
     },
