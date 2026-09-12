@@ -43,7 +43,7 @@ FROM characters WHERE audience_rank IS NOT NULL ORDER BY audience_rank LIMIT 15;
 |    3 | 푸리나   | 원신      |    20 |       4.55 |
 |    4 | 은랑    | 붕괴:스타레일 |    18 |       4.39 |
 |    5 | 마비카   | 원신      |    18 |       3    |
-|    6 | 키레네   | 붕괴:스타레일 |    18 |       2.5  |
+|    6 | 키레네   | 붕괴:스타레일 |    18 |       2.67 |
 |    7 | 파이논   | 붕괴:스타레일 |    16 |       3.31 |
 |    8 | 블레이드  | 붕괴:스타레일 |    14 |       4.43 |
 |    9 | 콜롬비나  | 원신      |    13 |       4.23 |
@@ -65,7 +65,7 @@ FROM characters WHERE matchable=1 AND mention_count=0 GROUP BY name_ko_game;
 | 게임      |   무언급_캐릭터수 |
 |:--------|-----------:|
 | 붕괴:스타레일 |         31 |
-| 원신      |         50 |
+| 원신      |         48 |
 
 
 ## 게임별 월간 평균 평점
@@ -77,20 +77,20 @@ FROM monthly_sentiment ORDER BY game, month;
 
 | 게임       | 월       |   평균평점 |   리뷰수 |
 |:---------|:--------|-------:|------:|
-| genshin  | 2024-09 |  3.375 |    16 |
+| genshin  | 2024-09 |  3.667 |     3 |
 | genshin  | 2024-10 |  4.02  |   204 |
 | genshin  | 2024-11 |  4.058 |   172 |
 | genshin  | 2024-12 |  3.639 |   158 |
 | genshin  | 2025-01 |  3.757 |   218 |
-| genshin  | 2025-02 |  3.511 |   174 |
+| genshin  | 2025-02 |  3.514 |   173 |
 | genshin  | 2025-03 |  3.625 |   136 |
 | genshin  | 2025-04 |  3.5   |    60 |
 | genshin  | 2025-05 |  3.584 |   101 |
 | genshin  | 2025-06 |  3.692 |   104 |
-| genshin  | 2025-07 |  3.373 |   102 |
+| genshin  | 2025-07 |  3.366 |   101 |
 | genshin  | 2025-08 |  3.244 |   119 |
 | genshin  | 2025-09 |  3.149 |   188 |
-| genshin  | 2025-10 |  3.119 |   168 |
+| genshin  | 2025-10 |  3.126 |   167 |
 | genshin  | 2025-11 |  3.493 |    71 |
 | genshin  | 2025-12 |  3.689 |   106 |
 | genshin  | 2026-01 |  3.87  |   177 |
@@ -98,11 +98,11 @@ FROM monthly_sentiment ORDER BY game, month;
 | genshin  | 2026-03 |  3.908 |    65 |
 | genshin  | 2026-04 |  3.771 |    70 |
 | genshin  | 2026-05 |  3.274 |   113 |
-| genshin  | 2026-06 |  3.662 |    68 |
+| genshin  | 2026-06 |  3.642 |    67 |
 | genshin  | 2026-07 |  3.62  |   121 |
-| genshin  | 2026-08 |  3.669 |   151 |
-| genshin  | 2026-09 |  4     |    10 |
-| starrail | 2024-04 |  4.147 |   190 |
+| genshin  | 2026-08 |  3.698 |   149 |
+| genshin  | 2026-09 |  3.897 |    29 |
+| starrail | 2024-04 |  4.151 |   186 |
 | starrail | 2024-05 |  4.247 |   223 |
 | starrail | 2024-06 |  4.178 |   191 |
 | starrail | 2024-07 |  4.271 |   144 |
@@ -116,7 +116,7 @@ FROM monthly_sentiment ORDER BY game, month;
 | starrail | 2025-03 |  3.695 |    59 |
 | starrail | 2025-04 |  3.695 |   141 |
 | starrail | 2025-05 |  4.062 |    65 |
-| starrail | 2025-06 |  3.721 |    61 |
+| starrail | 2025-06 |  3.7   |    60 |
 | starrail | 2025-07 |  4.053 |   113 |
 | starrail | 2025-08 |  3.841 |    88 |
 | starrail | 2025-09 |  3.848 |    46 |
@@ -124,14 +124,14 @@ FROM monthly_sentiment ORDER BY game, month;
 | starrail | 2025-11 |  2.512 |   205 |
 | starrail | 2025-12 |  2.333 |    87 |
 | starrail | 2026-01 |  3.055 |    55 |
-| starrail | 2026-02 |  3.127 |    71 |
-| starrail | 2026-03 |  3.233 |    60 |
+| starrail | 2026-02 |  3.157 |    70 |
+| starrail | 2026-03 |  3.271 |    59 |
 | starrail | 2026-04 |  4.056 |   126 |
 | starrail | 2026-05 |  3.911 |    79 |
 | starrail | 2026-06 |  3.521 |    48 |
 | starrail | 2026-07 |  3.588 |    80 |
-| starrail | 2026-08 |  3     |    67 |
-| starrail | 2026-09 |  3.333 |     6 |
+| starrail | 2026-08 |  3.031 |    65 |
+| starrail | 2026-09 |  3.2   |    15 |
 
 
 ## 언급 리뷰 평점이 게임 평균보다 높은 캐릭터 TOP 10
