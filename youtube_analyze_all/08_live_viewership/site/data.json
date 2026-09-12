@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-12T18:12:34.989121+00:00",
-    "n_snapshots": 21830,
+    "fetched_at": "2026-09-12T18:22:48.229000+00:00",
+    "n_snapshots": 21841,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-12T18:12:34.989121+00:00"
+      "2026-09-12T18:22:48.229000+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 19819,
-    "n_timepoints": 1982,
-    "span_hours": 756.28,
-    "observed_hours": 337.73,
+    "n_snapshots": 19829,
+    "n_timepoints": 1983,
+    "span_hours": 756.45,
+    "observed_hours": 337.9,
     "coverage_ratio": 0.447,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 4524,
+    "n_live_rows": 4525,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-12T18:12:34.989121+00:00"
+    "last": "2026-09-12T18:22:48.229000+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,13 +44,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 261713,
-      "follower_delta": 6387,
+      "followers": 261716,
+      "follower_delta": 6390,
       "follower_per_day": 202.7,
       "n_sessions": 105,
-      "n_live_points": 451,
+      "n_live_points": 452,
       "peak_ccu": 38237,
-      "avg_ccu": 5402,
+      "avg_ccu": 5403,
       "ccu_per_1k_followers": 146.1
     },
     {
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 215837,
-      "follower_delta": 6018,
+      "followers": 215838,
+      "follower_delta": 6019,
       "follower_per_day": 191.0,
       "n_sessions": 94,
       "n_live_points": 400,
@@ -74,7 +74,7 @@
       "unit": "CLICHE",
       "followers": 214099,
       "follower_delta": 6673,
-      "follower_per_day": 211.8,
+      "follower_per_day": 211.7,
       "n_sessions": 81,
       "n_live_points": 541,
       "peak_ccu": 24385,
@@ -86,9 +86,9 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 246653,
-      "follower_delta": 5536,
-      "follower_per_day": 175.7,
+      "followers": 246652,
+      "follower_delta": 5535,
+      "follower_per_day": 175.6,
       "n_sessions": 90,
       "n_live_points": 497,
       "peak_ccu": 13363,
@@ -100,9 +100,9 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 216085,
-      "follower_delta": 6750,
-      "follower_per_day": 214.2,
+      "followers": 216084,
+      "follower_delta": 6749,
+      "follower_per_day": 214.1,
       "n_sessions": 112,
       "n_live_points": 608,
       "peak_ccu": 10461,
@@ -142,8 +142,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 306790,
-      "follower_delta": 4870,
+      "followers": 306789,
+      "follower_delta": 4869,
       "follower_per_day": 154.5,
       "n_sessions": 91,
       "n_live_points": 555,
@@ -156,8 +156,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 259592,
-      "follower_delta": 6690,
+      "followers": 259594,
+      "follower_delta": 6692,
       "follower_per_day": 212.3,
       "n_sessions": 68,
       "n_live_points": 279,
@@ -1432,10 +1432,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-12 19:41",
-      "observed_min": 450.8,
-      "n_points": 46,
+      "observed_min": 461.0,
+      "n_points": 47,
       "peak_ccu": 5999,
-      "avg_ccu": 4414,
+      "avg_ccu": 4441,
       "title": "ㅎ흐아ㅏㅇ",
       "category": "talk"
     },
@@ -15213,6 +15213,10 @@
         [
           "2026-09-13 03:12",
           5778
+        ],
+        [
+          "2026-09-13 03:22",
+          5648
         ]
       ]
     },
