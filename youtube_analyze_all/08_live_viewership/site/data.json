@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-13T08:23:12.406096+00:00",
-    "n_snapshots": 22765,
+    "fetched_at": "2026-09-13T08:24:02.931310+00:00",
+    "n_snapshots": 22776,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-13T08:23:12.406096+00:00"
+      "2026-09-13T08:24:02.931310+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 20669,
-    "n_timepoints": 2067,
-    "span_hours": 770.46,
-    "observed_hours": 352.21,
+    "n_snapshots": 20679,
+    "n_timepoints": 2068,
+    "span_hours": 770.47,
+    "observed_hours": 352.38,
     "coverage_ratio": 0.457,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 4552,
+    "n_live_rows": 4554,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-13T08:23:12.406096+00:00"
+    "last": "2026-09-13T08:24:02.931310+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 164276,
       "follower_delta": 7535,
-      "follower_per_day": 234.8,
+      "follower_per_day": 234.7,
       "n_sessions": 49,
       "n_live_points": 185,
       "peak_ccu": 38402,
@@ -48,9 +48,9 @@
       "follower_delta": 6528,
       "follower_per_day": 203.3,
       "n_sessions": 106,
-      "n_live_points": 473,
+      "n_live_points": 474,
       "peak_ccu": 38237,
-      "avg_ccu": 5495,
+      "avg_ccu": 5503,
       "ccu_per_1k_followers": 146.02
     },
     {
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 215906,
-      "follower_delta": 6087,
+      "followers": 215907,
+      "follower_delta": 6088,
       "follower_per_day": 189.6,
       "n_sessions": 94,
       "n_live_points": 400,
@@ -88,7 +88,7 @@
       "unit": "CLICHE",
       "followers": 246727,
       "follower_delta": 5610,
-      "follower_per_day": 174.8,
+      "follower_per_day": 174.7,
       "n_sessions": 90,
       "n_live_points": 497,
       "peak_ccu": 13363,
@@ -100,11 +100,11 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 216195,
-      "follower_delta": 6860,
+      "followers": 216196,
+      "follower_delta": 6861,
       "follower_per_day": 213.7,
       "n_sessions": 113,
-      "n_live_points": 614,
+      "n_live_points": 615,
       "peak_ccu": 10461,
       "avg_ccu": 3638,
       "ccu_per_1k_followers": 48.39
@@ -128,9 +128,9 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 225982,
-      "follower_delta": 6882,
-      "follower_per_day": 214.4,
+      "followers": 225981,
+      "follower_delta": 6881,
+      "follower_per_day": 214.3,
       "n_sessions": 86,
       "n_live_points": 358,
       "peak_ccu": 9414,
@@ -316,10 +316,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-13 13:58",
-      "observed_min": 204.8,
-      "n_points": 21,
+      "observed_min": 205.7,
+      "n_points": 22,
       "peak_ccu": 9802,
-      "avg_ccu": 7469,
+      "avg_ccu": 7554,
       "title": "저는 버그 인간입니다",
       "category": "talk"
     },
@@ -6916,10 +6916,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-09-13 16:31",
-      "observed_min": 51.2,
-      "n_points": 6,
+      "observed_min": 52.1,
+      "n_points": 7,
       "peak_ccu": 3175,
-      "avg_ccu": 2418,
+      "avg_ccu": 2523,
       "title": "6시 리코의 드디어 한식 커버곡 ",
       "category": "talk"
     },
@@ -15325,6 +15325,10 @@
         [
           "2026-09-13 17:23",
           9362
+        ],
+        [
+          "2026-09-13 17:24",
+          9341
         ]
       ]
     },
@@ -29128,6 +29132,10 @@
         [
           "2026-09-13 17:23",
           3175
+        ],
+        [
+          "2026-09-13 17:24",
+          3152
         ]
       ]
     }
