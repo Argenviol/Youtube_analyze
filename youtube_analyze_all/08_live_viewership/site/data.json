@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-13T17:59:04.045216+00:00",
-    "n_snapshots": 23403,
+    "fetched_at": "2026-09-13T18:09:16.893910+00:00",
+    "n_snapshots": 23414,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-13T17:59:04.045216+00:00"
+      "2026-09-13T18:09:16.893910+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 21249,
-    "n_timepoints": 2125,
-    "span_hours": 780.06,
-    "observed_hours": 362.09,
+    "n_snapshots": 21259,
+    "n_timepoints": 2126,
+    "span_hours": 780.23,
+    "observed_hours": 362.26,
     "coverage_ratio": 0.464,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 4817,
+    "n_live_rows": 4818,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-13T17:59:04.045216+00:00"
+    "last": "2026-09-13T18:09:16.893910+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 164409,
       "follower_delta": 7668,
-      "follower_per_day": 236.0,
+      "follower_per_day": 235.9,
       "n_sessions": 50,
       "n_live_points": 197,
       "peak_ccu": 38402,
@@ -88,7 +88,7 @@
       "unit": "CLICHE",
       "followers": 246915,
       "follower_delta": 5798,
-      "follower_per_day": 178.4,
+      "follower_per_day": 178.3,
       "n_sessions": 91,
       "n_live_points": 539,
       "peak_ccu": 13363,
@@ -114,11 +114,11 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 240228,
-      "follower_delta": 3380,
-      "follower_per_day": 104.0,
+      "followers": 240231,
+      "follower_delta": 3383,
+      "follower_per_day": 104.1,
       "n_sessions": 115,
-      "n_live_points": 659,
+      "n_live_points": 660,
       "peak_ccu": 9749,
       "avg_ccu": 3420,
       "ccu_per_1k_followers": 40.58
@@ -158,7 +158,7 @@
       "unit": "UNIVERSE",
       "followers": 259804,
       "follower_delta": 6902,
-      "follower_per_day": 212.4,
+      "follower_per_day": 212.3,
       "n_sessions": 69,
       "n_live_points": 307,
       "peak_ccu": 8585,
@@ -4612,10 +4612,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-14 01:37",
-      "observed_min": 81.7,
-      "n_points": 9,
+      "observed_min": 91.9,
+      "n_points": 10,
       "peak_ccu": 3950,
-      "avg_ccu": 3048,
+      "avg_ccu": 3123,
       "title": "기습 가챠쇼",
       "category": "마인크래프트"
     },
@@ -25454,6 +25454,10 @@
         [
           "2026-09-14 02:59",
           3814
+        ],
+        [
+          "2026-09-14 03:09",
+          3800
         ]
       ]
     },
