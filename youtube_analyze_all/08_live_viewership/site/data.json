@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-13T06:51:01.116780+00:00",
-    "n_snapshots": 22666,
+    "fetched_at": "2026-09-13T07:01:15.724874+00:00",
+    "n_snapshots": 22677,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-13T06:51:01.116780+00:00"
+      "2026-09-13T07:01:15.724874+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 20579,
-    "n_timepoints": 2058,
-    "span_hours": 768.92,
-    "observed_hours": 350.68,
+    "n_snapshots": 20589,
+    "n_timepoints": 2059,
+    "span_hours": 769.09,
+    "observed_hours": 350.85,
     "coverage_ratio": 0.456,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 4537,
+    "n_live_rows": 4538,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-13T06:51:01.116780+00:00"
+    "last": "2026-09-13T07:01:15.724874+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 164265,
-      "follower_delta": 7524,
+      "followers": 164266,
+      "follower_delta": 7525,
       "follower_per_day": 234.9,
       "n_sessions": 49,
       "n_live_points": 185,
@@ -44,13 +44,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 261820,
-      "follower_delta": 6494,
+      "followers": 261823,
+      "follower_delta": 6497,
       "follower_per_day": 202.7,
       "n_sessions": 106,
-      "n_live_points": 464,
+      "n_live_points": 465,
       "peak_ccu": 38237,
-      "avg_ccu": 5417,
+      "avg_ccu": 5424,
       "ccu_per_1k_followers": 146.04
     },
     {
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 215899,
       "follower_delta": 6080,
-      "follower_per_day": 189.8,
+      "follower_per_day": 189.7,
       "n_sessions": 94,
       "n_live_points": 400,
       "peak_ccu": 28071,
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 214149,
-      "follower_delta": 6723,
+      "followers": 214150,
+      "follower_delta": 6724,
       "follower_per_day": 209.8,
       "n_sessions": 81,
       "n_live_points": 541,
@@ -100,9 +100,9 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 216166,
-      "follower_delta": 6831,
-      "follower_per_day": 213.2,
+      "followers": 216169,
+      "follower_delta": 6834,
+      "follower_per_day": 213.3,
       "n_sessions": 112,
       "n_live_points": 608,
       "peak_ccu": 10461,
@@ -114,8 +114,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 240124,
-      "follower_delta": 3276,
+      "followers": 240125,
+      "follower_delta": 3277,
       "follower_per_day": 102.3,
       "n_sessions": 114,
       "n_live_points": 650,
@@ -156,8 +156,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 259632,
-      "follower_delta": 6730,
+      "followers": 259634,
+      "follower_delta": 6732,
       "follower_per_day": 210.1,
       "n_sessions": 68,
       "n_live_points": 279,
@@ -432,6 +432,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "아라하시 타비",
+      "name_en": "Arahashi Tabi",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-13 13:58",
+      "observed_min": 122.9,
+      "n_points": 13,
+      "peak_ccu": 8601,
+      "avg_ccu": 6162,
+      "title": "저는 버그 인간입니다",
+      "category": "talk"
+    },
+    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -453,18 +465,6 @@
       "peak_ccu": 8579,
       "avg_ccu": 8235,
       "title": "초심 찾기 2일챠ㅑ 청룡이었지만 스토리는 모르는 청년의 봉누도 클립 월드컵",
-      "category": "talk"
-    },
-    {
-      "name_ko": "아라하시 타비",
-      "name_en": "Arahashi Tabi",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-13 13:58",
-      "observed_min": 112.7,
-      "n_points": 12,
-      "peak_ccu": 8343,
-      "avg_ccu": 5959,
-      "title": "저는 버그 인간입니다",
       "category": "talk"
     },
     {
@@ -15277,6 +15277,10 @@
         [
           "2026-09-13 15:51",
           8343
+        ],
+        [
+          "2026-09-13 16:01",
+          8601
         ]
       ]
     },
