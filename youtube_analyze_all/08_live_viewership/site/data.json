@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-14T18:22:37.301933+00:00",
-    "n_snapshots": 25020,
+    "fetched_at": "2026-09-14T18:32:51.433164+00:00",
+    "n_snapshots": 25031,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-14T18:22:37.301933+00:00"
+      "2026-09-14T18:32:51.433164+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 22719,
-    "n_timepoints": 2272,
-    "span_hours": 804.45,
-    "observed_hours": 387.14,
+    "n_snapshots": 22729,
+    "n_timepoints": 2273,
+    "span_hours": 804.62,
+    "observed_hours": 387.31,
     "coverage_ratio": 0.481,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 5387,
+    "n_live_rows": 5389,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-14T18:22:37.301933+00:00"
+    "last": "2026-09-14T18:32:51.433164+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,13 +44,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 262484,
-      "follower_delta": 7158,
+      "followers": 262487,
+      "follower_delta": 7161,
       "follower_per_day": 213.6,
       "n_sessions": 107,
-      "n_live_points": 575,
+      "n_live_points": 576,
       "peak_ccu": 38237,
-      "avg_ccu": 5741,
+      "avg_ccu": 5739,
       "ccu_per_1k_followers": 145.67
     },
     {
@@ -86,9 +86,9 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 247325,
-      "follower_delta": 6208,
-      "follower_per_day": 185.2,
+      "followers": 247328,
+      "follower_delta": 6211,
+      "follower_per_day": 185.3,
       "n_sessions": 92,
       "n_live_points": 596,
       "peak_ccu": 13363,
@@ -100,8 +100,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 216858,
-      "follower_delta": 7523,
+      "followers": 216859,
+      "follower_delta": 7524,
       "follower_per_day": 224.4,
       "n_sessions": 114,
       "n_live_points": 728,
@@ -128,8 +128,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 226475,
-      "follower_delta": 7375,
+      "followers": 226477,
+      "follower_delta": 7377,
       "follower_per_day": 220.0,
       "n_sessions": 88,
       "n_live_points": 453,
@@ -142,8 +142,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 307202,
-      "follower_delta": 5282,
+      "followers": 307203,
+      "follower_delta": 5283,
       "follower_per_day": 157.6,
       "n_sessions": 93,
       "n_live_points": 662,
@@ -156,13 +156,13 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 260307,
-      "follower_delta": 7405,
-      "follower_per_day": 220.9,
+      "followers": 260311,
+      "follower_delta": 7409,
+      "follower_per_day": 221.0,
       "n_sessions": 70,
-      "n_live_points": 366,
+      "n_live_points": 367,
       "peak_ccu": 8585,
-      "avg_ccu": 4154,
+      "avg_ccu": 4150,
       "ccu_per_1k_followers": 32.98
     }
   ],
@@ -484,10 +484,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-14 15:48",
-      "observed_min": 693.7,
-      "n_points": 70,
+      "observed_min": 704.0,
+      "n_points": 71,
       "peak_ccu": 8556,
-      "avg_ccu": 6155,
+      "avg_ccu": 6130,
       "title": "나 황천길인대",
       "category": "talk"
     },
@@ -2188,10 +2188,10 @@
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-14 17:41",
-      "observed_min": 581.3,
-      "n_points": 59,
+      "observed_min": 591.6,
+      "n_points": 60,
       "peak_ccu": 5271,
-      "avg_ccu": 4230,
+      "avg_ccu": 4204,
       "title": "에이스 갸루폴리스 야루링 등쟝🌟 진급을 위해 싹 다 잡아넣깅! ( •̀ ω •́ )✧",
       "category": "talk"
     },
@@ -12555,6 +12555,10 @@
         [
           "2026-09-15 03:22",
           2969
+        ],
+        [
+          "2026-09-15 03:32",
+          2667
         ]
       ]
     },
@@ -16677,6 +16681,10 @@
         [
           "2026-09-15 03:22",
           4739
+        ],
+        [
+          "2026-09-15 03:32",
+          4324
         ]
       ]
     },
