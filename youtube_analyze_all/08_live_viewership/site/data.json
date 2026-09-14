@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-14T06:17:22.146730+00:00",
-    "n_snapshots": 24217,
+    "fetched_at": "2026-09-14T06:18:13.439642+00:00",
+    "n_snapshots": 24228,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-14T06:17:22.146730+00:00"
+      "2026-09-14T06:18:13.439642+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 21989,
-    "n_timepoints": 2199,
-    "span_hours": 792.36,
-    "observed_hours": 374.7,
+    "n_snapshots": 21999,
+    "n_timepoints": 2200,
+    "span_hours": 792.38,
+    "observed_hours": 374.87,
     "coverage_ratio": 0.473,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 4824,
+    "n_live_rows": 4825,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-14T06:17:22.146730+00:00"
+    "last": "2026-09-14T06:18:13.439642+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -146,9 +146,9 @@
       "follower_delta": 5021,
       "follower_per_day": 152.1,
       "n_sessions": 93,
-      "n_live_points": 590,
+      "n_live_points": 591,
       "peak_ccu": 8655,
-      "avg_ccu": 3499,
+      "avg_ccu": 3498,
       "ccu_per_1k_followers": 28.2
     },
     {
@@ -8964,6 +8964,18 @@
       "category": "이터널 리턴"
     },
     {
+      "name_ko": "아야츠노 유니",
+      "name_en": "Ayatsuno Yuni",
+      "unit": "EVERYS",
+      "start_kst": "2026-09-14 14:56",
+      "observed_min": 21.3,
+      "n_points": 4,
+      "peak_ccu": 2614,
+      "avg_ccu": 1785,
+      "title": "봉누도 대기증 ",
+      "category": "talk"
+    },
+    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -9048,18 +9060,6 @@
       "category": "로블록스"
     },
     {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-26 22:01",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 2568,
-      "avg_ccu": 2568,
-      "title": "안녕하새요...",
-      "category": "talk"
-    },
-    {
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
@@ -9069,6 +9069,18 @@
       "peak_ccu": 2568,
       "avg_ccu": 2568,
       "title": "바쿠쿠 바쿠바쿠 바쿠쿠",
+      "category": "talk"
+    },
+    {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-26 22:01",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 2568,
+      "avg_ccu": 2568,
+      "title": "안녕하새요...",
       "category": "talk"
     },
     {
@@ -9142,18 +9154,6 @@
       "avg_ccu": 2547,
       "title": "클리셰랑 비꾸워꾸",
       "category": "빅 워크"
-    },
-    {
-      "name_ko": "아야츠노 유니",
-      "name_en": "Ayatsuno Yuni",
-      "unit": "EVERYS",
-      "start_kst": "2026-09-14 14:56",
-      "observed_min": 20.4,
-      "n_points": 3,
-      "peak_ccu": 2545,
-      "avg_ccu": 1509,
-      "title": "봉누도 대기증 ",
-      "category": "talk"
     },
     {
       "name_ko": "아카네 리제",
@@ -18190,6 +18190,10 @@
         [
           "2026-09-14 15:17",
           2545
+        ],
+        [
+          "2026-09-14 15:18",
+          2614
         ]
       ]
     },
