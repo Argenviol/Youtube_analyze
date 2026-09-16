@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-16T20:20:56.900644+00:00",
-    "n_snapshots": 28331,
+    "fetched_at": "2026-09-16T20:31:10.171702+00:00",
+    "n_snapshots": 28342,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-16T20:20:56.900644+00:00"
+      "2026-09-16T20:31:10.171702+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 25729,
-    "n_timepoints": 2573,
-    "span_hours": 854.42,
-    "observed_hours": 438.51,
+    "n_snapshots": 25739,
+    "n_timepoints": 2574,
+    "span_hours": 854.59,
+    "observed_hours": 438.68,
     "coverage_ratio": 0.513,
     "largest_gap_hours": 11.3,
     "n_live_rows": 6425,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-16T20:20:56.900644+00:00"
+    "last": "2026-09-16T20:31:10.171702+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 165027,
       "follower_delta": 8286,
-      "follower_per_day": 232.8,
+      "follower_per_day": 232.7,
       "n_sessions": 53,
       "n_live_points": 311,
       "peak_ccu": 38402,
@@ -130,7 +130,7 @@
       "unit": "CLICHE",
       "followers": 226935,
       "follower_delta": 7835,
-      "follower_per_day": 220.1,
+      "follower_per_day": 220.0,
       "n_sessions": 90,
       "n_live_points": 560,
       "peak_ccu": 9414,
@@ -156,8 +156,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 260785,
-      "follower_delta": 7883,
+      "followers": 260786,
+      "follower_delta": 7884,
       "follower_per_day": 221.4,
       "n_sessions": 72,
       "n_live_points": 481,
