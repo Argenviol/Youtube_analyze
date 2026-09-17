@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-17T05:14:09.271680+00:00",
-    "n_snapshots": 28914,
+    "fetched_at": "2026-09-17T05:24:24.062555+00:00",
+    "n_snapshots": 28925,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-17T05:14:09.271680+00:00"
+      "2026-09-17T05:24:24.062555+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 26259,
-    "n_timepoints": 2626,
-    "span_hours": 863.31,
-    "observed_hours": 447.55,
-    "coverage_ratio": 0.518,
+    "n_snapshots": 26269,
+    "n_timepoints": 2627,
+    "span_hours": 863.48,
+    "observed_hours": 447.72,
+    "coverage_ratio": 0.519,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 6442,
+    "n_live_rows": 6443,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-17T05:14:09.271680+00:00"
+    "last": "2026-09-17T05:24:24.062555+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 165027,
       "follower_delta": 8286,
-      "follower_per_day": 230.4,
+      "follower_per_day": 230.3,
       "n_sessions": 53,
       "n_live_points": 311,
       "peak_ccu": 38402,
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 216409,
-      "follower_delta": 6590,
+      "followers": 216410,
+      "follower_delta": 6591,
       "follower_per_day": 183.2,
       "n_sessions": 97,
-      "n_live_points": 490,
+      "n_live_points": 491,
       "peak_ccu": 28071,
-      "avg_ccu": 3727,
+      "avg_ccu": 3726,
       "ccu_per_1k_followers": 129.71
     },
     {
@@ -100,9 +100,9 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 217402,
-      "follower_delta": 8067,
-      "follower_per_day": 224.3,
+      "followers": 217403,
+      "follower_delta": 8068,
+      "follower_per_day": 224.2,
       "n_sessions": 116,
       "n_live_points": 844,
       "peak_ccu": 10461,
@@ -116,7 +116,7 @@
       "unit": "UNIVERSE",
       "followers": 240757,
       "follower_delta": 3909,
-      "follower_per_day": 108.7,
+      "follower_per_day": 108.6,
       "n_sessions": 118,
       "n_live_points": 861,
       "peak_ccu": 9749,
@@ -142,8 +142,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 307509,
-      "follower_delta": 5589,
+      "followers": 307510,
+      "follower_delta": 5590,
       "follower_per_day": 155.4,
       "n_sessions": 95,
       "n_live_points": 777,
@@ -5676,6 +5676,18 @@
       "category": "구스 구스 덕"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-17 11:30",
+      "observed_min": 174.3,
+      "n_points": 18,
+      "peak_ccu": 3608,
+      "avg_ccu": 2850,
+      "title": "물맨듀!",
+      "category": "talk"
+    },
+    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -5808,18 +5820,6 @@
       "category": "종합 게임"
     },
     {
-      "name_ko": "아오쿠모 린",
-      "name_en": "Aokumo Rin",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-18 20:01",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3567,
-      "avg_ccu": 3567,
-      "title": "[광고] 드디어 스네즈나야로!!! 원신 7.0 탐험하기~",
-      "category": "원신"
-    },
-    {
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
@@ -5830,6 +5830,18 @@
       "avg_ccu": 3421,
       "title": "잼섯다",
       "category": "talk"
+    },
+    {
+      "name_ko": "아오쿠모 린",
+      "name_en": "Aokumo Rin",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-18 20:01",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3567,
+      "avg_ccu": 3567,
+      "title": "[광고] 드디어 스네즈나야로!!! 원신 7.0 탐험하기~",
+      "category": "원신"
     },
     {
       "name_ko": "아라하시 타비",
@@ -5868,18 +5880,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "아라하시 타비",
-      "name_en": "Arahashi Tabi",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-21 21:17",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3547,
-      "avg_ccu": 3547,
-      "title": "몇 번째 아내인지는 모르겠지만 오늘도 나의 하렘을 늘리기 위한 노력을 한다.. 내 아내 픽업하기 .. ",
-      "category": "명조:워더링 웨이브"
-    },
-    {
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
@@ -5890,6 +5890,18 @@
       "avg_ccu": 3547,
       "title": "치지직컵 열심히 배우기. (W. 린, 하루님, 코치 한동그라미님)",
       "category": "이터널 리턴"
+    },
+    {
+      "name_ko": "아라하시 타비",
+      "name_en": "Arahashi Tabi",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-21 21:17",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3547,
+      "avg_ccu": 3547,
+      "title": "몇 번째 아내인지는 모르겠지만 오늘도 나의 하렘을 늘리기 위한 노력을 한다.. 내 아내 픽업하기 .. ",
+      "category": "명조:워더링 웨이브"
     },
     {
       "name_ko": "네네코 마시로",
@@ -5928,18 +5940,6 @@
       "category": "Grand Theft Auto V"
     },
     {
-      "name_ko": "텐코 시부키",
-      "name_en": "Tenko Shibuki",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-15 00:28",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3536,
-      "avg_ccu": 3536,
-      "title": "아오 스트레스 풀어",
-      "category": "데드 바이 데이라이트"
-    },
-    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -5950,6 +5950,18 @@
       "avg_ccu": 2497,
       "title": "[봉누도] 기 사 써 야 해 요",
       "category": "Grand Theft Auto V"
+    },
+    {
+      "name_ko": "텐코 시부키",
+      "name_en": "Tenko Shibuki",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-15 00:28",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3536,
+      "avg_ccu": 3536,
+      "title": "아오 스트레스 풀어",
+      "category": "데드 바이 데이라이트"
     },
     {
       "name_ko": "아오쿠모 린",
@@ -6010,18 +6022,6 @@
       "avg_ccu": 3424,
       "title": "간만에 땡겨서",
       "category": "발로란트"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-17 11:30",
-      "observed_min": 164.0,
-      "n_points": 17,
-      "peak_ccu": 3510,
-      "avg_ccu": 2806,
-      "title": "물맨듀!",
-      "category": "talk"
     },
     {
       "name_ko": "아라하시 타비",
@@ -26224,6 +26224,10 @@
         [
           "2026-09-17 14:14",
           3371
+        ],
+        [
+          "2026-09-17 14:24",
+          3608
         ]
       ]
     },
