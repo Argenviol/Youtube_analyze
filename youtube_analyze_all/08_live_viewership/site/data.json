@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-17T04:12:36.104312+00:00",
-    "n_snapshots": 28848,
+    "fetched_at": "2026-09-17T04:22:50.990005+00:00",
+    "n_snapshots": 28859,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-17T04:12:36.104312+00:00"
+      "2026-09-17T04:22:50.990005+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 26199,
-    "n_timepoints": 2620,
-    "span_hours": 862.28,
-    "observed_hours": 446.53,
+    "n_snapshots": 26209,
+    "n_timepoints": 2621,
+    "span_hours": 862.45,
+    "observed_hours": 446.7,
     "coverage_ratio": 0.518,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 6436,
+    "n_live_rows": 6437,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-17T04:12:36.104312+00:00"
+    "last": "2026-09-17T04:22:50.990005+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,27 +44,27 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 263006,
-      "follower_delta": 7680,
-      "follower_per_day": 213.8,
+      "followers": 263005,
+      "follower_delta": 7679,
+      "follower_per_day": 213.7,
       "n_sessions": 109,
       "n_live_points": 705,
       "peak_ccu": 38237,
       "avg_ccu": 5740,
-      "ccu_per_1k_followers": 145.38
+      "ccu_per_1k_followers": 145.39
     },
     {
       "rank": 3,
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 216400,
-      "follower_delta": 6581,
+      "followers": 216401,
+      "follower_delta": 6582,
       "follower_per_day": 183.2,
       "n_sessions": 97,
-      "n_live_points": 484,
+      "n_live_points": 485,
       "peak_ccu": 28071,
-      "avg_ccu": 3731,
+      "avg_ccu": 3730,
       "ccu_per_1k_followers": 129.72
     },
     {
@@ -72,9 +72,9 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 215088,
-      "follower_delta": 7662,
-      "follower_per_day": 213.3,
+      "followers": 215089,
+      "follower_delta": 7663,
+      "follower_per_day": 213.2,
       "n_sessions": 86,
       "n_live_points": 704,
       "peak_ccu": 24385,
@@ -86,8 +86,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 247684,
-      "follower_delta": 6567,
+      "followers": 247685,
+      "follower_delta": 6568,
       "follower_per_day": 182.8,
       "n_sessions": 94,
       "n_live_points": 709,
@@ -100,8 +100,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 217400,
-      "follower_delta": 8065,
+      "followers": 217401,
+      "follower_delta": 8066,
       "follower_per_day": 224.5,
       "n_sessions": 116,
       "n_live_points": 844,
@@ -116,7 +116,7 @@
       "unit": "UNIVERSE",
       "followers": 240759,
       "follower_delta": 3911,
-      "follower_per_day": 108.9,
+      "follower_per_day": 108.8,
       "n_sessions": 118,
       "n_live_points": 861,
       "peak_ccu": 9749,
@@ -128,8 +128,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 226945,
-      "follower_delta": 7845,
+      "followers": 226947,
+      "follower_delta": 7847,
       "follower_per_day": 218.4,
       "n_sessions": 90,
       "n_live_points": 560,
@@ -144,7 +144,7 @@
       "unit": "EVERYS",
       "followers": 307513,
       "follower_delta": 5593,
-      "follower_per_day": 155.7,
+      "follower_per_day": 155.6,
       "n_sessions": 95,
       "n_live_points": 777,
       "peak_ccu": 8655,
@@ -6540,6 +6540,18 @@
       "category": "이터널 리턴"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-17 11:30",
+      "observed_min": 112.7,
+      "n_points": 12,
+      "peak_ccu": 3374,
+      "avg_ccu": 2548,
+      "title": "물맨듀!",
+      "category": "talk"
+    },
+    {
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
@@ -6780,18 +6792,6 @@
       "category": "오버워치"
     },
     {
-      "name_ko": "아카네 리제",
-      "name_en": "Akane Lize",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-17 20:30",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3308,
-      "avg_ccu": 3308,
-      "title": "유니버스 하빵날 저희 싸우는거 맞습니다 (w. 타비, 시로, 히나)",
-      "category": "갬블 위드 유어 프렌즈"
-    },
-    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -6802,6 +6802,18 @@
       "avg_ccu": 3135,
       "title": "수아님.",
       "category": "이터널 리턴"
+    },
+    {
+      "name_ko": "아카네 리제",
+      "name_en": "Akane Lize",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-17 20:30",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3308,
+      "avg_ccu": 3308,
+      "title": "유니버스 하빵날 저희 싸우는거 맞습니다 (w. 타비, 시로, 히나)",
+      "category": "갬블 위드 유어 프렌즈"
     },
     {
       "name_ko": "유즈하 리코",
@@ -6975,18 +6987,6 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "start_kst": "2026-09-05 19:22",
-      "observed_min": 255.8,
-      "n_points": 26,
-      "peak_ccu": 3253,
-      "avg_ccu": 2745,
-      "title": "역재 3-3 풀더빙 실황 갑니다",
-      "category": "역전재판 3"
-    },
-    {
-      "name_ko": "하나코 나나",
-      "name_en": "Hanako Nana",
-      "unit": "CLICHE",
       "start_kst": "2026-08-17 17:55",
       "observed_min": 0.0,
       "n_points": 1,
@@ -6994,6 +6994,18 @@
       "avg_ccu": 3253,
       "title": "월요일이다 근데 휴일인",
       "category": "talk"
+    },
+    {
+      "name_ko": "하나코 나나",
+      "name_en": "Hanako Nana",
+      "unit": "CLICHE",
+      "start_kst": "2026-09-05 19:22",
+      "observed_min": 255.8,
+      "n_points": 26,
+      "peak_ccu": 3253,
+      "avg_ccu": 2745,
+      "title": "역재 3-3 풀더빙 실황 갑니다",
+      "category": "역전재판 3"
     },
     {
       "name_ko": "아오쿠모 린",
@@ -7006,18 +7018,6 @@
       "avg_ccu": 3248,
       "title": "클리셰와 함께 조깅해",
       "category": "빅 워크"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-17 11:30",
-      "observed_min": 102.5,
-      "n_points": 11,
-      "peak_ccu": 3245,
-      "avg_ccu": 2473,
-      "title": "물맨듀!",
-      "category": "talk"
     },
     {
       "name_ko": "아야츠노 유니",
@@ -26200,6 +26200,10 @@
         [
           "2026-09-17 13:12",
           3245
+        ],
+        [
+          "2026-09-17 13:22",
+          3374
         ]
       ]
     },
