@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-17T04:02:21.386117+00:00",
-    "n_snapshots": 28837,
+    "fetched_at": "2026-09-17T04:12:36.104312+00:00",
+    "n_snapshots": 28848,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-17T04:02:21.386117+00:00"
+      "2026-09-17T04:12:36.104312+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 26189,
-    "n_timepoints": 2619,
-    "span_hours": 862.11,
-    "observed_hours": 446.35,
+    "n_snapshots": 26199,
+    "n_timepoints": 2620,
+    "span_hours": 862.28,
+    "observed_hours": 446.53,
     "coverage_ratio": 0.518,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 6435,
+    "n_live_rows": 6436,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-17T04:02:21.386117+00:00"
+    "last": "2026-09-17T04:12:36.104312+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 165029,
       "follower_delta": 8288,
-      "follower_per_day": 230.8,
+      "follower_per_day": 230.7,
       "n_sessions": 53,
       "n_live_points": 311,
       "peak_ccu": 38402,
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 216399,
-      "follower_delta": 6580,
+      "followers": 216400,
+      "follower_delta": 6581,
       "follower_per_day": 183.2,
       "n_sessions": 97,
-      "n_live_points": 483,
+      "n_live_points": 484,
       "peak_ccu": 28071,
-      "avg_ccu": 3732,
+      "avg_ccu": 3731,
       "ccu_per_1k_followers": 129.72
     },
     {
@@ -114,8 +114,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 240760,
-      "follower_delta": 3912,
+      "followers": 240759,
+      "follower_delta": 3911,
       "follower_per_day": 108.9,
       "n_sessions": 118,
       "n_live_points": 861,
@@ -142,8 +142,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 307512,
-      "follower_delta": 5592,
+      "followers": 307513,
+      "follower_delta": 5593,
       "follower_per_day": 155.7,
       "n_sessions": 95,
       "n_live_points": 777,
@@ -158,7 +158,7 @@
       "unit": "UNIVERSE",
       "followers": 260797,
       "follower_delta": 7895,
-      "follower_per_day": 219.8,
+      "follower_per_day": 219.7,
       "n_sessions": 72,
       "n_live_points": 481,
       "peak_ccu": 8585,
@@ -7008,6 +7008,18 @@
       "category": "빅 워크"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-17 11:30",
+      "observed_min": 102.5,
+      "n_points": 11,
+      "peak_ccu": 3245,
+      "avg_ccu": 2473,
+      "title": "물맨듀!",
+      "category": "talk"
+    },
+    {
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
@@ -7044,18 +7056,6 @@
       "category": "로블록스"
     },
     {
-      "name_ko": "아카네 리제",
-      "name_en": "Akane Lize",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-24 00:31",
-      "observed_min": 25.3,
-      "n_points": 2,
-      "peak_ccu": 3227,
-      "avg_ccu": 3099,
-      "title": "애들이랑 낚시할거에용 (w. 부키, 리코)",
-      "category": "낚시 방법"
-    },
-    {
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
@@ -7066,6 +7066,18 @@
       "avg_ccu": 3227,
       "title": "공식 스크림 하는날 ! ",
       "category": "오버워치"
+    },
+    {
+      "name_ko": "아카네 리제",
+      "name_en": "Akane Lize",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-24 00:31",
+      "observed_min": 25.3,
+      "n_points": 2,
+      "peak_ccu": 3227,
+      "avg_ccu": 3099,
+      "title": "애들이랑 낚시할거에용 (w. 부키, 리코)",
+      "category": "낚시 방법"
     },
     {
       "name_ko": "유즈하 리코",
@@ -7149,18 +7161,6 @@
       "peak_ccu": 3215,
       "avg_ccu": 3215,
       "title": "오늘 [치지직 오픈컵] 드래프트 날🥺💚",
-      "category": "talk"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-17 11:30",
-      "observed_min": 92.2,
-      "n_points": 10,
-      "peak_ccu": 3214,
-      "avg_ccu": 2396,
-      "title": "물맨듀!",
       "category": "talk"
     },
     {
@@ -26196,6 +26196,10 @@
         [
           "2026-09-17 13:02",
           3103
+        ],
+        [
+          "2026-09-17 13:12",
+          3245
         ]
       ]
     },
