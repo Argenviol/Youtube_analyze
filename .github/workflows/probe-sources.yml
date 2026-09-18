@@ -1,0 +1,33 @@
+# 샌드박스에서 막힌 외부 소스를 러너에서 대신 열어 본다. 응답 앞부분만 로그에 남긴다.
+# 수집 코드를 쓰기 전에 실제 스키마를 확인하는 용도. 저장소 상태는 바꾸지 않는다.
+name: probe-sources
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: "공백으로 구분한 URL 목록"
+        required: true
+        type: string
+      bytes:
+        description: "URL 당 출력할 바이트 수"
+        required: false
+        default: "2500"
+        type: string
+permissions: {}
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: fetch
+        env:
+          URLS: ${{ inputs.urls }}
+          N: ${{ inputs.bytes }}
+        run: |
+          set -f
+          for u in $URLS; do
+            echo "=== $u"
+            curl -sS -L --max-time 40 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+              -H "Accept: application/json, text/html;q=0.9, */*;q=0.8" "$u" -o out.bin \
+              -w "HTTP %{http_code} %{size_download}B %{content_type}\n" || echo "curl failed"
+            head -c "$N" out.bin | tr -d '\r'; echo; echo
+          done
