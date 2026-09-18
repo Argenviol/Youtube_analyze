@@ -71,8 +71,10 @@ def _gap_rows(rows: list[dict]) -> str:
     return "\n".join(out)
 
 
-def _rank_scatter_svg(characters: list[dict], width=760, height=560, pad=54):
-    pts = [c for c in characters if c.get("push_rank") is not None and c.get("audience_rank") is not None]
+def _rank_scatter_svg(characters: list[dict], game: str, width=760, height=560, pad=54):
+    """게임 하나의 푸시 순위 × 반응 순위. 순위가 게임 안에서만 매겨지므로 게임별로 그린다."""
+    pts = [c for c in characters if c.get("game") == game
+           and c.get("push_rank") is not None and c.get("audience_rank") is not None]
     if not pts:
         return '<p class="empty">두 랭킹에 모두 포함된 캐릭터가 없습니다.</p>'
     xmax = max(c["push_rank"] for c in pts)
@@ -146,19 +148,63 @@ def _monthly_svg(monthly: list[dict], width=820, height=300, pad=48):
     return (f'<svg viewBox="0 0 {width} {height}" class="chart">{grid}{xlabels}'
             + "".join(paths) + "</svg>"
             + f'<div class="legend">'
-            + "".join(f'<span class="lg"><i style="background:{_c(g)}"></i>{("원신" if g=="genshin" else "붕괴:스타레일")}</span>' for g in by_game)
+            + "".join(f'<span class="lg"><i style="background:{_c(g)}"></i>{GAME_KO.get(g, g)}</span>' for g in by_game)
             + "</div>")
+
+
+GAME_KO: dict[str, str] = {}
+
+
+def _game_block(game: str, bg: dict, chars: list[dict]) -> str:
+    """게임 하나의 절: 푸시 TOP·반응 TOP·산점도·격차. 게임을 가로지르는 표는 만들지 않는다."""
+    name = bg["name_ko"]
+    return f"""
+<h2 style="margin-top:44px;border-top:1px solid var(--line);padding-top:22px">
+<span style="display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:middle;background:{_c(game)}"></span>{name}
+<span style="font-weight:400;color:var(--label-alt);font-size:13px">가챠 캐릭터 {bg['n_gacha']}명 · 리뷰 {bg['n_reviews']:,}건 · 무언급 {bg['n_zero_mention']}명 — 순위는 이 게임 안에서만</span></h2>
+
+<h3>공식 푸시 TOP 15 <span style="font-weight:400;color:var(--label-alt);font-size:13px">(5성·출시 최신순 — 배너 재출시 이력 API를 찾지 못해 쓴 프록시)</span></h3>
+<div class="table-box"><table><thead><tr>
+<th>순위</th><th>캐릭터</th><th>게임</th><th>등급</th><th>출시일</th>
+</tr></thead><tbody>
+{_push_rows(bg['push_top'])}
+</tbody></table></div>
+
+<h3>유저 반응 TOP 15 <span style="font-weight:400;color:var(--label-alt);font-size:13px">(리뷰 본문 언급 횟수)</span></h3>
+{_audience_rows(bg['audience_top'])}
+
+<h3>푸시 순위 vs 반응 순위</h3>
+<p class="sub">점선(대각선) 위 = 반응이 푸시 순위보다 약함 · 아래 = 반응이 푸시 순위보다 강함(마우스오버로 캐릭터 확인)</p>
+<div class="chart-box">{_rank_scatter_svg(chars, game)}</div>
+
+<h3>간극이 가장 큰 캐릭터</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex-wrap:wrap">
+<div>
+<p class="sub"><strong>많이 밀렸는데 반응은 약함</strong> (반응순위 - 푸시순위, 양수 클수록)</p>
+<div class="table-box"><table><thead><tr><th>캐릭터</th><th>게임</th><th>푸시순위</th><th>반응순위</th><th>격차</th></tr></thead>
+<tbody>{_gap_rows(bg['gap_overpushed'])}</tbody></table></div>
+</div>
+<div>
+<p class="sub"><strong>덜 밀렸는데 반응은 강함</strong> (숨은 인기 캐릭터, 음수 클수록)</p>
+<div class="table-box"><table><thead><tr><th>캐릭터</th><th>게임</th><th>푸시순위</th><th>반응순위</th><th>격차</th></tr></thead>
+<tbody>{_gap_rows(bg['gap_sleeper'])}</tbody></table></div>
+</div>
+</div>
+"""
 
 
 def build():
     data = json.loads((SITE / "data.json").read_text(encoding="utf-8"))
     meta, trends = data["meta"], data["trends_status"]
     chars = data["characters"]
-    push_top, audience_top = data["push_top"], data["audience_top"]
-    overpushed, sleeper = data["gap_overpushed"], data["gap_sleeper"]
+    by_game = data["by_game"]
+    games = meta.get("games") or list(by_game)
+    GAME_KO.update({g: by_game[g]["name_ko"] for g in games})
+    game_names = "·".join(GAME_KO[g] for g in games)
 
     n_gacha = len(chars)
     n_zero = sum(1 for c in chars if c.get("matchable") and (c.get("mention_count") or 0) == 0)
+    game_blocks = "".join(_game_block(g, by_game[g], chars) for g in games)
 
     html = f"""<!doctype html>
 <html lang="ko"><head>
@@ -168,7 +214,7 @@ def build():
 <div class="eyebrow">PROJECT 10</div>
 <h1>호요버스 캐릭터 인기도 분석</h1>
 <div class="sub">게임사가 밀어주는 캐릭터와 유저가 실제로 반응하는 캐릭터는 일치하는가? ·
-원신·붕괴:스타레일 · 수집 {meta['fetched_at'][:10]}</div>
+{game_names} · 게임별로 따로 순위를 매긴다 · 수집 {meta['fetched_at'][:10]}</div>
 
 <div class="cards">
   <div class="card"><div class="k">가챠 대상 캐릭터</div><div class="v">{n_gacha}명</div></div>
@@ -178,38 +224,17 @@ def build():
 </div>
 
 <div class="warn">
-<strong>Google Trends는 이 프로젝트에서 쓰지 않았다.</strong> 매 시도 즉시
-<code>{trends['error']}</code>가 발생했다(재현 로그: <code>data/trends_status.json</code>).
+<strong>Google Trends는 이 프로젝트에서 쓰지 않았다.</strong> 마지막 실행 기록:
+<code>{trends.get('error') or '원인 미기록'}</code> (재현 로그: <code>data/trends_status.json</code>).
 검색 관심도 대신 <strong>앱스토어 리뷰 본문에 캐릭터 이름이 언급된 횟수</strong>로 유저 반응을
 근사했다 — 이건 검색량보다 훨씬 거친 대체 지표이고, 리뷰를 남기는 유저층으로 표본이 편향돼 있다.
 </div>
 
-<h2>공식 푸시 TOP 15 <span style="font-weight:400;color:var(--label-alt);font-size:13px">(5성·출시 최신순 — 배너 재출시 이력 API를 찾지 못해 쓴 프록시)</span></h2>
-<div class="table-box"><table><thead><tr>
-<th>순위</th><th>캐릭터</th><th>게임</th><th>등급</th><th>출시일</th>
-</tr></thead><tbody>
-{_push_rows(push_top)}
-</tbody></table></div>
-
-<h2>유저 반응 TOP 15 <span style="font-weight:400;color:var(--label-alt);font-size:13px">(리뷰 본문 언급 횟수)</span></h2>
-{_audience_rows(audience_top)}
-
-<h2>푸시 순위 vs 반응 순위</h2>
-<p class="sub">점선(대각선) 위 = 반응이 푸시 순위보다 약함 · 아래 = 반응이 푸시 순위보다 강함(마우스오버로 캐릭터 확인)</p>
-<div class="chart-box">{_rank_scatter_svg(chars)}</div>
-
-<h2>간극이 가장 큰 캐릭터</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex-wrap:wrap">
-<div>
-<p class="sub"><strong>많이 밀렸는데 반응은 약함</strong> (반응순위 - 푸시순위, 양수 클수록)</p>
-<div class="table-box"><table><thead><tr><th>캐릭터</th><th>게임</th><th>푸시순위</th><th>반응순위</th><th>격차</th></tr></thead>
-<tbody>{_gap_rows(overpushed)}</tbody></table></div>
-</div>
-<div>
-<p class="sub"><strong>덜 밀렸는데 반응은 강함</strong> (숨은 인기 캐릭터, 음수 클수록)</p>
-<div class="table-box"><table><thead><tr><th>캐릭터</th><th>게임</th><th>푸시순위</th><th>반응순위</th><th>격차</th></tr></thead>
-<tbody>{_gap_rows(sleeper)}</tbody></table></div>
-</div>
+<div class="note"><strong>왜 게임별로 따로 보는가.</strong> 원신과 붕괴:스타레일은 출시 주기·캐릭터
+풀·리뷰 표본 수가 다르다. 두 게임을 한 순위표에 섞으면 "원신 신캐가 스타레일 신캐보다 더 밀렸다"
+같은, 아무도 묻지 않은 비교가 생긴다. 그래서 푸시 순위·반응 순위·격차는 <strong>게임 안에서만</strong>
+매기고, 아래는 게임마다 한 절씩이다.</div>
+{game_blocks}
 
 <h2>게임별 월간 평균 리뷰 평점 추이</h2>
 <div class="chart-box">{_monthly_svg(data["monthly_sentiment"])}</div>

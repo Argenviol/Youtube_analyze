@@ -63,6 +63,8 @@ const MONTHLY_SENTIMENT_SERIES: LineSeriesDatum[] = (() => {
 })();
 
 const GAMES = data.meta.games;
+// 순위는 게임 안에서만 매긴 값이다(meta.ranking_scope === "per_game"). 게임을 섞은 표는 만들지 않는다.
+const BY_GAME = data.by_game;
 const RANKS = [5, 4];
 
 function buildCharacterColumns(): TableColumn<Character10>[] {
@@ -169,9 +171,10 @@ export default function Page() {
           <Freshness fetchedAt={data.meta.fetched_at} intervalMinutes={REFRESH_INTERVAL_MIN["10"]} cadenceLabel={REFRESH_LABEL["10"]} />
         </div>
         <p className={styles.subhead}>
-          원신·붕괴: 스타레일 캐릭터 {data.characters.length}종(플레이어 아바타 {data.meta.n_playable_avatars_excluded}
-          종 제외) × 앱스토어 리뷰 {data.meta.n_reviews.toLocaleString("ko-KR")}건 기준. Zenless Zone Zero는 작동하는
-          데이터 소스가 없어 수집 대상에서 제외했다.
+          {GAMES.map((g) => gameLabel(g)).join("·")} 캐릭터 {data.characters.length}종(플레이어 아바타{" "}
+          {data.meta.n_playable_avatars_excluded}종 제외) × 앱스토어 리뷰 {data.meta.n_reviews.toLocaleString("ko-KR")}건
+          기준. <strong>순위·격차는 게임 안에서만 매긴다</strong> — 출시 주기와 리뷰 표본이 달라 게임을 섞은 순위는
+          만들지 않는다. 젠레스 존 제로·붕괴3rd는 캐릭터 마스터 소스가 없어 아직 없다.
         </p>
         {data.characters.length !== data.meta.n_characters ? (
           <p className={styles.subhead}>
@@ -254,37 +257,45 @@ export default function Page() {
         </button>
       </div>
 
-      <Section
-        eyebrow="Table"
-        title="푸시 순위 상위 15명 (프록시)"
-        description="5★ 캐릭터의 출시 최신성 기준 — 실제 배너율 데이터 아님."
-      />
-      <Table columns={PUSH_COLUMNS} rows={data.push_top} getRowKey={(r) => r.char_id} initialSortKey="push_rank" initialSortDir="asc" />
+      {GAMES.map((g) => {
+        const bg = BY_GAME[g];
+        if (!bg) return null;
+        return (
+          <div key={g}>
+            <Section
+              eyebrow={gameLabel(g)}
+              title={`${gameLabel(g)} · 푸시 순위 상위 15명 (프록시)`}
+              description={`5★ 캐릭터의 출시 최신성 기준 — 실제 배너율 데이터 아님. 가챠 캐릭터 ${bg.n_gacha}명 · 리뷰 ${bg.n_reviews.toLocaleString("ko-KR")}건 · 리뷰 무언급 ${bg.n_zero_mention}명.`}
+            />
+            <Table columns={PUSH_COLUMNS} rows={bg.push_top} getRowKey={(r) => r.char_id} initialSortKey="push_rank" initialSortDir="asc" />
 
-      <Section eyebrow="Table" title="반응 순위 상위 15명" description="리뷰 언급률(mention_rate_per_10k) 기준." />
-      <Table
-        columns={AUDIENCE_COLUMNS}
-        rows={data.audience_top}
-        getRowKey={(r) => r.char_id}
-        initialSortKey="audience_rank"
-        initialSortDir="asc"
-      />
+            <Section eyebrow={gameLabel(g)} title={`${gameLabel(g)} · 반응 순위 상위 15명`} description="리뷰 본문 언급 횟수 기준. 순위는 이 게임 안에서만." />
+            <Table
+              columns={AUDIENCE_COLUMNS}
+              rows={bg.audience_top}
+              getRowKey={(r) => r.char_id}
+              initialSortKey="audience_rank"
+              initialSortDir="asc"
+            />
 
-      <Section
-        eyebrow="Table"
-        title="과대 푸시 vs 숨은 인기"
-        description="왼쪽: 많이 밀었는데 반응이 적은 캐릭터. 오른쪽: 덜 밀었는데 반응이 큰(숨은 인기) 캐릭터."
-      />
-      <div className={styles.gapGrid}>
-        <div>
-          <p className={styles.gapLabel}>과대 푸시 (push는 상위인데 반응은 하위)</p>
-          <Table columns={gapColumns} rows={data.gap_overpushed} getRowKey={(r) => r.char_id} initialSortKey="gap" initialSortDir="desc" />
-        </div>
-        <div>
-          <p className={styles.gapLabel}>숨은 인기 (push는 하위인데 반응은 상위)</p>
-          <Table columns={gapColumns} rows={data.gap_sleeper} getRowKey={(r) => r.char_id} initialSortKey="gap" initialSortDir="asc" />
-        </div>
-      </div>
+            <Section
+              eyebrow={gameLabel(g)}
+              title={`${gameLabel(g)} · 과대 푸시 vs 숨은 인기`}
+              description="왼쪽: 많이 밀었는데 반응이 적은 캐릭터. 오른쪽: 덜 밀었는데 반응이 큰(숨은 인기) 캐릭터."
+            />
+            <div className={styles.gapGrid}>
+              <div>
+                <p className={styles.gapLabel}>과대 푸시 (push는 상위인데 반응은 하위)</p>
+                <Table columns={gapColumns} rows={bg.gap_overpushed} getRowKey={(r) => r.char_id} initialSortKey="gap" initialSortDir="desc" />
+              </div>
+              <div>
+                <p className={styles.gapLabel}>숨은 인기 (push는 하위인데 반응은 상위)</p>
+                <Table columns={gapColumns} rows={bg.gap_sleeper} getRowKey={(r) => r.char_id} initialSortKey="gap" initialSortDir="asc" />
+              </div>
+            </div>
+          </div>
+        );
+      })}
 
       <Section eyebrow="Table" title="전체 캐릭터" description="열 제목을 클릭하면 정렬된다." />
       <Table

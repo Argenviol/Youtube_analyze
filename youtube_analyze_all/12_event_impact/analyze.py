@@ -613,8 +613,20 @@ def hoyo_effect(chars: pd.DataFrame, streams: pd.DataFrame) -> tuple:
         m = chars[chars["matchable"] == True].copy()  # noqa: E712
         stats["n_chars"] = int(len(m))
         stats["mentioned_share"] = float((m["mention_count"] > 0).mean())
-        stats["corr_push"] = float(m["push_rank"].corr(m["mention_rate_per_10k"]))
-        stats["corr_recency"] = float(pd.Series(m["release_unix"]).corr(m["mention_rate_per_10k"]))
+        # 10 의 push_rank 는 게임 안에서만 매긴 순위다(2026-09-18). 게임을 섞어 상관을 내면
+        # 두 게임의 순위 눈금이 다른데 한 축에 올리는 꼴이라, 게임별로 내고 그 평균을 대표값으로 쓴다.
+        by_game = {}
+        for game, g in m.groupby("name_ko_game"):
+            by_game[str(game)] = {
+                "n": int(len(g)),
+                "corr_push": float(g["push_rank"].corr(g["mention_rate_per_10k"])),
+                "corr_recency": float(pd.Series(g["release_unix"]).corr(g["mention_rate_per_10k"])),
+            }
+        stats["by_game"] = by_game
+        _vals = [v["corr_push"] for v in by_game.values() if v["corr_push"] == v["corr_push"]]
+        _rec = [v["corr_recency"] for v in by_game.values() if v["corr_recency"] == v["corr_recency"]]
+        stats["corr_push"] = float(sum(_vals) / len(_vals)) if _vals else float("nan")
+        stats["corr_recency"] = float(sum(_rec) / len(_rec)) if _rec else float("nan")
         r = m.groupby("rank")["mention_count"].agg(["size", "median", "mean"])
         stats["rarity"] = {int(k): {"n": int(v["size"]), "med": float(v["median"]), "mean": float(v["mean"])}
                            for k, v in r.iterrows()}
@@ -1146,6 +1158,7 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
     hs_ = hoyo_stats or {}
     hy_n = hs_.get("n_chars", 0); hy_mentioned = hs_.get("mentioned_share", 0.0)
     hy_corr_push = hs_.get("corr_push", 0.0); hy_corr_recency = hs_.get("corr_recency", 0.0)
+    hy_by_game = " · ".join(f"{g} {v['corr_push']:+.2f}" for g, v in (hs_.get("by_game") or {}).items())
     hy_top_push = hs_.get("top_median_push", 0.0)
     hy_pushed_mentions = hs_.get("pushed_median_mentions", 0.0)
     hy_top_mentions = hs_.get("top_median_mentions", 0.0)
@@ -1678,8 +1691,9 @@ MAU {mk_mau:,.0f}명 기준으로 사키하네 후야의 신의상 피크 38,402
 ### ① 공식 푸시 → 유저 언급: 상관 {hy_corr_push:+.2f}
 
 매칭 가능한 캐릭터 {hy_n}명 중 {hy_mentioned:.0%}만 리뷰에 한 번이라도 언급된다.
-공식 푸시 순위(5성·최신순)와 언급률의 상관은 **{hy_corr_push:+.2f}** — 없다. 출시 최신순과의
-상관도 {hy_corr_recency:+.2f}로 약하다.
+공식 푸시 순위(5성·최신순)와 언급률의 상관은 게임별로 **{hy_by_game}** (평균 {hy_corr_push:+.2f}) — 없다.
+출시 최신순과의 상관도 평균 {hy_corr_recency:+.2f}로 약하다. 순위는 게임 안에서만 매긴 값이라
+상관도 게임별로 내고, 두 게임을 한 축에 섞지 않는다.
 
 | 구분 | 캐릭터 수 | 언급 중앙값 | 언급 평균 |
 |---|---|---|---|

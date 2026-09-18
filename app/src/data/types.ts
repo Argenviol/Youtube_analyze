@@ -636,8 +636,27 @@ export type Character10 = {
 
 export type MonthlySentiment10 = { game: string; month: string; avg_score: number; n_reviews: number };
 
+/** 게임 하나의 묶음. 순위·격차는 이 안에서만 의미가 있다. */
+export type GameBlock10 = {
+  name_ko: string;
+  n_gacha: number;
+  n_reviews: number;
+  n_matchable: number;
+  n_zero_mention: number;
+  push_top: Character10[];
+  audience_top: Character10[];
+  gap_overpushed: Character10[];
+  gap_sleeper: Character10[];
+};
+
 export type Data10 = {
-  meta: Meta10;
+  meta: Meta10 & {
+    /** 분석 대상 게임 키(수집 순서). */
+    games: string[];
+    /** "per_game" — push_rank·audience_rank·gap 은 게임 안에서만 매긴 값. */
+    ranking_scope: string;
+    ranking_note: string;
+  };
   trends_status: TrendsStatus10;
   app_summary: AppSummary10[];
   characters: Character10[];
@@ -650,6 +669,8 @@ export type Data10 = {
   gap_overpushed: Character10[];
   /** push_rank는 낮은데(안 밀었는데) audience_rank는 높은(반응이 큰) 캐릭터 — 숨은 인기. */
   gap_sleeper: Character10[];
+  /** 게임별 묶음. 화면은 이걸로 게임마다 한 절씩 그린다. */
+  by_game: Record<string, GameBlock10>;
   n_matchable_low_confidence: number;
 };
 
