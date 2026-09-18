@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-18T13:04:52.410087+00:00",
-    "n_snapshots": 31026,
+    "fetched_at": "2026-09-18T13:15:06.283410+00:00",
+    "n_snapshots": 31037,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-18T13:04:52.410087+00:00"
+      "2026-09-18T13:15:06.283410+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 28179,
-    "n_timepoints": 2818,
-    "span_hours": 895.15,
-    "observed_hours": 480.33,
+    "n_snapshots": 28189,
+    "n_timepoints": 2819,
+    "span_hours": 895.32,
+    "observed_hours": 480.5,
     "coverage_ratio": 0.537,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 7007,
+    "n_live_rows": 7008,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-18T13:04:52.410087+00:00"
+    "last": "2026-09-18T13:15:06.283410+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,14 +30,14 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 165557,
-      "follower_delta": 8816,
-      "follower_per_day": 236.4,
+      "followers": 165569,
+      "follower_delta": 8828,
+      "follower_per_day": 236.7,
       "n_sessions": 56,
-      "n_live_points": 329,
+      "n_live_points": 330,
       "peak_ccu": 38402,
-      "avg_ccu": 3505,
-      "ccu_per_1k_followers": 231.96
+      "avg_ccu": 3514,
+      "ccu_per_1k_followers": 231.94
     },
     {
       "rank": 2,
@@ -46,7 +46,7 @@
       "unit": "UNIVERSE",
       "followers": 263184,
       "follower_delta": 7858,
-      "follower_per_day": 210.7,
+      "follower_per_day": 210.6,
       "n_sessions": 110,
       "n_live_points": 768,
       "peak_ccu": 38237,
@@ -86,9 +86,9 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 247890,
-      "follower_delta": 6773,
-      "follower_per_day": 181.6,
+      "followers": 247889,
+      "follower_delta": 6772,
+      "follower_per_day": 181.5,
       "n_sessions": 95,
       "n_live_points": 787,
       "peak_ccu": 13363,
@@ -114,9 +114,9 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 240886,
-      "follower_delta": 4038,
-      "follower_per_day": 108.3,
+      "followers": 240885,
+      "follower_delta": 4037,
+      "follower_per_day": 108.2,
       "n_sessions": 119,
       "n_live_points": 923,
       "peak_ccu": 9749,
@@ -128,22 +128,22 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 227144,
-      "follower_delta": 8044,
+      "followers": 227145,
+      "follower_delta": 8045,
       "follower_per_day": 215.7,
       "n_sessions": 91,
       "n_live_points": 617,
       "peak_ccu": 9414,
       "avg_ccu": 3631,
-      "ccu_per_1k_followers": 41.45
+      "ccu_per_1k_followers": 41.44
     },
     {
       "rank": 9,
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 307679,
-      "follower_delta": 5759,
+      "followers": 307681,
+      "follower_delta": 5761,
       "follower_per_day": 154.4,
       "n_sessions": 96,
       "n_live_points": 837,
@@ -156,8 +156,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 261048,
-      "follower_delta": 8146,
+      "followers": 261050,
+      "follower_delta": 8148,
       "follower_per_day": 218.4,
       "n_sessions": 73,
       "n_live_points": 542,
@@ -1236,6 +1236,18 @@
       "category": "더 게임 오브 시시포스"
     },
     {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-09-18 21:44",
+      "observed_min": 30.7,
+      "n_points": 4,
+      "peak_ccu": 6497,
+      "avg_ccu": 5081,
+      "title": "용가리가 왔어요. 3D 데뷔 끝났어요.",
+      "category": "talk"
+    },
+    {
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
@@ -1653,18 +1665,6 @@
       "peak_ccu": 5909,
       "avg_ccu": 5909,
       "title": "빠쓰아가씨의 봉누도2 설명회 같이보기",
-      "category": "talk"
-    },
-    {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-09-18 21:44",
-      "observed_min": 20.5,
-      "n_points": 3,
-      "peak_ccu": 5878,
-      "avg_ccu": 4609,
-      "title": "용가리가 왔어요. 3D 데뷔 끝났어요.",
       "category": "talk"
     },
     {
@@ -29041,6 +29041,10 @@
         [
           "2026-09-18 22:04",
           5878
+        ],
+        [
+          "2026-09-18 22:15",
+          6497
         ]
       ]
     },
