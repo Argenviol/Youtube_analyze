@@ -13,6 +13,11 @@ on:
         required: false
         default: "2500"
         type: string
+      pattern:
+        description: "있으면 앞부분 대신 grep -o -E 결과(최대 120줄)를 출력"
+        required: false
+        default: ""
+        type: string
 permissions: {}
 jobs:
   probe:
@@ -22,6 +27,7 @@ jobs:
         env:
           URLS: ${{ inputs.urls }}
           N: ${{ inputs.bytes }}
+          PATTERN: ${{ inputs.pattern }}
         run: |
           set -f
           for u in $URLS; do
@@ -29,5 +35,10 @@ jobs:
             curl -sS -L --max-time 40 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
               -H "Accept: application/json, text/html;q=0.9, */*;q=0.8" "$u" -o out.bin \
               -w "HTTP %{http_code} %{size_download}B %{content_type}\n" || echo "curl failed"
-            head -c "$N" out.bin | tr -d '\r'; echo; echo
+            if [ -n "$PATTERN" ]; then
+              grep -o -E "$PATTERN" out.bin | head -120 || echo "(no match)"
+            else
+              head -c "$N" out.bin | tr -d '\r'
+            fi
+            echo; echo
           done
