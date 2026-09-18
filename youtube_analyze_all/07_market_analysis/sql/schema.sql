@@ -20,13 +20,15 @@ CREATE TABLE stellive_milestones (
     category TEXT
 );
 
-DROP TABLE IF EXISTS group_summary;
-CREATE TABLE group_summary (
+DROP TABLE IF EXISTS cohort_summary;
+CREATE TABLE cohort_summary (
+    cohort TEXT,
     group TEXT,
     n_members INTEGER,
-    avg_subscribers REAL,
+    avg_months_since_debut REAL,
     median_subscribers REAL,
-    total_subscribers INTEGER,
+    avg_subscribers REAL,
+    median_subs_per_month REAL,
     avg_recent_views REAL,
     avg_engagement_rate REAL,
     avg_uploads_per_week REAL,

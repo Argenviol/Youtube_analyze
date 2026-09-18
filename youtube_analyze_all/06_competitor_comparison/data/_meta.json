@@ -1,13 +1,60 @@
 {
-  "fetched_at": "2026-09-17T22:47:33.994104+00:00",
-  "n_channels": 18,
-  "n_videos": 540,
+  "fetched_at": "2026-09-18T02:28:31.616061+00:00",
+  "n_channels": 42,
+  "n_videos": 1260,
   "recent_per_channel": 30,
   "groups": [
     "StelLive",
-    "홀로라이브",
-    "이세계아이돌"
+    "이세계아이돌",
+    "홀로라이브"
   ],
+  "cohorts": [
+    "2021-2022 데뷔",
+    "2023 데뷔",
+    "2024 데뷔",
+    "2025 데뷔"
+  ],
+  "cohort_composition": [
+    {
+      "cohort": "2021-2022 데뷔",
+      "group": "이세계아이돌",
+      "n": 6
+    },
+    {
+      "cohort": "2021-2022 데뷔",
+      "group": "홀로라이브",
+      "n": 8
+    },
+    {
+      "cohort": "2023 데뷔",
+      "group": "StelLive",
+      "n": 5
+    },
+    {
+      "cohort": "2023 데뷔",
+      "group": "홀로라이브",
+      "n": 9
+    },
+    {
+      "cohort": "2024 데뷔",
+      "group": "StelLive",
+      "n": 4
+    },
+    {
+      "cohort": "2024 데뷔",
+      "group": "홀로라이브",
+      "n": 9
+    },
+    {
+      "cohort": "2025 데뷔",
+      "group": "StelLive",
+      "n": 1
+    }
+  ],
+  "missing_channels": [],
   "source": "YouTube Data API v3",
-  "note": "각 그룹 대표 멤버 6명 표본 비교"
+  "sampling": "데뷔 코호트 매칭 — 기수 전원 수집(개인 인지도로 고르지 않음)",
+  "method": "debut_cohort_matched",
+  "method_changed_at": "2026-09-18",
+  "method_note": "이전에는 홀로라이브 대표 6명(2019~2020 데뷔)과 StelLive 6명(2023~2025 데뷔)을 비교했다. 구독자 격차의 대부분이 데뷔 시기 차이로 설명되는 구조라 그룹 비교로 쓸 수 없었다. 이 시점 이전 스냅샷과 그룹 평균을 직접 비교하지 말 것."
 }

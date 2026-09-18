@@ -1,7 +1,7 @@
 {
   "meta": {
-    "built_at": "2026-09-17T22:47:37.603751+00:00",
-    "fetched_at": "2026-09-17T22:47:37.603751+00:00",
+    "built_at": "2026-09-18T02:28:35.748640+00:00",
+    "fetched_at": "2026-09-18T02:28:35.748640+00:00",
     "source": "Claude 웹서치(시장 통계) + 프로젝트1·6 자체 수집 데이터",
     "n_facts": 13,
     "n_milestones": 8
@@ -195,37 +195,95 @@
   ],
   "groups": [
     {
-      "group": "StelLive",
-      "n_members": 6,
-      "avg_subscribers": 269666.6667,
-      "median_subscribers": 291000.0,
-      "total_subscribers": 1618000,
-      "avg_recent_views": 175069.4,
-      "avg_engagement_rate": 0.0338,
-      "avg_uploads_per_week": 3.3617,
-      "avg_reach_ratio": 0.698
-    },
-    {
+      "cohort": "2021-2022 데뷔",
       "group": "이세계아이돌",
       "n_members": 6,
-      "avg_subscribers": 412000.0,
+      "avg_months_since_debut": 57.0,
       "median_subscribers": 415000.0,
-      "total_subscribers": 2472000,
-      "avg_recent_views": 101832.75,
-      "avg_engagement_rate": 0.0543,
+      "avg_subscribers": 412000.0,
+      "median_subs_per_month": 7276.25,
+      "avg_recent_views": 101928.4167,
+      "avg_engagement_rate": 0.0545,
       "avg_uploads_per_week": 3.2967,
-      "avg_reach_ratio": 0.2522
+      "avg_reach_ratio": 0.2527
     },
     {
+      "cohort": "2021-2022 데뷔",
       "group": "홀로라이브",
-      "n_members": 6,
-      "avg_subscribers": 3011666.6667,
-      "median_subscribers": 2720000.0,
-      "total_subscribers": 18070000,
-      "avg_recent_views": 555653.7833,
-      "avg_engagement_rate": 0.056,
-      "avg_uploads_per_week": 4.82,
-      "avg_reach_ratio": 0.1668
+      "n_members": 8,
+      "avg_months_since_debut": 56.2,
+      "median_subscribers": 1230000.0,
+      "avg_subscribers": 1410500.0,
+      "median_subs_per_month": 21350.15,
+      "avg_recent_views": 233578.1875,
+      "avg_engagement_rate": 0.0721,
+      "avg_uploads_per_week": 6.0525,
+      "avg_reach_ratio": 0.1744
+    },
+    {
+      "cohort": "2023 데뷔",
+      "group": "StelLive",
+      "n_members": 5,
+      "avg_months_since_debut": 40.3,
+      "median_subscribers": 320000.0,
+      "avg_subscribers": 296600.0,
+      "median_subs_per_month": 8143.8,
+      "avg_recent_views": 184582.64,
+      "avg_engagement_rate": 0.0328,
+      "avg_uploads_per_week": 3.322,
+      "avg_reach_ratio": 0.647
+    },
+    {
+      "cohort": "2023 데뷔",
+      "group": "홀로라이브",
+      "n_members": 9,
+      "avg_months_since_debut": 36.9222,
+      "median_subscribers": 995000.0,
+      "avg_subscribers": 999000.0,
+      "median_subs_per_month": 26427.0,
+      "avg_recent_views": 223807.5889,
+      "avg_engagement_rate": 0.074,
+      "avg_uploads_per_week": 5.0189,
+      "avg_reach_ratio": 0.2489
+    },
+    {
+      "cohort": "2024 데뷔",
+      "group": "StelLive",
+      "n_members": 4,
+      "avg_months_since_debut": 28.0,
+      "median_subscribers": 226000.0,
+      "avg_subscribers": 235750.0,
+      "median_subs_per_month": 8069.0,
+      "avg_recent_views": 198403.025,
+      "avg_engagement_rate": 0.0358,
+      "avg_uploads_per_week": 5.2625,
+      "avg_reach_ratio": 0.868
+    },
+    {
+      "cohort": "2024 데뷔",
+      "group": "홀로라이브",
+      "n_members": 9,
+      "avg_months_since_debut": 24.3444,
+      "median_subscribers": 652000.0,
+      "avg_subscribers": 638111.1111,
+      "median_subs_per_month": 25494.7,
+      "avg_recent_views": 152070.0333,
+      "avg_engagement_rate": 0.072,
+      "avg_uploads_per_week": 7.3789,
+      "avg_reach_ratio": 0.2389
+    },
+    {
+      "cohort": "2025 데뷔",
+      "group": "StelLive",
+      "n_members": 1,
+      "avg_months_since_debut": 11.9,
+      "median_subscribers": 135000.0,
+      "avg_subscribers": 135000.0,
+      "median_subs_per_month": 11319.7,
+      "avg_recent_views": 129465.0,
+      "avg_engagement_rate": 0.0391,
+      "avg_uploads_per_week": 3.56,
+      "avg_reach_ratio": 0.959
     }
   ]
 }

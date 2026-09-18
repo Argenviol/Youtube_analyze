@@ -9,20 +9,20 @@
 
 | # | 프로젝트 | 최신 리포트 | 기준일 | 축적 | 차트 | 대시보드 |
 |---|---|---|---|---|---|---|
-| 1 | 멤버별 유튜브 채널 성과 | [REPORT1 - 20260917.md](01_member_channel_performance/REPORT1%20-%2020260917.md) | 2026-09-17 | 31개 | [8종](01_member_channel_performance/charts/) | [index.html](01_member_channel_performance/index.html) |
-| 2 | 커버곡 성과 랭킹 | [REPORT2 - 20260917.md](02_cover_song_ranking/REPORT2%20-%2020260917.md) | 2026-09-17 | 31개 | [7종](02_cover_song_ranking/charts/) | [index.html](02_cover_song_ranking/index.html) |
-| 3 | 치지직 방송 패턴 | [REPORT3 - 20260917.md](03_chzzk_stream_pattern/REPORT3%20-%2020260917.md) | 2026-09-17 | 31개 | [8종](03_chzzk_stream_pattern/charts/) | [index.html](03_chzzk_stream_pattern/index.html) |
+| 1 | 멤버별 유튜브 채널 성과 | [REPORT1 - 20260918.md](01_member_channel_performance/REPORT1%20-%2020260918.md) | 2026-09-18 | 32개 | [8종](01_member_channel_performance/charts/) | [index.html](01_member_channel_performance/index.html) |
+| 2 | 커버곡 성과 랭킹 | [REPORT2 - 20260918.md](02_cover_song_ranking/REPORT2%20-%2020260918.md) | 2026-09-18 | 32개 | [7종](02_cover_song_ranking/charts/) | [index.html](02_cover_song_ranking/index.html) |
+| 3 | 치지직 방송 패턴 | [REPORT3 - 20260918.md](03_chzzk_stream_pattern/REPORT3%20-%2020260918.md) | 2026-09-18 | 32개 | [8종](03_chzzk_stream_pattern/charts/) | [index.html](03_chzzk_stream_pattern/index.html) |
 | 4 | 키리누키(2차창작) 생태계 | [REPORT.md](04_kirinuki_ecosystem/REPORT.md) | 2026-09-12 | — | [6종](04_kirinuki_ecosystem/charts/) | [index.html](04_kirinuki_ecosystem/index.html) |
 | 5 | 댓글 여론/감성 | [REPORT.md](05_comment_sentiment/REPORT.md) | 2026-09-12 | — | [4종](05_comment_sentiment/charts/) | [index.html](05_comment_sentiment/index.html) |
-| 6 | 경쟁사 비교 | [REPORT6 - 20260917.md](06_competitor_comparison/REPORT6%20-%2020260917.md) | 2026-09-17 | 31개 | — | [index.html](06_competitor_comparison/index.html) |
-| 7 | 버추얼 크리에이터 시장 | [REPORT.md](07_market_analysis/REPORT.md) | — | — | [5종](07_market_analysis/charts/) | [index.html](07_market_analysis/index.html) |
+| 6 | 경쟁사 비교 | [REPORT6 - 20260918.md](06_competitor_comparison/REPORT6%20-%2020260918.md) | 2026-09-18 | 32개 | [6종](06_competitor_comparison/charts/) | [index.html](06_competitor_comparison/index.html) |
+| 7 | 버추얼 크리에이터 시장 | [REPORT.md](07_market_analysis/REPORT.md) | 2026-09-18 | — | [5종](07_market_analysis/charts/) | [index.html](07_market_analysis/index.html) |
 | 8 | 동시시청자 시계열 | [REPORT8 - 20260918.md](08_live_viewership/REPORT8%20-%2020260918.md) | 2026-09-18 | 3개 | [4종](08_live_viewership/charts/) | [index.html](08_live_viewership/index.html) |
 | 9 | DART 재무 분석 | [REPORT.md](09_dart_financials/REPORT.md) | 2026-09-04 | — | [5종](09_dart_financials/charts/) | [index.html](09_dart_financials/index.html) |
 | 10 | 호요버스 캐릭터 인기도 | [REPORT.md](10_hoyoverse/REPORT.md) | 2026-09-12 | — | [8종](10_hoyoverse/charts/) | [index.html](10_hoyoverse/index.html) |
 | 11 | 팬 커머스 | [REPORT.md](11_fan_commerce/REPORT.md) | 2026-09-12 | — | [5종](11_fan_commerce/charts/) | [index.html](11_fan_commerce/index.html) |
 | 12 | 이벤트 임팩트 | [REPORT12 - 20260918.md](12_event_impact/REPORT12%20-%2020260918.md) | 2026-09-18 | 21개 | [4종](12_event_impact/charts/) | [index.html](12_event_impact/index.html) |
 
-프로젝트 12개 · 차트 64종 · 대시보드 12건.
+프로젝트 12개 · 차트 70종 · 대시보드 12건.
 
 ## 대시보드 여는 법
 
@@ -31,7 +31,7 @@
 
 ## 차트 시점
 
-차트는 **최신 실행 기준 한 벌만** 둡니다. 날짜별로 쌓으면 64종 × 날짜 수로
+차트는 **최신 실행 기준 한 벌만** 둡니다. 날짜별로 쌓으면 70종 × 날짜 수로
 저장소가 급격히 커지기 때문입니다. 그래서 지난 날짜의 리포트를 열면 본문 숫자와
 차트 시점이 다를 수 있습니다 — 각 리포트의 차트 절에 어느 시점 기준인지 적어뒀습니다.
 
