@@ -15,8 +15,13 @@
   REPORT1 - 20260818.md      ← 매일 갱신되는 프로젝트
   REPORT.md                  ← 숫자가 잘 안 바뀌는 프로젝트(04·05·07·09·10·11)
 
+## 기준일은 수집 메타에서 온다
+리포트 파일명과 본문의 "기준" 날짜는 `data/_meta.json` 의 fetched_at 이다. 본문에서
+정규식으로 날짜를 긁으면 "관측 구간 2026-08-12 ~ ..." 같은 줄의 **시작일**을 집어와
+매일 수집해도 리포트가 한 날짜에 고정된다(08 에서 실제로 그랬다).
+
 ## 차트는 최신본 하나만 둔다
-차트까지 날짜별로 쌓으면 67종 × 날짜 수로 저장소가 급격히 커진다. 대신 각 리포트의
+차트까지 날짜별로 쌓으면 (차트 수 × 날짜 수)로 저장소가 급격히 커진다. 대신 각 리포트의
 차트 절에 차트가 어느 시점 기준인지 명시한다 — 옛 리포트를 열면 본문 숫자와 차트
 날짜가 다를 수 있고, 그건 숨기지 말고 드러내야 한다.
 
@@ -26,6 +31,8 @@
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 import shutil
 import sys
@@ -43,9 +50,9 @@ OUT = ROOT.parent / "결과물"
 PROJECTS = [
     ("01_member_channel_performance", 1, "멤버별 유튜브 채널 성과", True,
      "규모와 밀도는 반대로 간다. 참여율과 구독자, 도달 효율과 구독자가 모두 "
-     "**뚜렷한 음의 상관**이다(둘 다 -0.4 이하). 구독자가 많은 채널일수록 구독자 대비 조회수와 "
+     "**뚜렷한 음의 상관**이다. 구독자가 많은 채널일수록 구독자 대비 조회수와 "
      "참여율이 낮다 — 팬덤이 커질수록 느슨해진다는 뜻이다. 반면 업로드 빈도와 평균 조회수는 "
-     "**+0.8 안팎**으로 강하게 붙어 있어, 이 규모대에서는 물량이 조회수를 견인한다."),
+     "**뚜렷한 양의 상관**이라, 이 규모대에서는 물량이 조회수를 견인한다."),
 
     ("02_cover_song_ranking", 2, "커버곡 성과 랭킹", True,
      "커버곡은 업로드 수와 성과가 비례하지 않는다. 최다 업로더와 총 조회수 1위가 다른 사람이고, "
@@ -73,10 +80,14 @@ PROJECTS = [
      "토픽 분포에서는 성격·개그가 목소리·노래를 앞서, 팬들이 콘텐츠보다 **사람**에 반응한다."),
 
     ("06_competitor_comparison", 6, "경쟁사 비교", True,
-     "StelLive 는 규모에서 밀리지만 **도달 효율에서 압도한다.** 평균 구독자는 홀로라이브의 "
-     "10분의 1 수준인데 도달 효율(평균조회수/구독자)은 **4배 이상** 앞선다. "
-     "구독자 수가 곧 영향력이 아니라는 뜻이고, 규모가 작을수록 구독자가 실제 시청으로 "
-     "이어지는 비율이 높다는 프로젝트 1의 발견과 같은 방향이다."),
+     "**규모 비교는 데뷔 시기를 맞춰야 성립한다.** 구독자는 매일 조금씩만 늘고 거의 줄지 "
+     "않는 누적 지표라, 먼저 시작한 채널이 항상 앞서 있다. 예전 비교는 2019~2020년 데뷔한 "
+     "홀로라이브 유명 멤버 6명과 2023~2025년 데뷔한 StelLive 멤버를 나란히 놓은 것이어서, "
+     "'평균 구독자 10배 차이'는 대부분 **4~6년 먼저 시작했다는 사실을 다시 말한 것**에 "
+     "가깝다. 표본을 **기수 전원**으로 바꾸고 비교를 같은 데뷔 코호트 안으로 제한하면, "
+     "남는 차이는 누적이 아닌 지표—도달 효율과 참여율—에서 드러난다. 이세계아이돌은 "
+     "StelLive 보다 1년 반 먼저 데뷔해 같은 코호트가 아니므로, 같은 시기 데뷔한 홀로라이브 "
+     "기수와 짝지어 따로 본다."),
 
     ("07_market_analysis", 7, "버추얼 크리에이터 시장", False,
      "VTuber 시장 추정치는 리서치사마다 2026년 31.3억~33.1억 달러로 갈리고 2032년 전망은 "
@@ -115,7 +126,7 @@ PROJECTS = [
      "유튜브를 움직이는 것(오리지널곡·커버곡 4배)과 치지직을 움직이는 것(신의상)이 갈리고, 합방은 "
      "둘 다 완만하되 며칠씩 이어져 분량으로 벌충한다. 단독 콘서트는 합동 페스티벌의 5배로 남고, "
      "레버는 대부분 기획할 수 있지만 키리누키만은 방송 중 우연한 순간이 만든다. 같은 21일에 "
-     "세 그룹 중 스텔라이브만 전원이 올랐고 업로드 빈도가 조회수와 +0.8 로 붙는다. 팬은 자기 돈으로 "
+     "세 그룹 중 스텔라이브만 전원이 올랐고 업로드 빈도가 조회수와 뚜렷한 양의 상관으로 붙는다. 팬은 자기 돈으로 "
      "광고까지 내지만 그 돈은 플랫폼에 20%대 마진으로 쌓이고 IP 회사엔 남지 않는다. "
      "**수익은 어떤 방법으로도 잴 수 없고**, 전후 비교는 일일 수집이 시작된 2026-08-12 이후 "
      "이벤트만 가능하다 — 그 이전은 0%가 아니라 측정 불가다."),
@@ -133,12 +144,36 @@ TREND_METRIC = {
 
 
 def _report_date(src: Path) -> str | None:
-    """원본 REPORT.md 본문에서 기준 날짜(YYYY-MM-DD)를 찾는다."""
+    """이 리포트의 기준일(YYYY-MM-DD).
+
+    정본은 **수집 메타(data/_meta.json 의 fetched_at)** 다. 본문 첫 줄들에서
+    정규식으로 날짜를 긁던 이전 방식은 08(동시시청자)에서 조용히 틀렸다 —
+    08 의 첫 줄에는 "관측 구간: 2026-08-12 ~ 2026-09-18" 처럼 **시작일**이 먼저
+    나와서, 매일 새로 수집해도 리포트 날짜가 관측 시작일에 고정됐다. 그 결과
+    결과물/08 은 데이터가 한 달 넘게 쌓이는 동안 2026-08-12 자 리포트 하나로
+    멈춰 있었다.
+
+    메타가 없는 프로젝트(07·12 처럼 자체 수집이 없는 재분석 전용)는 예전처럼
+    본문에서 찾되, "관측 구간/기간" 같은 범위 표기 줄은 건너뛴다.
+    """
+    meta = src.parent / "data" / "_meta.json"
+    if meta.exists():
+        try:
+            m = json.loads(meta.read_text(encoding="utf-8"))
+            v = m.get("fetched_at") or m.get("collected_at")
+            if isinstance(v, str) and len(v) >= 10:
+                return v[:10]
+        except Exception:
+            pass
     if not src.exists():
         return None
-    head = "\n".join(src.read_text(encoding="utf-8").splitlines()[:8])
-    m = re.search(r"(\d{4}-\d{2}-\d{2})", head)
-    return m.group(1) if m else None
+    for line in src.read_text(encoding="utf-8").splitlines()[:8]:
+        if re.search(r"관측\s*구간|관측\s*기간|이벤트\s*구간|span", line):
+            continue
+        m = re.search(r"(\d{4}-\d{2}-\d{2})", line)
+        if m:
+            return m.group(1)
+    return None
 
 
 def _split_report(text: str) -> tuple[str, dict[str, str]]:
@@ -205,8 +240,25 @@ def _trend_block(slug: str) -> str:
             + head + "\n" + sep + "\n" + "\n".join(rows) + "\n" + note)
 
 
+def unique_charts(slug: str) -> list[Path]:
+    """같은 그림을 두 번 싣지 않는다.
+
+    차트 파일명이 다르더라도 내용이 같으면(픽셀 단위로 동일한 PNG) 리포트에는
+    한 번만 나와야 한다. 파일 내용 해시로 걸러낸다 — 파일명 규칙에 기대면
+    이름만 바꿔 저장된 같은 그림을 못 잡는다.
+    """
+    seen, out = set(), []
+    for c in sorted((ROOT / slug / "charts").glob("*.png")):
+        h = hashlib.sha256(c.read_bytes()).hexdigest()
+        if h in seen:
+            continue
+        seen.add(h)
+        out.append(c)
+    return out
+
+
 def _charts_block(slug: str, chart_date: str | None) -> str:
-    charts = sorted((ROOT / slug / "charts").glob("*.png"))
+    charts = unique_charts(slug)
     if not charts:
         return ""
     when = f" (최신 실행 {chart_date} 기준)" if chart_date else ""
@@ -253,20 +305,8 @@ def _compose(slug: str, num: int, short: str, conclusion: str,
     if ch:
         md += ["## 근거 자료", "", ch, ""]
 
-    md += [
-        "## 원자료", "",
-        f"이 리포트를 만든 코드와 데이터는 저장소의 [`youtube_analyze_all/{slug}/`]"
-        f"(../../youtube_analyze_all/{slug}/) 에 있다.", "",
-        "| 경로 | 내용 |", "|---|---|",
-        "| `collect.py` | 수집 |",
-        "| `analyze.py` | 정제·집계·차트 생성 |",
-        "| `data/` | 원천·정제 데이터 (CSV/JSON) |",
-        "| `sql/` | 스키마·INSERT·분석쿼리·SQLite·쿼리 실행결과 |",
-        "| `site/index.html` | 자체완결 인터랙티브 대시보드 |",
-    ]
-    if accumulating:
-        md.append("| `data/history.csv` | 날짜별 지표 축적 (이 리포트의 추세 절 근거) |")
-    md.append("")
+    # 코드·데이터 경로를 나열하던 "원자료" 표는 싣지 않는다. 리포트는 읽는
+    # 문서이고, 어느 폴더에 무엇이 있는지는 저장소 구조가 이미 말해 준다.
     return "\n".join(md)
 
 
@@ -276,12 +316,19 @@ def _copy_project(slug: str, num: int, short: str, conclusion: str, acc: bool) -
     date = _report_date(src / "REPORT.md")
 
     # 차트는 최신본만 둔다. 날짜별로 쌓으면 저장소가 감당이 안 된다.
-    charts = sorted((src / "charts").glob("*.png"))
+    # 내용이 같은 그림은 한 장만 옮긴다(unique_charts).
+    charts = unique_charts(slug)
     if charts:
         cdir = dst / "charts"
         cdir.mkdir(exist_ok=True)
         for png in charts:
             shutil.copy2(png, cdir / png.name)
+        # 차트 구성이 바뀌면(06 이 7종→6종으로 바뀐 것처럼) 옛 파일명이 남아
+        # 새 그림 옆에 지난 분석의 그림이 그대로 놓인다. 원본에 없는 PNG 는 지운다.
+        keep = {c.name for c in charts}
+        for stale in cdir.glob("*.png"):
+            if stale.name not in keep:
+                stale.unlink()
 
     index = src / "site" / "index.html"
     if index.exists():
@@ -303,7 +350,7 @@ def _copy_project(slug: str, num: int, short: str, conclusion: str, acc: bool) -
 def _index_md(rows: list) -> str:
     lines = [
         "# 결과물", "",
-        "StelLive 데이터 분석 포트폴리오 **11개 프로젝트의 결과물만** 모았습니다.",
+        f"데이터 분석 포트폴리오 **{len(rows)}개 프로젝트의 결과물만** 모았습니다.",
         "각 리포트는 **결론이 맨 위**에 있고 근거·차트·상세분석이 아래로 이어집니다 —",
         "파일 하나만 열면 됩니다.", "",
         "수집할 때마다 숫자가 바뀌는 프로젝트는 `REPORT1 - 20260818.md` 처럼 날짜를 붙여",
@@ -327,7 +374,7 @@ def _index_md(rows: list) -> str:
         "`index.html` 은 CSS·데이터를 안에 품은 자체완결 파일이라 그냥 브라우저로 열면 됩니다",
         "(GitHub 웹에서는 HTML 이 렌더링되지 않으니 내려받아서 열어야 합니다).", "",
         "## 차트 시점", "",
-        "차트는 **최신 실행 기준 한 벌만** 둡니다. 날짜별로 쌓으면 67종 × 날짜 수로",
+        f"차트는 **최신 실행 기준 한 벌만** 둡니다. 날짜별로 쌓으면 {total_ch}종 × 날짜 수로",
         "저장소가 급격히 커지기 때문입니다. 그래서 지난 날짜의 리포트를 열면 본문 숫자와",
         "차트 시점이 다를 수 있습니다 — 각 리포트의 차트 절에 어느 시점 기준인지 적어뒀습니다.", "",
         "> 이 폴더는 `youtube_analyze_all/scripts/build_deliverables.py` 가 생성합니다.",

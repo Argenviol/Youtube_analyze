@@ -110,15 +110,3 @@ API가 아니므로).
 
 ![05_sandbox_revenue_vs_operating](charts/05_sandbox_revenue_vs_operating.png)
 
-
-## 원자료
-
-이 리포트를 만든 코드와 데이터는 저장소의 [`youtube_analyze_all/11_fan_commerce/`](../../youtube_analyze_all/11_fan_commerce/) 에 있다.
-
-| 경로 | 내용 |
-|---|---|
-| `collect.py` | 수집 |
-| `analyze.py` | 정제·집계·차트 생성 |
-| `data/` | 원천·정제 데이터 (CSV/JSON) |
-| `sql/` | 스키마·INSERT·분석쿼리·SQLite·쿼리 실행결과 |
-| `site/index.html` | 자체완결 인터랙티브 대시보드 |

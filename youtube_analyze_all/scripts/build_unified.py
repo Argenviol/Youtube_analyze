@@ -1,26 +1,36 @@
 # -*- coding: utf-8 -*-
-"""11개 프로젝트 리포트를 **한 파일**로 조립한다 (화면용 HTML + 인쇄용 PDF 소스).
+"""프로젝트 리포트를 **소재별로 한 파일씩** 조립한다 (화면용 HTML + 인쇄용 PDF 소스).
 
 결과물/ 은 프로젝트별로 흩어져 있어서 "지금 전체가 어떤 상태인지"를 한 번에 보려면
-11개 폴더를 돌아다녀야 한다. 이 스크립트는 같은 소스에서 한 페이지짜리 종합본을 만든다.
+폴더를 여럿 돌아다녀야 한다. 이 스크립트는 같은 소스에서 한 페이지짜리 종합본을 만든다.
+
+## 왜 두 권인가
+버추얼 크리에이터 팬덤(01~09·11·12)과 게임 캐릭터 인기도(10)는 읽는 사람도, 묻는
+질문도 다르다. 한 문서에 섞으면 독자가 중간에 맥락을 갈아타야 한다. 소재가 다르면
+문서를 나눈다 — 스텔라이브 리포트 한 권, 게임 리포트 한 권.
 
   python scripts/build_unified.py
 
 만들어지는 것 (결과물/_build/ — 용량이 커서 git 에는 올리지 않는다):
-  stellive-analytics.html   본문 fragment (아티팩트 퍼블리시용)
-  StelLive-리포트.html      단독 문서 (doctype·charset·viewport 포함 — 모바일에서 그냥 열림)
-  _print.html               PDF 렌더 소스 (details 펼침·lazy 제거·웹폰트 제거)
+  StelLive-리포트.html / 게임-리포트.html   단독 문서(doctype·viewport 포함)
+  *-fragment.html                           본문 fragment (아티팩트 퍼블리시용)
+  *-print.html                              PDF 렌더 소스 (details 펼침·lazy 제거)
 
 PDF 는 헤드리스 크로미움으로 뽑는다:
 
   chromium --headless=new --no-pdf-header-footer \
-    --print-to-pdf=StelLive-리포트.pdf file://$PWD/결과물/_build/_print.html
+    --print-to-pdf=StelLive-리포트.pdf file://$PWD/결과물/_build/StelLive-리포트-print.html
 
 내용은 새로 쓰지 않는다 — 결론·본문은 build_deliverables 의 소스(PROJECTS 결론 +
 각 프로젝트 REPORT.md 섹션)를 그대로 재사용하고, 추세만 history.csv 에서 직접
-계산한다(1일/7일/28일). 차트 67장은 base64 로 인라인해 파일 하나로 자체완결시킨다.
+계산한다(1일/7일/28일). 차트는 base64 로 인라인해 파일 하나로 자체완결시킨다.
+
+## 같은 그림은 한 번만
+프로젝트가 서로의 데이터를 재사용하다 보면 같은 그림이 두 절에 들어간다. 픽셀이
+같은 PNG 는 문서 전체에서 한 번만 싣는다(charts_html 의 seen 집합).
 """
 import base64
+import hashlib
 import importlib.util
 import io
 import re
@@ -32,9 +42,9 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]      # youtube_analyze_all/
 REPO = ROOT.parent
-OUT = REPO / "결과물" / "_build" / "stellive-analytics.html"
+BUILD = REPO / "결과물" / "_build"
 
-OUT.parent.mkdir(parents=True, exist_ok=True)
+BUILD.mkdir(parents=True, exist_ok=True)
 
 spec = importlib.util.spec_from_file_location("bd", ROOT / "scripts" / "build_deliverables.py")
 bd = importlib.util.module_from_spec(spec)
@@ -118,17 +128,27 @@ def trend_table(slug: str) -> str:
             f"<tbody>{''.join(rows)}</tbody></table></div>{note}</div>")
 
 
-def charts_html(slug: str) -> str:
-    charts = sorted((ROOT / slug / "charts").glob("*.png"))
-    if not charts:
+def charts_html(slug: str, seen: set[str] | None = None) -> str:
+    """한 절의 차트들. 이미 문서에 실린 것과 픽셀이 같으면 건너뛴다.
+
+    파일명이 달라도 내용이 같으면 독자에게는 같은 그림이다. 파일명 규칙에 기대면
+    이름만 바꿔 저장된 같은 그림을 못 잡으므로 내용 해시로 판정한다.
+    """
+    seen = seen if seen is not None else set()
+    figs = []
+    for c in sorted((ROOT / slug / "charts").glob("*.png")):
+        h = hashlib.sha256(c.read_bytes()).hexdigest()
+        if h in seen:
+            continue
+        seen.add(h)
+        figs.append(
+            f"<figure><img src='{data_uri(c)}' alt='{c.stem}' loading='lazy'></figure>")
+    if not figs:
         return ""
-    figs = "".join(
-        f"<figure><img src='{data_uri(c)}' alt='{c.stem}' loading='lazy'></figure>"
-        for c in charts)
-    return f"<div class='charts'>{figs}</div>"
+    return f"<div class='charts'>{''.join(figs)}</div>"
 
 
-def section(slug, num, short, acc, conclusion) -> str:
+def section(slug, num, short, acc, conclusion, seen=None) -> str:
     src = ROOT / slug / "REPORT.md"
     date = bd._report_date(src)
     _, sec = bd._split_report(src.read_text(encoding="utf-8")) if src.exists() else ("", {})
@@ -164,178 +184,97 @@ def section(slug, num, short, acc, conclusion) -> str:
   {f"<div class='glance'>{glance}</div>" if glance else ""}
   {trend}
   {detail_block}
-  {charts_html(slug)}
+  {charts_html(slug, seen)}
 </section>"""
 
 
-ARCHIVE = ROOT / "_archive" / "2026-08-03_original"
 
-def _pct_table(rows, cols):
-    """rows: [(이름, [셀들])] — 셀은 (표시문자열, up/dn/zero 클래스)"""
-    head = "".join(f"<th>{c}</th>" for c in cols)
-    body = ""
-    for nm, cells in rows:
-        tds = "".join(f"<td class='{k}'>{t}</td>" for t, k in cells)
-        body += f"<tr><td class='nm'>{nm}</td>{tds}</tr>"
-    return (f"<div class='tblwrap'><table><thead><tr><th>멤버</th>{head}</tr></thead>"
-            f"<tbody>{body}</tbody></table></div>")
+# ---------------------------------------------------------------------------
+# 리포트 정의 — 소재가 다르면 문서를 나눈다
+#
+#   버추얼 크리에이터 팬덤 지표와 게임 캐릭터 인기도는 독자도 질문도 다르다.
+#   한 권에 묶으면 중간에 맥락이 끊기고, 목차가 두 배로 길어져 둘 다 안 읽힌다.
+#   slugs 에 없는 프로젝트는 그 리포트에 실리지 않는다.
+# ---------------------------------------------------------------------------
+GAME_SLUGS = ["10_hoyoverse"]
 
-def _cls(v):
-    return "up" if v > 0.005 else ("dn" if v < -0.005 else "zero")
+STELLIVE_FINDINGS = [
+    ("규모 1위와 밀도 1위는<br>다른 사람이다",
+     "구독자 상위 멤버와 참여율·도달효율 상위 멤버가 겹치지 않는다. 참여율↔구독자 상관은 "
+     "뚜렷한 음수 — 팬덤이 커질수록 느슨해진다. (01·06·08)"),
+    ("플랫폼마다 성장 곡선이<br>다르다",
+     "유튜브 구독자 성장 1위와 치지직 팔로워 성장 1위가 다르다. 한 플랫폼 지표만 보면 "
+     "성장을 오판한다. (01·03)"),
+    ("팬은 쓰지만, 회사에<br>남지 않는다",
+     "정기 구독은 만원 미만, 한정 굿즈엔 수십만원 — 그런데 동종업계 감사 재무는 연속 "
+     "영업적자다. 지출과 수익성 사이의 구조적 간극. (09·11)"),
+]
 
-def _md(iso: str) -> str:
-    """2026-08-28 → 8/28. 제목에서 시작일(8/3)과 표기를 맞춘다."""
-    if not iso:
-        return "현재"
-    y, m, d = iso.split("-")
-    return f"{int(m)}/{int(d)}"
+GAME_FINDINGS = [
+    ("미는 캐릭터와 반응하는<br>캐릭터가 다르다",
+     "공식 푸시 1위(최신 5성)와 리뷰 언급량 1위가 일치하지 않는다. 출시 순서는 회사가 "
+     "정하지만 화제는 그대로 따라오지 않는다."),
+    ("언급량은 인기가 아니라<br>화제성이다",
+     "매칭 가능한 캐릭터의 3분의 1 이상이 수집된 리뷰에 한 번도 등장하지 않는다. "
+     "언급 0을 비인기로 읽으면 안 된다 — 표본이 닿지 않은 것이다."),
+    ("못 쓴 지표도<br>기록한다",
+     "원래 쓰려던 검색 관심도(Google Trends)는 이 환경에서 확보하지 못했다. 실패를 "
+     "숨기지 않고 상태 파일로 남겨 다음 실행이 다시 시도하게 했다."),
+]
 
-
-def monthly_section() -> str:
-    """8/3 보존본 → 현재. 탤런트 10명만 (강지 제외)."""
-    o1 = pd.read_csv(ARCHIVE/"01_member_channel_performance/data/channel_metrics.csv").set_index("name_ko")
-    n1 = pd.read_csv(ROOT/"01_member_channel_performance/data/channel_metrics.csv").set_index("name_ko")
-    talents = [m for m in n1.index if n1.loc[m, "role"] == "talent" and m in o1.index]
-    date_to = bd._report_date(ROOT/"01_member_channel_performance/REPORT.md") or ""
-    o3 = pd.read_csv(ARCHIVE/"03_chzzk_stream_pattern/data/stream_metrics.csv").set_index("name_ko")
-    n3 = pd.read_csv(ROOT/"03_chzzk_stream_pattern/data/stream_metrics.csv").set_index("name_ko")
-    o2 = pd.read_csv(ARCHIVE/"02_cover_song_ranking/data/cover_metrics.csv").set_index("name_ko")
-    n2 = pd.read_csv(ROOT/"02_cover_song_ranking/data/cover_metrics.csv").set_index("name_ko")
-
-    rows = []
-    for m in talents:
-        sub = (n1.loc[m,"subscribers"]-o1.loc[m,"subscribers"])/o1.loc[m,"subscribers"]*100
-        vw  = (n1.loc[m,"recent_avg_views"]-o1.loc[m,"recent_avg_views"])/o1.loc[m,"recent_avg_views"]*100
-        fo  = (n3.loc[m,"followers"]-o3.loc[m,"followers"])/o3.loc[m,"followers"]*100 if m in o3.index and m in n3.index else None
-        cv  = (n2.loc[m,"total_views"]-o2.loc[m,"total_views"])/o2.loc[m,"total_views"]*100 if m in o2.index and m in n2.index else None
-        dc  = int(n2.loc[m,"cover_count"]-o2.loc[m,"cover_count"]) if m in o2.index and m in n2.index else 0
-        rows.append((m, sub, vw, fo, cv, dc))
-    rows.sort(key=lambda r: -r[1])
-    tbl = _pct_table(
-        [(m, [(f"{sub:+.2f}%", _cls(sub)), (f"{vw:+.1f}%", _cls(vw)),
-              (f"{fo:+.2f}%", _cls(fo)) if fo is not None else ("—","zero"),
-              (f"{cv:+.1f}%", _cls(cv)) if cv is not None else ("—","zero"),
-              (f"{dc:+d}곡" if dc else "—", "zero")])
-         for m, sub, vw, fo, cv, dc in rows],
-        ["구독자", "평균조회수", "치지직 팔로워", "커버 총조회수", "커버 추가"])
-
-    o4 = pd.read_csv(ARCHIVE/"04_kirinuki_ecosystem/data/member_ecosystem.csv")
-    n4 = pd.read_csv(ROOT/"04_kirinuki_ecosystem/data/member_ecosystem.csv")
-    clip = (n4.clip_count.sum()-o4.clip_count.sum())/o4.clip_count.sum()*100
-    cvw = (n4.total_clip_views.sum()-o4.total_clip_views.sum())/o4.total_clip_views.sum()*100
-
-    return f"""
-<section id="monthly">
-  <header class="sec-head"><span class="num">M</span><div>
-    <h2>월간 변화 — 8/3 → {_md(date_to)}</h2>
-    <div class="badges"><span class="badge">보존 스냅샷 대비 약 3주</span>
-    <span class="badge acc">탤런트 10명</span></div></div></header>
-  <div class="verdict"><p class="verdict-label">읽는 법</p>
-  <p>8월 3일 보존 스냅샷과 최신 수집을 비교한 값이다(정확히는 약 3주 — 아직 한 달치 일일
-  축적이 없어 보존본이 기준이다). 규모가 달라 절대값 대신 <strong>성장률(%)</strong>로
-  비교한다.</p></div>
-  {tbl}
-  <p class='note'>키리누키 생태계(04): 팬 클립 {clip:+.1f}% · 클립 표본 조회수 {cvw:+.1f}%
-  — 공식 채널 밖 2차창작도 같은 기간 함께 늘었다. 09 재무는 분기 공시라 월간 변화 없음.</p>
-</section>"""
-
-def fixes_section() -> str:
-    """이번 회차에서 고친 것 — 숫자가 왜 지난번과 다른지 설명이 없으면 신뢰가 안 간다."""
-    return """
-<section id="fixes">
-  <header class="sec-head"><span class="num">✓</span><div>
-    <h2>이번에 고친 것 — 숫자가 바뀐 이유</h2>
-    <div class="badges"><span class="badge">데이터 정합성</span>
-    <span class="badge">기준 변경</span></div></div></header>
-
-  <div class="verdict"><p class="verdict-label">요약</p>
-  <p>지난 버전과 숫자가 다른 항목이 있다면 대부분 아래 세 가지 때문이다:
-  <strong>참여율 계산 버그</strong>(조회수가 아직 안 붙은 신규 업로드가 4,000%대 참여율을
-  만들어냈다), <strong>강지 제외</strong>(창립자를 빼고 탤런트 10명만 비교),
-  <strong>차트 한글 깨짐</strong>(러너에 한글 폰트가 없어 라벨이 전부 □ 였다).
-  모두 원인을 고친 뒤 과거 축적분까지 되돌려 정정했다.</p></div>
-
-  <div class="tblwrap txt"><table>
-  <thead><tr><th>고친 것</th><th>증상</th><th>원인과 조치</th></tr></thead>
-  <tbody>
-  <tr><td class="nm">참여율 폭주</td>
-      <td>마시로 1,028% · 커버곡 평균 4,397%</td>
-      <td>업로드 직후 영상은 좋아요·댓글이 먼저 붙고 조회수가 늦게 반영된다(조회수 1, 좋아요 443).
-          <code>조회수 1,000 미만은 참여율 계산에서 제외</code>로 바꾸고, 같은 원본을 쓰는
-          01·02·06 <b>세 곳 모두</b>에 적용한 뒤 오염된 과거 행을 정정했다. 마시로 커버 참여율 4,397% → 2.5%.</td></tr>
-  <tr><td class="nm">강지 제외</td>
-      <td>평균·순위가 창립자 기준으로 왜곡</td>
-      <td>구독자 규모가 7배라 섞으면 비교가 무의미하다. 리포트·차트에서 전면 제외(수집은 계속 —
-          08 동시시청자는 소급이 불가능해 기준이 바뀌어도 복구 가능해야 한다).
-          04는 멤버 컬럼 이름이 달라 필터가 조용히 안 먹고 있었다 — 함께 고쳤다.</td></tr>
-  <tr><td class="nm">차트 한글 깨짐</td>
-      <td>모든 라벨이 □□□</td>
-      <td>자동화 러너에 한글 폰트가 없어 matplotlib 이 폴백했다. 폰트 설치 단계를 추가하고
-          67장을 다시 그렸다.</td></tr>
-  <tr><td class="nm">동시시청자 공백</td>
-      <td>수집 간격 중앙값 64분 · 8~10시간 공백 3회</td>
-      <td>스케줄러가 10분 cron 을 집행해주지 않았다. 구조를 바꿔 <b>한 번 깨어나면 잡 안에서
-          5시간 반 동안 10분마다</b> 찍게 했다. 전환 후 중앙값 <b>10분</b>으로 회복.</td></tr>
-  <tr><td class="nm">07이 06과 다른 숫자</td>
-      <td>06은 148,356, 07은 155,586</td>
-      <td>07은 수집이 없어 자동화에서 아예 빠져 있었다. "수집만 건너뛰고 재분석은 매일"로 바꿨다.</td></tr>
-  <tr><td class="nm">부분 실패 시 데이터 유실</td>
-      <td>한 프로젝트가 죽으면 성공분도 커밋 안 됨</td>
-      <td>커밋 단계를 <code>always()</code>로. 실제로 10이 실패한 날 04·05·11의 68개 파일이 살아남았다.</td></tr>
-  </tbody></table></div>
-  <p class="note">그 외: 결론 문장이 본문 숫자와 어긋나던 것(하드코딩)을 방향·비율 서술로 바꿔
-  데이터가 갱신돼도 어긋나지 않게 했고, 댓글 데이터에서 시청자 핸들 1,305개를 제거했다.</p>
-</section>"""
+REPORTS = [
+    dict(
+        key="StelLive-리포트",
+        title="StelLive 팬덤 애널리틱스",
+        kicker="StelLive Fandom Analytics",
+        headline="팬덤 지표 {n}개 프로젝트,<br>한 페이지 종합 리포트",
+        lead="버추얼 크리에이터 그룹 스텔라이브를 소재로, 공개 데이터만으로 팬덤 지표와 "
+             "실제 재무를 연결한 분석입니다. 각 프로젝트의 결론 → 지표 → 추세 → 차트를 "
+             "이 한 페이지에서 볼 수 있습니다. 멤버 비교는 <strong>탤런트 10명 기준</strong>, "
+             "그룹 비교는 <strong>데뷔 시기를 맞춘 코호트 기준</strong>입니다.",
+        findings=STELLIVE_FINDINGS,
+        include=lambda slug: slug not in GAME_SLUGS,
+    ),
+    dict(
+        key="게임-리포트",
+        title="게임 캐릭터 인기도 애널리틱스",
+        kicker="Game Character Analytics",
+        headline="게임사가 미는 캐릭터,<br>유저가 반응하는 캐릭터",
+        lead="원신·붕괴:스타레일의 캐릭터 마스터와 스토어 리뷰만으로 "
+             "<strong>공식 푸시</strong>와 <strong>유저 반응</strong>이 어디서 갈리는지 봅니다. "
+             "설문도 내부 지표도 쓰지 않았고, 확보하지 못한 지표는 못 썼다고 적었습니다.",
+        findings=GAME_FINDINGS,
+        include=lambda slug: slug in GAME_SLUGS,
+    ),
+]
 
 
-def events_section() -> str:
-    return """
-<section id="events">
-  <header class="sec-head"><span class="num">E</span><div>
-    <h2>이벤트 효과 — 커버곡 업로드 · 콘서트</h2>
-    <div class="badges"><span class="badge">치지직 팔로워 일일 순증 기준</span></div></div></header>
+def document(body: str) -> str:
+    """다운로드용 단독 문서. viewport 가 없으면 모바일이 980px 데스크톱 폭으로 렌더한다."""
+    return ("<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n"
+            "<meta charset=\"utf-8\">\n"
+            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
+            "</head>\n<body>\n" + body + "\n</body>\n</html>\n")
 
-  <div class="verdict"><p class="verdict-label">결론</p>
-  <p>관측 창 안의 커버곡 업로드 2건은 <strong>서로 반대 방향</strong>으로 움직였다 —
-  커버 업로드가 팔로워 증가로 이어진다고 말할 근거가 아직 없다. 콘서트(리제, 7/11)는
-  일일 수집 시작 <strong>이전</strong>이라 전후 비교가 불가능하다. 억지 결론 대신
-  측정 가능해진 것과 불가능한 것을 구분해 둔다.</p></div>
 
-  <h4>커버곡 업로드 전후 — 치지직 팔로워 일일 순증</h4>
-  <div class="tblwrap"><table>
-  <thead><tr><th>이벤트</th><th>업로드 전</th><th>업로드 후 5일</th><th>변화</th></tr></thead>
-  <tbody>
-  <tr><td class="nm">하나코 나나 · 8/16 「논브레스 오블리주」</td><td>+246/일</td><td>+66/일</td><td class="dn">−73%</td></tr>
-  <tr><td class="nm">유즈하 리코 · 8/22 「숨바꼭질」</td><td>+134/일</td><td>+208/일</td><td class="up">+56%</td></tr>
-  </tbody></table></div>
-  <p class="note">표본 2건, 방향 상반 — 결론 불가. 커버는 유튜브에 올라가는데 측정은 치지직
-  팔로워라 플랫폼도 어긋난다. 유튜브 구독자는 1,000 단위 반올림이라 일 단위 귀속이 안 된다.
-  리코의 경우 업로드 다음날(8/23) 유튜브 +1,000 계단이 온 것은 정황상 부합하지만,
-  나나는 커버 이후 오히려 감속했다. 이벤트가 더 쌓이면 자동으로 판별력이 생긴다.</p>
+def build_report(cfg: dict) -> None:
+    projects = [p for p in bd.PROJECTS if cfg["include"](p[0])]
+    if not projects:
+        print(f"건너뜀: {cfg['key']} — 해당 프로젝트 없음")
+        return
 
-  <h4>콘서트 — 아카네 리제 첫 단독 콘서트 (7/11~12)</h4>
-  <p>일일 수집이 8/12에 시작돼 <strong>콘서트 전 기준선이 존재하지 않는다.</strong>
-  전후 변화율은 계산할 수 없고, 계산한 척하지 않는다. 확인 가능한 사후 정황은:</p>
-  <ul>
-  <li>콘서트 안내 쇼츠 2건이 각각 <strong>86만·167만 조회</strong> — 리제 채널 최상위권</li>
-  <li>8/3→8/12 (콘서트 3~4주 후): 구독자 <strong>+6,000 (+1.75%)</strong>, 평균 조회수
-  <strong>+30,872</strong> — 두 지표 모두 그 구간 전 멤버 1위</li>
-  <li>8/12→8/26: +2,000 으로 둔화 — 사후 효과가 잦아드는 모양새</li>
-  </ul>
-  <p class="note">다음 콘서트부터는 일일 축적(history.csv)이 있어 전후 비교가 실제로
-  가능하다 — 이번에 측정 불가였던 것이 시스템 개선의 이유다.</p>
-</section>"""
+    # 같은 그림을 두 번 싣지 않기 위한 문서 단위 기억. 절 사이를 넘어 공유한다.
+    seen: set[str] = set()
+    sections = "".join(section(*p, seen=seen) for p in projects)
+    today = pd.Timestamp.now().strftime("%Y-%m-%d")
 
-sections = (fixes_section() + monthly_section() + events_section()
-            + "".join(section(*p) for p in bd.PROJECTS))
-today = pd.Timestamp.now().strftime("%Y-%m-%d")
+    nav = "".join(f"<a href='#p{num:02d}'><b>{num:02d}</b> {short}</a>"
+                  for _, num, short, _, _ in projects)
+    findings = "".join(
+        f"<div class='finding'><h3>{h}</h3><p>{p}</p></div>" for h, p in cfg["findings"])
+    headline = cfg["headline"].replace("{n}", str(len(projects)))
 
-nav = ("<a href='#fixes'><b>✓</b> 고친 것</a>"
-       "<a href='#monthly'><b>M</b> 월간 변화</a><a href='#events'><b>E</b> 이벤트</a>"
-       + "".join(f"<a href='#p{num:02d}'><b>{num:02d}</b> {short}</a>"
-                 for _, num, short, _, _ in bd.PROJECTS))
-
-html = f"""<title>StelLive 팬덤 애널리틱스</title>
+    html = f"""<title>{cfg['title']}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@800;900&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
@@ -574,63 +513,42 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
 <div class="wrap">
 
 <header class="hero">
-  <p class="kicker">StelLive Fandom Analytics</p>
-  <h1>팬덤 지표 11개 프로젝트,<br>한 페이지 종합 리포트</h1>
-  <p class="sub">버추얼 크리에이터 그룹 스텔라이브를 소재로, 공개 데이터만으로 팬덤 지표와
-  실제 재무를 연결한 분석 포트폴리오입니다. 각 프로젝트의 결론 → 지표 → 추세 → 차트를
-  이 한 페이지에서 볼 수 있습니다. 멤버 비교는 <strong>탤런트 10명 기준</strong>입니다.</p>
-  <div class="findings">
-    <div class="finding"><h3>규모 1위와 밀도 1위는<br>다른 사람이다</h3>
-      <p>구독자 상위 멤버와 참여율·도달효율 상위 멤버가 겹치지 않는다. 참여율↔구독자 상관은
-      뚜렷한 음수 — 팬덤이 커질수록 느슨해진다. (01·06·08)</p></div>
-    <div class="finding"><h3>플랫폼마다 성장 곡선이<br>다르다</h3>
-      <p>유튜브 구독자 성장 1위와 치지직 팔로워 성장 1위가 다르다. 한 플랫폼 지표만 보면
-      성장을 오판한다. (01·03)</p></div>
-    <div class="finding"><h3>팬은 쓰지만, 회사에<br>남지 않는다</h3>
-      <p>정기 구독은 만원 미만, 한정 굿즈엔 수십만원 — 그런데 동종업계 감사 재무는 연속
-      영업적자다. 지출과 수익성 사이의 구조적 간극. (09·11)</p></div>
-  </div>
-  <p class="stamp">생성 {today} · 데이터 저장소 <code>Argenviol/Youtube_analyze</code> ·
-  자동 수집: 동시시청자 폴링 + daily/weekly/monthly</p>
+  <p class="kicker">{cfg['kicker']}</p>
+  <h1>{headline}</h1>
+  <p class="sub">{cfg['lead']}</p>
+  <div class="findings">{findings}</div>
+  <p class="stamp">생성 {today} · 자동 수집 기준 최신 스냅샷</p>
 </header>
 
 {sections}
 
 <footer>
-  이 문서는 저장소의 최신 수집분으로 생성됐습니다. 원자료·코드·SQL·인터랙티브 대시보드는
-  GitHub 저장소 <b>Argenviol/Youtube_analyze</b> 의 각 프로젝트 폴더(<code>youtube_analyze_all/</code>)와
-  <code>결과물/</code>에 있습니다. 날짜별 축적 리포트는 <code>결과물/&lt;프로젝트&gt;/REPORTn - YYYYMMDD.md</code>
-  로 매일 쌓입니다.
+  이 문서는 저장소의 최신 수집분으로 자동 생성됐습니다. 수치는 각 절에 적힌 기준일의
+  스냅샷이며, 데이터가 부족한 구간은 추정하지 않고 측정 불가로 남겨 뒀습니다.
 </footer>
 </div>
 """
 
-# 아티팩트용 — 래퍼가 doctype/head/viewport 를 채워주므로 fragment 그대로.
-OUT.write_text(html, encoding="utf-8")
+    out = BUILD / f"{cfg['key']}-fragment.html"
+    out.write_text(html, encoding="utf-8")
 
-# 다운로드용 — 파일 단독으로 열리므로 완전한 문서여야 한다. viewport 가 없으면
-# 모바일 브라우저가 980px 데스크톱 폭으로 렌더링해 페이지가 깨져 보인다.
-def document(body: str) -> str:
-    return ("<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n"
-            "<meta charset=\"utf-8\">\n"
-            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
-            "</head>\n<body>\n" + body + "\n</body>\n</html>\n")
+    standalone = BUILD / f"{cfg['key']}.html"
+    standalone.write_text(document(html), encoding="utf-8")
+
+    # PDF 소스 — 화면판과 세 군데가 다르다.
+    #   1) <details> 를 열어 둔다: 종이는 클릭이 안 된다.
+    #   2) loading=lazy 제거: 인쇄 시점에 아직 안 불러온 이미지가 빈칸으로 나갈 수 있다.
+    #   3) 웹폰트 링크 제거: 렌더러가 네트워크를 못 쓰면 폰트 대기로 시간만 쓴다.
+    print_body = (html
+                  .replace("<details class='more'>", "<details class='more' open>")
+                  .replace(" loading='lazy'", ""))
+    print_body = re.sub(r'<link rel="(preconnect|stylesheet)"[^>]*>\n?', "", print_body)
+    printed = BUILD / f"{cfg['key']}-print.html"
+    printed.write_text(document(print_body), encoding="utf-8")
+
+    for f in (out, standalone, printed):
+        print(f"생성: {f.name}  ({f.stat().st_size/1e6:.1f} MB)  프로젝트 {len(projects)}개")
 
 
-STANDALONE = OUT.with_name("StelLive-리포트.html")
-STANDALONE.write_text(document(html), encoding="utf-8")
-
-# PDF 소스 — 화면판과 세 군데가 다르다.
-#   1) <details> 를 열어 둔다: 종이는 클릭이 안 된다.
-#   2) loading=lazy 제거: 인쇄 시점에 아직 안 불러온 이미지가 빈칸으로 나갈 수 있다.
-#   3) 웹폰트 링크 제거: 렌더러가 네트워크를 못 쓰면 폰트 대기로 시간만 쓰고 결국
-#      로컬 폰트로 떨어진다. 처음부터 로컬 한글 폰트로 확정한다.
-PRINT = OUT.with_name("_print.html")
-print_body = (html
-              .replace("<details class='more'>", "<details class='more' open>")
-              .replace(" loading='lazy'", ""))
-print_body = re.sub(r'<link rel="(preconnect|stylesheet)"[^>]*>\n?', "", print_body)
-PRINT.write_text(document(print_body), encoding="utf-8")
-
-for f in (OUT, STANDALONE, PRINT):
-    print(f"생성: {f.name}  ({f.stat().st_size/1e6:.1f} MB)")
+for _cfg in REPORTS:
+    build_report(_cfg)

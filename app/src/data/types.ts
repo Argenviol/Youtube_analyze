@@ -323,24 +323,43 @@ export type Meta06 = {
   n_videos: number;
   recent_per_channel: number;
   groups: string[];
+  /** 데뷔 코호트 라벨 목록. 그룹 비교는 이 안에서만 성립한다. */
+  cohorts: string[];
+  cohort_composition: { cohort: string | null; group: Group06; n: number }[];
+  missing_channels: string[];
   source: string;
-  note: string;
+  sampling: string;
+  method: string;
+  method_changed_at: string;
+  method_note: string;
 };
 
 /**
- * 18행(StelLive 6 + 홀로라이브 6 + 이세계아이돌 6) — 표본 비교이지 전 멤버가
- * 아니다. `unit`은 StelLive 소속 6명만 채워지고, 나머지 12명은 `null`이
- * 의도된 값이다(그 대신 `group`으로 소속을 구분한다). 이 null 행을 걸러내지
- * 말 것 — 경쟁사 비교가 이 프로젝트의 핵심이다.
+ * 데뷔 시기가 겹치는 기수 **전원**이다. 표본을 인지도로 고르면 그 자체가
+ * 생존편향이므로 기수 단위로 통째로 넣는다. `unit`은 StelLive 소속만 채워지고
+ * 나머지는 `null`이 의도된 값이다(소속은 `group`이 표현한다). 이 null 행을
+ * 걸러내지 말 것 — 경쟁사 비교가 이 프로젝트의 핵심이다.
+ *
+ * ⚠ `subscribers`는 누적 지표다. `cohort`가 다른 행끼리 비교하면 안 된다.
+ *   코호트를 넘어 비교할 수 있는 것은 `reach_ratio`·`recent_avg_engagement_rate`
+ *   처럼 최근 영상 기준 지표이고, `subs_per_month`는 보조 지표다.
  */
 export type Member06 = {
-  rank: number;
+  /** 같은 코호트 안에서의 구독자 순위. 코호트가 없는 행은 0. */
+  rank_in_cohort: number;
   group: Group06;
+  /** 코호트 구간 밖이면 null. 버리지 않고 표에는 남긴다. */
+  cohort: string | null;
+  generation: string | null;
+  debut_date: string | null;
+  months_since_debut: number | null;
   channel_id: string;
   name_ko: string;
   name_en: string;
   unit: Unit | null;
   subscribers: number;
+  /** 구독자 ÷ 데뷔 후 경과 개월. 데뷔 직후 급증이 섞여 신생 채널에 유리하다. */
+  subs_per_month: number | null;
   total_views: number;
   video_count: number;
   recent_avg_views: number;
@@ -349,12 +368,15 @@ export type Member06 = {
   reach_ratio: number;
 };
 
-export type GroupSummary06 = {
+/** 코호트 × 그룹 요약. 같은 `cohort` 안의 행끼리만 비교 가능하다. */
+export type CohortSummary06 = {
+  cohort: string;
   group: Group06;
   n_members: number;
-  avg_subscribers: number;
+  avg_months_since_debut: number;
   median_subscribers: number;
-  total_subscribers: number;
+  avg_subscribers: number;
+  median_subs_per_month: number;
   avg_recent_views: number;
   avg_engagement_rate: number;
   avg_uploads_per_week: number;
@@ -364,7 +386,7 @@ export type GroupSummary06 = {
 export type Data06 = {
   meta: Meta06;
   members: Member06[];
-  groups: GroupSummary06[];
+  cohorts: CohortSummary06[];
 };
 
 // ---------------------------------------------------------------------------

@@ -32,20 +32,26 @@
 
 `결과물/` 은 프로젝트별로 나뉘어 있어 전체 상태를 한눈에 보려면 12개 폴더를 돌아야
 합니다. `scripts/build_unified.py` 가 같은 소스에서 **한 페이지짜리 종합본**을 만듭니다.
-차트 전량을 base64 로 인라인해 파일 하나로 자체완결하므로, 링크나 인터넷 없이 열립니다.
+차트를 base64 로 인라인해 파일 하나로 자체완결하므로, 링크나 인터넷 없이 열립니다.
+
+소재가 다르면 문서를 나눕니다 — 버추얼 크리에이터 팬덤(01~09·11·12)은 **스텔라이브
+리포트**, 게임 캐릭터 인기도(10)는 **게임 리포트** 로 따로 나옵니다.
 
 ```bash
-python scripts/build_unified.py          # 결과물/_build/ 에 HTML 3종 생성
+python scripts/build_unified.py          # 결과물/_build/ 에 리포트 2권 × HTML 3종
 chromium --headless=new --no-pdf-header-footer \
   --print-to-pdf=결과물/_build/StelLive-리포트.pdf \
-  file://$PWD/결과물/_build/_print.html   # 인쇄용 → PDF (71쪽)
+  file://$PWD/결과물/_build/StelLive-리포트-print.html   # 게임-리포트-print.html 도 같은 방법
 ```
 
 | 파일 | 용도 |
 |---|---|
-| `StelLive-리포트.html` | 단독 문서 — doctype·charset·viewport 포함, 모바일에서 그냥 열립니다 |
-| `stellive-analytics.html` | 본문 fragment — 아티팩트로 퍼블리시할 때 |
-| `_print.html` | PDF 렌더 소스 — `<details>` 를 펼치고 웹폰트를 걷어냅니다 |
+| `StelLive-리포트.html` · `게임-리포트.html` | 단독 문서 — doctype·charset·viewport 포함, 모바일에서 그냥 열립니다 |
+| `*-fragment.html` | 본문 fragment — 아티팩트로 퍼블리시할 때 |
+| `*-print.html` | PDF 렌더 소스 — `<details>` 를 펼치고 웹폰트를 걷어냅니다 |
+
+같은 그림은 한 번만 싣습니다 — 프로젝트끼리 데이터를 재사용하다 보면 픽셀이 같은 PNG 가
+두 절에 들어가는데, 내용 해시로 걸러 문서 전체에서 한 번만 나오게 했습니다.
 
 ⚠ PDF 페이지는 A4 가 아니라 **150×210mm** 로 잡았습니다. 휴대폰에서 A4 는 한 줄이 너무
 길어 확대·좌우 스크롤을 하게 되는데, 좁은 페이지는 화면 폭에 맞춰도 글자가 읽힙니다.

@@ -1,4 +1,4 @@
-"""프로젝트6 · 사이트 빌드 — 그룹 비교 대시보드."""
+"""프로젝트6 · 사이트 빌드 — 데뷔 코호트 매칭 비교 대시보드."""
 from __future__ import annotations
 
 import json
@@ -23,7 +23,7 @@ TEMPLATE = r"""<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>StelLive 경쟁사 비교 분석</title>
+<title>StelLive 경쟁사 비교 — 데뷔 코호트 매칭</title>
 <style>
 :root{
   --bg:#F7F7F8; --surface:#ffffff; --text:#171719; --text2:#37383C; --muted:#70737C;
@@ -82,8 +82,8 @@ tbody tr:hover{background:color-mix(in srgb,var(--s1) 8%,transparent)}
 <div class="wrap">
 <button class="toggle" onclick="toggleTheme()">◐ 테마</button>
 <header>
-  <h1>StelLive 경쟁사 비교 분석</h1>
-  <p>StelLive vs 홀로라이브(Hololive) vs 이세계아이돌(이세돌) — 그룹별 대표 6명 표본 비교</p>
+  <h1>StelLive 경쟁사 비교 — 데뷔 코호트 매칭</h1>
+  <p>StelLive vs 홀로라이브(Hololive) vs 이세계아이돌(이세돌) — <b>데뷔 시기가 겹치는 기수끼리만</b> 비교합니다. 기수 전원 표본.</p>
   <div id="tags"></div>
 </header>
 
@@ -91,14 +91,14 @@ tbody tr:hover{background:color-mix(in srgb,var(--s1) 8%,transparent)}
 
 <section>
   <h2>구독자 vs 참여율 (로그 스케일)</h2>
-  <p class="sub">규모가 커질수록 참여율은 낮아지는 경향 — 팬덤 밀도와 채널 규모의 트레이드오프.</p>
+  <p class="sub">참여율은 최근 영상 기준이라 데뷔 시기 영향이 가장 작은 지표다 — 코호트가 달라도 이 축은 견줄 수 있다.</p>
   <div class="card"><svg id="scatter" class="chart-svg" viewBox="0 0 720 440"></svg></div>
   <div class="legend" id="glegend"></div>
 </section>
 
 <section>
-  <h2>전체 18명 상세 비교</h2>
-  <p class="sub">열 제목 클릭 시 정렬.</p>
+  <h2>전체 멤버 상세 비교</h2>
+  <p class="sub">열 제목 클릭 시 정렬. 구독자는 같은 코호트끼리만 비교하세요.</p>
   <div class="card" style="overflow-x:auto"><table id="tbl"></table></div>
 </section>
 
@@ -119,14 +119,23 @@ const svgEl=(t,a)=>{const e=document.createElementNS('http://www.w3.org/2000/svg
 
 document.getElementById('tags').innerHTML =
   `<span class="tag">수집 ${DATA.meta.fetched_at.slice(0,10)}</span>`+
-  `<span class="tag">그룹당 6명 표본</span>`+
+  `<span class="tag">데뷔 코호트 매칭</span>`+
+  `<span class="tag">${DATA.meta.n_channels}채널 · 기수 전원</span>`+
   `<span class="tag">최근 ${DATA.meta.recent_per_channel}영상</span>`+
   `<span class="tag">YouTube Data API v3</span>`;
 
-document.getElementById('gcards').innerHTML = DATA.groups.map(g=>`
+// 그룹이 하나뿐인 코호트는 비교 상대가 없다 — 카드로 만들면 비교한 것처럼 보이므로 뺀다.
+const COHORT_N = {};
+DATA.cohorts.forEach(c=>{ COHORT_N[c.cohort]=(COHORT_N[c.cohort]||0)+1; });
+const CMP = DATA.cohorts.filter(c=>COHORT_N[c.cohort]>=2);
+const LONELY = DATA.cohorts.filter(c=>COHORT_N[c.cohort]<2);
+
+document.getElementById('gcards').innerHTML = CMP.map(g=>`
   <div class="gcard" style="--gc:${cssv(GC[g.group])}">
-    <h3>${g.group}</h3>
-    <div class="row"><span>평균 구독자</span><b>${fmt(g.avg_subscribers)}</b></div>
+    <h3>${g.cohort}<br><span class="gpill">${g.group} · ${g.n_members}명</span></h3>
+    <div class="row"><span>데뷔 후 경과</span><b>${g.avg_months_since_debut.toFixed(1)}개월</b></div>
+    <div class="row"><span>구독자 중앙값</span><b>${fmt(g.median_subscribers)}</b></div>
+    <div class="row"><span>월평균 구독자 획득</span><b>${fmt(Math.round(g.median_subs_per_month))}</b></div>
     <div class="row"><span>평균 최근 조회수</span><b>${fmt(g.avg_recent_views)}</b></div>
     <div class="row"><span>평균 참여율</span><b>${(g.avg_engagement_rate*100).toFixed(1)}%</b></div>
     <div class="row"><span>주간 업로드</span><b>${g.avg_uploads_per_week.toFixed(1)}회</b></div>
@@ -158,7 +167,10 @@ function drawScatter(){
 
 const COLS=[
   ['name_ko','멤버',r=>`<i class="dot" style="background:${cssv(GC[r.group])}"></i>${r.name_ko} <span class="gpill">${r.group}</span>`],
+  ['cohort','코호트',r=>r.cohort||'—'],
+  ['months_since_debut','경과개월',r=>r.months_since_debut==null?'—':r.months_since_debut.toFixed(0)],
   ['subscribers','구독자',r=>fmtN(r.subscribers)],
+  ['subs_per_month','월평균획득',r=>r.subs_per_month==null?'—':fmtN(Math.round(r.subs_per_month))],
   ['recent_avg_views','평균조회수',r=>fmtN(Math.round(r.recent_avg_views))],
   ['recent_avg_engagement_rate','참여율',r=>(r.recent_avg_engagement_rate*100).toFixed(1)+'%'],
   ['uploads_per_week','주간업로드',r=>r.uploads_per_week.toFixed(1)],
@@ -172,7 +184,9 @@ function drawTable(){const t=document.getElementById('tbl');
 function setSk(k){if(sk===k)sd*=-1;else{sk=k;sd=-1;}drawTable();}
 
 document.getElementById('foot').innerHTML=
-  `표본: 각 그룹 대표 6명 비교(전체 소속 인원 아님). 홀로라이브는 EN/JP 혼합 대표 선정.<br>`+
+  `표본: 데뷔 시기가 겹치는 <b>기수 전원</b>입니다. 그룹 전체 평균이 아니므로 홀로라이브 전사 지표로 읽으면 안 됩니다.<br>`+
+  (LONELY.length? `비교군 없는 코호트: ${LONELY.map(c=>c.cohort+'('+c.group+' '+c.n_members+'명)').join(', ')} — 그룹 비교에서 제외했습니다.<br>`:'')+
+  `구독자는 누적 지표라 코호트가 다르면 비교가 성립하지 않습니다. 코호트 간 비교는 참여율·도달 효율을 보세요.<br>`+
   `데이터 출처: YouTube Data API v3 · 지표는 수집 시점 스냅샷입니다.`;
 
 function toggleTheme(){const r=document.documentElement;

@@ -40,7 +40,7 @@ GROUPS = {
     # 2026-08-12 업로드 재생목록 전량 열거로 바꾸면서 ~173 units 로 떨어져 daily 로 옮겼다.
     # 12는 01·02·03·08이 모아 둔 데이터에서 이벤트를 추출한다. 자체 API 호출이 없고
     # 남의 수집 결과를 읽으므로 daily 의 맨 뒤여야 한다.
-    # 07은 06의 group_summary.csv 를 읽어 시장 리포트를 만든다. 반드시 06 뒤에 온다
+    # 07은 06의 cohort_summary.csv 를 읽어 시장 리포트를 만든다. 반드시 06 뒤에 온다
     # (이 리스트 순서가 곧 실행 순서다). 자체 수집은 없고 재분석만 한다 — NO_COLLECT 참고.
     "daily":    ["01_member_channel_performance", "02_cover_song_ranking",
                  "03_chzzk_stream_pattern", "06_competitor_comparison",
@@ -60,7 +60,7 @@ COLLECT_ARGS = {"08_live_viewership": ["--once"]}
 # 수집 단계만 건너뛰고 분석·사이트 생성은 그대로 도는 프로젝트.
 #
 # 07은 외부 리서치(웹서치로 모은 공개 시장 통계) 기반이라 자동 수집이 불가능하다.
-# 그렇다고 그룹에서 아예 빼면 안 된다 — 07은 06의 group_summary.csv 를 읽어 쓰는데,
+# 그렇다고 그룹에서 아예 빼면 안 된다 — 07은 06의 cohort_summary.csv 를 읽어 쓰는데,
 # 06이 daily 로 갱신되는 동안 07만 안 돌면 두 프로젝트가 서로 다른 숫자를 말하게 된다.
 # 실제로 그랬다: 06이 평균 최근 조회수 148,356 을 들고 있을 때 07은 155,586 이었다.
 NO_COLLECT = {"07_market_analysis"}

@@ -243,6 +243,24 @@ def build_charts(gacha, reviews, monthly, push, audience):
     print(f"차트 8종 -> {CHARTS}")
 
 
+def _trends_line(status: dict) -> str:
+    """Google Trends 상태를 실제 기록대로 한 줄로 쓴다.
+
+    예전에는 "매 시도 즉시 429" 라고 본문에 박아 뒀는데, 실제 마지막 실행의 기록은
+    `ModuleNotFoundError` 였다(라이브러리가 아예 없어서 호출조차 안 됨). 실패의 종류가
+    다르면 독자가 판단할 것도 달라진다 — 기록된 것만 쓴다.
+    """
+    if status.get("ok"):
+        return (f"**Google Trends 사용** — {status.get('n_rows', 0)}행 확보. "
+                "검색 관심도와 리뷰 언급량을 함께 본다.")
+    err = status.get("error") or "원인 미기록"
+    if status.get("attempted") is False:
+        return (f"**Google Trends 미사용** — 이번 실행에서는 호출하지 않았다(`{err}`). "
+                "검색 관심도는 다루지 않았고, 리뷰 본문 언급량으로 유저 반응을 근사했다.")
+    return (f"**Google Trends 실패** — 호출했으나 `{err}` 로 데이터를 얻지 못했다. "
+            "빈 값을 채워 넣지 않고, 리뷰 본문 언급량으로 유저 반응을 근사했다.")
+
+
 def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
     gacha.drop(columns=["release_dt"], errors="ignore").to_csv(DATA / "character_metrics.csv", index=False)
     meta = json.loads((DATA / "_meta.json").read_text(encoding="utf-8"))
@@ -299,8 +317,7 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
   (원신·붕괴:스타레일, 게임당 최근 리뷰 최대 {meta['n_reviews_requested_per_app']:,}건)
 - 수집 {meta['fetched_at'][:10]} · 캐릭터 {meta['n_characters']}명(가챠 대상 {len(gacha)}명,
   여행자/개척자 {meta['n_playable_avatars_excluded']}명 제외) · 리뷰 {meta['n_reviews']:,}건
-- **Google Trends는 이 환경에서 사용 불가** — 매 시도 즉시 429(요청 제한). 검색 관심도는
-  아예 다루지 않았고, 대신 리뷰 본문 언급량으로 유저 반응을 근사했다(README 참고).
+- {_trends_line(trends_status)}
 
 ## 핵심 요약
 

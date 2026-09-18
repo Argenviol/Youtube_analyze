@@ -136,7 +136,10 @@ export function getMemberMetricGroups(nameEn: string): MemberMetricGroup[] {
       href: PROJECT_HREF["06"],
       fetchedAt: d06.meta.fetched_at,
       metrics: [
-        { label: "구독자(경쟁사 비교 표본)", value: `${fmtInt(m06.subscribers)}명` },
+        // 구독자는 누적 지표다. 코호트를 같이 보여주지 않으면 이 숫자만 떼어
+        // 다른 그룹과 비교하게 된다 — 라벨에 비교 조건을 붙여 둔다.
+        { label: "구독자(같은 코호트끼리만 비교)", value: `${fmtInt(m06.subscribers)}명` },
+        { label: "데뷔 코호트", value: m06.cohort ?? "구간 밖" },
         { label: "도달률(reach ratio)", value: fmtPercent(m06.reach_ratio) },
         { label: "비교 그룹", value: m06.group },
       ],

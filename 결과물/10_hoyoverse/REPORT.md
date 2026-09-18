@@ -16,8 +16,7 @@
   (원신·붕괴:스타레일, 게임당 최근 리뷰 최대 3,000건)
 - 수집 2026-09-12 · 캐릭터 205명(가챠 대상 205명,
   여행자/개척자 26명 제외) · 리뷰 6,000건
-- **Google Trends는 이 환경에서 사용 불가** — 매 시도 즉시 429(요청 제한). 검색 관심도는
-  아예 다루지 않았고, 대신 리뷰 본문 언급량으로 유저 반응을 근사했다(README 참고).
+- **Google Trends 미사용** — 이번 실행에서는 호출하지 않았다(`ModuleNotFoundError: No module named 'pytrends'`). 검색 관심도는 다루지 않았고, 리뷰 본문 언급량으로 유저 반응을 근사했다.
 
 ## 한눈에
 
@@ -67,15 +66,3 @@
 
 ![08_mentions_vs_sentiment](charts/08_mentions_vs_sentiment.png)
 
-
-## 원자료
-
-이 리포트를 만든 코드와 데이터는 저장소의 [`youtube_analyze_all/10_hoyoverse/`](../../youtube_analyze_all/10_hoyoverse/) 에 있다.
-
-| 경로 | 내용 |
-|---|---|
-| `collect.py` | 수집 |
-| `analyze.py` | 정제·집계·차트 생성 |
-| `data/` | 원천·정제 데이터 (CSV/JSON) |
-| `sql/` | 스키마·INSERT·분석쿼리·SQLite·쿼리 실행결과 |
-| `site/index.html` | 자체완결 인터랙티브 대시보드 |

@@ -26,9 +26,15 @@ SITE = HERE / "site"
 
 
 def load_own_data():
-    """프로젝트1(자체 채널 지표)·6(경쟁사 비교)의 산출물을 재사용."""
+    """프로젝트1(자체 채널 지표)·6(경쟁사 비교)의 산출물을 재사용.
+
+    06 은 2026-09-18 부터 그룹 평균(group_summary) 대신 **코호트 × 그룹**
+    요약(cohort_summary)을 만든다. 데뷔 시기가 4~6년 차이 나는 채널을 한 평균에
+    섞으면 그 평균이 활동 기간을 재는 값이 되기 때문이다. 07 은 그 구조를 그대로
+    따라간다 — 여기서 다시 코호트를 뭉개면 06 을 고친 의미가 없다.
+    """
     p1 = ROOT / "01_member_channel_performance" / "data" / "channel_metrics.csv"
-    p6 = ROOT / "06_competitor_comparison" / "data" / "group_summary.csv"
+    p6 = ROOT / "06_competitor_comparison" / "data" / "cohort_summary.csv"
     metrics = pd.read_csv(p1) if p1.exists() else pd.DataFrame()
     groups = pd.read_csv(p6) if p6.exists() else pd.DataFrame()
     return metrics, groups
@@ -38,7 +44,7 @@ def build_sql(facts, milestones, metrics, groups):
     SQL.mkdir(parents=True, exist_ok=True)
     tables = {"market_facts": facts, "stellive_milestones": milestones}
     if not groups.empty:
-        tables["group_summary"] = groups
+        tables["cohort_summary"] = groups
     db.write_sqlite(SQL / "market.db", tables)
     db.dump_schema_sql(SQL / "schema.sql", tables)
     for name, df in tables.items():
@@ -123,24 +129,52 @@ def build_charts(facts, milestones, metrics, groups):
               loc="upper center", bbox_to_anchor=(0.5, -0.02), ncol=4)
     fig.tight_layout(); fig.savefig(CHARTS / "04_stellive_timeline.png", dpi=140); plt.close(fig)
 
-    # 5. 시장 포지션 재확인 (프로젝트6 자체 데이터 재사용)
+    # 5. 시장 포지션 (프로젝트6 자체 데이터 재사용)
+    #    점 하나 = 그룹이 아니라 **코호트 × 그룹**이다. 그룹을 하나로 뭉쳐 찍으면
+    #    데뷔 2년차와 7년차가 한 점이 되어 위치가 아무 의미도 갖지 못한다.
     if not groups.empty:
-        order = ["StelLive", "홀로라이브", "이세계아이돌"]
-        gs = groups.set_index("group").reindex(order).reset_index()
         gc = {"StelLive": S[0], "홀로라이브": S[1], "이세계아이돌": S[2]}
-        fig, ax = plt.subplots(figsize=(8, 6))
-        for _, r in gs.iterrows():
-            ax.scatter(r["avg_subscribers"], r["avg_reach_ratio"]*100, s=r["avg_recent_views"]/2000,
-                      color=gc[r["group"]], alpha=0.8, edgecolors="white", linewidths=1.5, zorder=3)
-            ax.annotate(r["group"], (r["avg_subscribers"], r["avg_reach_ratio"]*100),
-                       fontsize=10, xytext=(8, 6), textcoords="offset points", color=config.INK["text"])
+        fig, ax = plt.subplots(figsize=(8.5, 6))
+        for _, r in groups.iterrows():
+            x, y = r["median_subscribers"], r["avg_reach_ratio"]*100
+            ax.scatter(x, y, s=max(40, r["avg_recent_views"]/2000),
+                      color=gc.get(r["group"], S[3]), alpha=0.8,
+                      edgecolors="white", linewidths=1.5, zorder=3)
+            ax.annotate(f"{r['group']}\n{r['cohort']}", (x, y),
+                       fontsize=9, xytext=(8, 6), textcoords="offset points",
+                       color=config.INK["text"])
         ax.set_xscale("log")
-        ax.set_title("시장 포지션: 규모 vs 도달효율 (버블=평균조회수)")
-        ax.set_xlabel("평균 구독자 (log)"); ax.set_ylabel("도달 효율 (%)")
+        ax.set_title("시장 포지션: 규모 vs 도달효율 (점=데뷔 코호트별 그룹, 버블=평균조회수)")
+        ax.set_xlabel("구독자 중앙값 (log)"); ax.set_ylabel("도달 효율 (%)")
         ax.grid(True, zorder=0)
         fig.tight_layout(); fig.savefig(CHARTS / "05_market_position.png", dpi=140); plt.close(fig)
 
     print(f"차트 -> {CHARTS}")
+
+
+def _stel_position(groups: pd.DataFrame) -> str:
+    """StelLive 의 시장 포지션 한 줄 — 하드코딩하지 않고 06 산출물에서 계산한다.
+
+    예전에는 "도달 효율(60%)이 압도적" 처럼 숫자를 본문에 박아 뒀다. 06 이 매일
+    갱신되는 동안 이 문장만 옛날 값에 머물러 두 리포트가 서로 다른 숫자를 말했다.
+    """
+    if groups.empty or "cohort" not in groups.columns:
+        return "비교 데이터 없음 — 프로젝트6을 먼저 실행하세요."
+    shared = [c for c, g in groups.groupby("cohort")
+              if {"StelLive", "홀로라이브"} <= set(g["group"])]
+    if not shared:
+        return ("같은 시기에 데뷔한 비교군이 아직 없어 그룹 비교를 하지 않았습니다 "
+                "(프로젝트6 참고).")
+    parts = []
+    for c in sorted(shared):
+        g = groups[groups["cohort"] == c].set_index("group")
+        s, h = g.loc["StelLive"], g.loc["홀로라이브"]
+        parts.append(
+            f"**{c}** 코호트에서 구독자 중앙값은 {s['median_subscribers']:,.0f} 대 "
+            f"{h['median_subscribers']:,.0f}, 도달 효율은 {s['avg_reach_ratio']*100:.0f}% 대 "
+            f"{h['avg_reach_ratio']*100:.0f}%")
+    return ("; ".join(parts) +
+            " — 규모가 아니라 구독자 대비 실제 시청 비율에서 위치를 잡는 구조입니다.")
 
 
 def build_outputs(facts, milestones, metrics, groups):
@@ -159,6 +193,13 @@ def build_outputs(facts, milestones, metrics, groups):
     )
     SITE.mkdir(parents=True, exist_ok=True)
     (SITE / "data.json").write_text(json.dumps(site_data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # data/_meta.json 도 같이 남긴다. 다른 프로젝트는 collect.py 가 만들지만 07은
+    # 자체 수집이 없어 이 파일이 없었고, 그래서 결과물 리포트의 기준일이 계속 "—"
+    # 였다. 갱신된 날짜를 모르면 독자는 이 페이지가 언제 것인지 알 수 없다.
+    DATA.mkdir(parents=True, exist_ok=True)
+    (DATA / "_meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2),
+                                     encoding="utf-8")
 
     md = f"""# 프로젝트 7 · 버추얼 크리에이터 시장 분석
 
@@ -184,12 +225,11 @@ Claude 웹서치로 수집한 공개 시장 통계(출처 명시)와, 프로젝�
 
 - 2025년 7월 **브레이브 그룹(Brave Group)에 인수합병** — 일본계 버추얼 기획사 자본 편입으로 해외 확장 발판.
 - 2025년 12월 **첫 단체 콘서트** 개최로 오프라인 IP 확장 시작.
-- 프로젝트6 자체 데이터 기준: 홀로라이브·이세계아이돌 대비 구독자 규모는 작지만
-  **도달 효율(60%)이 압도적으로 높음** — "작지만 밀도 높은 팬덤"이 시장 내 차별화 포인트.
+- 프로젝트6 자체 데이터 기준(데뷔 시기를 맞춘 코호트 비교): {_stel_position(groups)}
 
 ## 산출물
 - `data/market_facts.csv` 시장 통계(출처·URL 포함), `stellive_milestones.csv` 성장 타임라인
-- `sql/` 스키마·INSERT·분석쿼리·SQLite·실행결과 (프로젝트6 group_summary 재사용 포함)
+- `sql/` 스키마·INSERT·분석쿼리·SQLite·실행결과 (프로젝트6 cohort_summary 재사용 포함)
 - `charts/` 차트 5종(시장규모 전망·시장구조·치지직KPI·타임라인·시장포지션)
 - `site/index.html` 인터랙티브 대시보드
 

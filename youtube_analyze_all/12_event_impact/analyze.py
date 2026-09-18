@@ -1023,6 +1023,18 @@ def main() -> int:
     (SITE / "data.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    # 12는 자체 수집이 없어 data/_meta.json 이 없었다. 그래서 결과물 리포트의 기준일이
+    # 본문 첫 줄 정규식에 의존했고, 다른 프로젝트와 기준이 달랐다. 재분석 시각을
+    # 같은 규격(fetched_at)으로 남겨 둔다 — 원천은 01·02·03·08 의 수집분이다.
+    (DATA / "_meta.json").write_text(json.dumps({
+        "fetched_at": pd.Timestamp.now(tz="UTC").isoformat(),
+        "source": "01·02·03·08 의 기존 수집분 재사용 (신규 API 호출 없음)",
+        "n_events": int(len(events)),
+        "span": [str(events["date"].min()), str(events["date"].max())],
+        "measurable_events": measurable,
+        "note": "이 프로젝트는 수집하지 않고 재분석만 한다. fetched_at 은 재분석 시각이다.",
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
+
     write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff,
                  drivers, kiri, kiri_stats, cmt, cmt_stats, com, com_stats,
                  dart, dart_stats, comp, comp_stats, hoyo, hoyo_stats,

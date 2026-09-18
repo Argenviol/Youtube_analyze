@@ -96,23 +96,29 @@ PRD 섹션 7(데이터 계약) 검증 결과. Next.js 구현자는 이 문서를
 
 - 파일: `youtube_analyze_all/06_competitor_comparison/site/data.json`
 - 갱신 주기(PRD): 일 1회
-- `meta`: `fetched_at`, `n_channels`, `n_videos`, `recent_per_channel`, `groups`, `source`, `note`
-- `members[]` (18행 — StelLive 6 + 홀로라이브 6 + 이세계아이돌 6, 표본 비교이지 전원 아님):
-  `rank`, `group`, `channel_id`, `name_ko`, `name_en`, **`unit`(M2에서 추가)**, `subscribers`,
-  `total_views`, `video_count`, `recent_avg_views`, `recent_avg_engagement_rate`,
-  `uploads_per_week`, `reach_ratio`
-  - `unit`은 StelLive 소속 6명만 채워짐(`common/config.py` 로스터 조인 결과: EVERYS/UNIVERSE/
-    CLICHE). 경쟁사(홀로라이브·이세계아이돌) 12명은 StelLive 유닛 체계에 속하지 않으므로
-    `unit: null` — 대신 `group` 필드로 소속 그룹(`StelLive`/`홀로라이브`/`이세계아이돌`)을 구분한다.
-- 보조 필드: `groups[]` (3건, 그룹 단위 집계): `group`, `n_members`, `avg_subscribers`,
-  `median_subscribers`, `total_subscribers`, `avg_recent_views`, `avg_engagement_rate`,
+- `meta`: `fetched_at`, `n_channels`, `n_videos`, `recent_per_channel`, `groups`,
+  **`cohorts`·`cohort_composition`·`missing_channels`·`sampling`·`method`·
+  `method_changed_at`·`method_note`(2026-09-18 추가)**, `source`
+- `members[]` (데뷔 시기가 겹치는 **기수 전원** — 그룹 전체가 아님):
+  `rank_in_cohort`, `group`, **`cohort`·`generation`·`debut_date`·`months_since_debut`·
+  `subs_per_month`(2026-09-18 추가)**, `channel_id`, `name_ko`, `name_en`, `unit`,
+  `subscribers`, `total_views`, `video_count`, `recent_avg_views`,
+  `recent_avg_engagement_rate`, `uploads_per_week`, `reach_ratio`
+  - `unit`은 StelLive 소속만 채워짐(`common/config.py` 로스터 조인 결과: EVERYS/UNIVERSE/
+    CLICHE). 경쟁사(홀로라이브·이세계아이돌)는 StelLive 유닛 체계에 속하지 않으므로
+    `unit: null` — 대신 `group` 필드로 소속 그룹을 구분한다.
+  - `cohort`는 `common/config.py` 의 `COHORT_BINS` 로 데뷔일에서 파생된다. 구간 밖이면
+    `null` 이고, 그 행은 버리지 않고 표에만 남긴다(`rank_in_cohort` 는 0).
+- 보조 필드: `cohorts[]` (코호트 × 그룹 집계): `cohort`, `group`, `n_members`,
+  `avg_months_since_debut`, `median_subscribers`, `avg_subscribers`,
+  `median_subs_per_month`, `avg_recent_views`, `avg_engagement_rate`,
   `avg_uploads_per_week`, `avg_reach_ratio`
-- 대표 지표: `subscribers`, `reach_ratio` (그룹별 비교는 `groups[]` 사용)
-- **계약 상태: M2에서 수정.** 갭 — `members[]`에 `unit` 필드가 전혀 없었음(경쟁사 포함 18행 모두
-  누락). `06_competitor_comparison/analyze.py`의 `build_metrics()`에 `common/config.py`
-  `member_rows()` 기반 `name_en → unit` 조회를 추가해 StelLive 6명은 실제 유닛을, 경쟁사 12명은
-  `null`을 채우도록 수정. `analyze.py` 재실행으로 `data.json` 재생성 및 검증 완료.
-
+- 대표 지표: `subscribers`(**같은 `cohort` 안에서만 비교**), `reach_ratio`(코호트 간 비교 가능)
+- **계약 상태: 2026-09-18 수정(표본 교체).** 갭 — 이전 표본은 홀로라이브 쪽을 인지도로
+  고른 2019~2020년 데뷔 6명이었고 StelLive 는 2023~2025년 데뷔라, 그룹 평균 비교가
+  사실상 활동 기간 비교였다. 표본을 데뷔 코호트 매칭(기수 전원)으로 바꾸고 집계 단위를
+  `groups[]` → `cohorts[]` 로 교체했다. `meta.method_changed_at` 경계를 넘는 그룹 평균
+  비교는 하지 않는다(멤버 개인 추세는 유효).
 ## 07_market_analysis (앱 미포함 — 정적 유지, 참고용)
 
 - 파일: `youtube_analyze_all/07_market_analysis/site/data.json`
@@ -127,7 +133,7 @@ PRD 섹션 7(데이터 계약) 검증 결과. Next.js 구현자는 이 문서를
     억분 등이며 멤버 계약의 `unit`=유닛 소속과 의미가 다름), `year`, `region`, `source_name`,
     `source_url`, `note`
   - `milestones[]` (8건): `date`, `event`, `category`
-  - `groups[]` (3건, 06의 `group_summary`를 그대로 재사용): 06과 동일 스키마
+  - `groups[]` (06의 `cohort_summary`를 그대로 재사용): 06과 동일 스키마 — 행은 코호트 × 그룹 단위다
 - **계약 상태: M2에서 수정.** 갭 — `meta`에 `fetched_at`이 없고 `built_at`만 있었음(공통 스키마
   위반). `07_market_analysis/analyze.py`의 `build_outputs()`에서 `built_at`은 그대로 두고
   동일 시각의 `fetched_at`을 추가(기존 필드 유지, 필드 추가만). 재실행으로 검증 완료.

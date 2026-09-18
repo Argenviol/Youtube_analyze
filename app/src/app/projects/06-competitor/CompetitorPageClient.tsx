@@ -48,12 +48,32 @@ export default function CompetitorPageClient() {
     [memberFilter, unitFilter]
   );
 
-  const groupBarData: BarDatum[] = useMemo(
+  // 그룹이 하나뿐인 코호트는 비교 상대가 없다. 막대를 그리면 비교한 것처럼 보이므로 뺀다.
+  const comparableCohorts = useMemo(() => {
+    const byCohort = new Map<string, Set<string>>();
+    for (const c of data.cohorts) {
+      if (!byCohort.has(c.cohort)) byCohort.set(c.cohort, new Set());
+      byCohort.get(c.cohort)!.add(c.group);
+    }
+    return [...byCohort.entries()].filter(([, g]) => g.size >= 2).map(([c]) => c).sort();
+  }, []);
+
+  // 구독자는 누적 지표라 코호트를 섞으면 안 된다. 라벨에 코호트를 붙여 같은
+  // 코호트끼리만 견주도록 강제한다.
+  const cohortBarData: BarDatum[] = useMemo(
     () =>
-      [...data.groups]
-        .sort((a, b) => b.avg_subscribers - a.avg_subscribers)
-        .map((g) => ({ name_en: g.group, label: g.group, value: g.avg_subscribers })),
-    []
+      data.cohorts
+        .filter((c) => comparableCohorts.includes(c.cohort))
+        .sort(
+          (a, b) =>
+            a.cohort.localeCompare(b.cohort) || b.median_subscribers - a.median_subscribers
+        )
+        .map((c) => ({
+          name_en: `${c.cohort}/${c.group}`,
+          label: `${c.cohort} · ${c.group}`,
+          value: c.median_subscribers,
+        })),
+    [comparableCohorts]
   );
 
   const scatterData: ScatterDatum[] = useMemo(
@@ -69,7 +89,26 @@ export default function CompetitorPageClient() {
   );
 
   const columns: TableColumn<Member06>[] = [
-    { key: "rank", header: "순위", accessor: (r) => r.rank, align: "right" },
+    {
+      key: "rank_in_cohort",
+      header: "코호트 내 순위",
+      accessor: (r) => r.rank_in_cohort,
+      align: "right",
+      render: (r) => (r.rank_in_cohort ? r.rank_in_cohort : "—"),
+    },
+    {
+      key: "cohort",
+      header: "데뷔 코호트",
+      accessor: (r) => r.cohort ?? "",
+      render: (r) => (r.cohort ? <Badge tone="neutral">{r.cohort}</Badge> : "구간 밖"),
+    },
+    {
+      key: "months_since_debut",
+      header: "데뷔 후 개월",
+      accessor: (r) => r.months_since_debut ?? 0,
+      align: "right",
+      render: (r) => (r.months_since_debut == null ? "—" : Math.round(r.months_since_debut)),
+    },
     {
       key: "group",
       header: "그룹",
@@ -104,6 +143,14 @@ export default function CompetitorPageClient() {
       align: "right",
       render: (r) => pct(r.recent_avg_engagement_rate),
     },
+    {
+      key: "subs_per_month",
+      header: "월평균 구독자 획득",
+      accessor: (r) => r.subs_per_month ?? 0,
+      align: "right",
+      render: (r) =>
+        r.subs_per_month == null ? "—" : Math.round(r.subs_per_month).toLocaleString("ko-KR"),
+    },
     { key: "uploads_per_week", header: "주당 업로드", accessor: (r) => r.uploads_per_week, align: "right" },
     {
       key: "reach_ratio",
@@ -123,31 +170,39 @@ export default function CompetitorPageClient() {
           <Freshness fetchedAt={data.meta.fetched_at} intervalMinutes={REFRESH_INTERVAL_MIN["06"]} cadenceLabel={REFRESH_LABEL["06"]} />
         </div>
         <p className={styles.subhead}>
-          {data.meta.note} — StelLive 6명 · 홀로라이브 6명 · 이세계아이돌 6명, 채널 {data.meta.n_channels}개 ·
-          영상 {data.meta.n_videos}건 기준. 전 멤버가 아니라 표본 비교임에 유의.
+          {data.meta.sampling} — 채널 {data.meta.n_channels}개 · 영상 {data.meta.n_videos}건 기준.
+          데뷔 시기가 겹치는 <strong>기수 전원</strong>이며 그룹 전체가 아니다.
         </p>
       </header>
 
       <Card padding="lg" className={styles.insightCard}>
-        <Badge tone="cautionary">필터 동작 안내</Badge>
+        <Badge tone="cautionary">읽는 법</Badge>
         <p className={styles.insightText}>
-          홀로라이브·이세계아이돌 12개 채널은 StelLive 유닛 체계에 속하지 않아 <code>unit: null</code>이다(설계상
-          정상). 그래서 <strong>유닛·멤버 필터는 이 12행에 적용되지 않는다</strong> — 필터를 켜도 경쟁사 그룹은
-          계속 표시된다(조용히 사라지지 않는다). 소속은 유닛 대신 <strong>그룹 배지</strong>(StelLive / 홀로라이브
-          / 이세계아이돌)로 구분한다.
+          <strong>구독자는 누적 지표다.</strong> 데뷔 시기가 다르면 그 차이의 대부분은 실력이 아니라 활동
+          기간이다. 그래서 그룹 비교는 <strong>같은 데뷔 코호트 안에서만</strong> 한다. 코호트를 넘어 견줄 수
+          있는 것은 최근 영상 기준 지표(도달률·참여율)이고, 월평균 구독자 획득은 데뷔 직후 급증이 섞여
+          신생 채널에 유리하므로 보조 지표로만 본다.
+          {comparableCohorts.length < data.cohorts.length ? (
+            <> 비교군이 없는 코호트는 그룹 비교 차트에서 제외했고, 표에는 그대로 남겨 뒀다.</>
+          ) : null}
+        </p>
+        <p className={styles.insightText}>
+          홀로라이브·이세계아이돌 채널은 StelLive 유닛 체계에 속하지 않아 <code>unit: null</code>이다(설계상
+          정상). <strong>유닛·멤버 필터는 그 행들에 적용되지 않는다</strong> — 필터를 켜도 경쟁사는 계속
+          표시된다. 소속은 유닛 대신 <strong>그룹 배지</strong>로 구분한다.
         </p>
       </Card>
 
-      <Section eyebrow="Filters" title="필터" description="StelLive 6명에만 적용된다 — 경쟁사 12명은 항상 표시." />
+      <Section eyebrow="Filters" title="필터" description="StelLive 멤버에만 적용된다 — 경쟁사 채널은 항상 표시." />
       <FilterBar />
 
       <Section
         eyebrow="Charts"
-        title="그룹별 평균 구독자"
-        description="StelLive · 홀로라이브 · 이세계아이돌 3개 그룹의 평균 구독자 수 비교."
+        title="데뷔 코호트별 구독자 중앙값"
+        description="같은 시기에 데뷔한 기수끼리만 묶어 비교한다. 코호트가 다른 막대끼리 견주면 안 된다."
       />
       <Card padding="md">
-        <BarChart data={groupBarData} title="그룹별 평균 구독자 수" />
+        <BarChart data={cohortBarData} title="데뷔 코호트 × 그룹 구독자 중앙값" />
       </Card>
 
       <Section
@@ -180,19 +235,21 @@ export default function CompetitorPageClient() {
         getRowKey={(r) => r.name_en}
         initialSortKey="subscribers"
         initialSortDir="desc"
-        caption="프로젝트 06 · 경쟁사 비교 (18개 채널, 3개 그룹 표본)"
+        caption={`프로젝트 06 · 경쟁사 비교 (${data.meta.n_channels}개 채널, 데뷔 코호트 매칭)`}
         onRowClick={(r) => openDetail(r.name_en)}
       />
 
       <div className={styles.statRow}>
-        {data.groups.map((g) => (
-          <StatTile
-            key={g.group}
-            label={`${g.group} 평균 참여율`}
-            value={pct(g.avg_engagement_rate)}
-            caption={`평균 구독자 ${Math.round(g.avg_subscribers).toLocaleString("ko-KR")}명 · 평균 도달률 ${pct(g.avg_reach_ratio)}`}
-          />
-        ))}
+        {data.cohorts
+          .filter((c) => comparableCohorts.includes(c.cohort))
+          .map((c) => (
+            <StatTile
+              key={`${c.cohort}/${c.group}`}
+              label={`${c.cohort} · ${c.group} 참여율`}
+              value={pct(c.avg_engagement_rate)}
+              caption={`${c.n_members}명 · 데뷔 후 ${Math.round(c.avg_months_since_debut)}개월 · 구독자 중앙값 ${Math.round(c.median_subscribers).toLocaleString("ko-KR")}명 · 도달률 ${pct(c.avg_reach_ratio)}`}
+            />
+          ))}
       </div>
 
       {detail ? <MemberDetail nameEn={detail} onClose={closeDetail} /> : null}

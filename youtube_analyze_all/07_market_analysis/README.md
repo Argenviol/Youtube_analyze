@@ -31,7 +31,7 @@ python build_site.py    # site/index.html
 |------|------|
 | `data/market_facts.csv` | 시장 통계 13건(출처·URL·비고 포함) |
 | `data/stellive_milestones.csv` | StelLive 성장 타임라인 8건 |
-| `sql/` | `market_facts`/`stellive_milestones`/`group_summary`(프로젝트6 재사용) 스키마·INSERT·쿼리·SQLite |
+| `sql/` | `market_facts`/`stellive_milestones`/`cohort_summary`(프로젝트6 코호트×그룹 요약 재사용) 스키마·INSERT·쿼리·SQLite |
 | `charts/*.png` | 차트 5종(시장규모 전망·시장구조·치지직KPI·타임라인·시장포지션) |
 | `site/index.html` | 인터랙티브 대시보드(출처 링크 포함) |
 
