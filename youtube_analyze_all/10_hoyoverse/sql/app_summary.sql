@@ -1,4 +1,6 @@
--- app_summary 데이터 (2 rows)
+-- app_summary 데이터 (4 rows)
 
-INSERT INTO app_summary (game, name_ko, package, title, score, ratings, reviews_total, installs, version) VALUES ('genshin', '원신', 'com.miHoYo.GenshinImpact', '원신-스네즈나야 오픈', 3.9041326, 5226675, 45649, '100,000,000+', '7.0.1_47144228_47194594');
-INSERT INTO app_summary (game, name_ko, package, title, score, ratings, reviews_total, installs, version) VALUES ('starrail', '붕괴:스타레일', 'com.HoYoverse.hkrpgoversea', '붕괴: 스타레일', 3.6158564, 522514, 9634, '10,000,000+', '4.5.0');
+INSERT INTO app_summary (game, name_ko, package, title, score, ratings, reviews_total, installs, version) VALUES ('genshin', '원신', 'com.miHoYo.GenshinImpact', '원신-스네즈나야 오픈', 3.9077358, 5229138, 45653, '100,000,000+', '7.0.1_47144228_47194594');
+INSERT INTO app_summary (game, name_ko, package, title, score, ratings, reviews_total, installs, version) VALUES ('starrail', '붕괴:스타레일', 'com.HoYoverse.hkrpgoversea', '붕괴: 스타레일', 3.6117904, 523016, 9637, '10,000,000+', '4.5.0');
+INSERT INTO app_summary (game, name_ko, package, title, score, ratings, reviews_total, installs, version) VALUES ('zzz', '젠레스 존 제로', 'com.HoYoverse.Nap', '젠레스 존 제로', 3.2419145, 165804, 3859, '10,000,000+', '3.2.0');
+INSERT INTO app_summary (game, name_ko, package, title, score, ratings, reviews_total, installs, version) VALUES ('hi3', '붕괴3rd', 'com.miHoYo.bh3korea', '붕괴3rd', 3.9588435, 67900, 34587, '1,000,000+', 'Varies with device');

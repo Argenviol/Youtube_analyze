@@ -42,6 +42,7 @@ SITE = HERE / "site"
 
 GAME_KO = {"genshin": "원신", "starrail": "붕괴:스타레일"}   # 데이터에 name_ko_game 이 없을 때만 쓰는 폴백
 TOP_N = 15
+SMALL_SAMPLE = 200     # 창 안 리뷰가 이보다 적으면 언급 순위를 해석하지 말라고 리포트에 적는다
 
 
 def games_of(df: pd.DataFrame) -> list[str]:
@@ -63,12 +64,20 @@ def build_metrics():
     reviews["month"] = reviews["at_dt"].dt.to_period("M").astype(str)
 
     gacha = chars[~chars["is_playable_avatar"]].copy()
-    gacha["release_dt"] = pd.to_datetime(gacha["release_date"])
-    gacha["name_len"] = gacha["name_ko"].str.len()
-    gacha["name_ambiguous"] = gacha["name_len"] <= 2   # 2글자 이하는 오탐 위험 표시
-    gacha["matchable"] = gacha["name_len"] >= 2         # 1글자는 매칭 자체를 하지 않음
+    gacha["release_dt"] = pd.to_datetime(gacha["release_date"], utc=True, errors="coerce", format="mixed")
+    if "rarity_label" not in gacha.columns:
+        gacha["rarity_label"] = gacha["rank"].map(lambda r: f"{int(r)}성" if r == r else None)
+    # 리뷰에서 찾는 문자열. 붕괴3rd 는 "키아나 카슬라나"가 아니라 "키아나"로 불리므로
+    # 수동 표의 match_name 을 쓴다. 다른 게임은 표시 이름 그대로.
+    if "match_name" not in gacha.columns:
+        gacha["match_name"] = None
+    gacha["match_name"] = gacha["match_name"].where(gacha["match_name"].notna(), gacha["name_ko"])
+    gacha["name_len"] = gacha["match_name"].fillna("").str.len()
+    gacha["name_ambiguous"] = gacha["name_len"].between(1, 2)   # 2글자 이하는 오탐 위험 표시
+    gacha["matchable"] = gacha["name_len"] >= 2                  # 1글자·이름 없음은 매칭하지 않음
 
     n_reviews_by_game = reviews.groupby("game").size().to_dict()
+    # 리뷰가 없는 게임(마스터만 있고 리뷰 수집이 안 된 경우)은 0으로 나누지 않는다.
 
     mention_rows = []
     for game, g in gacha.groupby("game"):
@@ -80,12 +89,12 @@ def build_metrics():
                 mention_rows.append(dict(char_id=c["char_id"], mention_count=None,
                                           avg_mention_score=None, mention_rate_per_10k=None))
                 continue
-            mask = texts.str.contains(c["name_ko"], regex=False, na=False)
+            mask = texts.str.contains(c["match_name"], regex=False, na=False)
             n = int(mask.sum())
             mention_rows.append(dict(
                 char_id=c["char_id"], mention_count=n,
                 avg_mention_score=round(float(scores[mask].mean()), 2) if n else None,
-                mention_rate_per_10k=round(n / n_reviews_by_game[game] * 10000, 2),
+                mention_rate_per_10k=round(n / n_reviews_by_game[game] * 10000, 2) if n_reviews_by_game.get(game) else None,
             ))
     mentions = pd.DataFrame(mention_rows)
     gacha = gacha.merge(mentions, on="char_id", how="left")
@@ -100,13 +109,14 @@ def build_metrics():
     # 밀렸다"는 식의, 아무도 묻지 않은 비교가 생긴다. 게임마다 따로 묻고 따로 답한다.
     #
     # 공식 푸시 랭킹: 5성만, 출시 최신순 (게임별)
-    push = (gacha[gacha["rank"] == 5]
+    push = (gacha[(gacha["rank"] == 5) & gacha["release_dt"].notna()]
             .sort_values(["game", "release_dt"], ascending=[True, False])
             .reset_index(drop=True))
     push["push_rank"] = push.groupby("game").cumcount() + 1
 
     # 유저 반응 랭킹: 매칭 가능한 캐릭터 중 언급량 많은 순 (전체 등급 포함, 게임별)
-    audience = (gacha[gacha["matchable"] & gacha["mention_count"].notna()]
+    # 언급 0건은 순위가 아니다 — 리뷰가 68건뿐인 게임에서 0건 캐릭터가 "반응 4위"로 찍히지 않게.
+    audience = (gacha[gacha["matchable"] & (gacha["mention_count"].fillna(0) > 0)]
                 .sort_values(["game", "mention_count"], ascending=[True, False])
                 .reset_index(drop=True))
     audience["audience_rank"] = audience.groupby("game").cumcount() + 1
@@ -144,9 +154,12 @@ def build_sql(gacha, reviews, monthly, app_summary):
     print(f"SQL -> {SQL}")
 
 
+GAME_COLOR = {"genshin": config.PALETTE["series"][0], "starrail": config.PALETTE["series"][1],
+              "zzz": config.PALETTE["series"][2], "hi3": config.PALETTE["series"][3]}
+
+
 def _gc(games):
-    cmap = {"genshin": config.PALETTE["series"][0], "starrail": config.PALETTE["series"][1]}
-    return [cmap.get(g, "#888") for g in games]
+    return [GAME_COLOR.get(g, "#888") for g in games]
 
 
 def build_charts(gacha, reviews, monthly, push, audience):
@@ -158,11 +171,24 @@ def build_charts(gacha, reviews, monthly, push, audience):
     # 읽히는데, 그런 비교는 이 프로젝트의 질문이 아니다.
     games = games_of(gacha)
     n = len(games)
+    # 패널 배치: 게임이 셋 이상이면 2열 격자. 한 줄에 넷을 놓으면 150mm 인쇄 폭에서 글자가 안 읽힌다.
+    ncol = min(n, 2)
+    nrow = -(-n // ncol)
+
+    def grid(w=6.4, h=6.2):
+        fig, axes = plt.subplots(nrow, ncol, figsize=(w * ncol, h * nrow), squeeze=False)
+        flat = [ax for row in axes for ax in row]
+        for ax in flat[n:]:
+            ax.axis("off")
+        return fig, flat[:n]
 
     # 1. 공식 푸시 프록시: 5성 캐릭터 출시 최신순 TOP 15 — 게임별
-    fig, axes = plt.subplots(1, n, figsize=(6.2 * n, 6.5), squeeze=False)
-    for ax, game in zip(axes[0], games):
+    fig, axes = grid(6.4, 6.4)
+    for ax, game in zip(axes, games):
         d = push[push["game"] == game].head(TOP_N).sort_values("release_dt")
+        if d.empty:
+            ax.text(0.5, 0.5, "출시일 데이터 없음 —\n푸시 순위를 만들 수 없다", ha="center", va="center",
+                    transform=ax.transAxes, color=config.INK["text"])
         ax.barh(d["name_ko"], range(len(d)), color=_gc([game])[0], height=0.72, zorder=3)
         ax.set_xticks([]); ax.set_title(f"{game_ko(gacha, game)} · 5성 출시 최신순 TOP {TOP_N}")
         for i, (_, r) in enumerate(d.iterrows()):
@@ -173,8 +199,8 @@ def build_charts(gacha, reviews, monthly, push, audience):
     fig.tight_layout(); fig.savefig(CHARTS / "01_push_proxy_top15.png", dpi=140); plt.close(fig)
 
     # 2. 유저 반응: 리뷰 언급량 TOP 15 — 게임별
-    fig, axes = plt.subplots(1, n, figsize=(6.2 * n, 6.5), squeeze=False)
-    for ax, game in zip(axes[0], games):
+    fig, axes = grid(6.4, 6.4)
+    for ax, game in zip(axes, games):
         d = audience[audience["game"] == game].head(TOP_N).sort_values("mention_count")
         bars = ax.barh(d["name_ko"], d["mention_count"], color=_gc([game])[0], height=0.72, zorder=3)
         ax.set_title(f"{game_ko(gacha, game)} · 리뷰 언급량 TOP {TOP_N}")
@@ -187,8 +213,8 @@ def build_charts(gacha, reviews, monthly, push, audience):
     fig.tight_layout(); fig.savefig(CHARTS / "02_audience_mentions_top15.png", dpi=140); plt.close(fig)
 
     # 3. 푸시 랭크 vs 반응 랭크 산점도 — 게임별 (두 랭킹에 모두 든 캐릭터)
-    fig, axes = plt.subplots(1, n, figsize=(6.5 * n, 6.8), squeeze=False)
-    for ax, game in zip(axes[0], games):
+    fig, axes = grid(6.6, 6.4)
+    for ax, game in zip(axes, games):
         both = gacha[(gacha["game"] == game)].dropna(subset=["push_rank", "audience_rank"])
         ax.scatter(both["push_rank"], both["audience_rank"], s=90, c=_gc([game])[0],
                    alpha=0.8, edgecolors="white", linewidths=1.2, zorder=3)
@@ -234,20 +260,27 @@ def build_charts(gacha, reviews, monthly, push, audience):
     ax.set_title("게임별 리뷰 평점 분포"); ax.grid(axis="y", zorder=0); ax.legend(frameon=False)
     fig.tight_layout(); fig.savefig(CHARTS / "05_score_distribution.png", dpi=140); plt.close(fig)
 
-    # 6. 게임별 희귀도(4성/5성) 구성
-    fig, ax = plt.subplots(figsize=(7, 5))
+    # 6. 게임별 희귀도 구성 — 최고 등급(5성/S급)과 그 아래(4성/A급·B급). 게임마다 등급
+    #    이름이 달라 숫자 rank(5=최고)로 묶고 라벨은 게임별 표기를 쓴다.
+    fig, ax = plt.subplots(figsize=(1.8 * n + 3, 5))
     ct = gacha.groupby(["game", "rank"]).size().unstack(fill_value=0)
-    games = ct.index.tolist()
-    b5 = ax.bar(games, ct.get(5, 0), color=S[4], label="5성", zorder=3)
-    b4 = ax.bar(games, ct.get(4, 0), bottom=ct.get(5, 0), color=S[3], label="4성", zorder=3)
-    ax.set_xticks(range(len(games))); ax.set_xticklabels([game_ko(gacha, g) for g in games])
-    ax.set_title("게임별 캐릭터 희귀도 구성 (여행자/개척자 제외)")
-    ax.grid(axis="y", zorder=0); ax.legend(frameon=False)
+    ct = ct.reindex(games).fillna(0)
+    top = ct.get(5, pd.Series(0, index=ct.index)); rest = ct.sum(axis=1) - top
+    ax.bar(range(n), top, color=S[4], label="최고 등급(5성·S급)", zorder=3)
+    ax.bar(range(n), rest, bottom=top, color=S[3], label="그 아래(4성·A급·B급)", zorder=3)
+    for i, g in enumerate(games):
+        labels = gacha[gacha["game"] == g].groupby("rarity_label").size()
+        ax.annotate(" · ".join(f"{k} {v}" for k, v in labels.items()), (i, top.iloc[i] + rest.iloc[i]),
+                    ha="center", va="bottom", fontsize=8.5, color=config.INK["text"],
+                    xytext=(0, 3), textcoords="offset points")
+    ax.set_xticks(range(n)); ax.set_xticklabels([game_ko(gacha, g) for g in games])
+    ax.set_title("게임별 캐릭터 희귀도 구성 (플레이어 캐릭터 제외)")
+    ax.grid(axis="y", zorder=0); ax.legend(frameon=False); ax.margins(y=0.15)
     fig.tight_layout(); fig.savefig(CHARTS / "06_rarity_composition.png", dpi=140); plt.close(fig)
 
     # 7. 원소/속성 분포 (게임별)
-    fig, axes = plt.subplots(1, n, figsize=(6.5 * n, 5), squeeze=False)
-    for ax, game in zip(axes[0], games):
+    fig, axes = grid(6.5, 4.8)
+    for ax, game in zip(axes, games):
         d = gacha[gacha["game"] == game]["element"].value_counts()
         ax.barh(d.index[::-1], d.values[::-1], color=S[:len(d)][::-1], zorder=3)
         ax.set_title(f"{game_ko(gacha, game)} 원소/속성 분포"); ax.grid(axis="x", zorder=0)
@@ -255,8 +288,8 @@ def build_charts(gacha, reviews, monthly, push, audience):
     fig.tight_layout(); fig.savefig(CHARTS / "07_element_distribution.png", dpi=140); plt.close(fig)
 
     # 8. 언급량 vs 감성(언급 리뷰 평균 평점) 산점도 — 게임별, 언급 5건 이상만 (표본 최소 확보)
-    fig, axes = plt.subplots(1, n, figsize=(6.5 * n, 6), squeeze=False)
-    for ax, game in zip(axes[0], games):
+    fig, axes = grid(6.5, 5.8)
+    for ax, game in zip(axes, games):
         d = gacha[(gacha["game"] == game) & (gacha["mention_count"].fillna(0) >= 5)]
         ax.scatter(d["mention_count"], d["avg_mention_score"], s=90, c=_gc([game])[0],
                    alpha=0.8, edgecolors="white", linewidths=1.2, zorder=3)
@@ -273,6 +306,16 @@ def build_charts(gacha, reviews, monthly, push, audience):
     print(f"차트 8종 -> {CHARTS}")
 
 
+def _window_line(meta: dict) -> str:
+    bg = meta.get("reviews_by_game") or {}
+    names = {"genshin": "원신", "starrail": "붕괴:스타레일", "zzz": "젠레스 존 제로", "hi3": "붕괴3rd"}
+    parts = []
+    for g, v in bg.items():
+        flag = "" if v.get("complete", True) else "(창 미완)"
+        parts.append(f"{names.get(g, g)} {v.get('n', 0):,}건{flag}")
+    return " · ".join(parts) if parts else "게임별 건수 기록 없음"
+
+
 def _trends_line(status: dict) -> str:
     """Google Trends 상태를 실제 기록대로 한 줄로 쓴다.
 
@@ -281,8 +324,9 @@ def _trends_line(status: dict) -> str:
     다르면 독자가 판단할 것도 달라진다 — 기록된 것만 쓴다.
     """
     if status.get("ok"):
-        return (f"**Google Trends 사용** — {status.get('n_rows', 0)}행 확보. "
-                "검색 관심도와 리뷰 언급량을 함께 본다.")
+        return (f"**Google Trends 호출 성공** — 시험 질의(\"Genshin Impact\", 1개월)가 {status.get('n_rows', 0)}행을 "
+                "받았다. 다만 **캐릭터 단위 검색 관심도는 아직 분석에 넣지 않았다** — 유저 반응 지표는 "
+                "리뷰 언급량이다. 이 줄은 소스가 살아 있다는 기록이지 분석에 썼다는 뜻이 아니다.")
     err = status.get("error") or "원인 미기록"
     if status.get("attempted") is False:
         return (f"**Google Trends 미사용** — 이번 실행에서는 호출하지 않았다(`{err}`). "
@@ -331,8 +375,10 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
             n_zero_mention=int((g["matchable"] & (g["mention_count"] == 0)).sum()),
             push_top=_recs(push[push["game"] == game].head(TOP_N)),
             audience_top=_recs(audience[audience["game"] == game].head(TOP_N)),
-            gap_overpushed=_recs(b.sort_values("gap", ascending=False).head(5)),
-            gap_sleeper=_recs(b.sort_values("gap").head(5)),
+            # 격차의 부호가 맞는 쪽만. 두 순위에 든 캐릭터가 셋뿐인 게임(붕괴3rd)에서
+            # 같은 셋이 양쪽 표에 다 나오는 일을 막는다.
+            gap_overpushed=_recs(b[b["gap"] > 0].sort_values("gap", ascending=False).head(5)),
+            gap_sleeper=_recs(b[b["gap"] < 0].sort_values("gap").head(5)),
         )
 
     site_data = dict(
@@ -356,21 +402,38 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
         bg = by_game[game]
         tp = push[push["game"] == game]
         ta = audience[audience["game"] == game]
+        src = (meta.get("character_sources") or {}).get(game, {})
+        src_line = ""
+        if src.get("names", "").startswith("manual"):
+            src_line = ("- ⚠ 한글 이름은 **사람이 적은 표**(`data/hi3_names_ko.csv`)다. 자동 소스가 없어서다. "
+                        f"이름이 있는 캐릭터 {src.get('n_named', 0)}명만 리뷰 매칭 대상이고, 표기가 불확실한 "
+                        "이름은 표에 uncertain 으로 적어 뒀다.\n")
         if tp.empty or ta.empty:
-            return f"### {bg['name_ko']}\n\n- 순위를 매길 데이터가 부족하다.\n"
+            why = []
+            if tp.empty:
+                why.append(f"출시일이 있는 최고 등급 캐릭터가 없다(출시일 소스: {src.get('release', '?')}, "
+                           f"확보 {src.get('n_release', 0)}명)")
+            if ta.empty:
+                why.append("리뷰에 매칭할 이름이 없거나 리뷰가 없다")
+            return (f"### {bg['name_ko']}\n\n- 가챠 캐릭터 {bg['n_gacha']}명 · 리뷰 {bg['n_reviews']:,}건\n"
+                    f"- 순위를 매길 수 없다 — " + "; ".join(why) + "\n" + src_line)
         tp, ta = tp.iloc[0], ta.iloc[0]
         over = bg["gap_overpushed"][:3]
         sleep = bg["gap_sleeper"][:3]
+        thin = ""
+        if bg["n_reviews"] < SMALL_SAMPLE:
+            thin = (f"- ⚠ 같은 {meta.get('review_window_days', '?')}일 창에서 리뷰가 **{bg['n_reviews']}건**뿐이다. "
+                    "언급 순위는 한두 건 차이로 뒤집히므로 **해석하지 말 것** — 표본이 이만큼 작다는 것 자체가 결과다.\n")
         fmt = lambda rows: ", ".join(f"{r['name_ko']}(푸시 {int(r['push_rank'])}위→반응 {int(r['audience_rank'])}위)" for r in rows) or "—"
         return f"""### {bg['name_ko']}
 
 - 가챠 캐릭터 {bg['n_gacha']}명 · 리뷰 {bg['n_reviews']:,}건
-- **공식 푸시 1위**(5성·최신 출시): {tp['name_ko']} ({str(tp['release_date'])[:10]} 출시)
+{thin}- **공식 푸시 1위**(최고 등급·최신 출시): {tp['name_ko']} ({str(tp['release_date'])[:10]} 출시)
 - **유저 반응 1위**(리뷰 언급량): {ta['name_ko']} ({int(ta['mention_count'])}건 언급)
 - 매칭 가능한 {bg['n_matchable']}명 중 **{bg['n_zero_mention']}명은 리뷰에서 한 번도 언급되지 않았다**
 - 많이 밀렸는데 반응이 약한 쪽: {fmt(over)}
 - 덜 밀렸는데 반응이 강한 쪽: {fmt(sleep)}
-"""
+{src_line}"""
 
     game_sections = "\n".join(_game_section(g) for g in games)
     n_zero_mention = int((gacha["matchable"] & (gacha["mention_count"] == 0)).sum())
@@ -380,26 +443,28 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
 
 **질문**: 게임사가 밀어주는 캐릭터와 유저가 실제로 반응하는 캐릭터는 일치하는가?
 
-- 데이터 소스: yatta.moe(Project Amber 후신, 캐릭터 마스터) + Google Play 리뷰
-  (원신·붕괴:스타레일, 게임당 최근 리뷰 최대 {meta['n_reviews_requested_per_app']:,}건)
+- 데이터 소스: 캐릭터 마스터 — 원신·붕괴:스타레일 yatta.moe / 젠레스 존 제로 Enka.Network 저장소 +
+  Fandom 위키(출시일) / 붕괴3rd Fandom 위키(전투복·버전) + 수동 한글 표. 리뷰 — 한국 Google Play.
+- **리뷰 기간은 네 게임 모두 같다**: 수집 시점부터 {meta.get('review_window_days', '?')}일
+  ({str(meta.get('review_since', ''))[:10]} ~ {meta['fetched_at'][:10]}). 건수는 게임마다 다르다 —
+  {_window_line(meta)}.
 - 수집 {meta['fetched_at'][:10]} · 캐릭터 {meta['n_characters']}명(가챠 대상 {len(gacha)}명,
   여행자/개척자 {meta['n_playable_avatars_excluded']}명 제외) · 리뷰 {meta['n_reviews']:,}건
 - {_trends_line(trends_status)}
 
 ## 게임은 따로 본다
 
-원신과 붕괴:스타레일은 출시 주기·캐릭터 풀·리뷰 표본 수가 다르다. 그래서 **순위(푸시·반응)와
-격차는 게임 안에서만 매기고**, 게임을 가로지르는 순위표는 만들지 않는다. 아래 요약과 차트의
-모든 순위는 그 게임 안에서의 순위다. 젠레스 존 제로·붕괴3rd 는 캐릭터 마스터 소스가 없어
-아직 없다(README 참고) — 소스가 생기면 같은 규격으로 한 절씩 추가된다.
+네 게임은 출시 주기·캐릭터 풀·리뷰 표본 수가 다르다. 그래서 **순위(푸시·반응)와 격차는 게임
+안에서만 매기고**, 게임을 가로지르는 순위표는 만들지 않는다. 아래 요약과 차트의 모든 순위는
+그 게임 안에서의 순위다. 비교할 수 있게 맞춘 것은 **리뷰 기간** 하나다.
 
 ## 게임별 핵심 요약
 
 {game_sections}
 ### 공통으로 보이는 것
 
-- 두 게임 모두 매칭 가능한 캐릭터 대부분이 리뷰에 등장하지 않는다(합쳐서 {n_matchable}명 중
-  {n_zero_mention}명 무언급). 표본이 게임당 {meta['n_reviews_requested_per_app']:,}건이라 리뷰에
+- 매칭 가능한 캐릭터 대부분이 리뷰에 등장하지 않는다(합쳐서 {n_matchable}명 중
+  {n_zero_mention}명 무언급). 같은 {meta.get('review_window_days', '?')}일 창 안에서도 리뷰에
   이름이 오르는 캐릭터는 소수다.
 - **가장 최근에 나온 캐릭터와 가장 많이 언급된 캐릭터는 게임마다 상당 부분 일치하지 않는다** —
   게임별 산점도(`03_push_vs_audience_rank.png`)에서 대각선(순위 일치선)을 얼마나 벗어나는지로 확인.
@@ -415,9 +480,11 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
    않아서 이름이 짧을수록(2글자 이하) 다른 단어와 우연히 일치할 위험이 커진다.
    1글자 이름({', '.join(gacha[gacha['name_len']==1]['name_ko'].tolist()) or '없음'})은 매칭에서
    아예 제외했고, 2글자 이름 {int(gacha['name_ambiguous'].sum())}개는 상한값으로만 해석해야 한다.
-3. **Google Trends 없음.** "검색 관심도"라는, 원래 계획했던 더 깨끗한 반응 지표를
-   못 썼다. 리뷰 언급량은 검색량의 대체재이지 동의어가 아니다 — 리뷰를 남기는 유저는
-   전체 플레이어의 일부이고, 특정 성향(불만이 있는 유저)에 쏠렸을 가능성이 있다.
+3. **Google Trends 는 아직 분석에 없다.** "검색 관심도"라는, 원래 계획했던 더 깨끗한 반응
+   지표를 아직 넣지 못했다(호출 가능 여부는 실행마다 `trends_status.json` 에 남는다 — 오래
+   실패하다 2026-09-18 부터 시험 질의가 통과한다). 리뷰 언급량은 검색량의 대체재이지 동의어가
+   아니다 — 리뷰를 남기는 유저는 전체 플레이어의 일부이고, 특정 성향(불만이 있는 유저)에
+   쏠렸을 가능성이 있다.
 
 ## 산출물
 - `data/characters.csv` 캐릭터 마스터, `data/reviews.csv` 리뷰 원본,

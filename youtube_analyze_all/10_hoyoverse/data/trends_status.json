@@ -1,8 +1,8 @@
 {
-  "attempted_at": "2026-09-12T22:25:32.059390+00:00",
-  "ok": false,
+  "attempted_at": "2026-09-18T08:43:45.746215+00:00",
+  "ok": true,
   "library": "pytrends",
-  "error": "ModuleNotFoundError: No module named 'pytrends'",
-  "note": "pytrends 미설치 — 이번 실행에서는 Google Trends 를 호출하지 않았다. 과거 실측에서 매 호출마다 즉시 429(TooManyRequestsError)가 발생했고, 재시도 로직(Retry(method_whitelist=...))은 최신 urllib3 와 인자가 맞지 않아 TypeError 가 나서, 설계에서 드롭하고 의존성도 넣지 않기로 했다. 분석 단계에서는 이 소스를 사용하지 않는다(허위 데이터로 채우지 않음).",
-  "attempted": false
+  "error": null,
+  "note": null,
+  "n_rows": 32
 }

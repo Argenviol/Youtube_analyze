@@ -578,16 +578,20 @@ export type Meta10 = {
   n_reviews: number;
   games: string[];
   google_trends_ok: boolean;
-  google_trends_error: string;
-  n_reviews_requested_per_app: number;
+  google_trends_error: string | null;
+  /** 2026-09-18 이전 판(게임당 최신 N건)에만 있던 값. 지금은 review_window_days 가 대신한다. */
+  n_reviews_requested_per_app?: number;
 };
 
 export type TrendsStatus10 = {
   attempted_at: string;
   ok: boolean;
   library: string;
-  error: string;
-  note: string;
+  /** 실패 시 원인. 성공하면 null. */
+  error: string | null;
+  note: string | null;
+  /** 성공 시 받은 행 수. 캐릭터 단위 분석에는 아직 쓰지 않는다(상태 기록용). */
+  n_rows?: number;
 };
 
 export type AppSummary10 = {
@@ -609,15 +613,21 @@ export type AppSummary10 = {
  * 파생 필드(= push_rank - audience_rank 부호 반전 근사)다.
  */
 export type Character10 = {
+  /** 게임별 등급 표기("5성"·"S급"). rank 숫자(5=최고 등급)는 게임을 넘어 비교하기 위한 값. */
+  rarity_label?: string | null;
+  name_en?: string | null;
+  /** 리뷰에서 실제로 찾는 문자열(붕괴3rd 는 "키아나"처럼 이름만). 없으면 name_ko. */
+  match_name?: string | null;
   game: string;
   name_ko_game: string;
   char_id: string;
-  name_ko: string;
-  route_en: string;
+  /** 붕괴3rd 는 수동 표에 없는 캐릭터가 null 일 수 있다. */
+  name_ko: string | null;
+  route_en: string | null;
   /** 캐릭터 희귀도(4 또는 5) — "희귀도" 필터가 이 값을 쓴다. */
   rank: number;
-  element: string;
-  weapon_or_path: string;
+  element: string | null;
+  weapon_or_path: string | null;
   is_playable_avatar: boolean;
   release_unix: number;
   release_date: string;
@@ -656,6 +666,11 @@ export type Data10 = {
     /** "per_game" — push_rank·audience_rank·gap 은 게임 안에서만 매긴 값. */
     ranking_scope: string;
     ranking_note: string;
+    /** 리뷰 창(일). 네 게임에 같은 창을 쓴다. */
+    review_window_days?: number;
+    review_since?: string;
+    reviews_by_game?: Record<string, { n: number; pages: number; complete: boolean; note: string }>;
+    character_sources?: Record<string, Record<string, unknown>>;
   };
   trends_status: TrendsStatus10;
   app_summary: AppSummary10[];

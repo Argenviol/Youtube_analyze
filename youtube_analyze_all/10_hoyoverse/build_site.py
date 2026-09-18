@@ -19,7 +19,7 @@ HERE = Path(__file__).resolve().parent
 SITE = HERE / "site"
 
 PAL = config.PALETTE["series"]
-C_GAME = {"genshin": PAL[0], "starrail": PAL[1]}
+C_GAME = {"genshin": PAL[0], "starrail": PAL[1], "zzz": PAL[2], "hi3": PAL[3]}
 
 
 def _c(game: str) -> str:
@@ -34,7 +34,7 @@ def _push_rows(push_top: list[dict]) -> str:
         out.append(
             f'<tr><td>{int(r["push_rank"])}</td>'
             f'<td><span style="display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle;background:{color}"></span>{r["name_ko"]}</td>'
-            f'<td>{r["name_ko_game"]}</td><td>{"5성" if r["rank"]==5 else "4성"}</td>'
+            f'<td>{r["name_ko_game"]}</td><td>{r.get("rarity_label") or ("5성" if r["rank"]==5 else "4성")}</td>'
             f'<td>{str(r["release_date"])[:10]}</td></tr>'
         )
     return "\n".join(out)
@@ -214,7 +214,7 @@ def build():
 <div class="eyebrow">PROJECT 10</div>
 <h1>호요버스 캐릭터 인기도 분석</h1>
 <div class="sub">게임사가 밀어주는 캐릭터와 유저가 실제로 반응하는 캐릭터는 일치하는가? ·
-{game_names} · 게임별로 따로 순위를 매긴다 · 수집 {meta['fetched_at'][:10]}</div>
+{game_names} · 게임별로 따로 순위를 매긴다 · 리뷰 기간은 네 게임 동일(최근 {meta.get('review_window_days', '?')}일) · 수집 {meta['fetched_at'][:10]}</div>
 
 <div class="cards">
   <div class="card"><div class="k">가챠 대상 캐릭터</div><div class="v">{n_gacha}명</div></div>
@@ -224,10 +224,11 @@ def build():
 </div>
 
 <div class="warn">
-<strong>Google Trends는 이 프로젝트에서 쓰지 않았다.</strong> 마지막 실행 기록:
-<code>{trends.get('error') or '원인 미기록'}</code> (재현 로그: <code>data/trends_status.json</code>).
-검색 관심도 대신 <strong>앱스토어 리뷰 본문에 캐릭터 이름이 언급된 횟수</strong>로 유저 반응을
-근사했다 — 이건 검색량보다 훨씬 거친 대체 지표이고, 리뷰를 남기는 유저층으로 표본이 편향돼 있다.
+<strong>Google Trends 는 아직 분석에 넣지 않았다.</strong> 마지막 실행 기록:
+<code>{('호출 성공, ' + str(trends.get('n_rows', 0)) + '행') if trends.get('ok') else (trends.get('error') or '원인 미기록')}</code>
+(<code>data/trends_status.json</code>). 검색 관심도 대신 <strong>앱스토어 리뷰 본문에 캐릭터 이름이 언급된
+횟수</strong>로 유저 반응을 근사했다 — 이건 검색량보다 훨씬 거친 대체 지표이고, 리뷰를 남기는 유저층으로
+표본이 편향돼 있다.
 </div>
 
 <div class="note"><strong>왜 게임별로 따로 보는가.</strong> 원신과 붕괴:스타레일은 출시 주기·캐릭터

@@ -3,15 +3,15 @@
 호요버스(HoYoverse) 캐릭터 인기도 분석 — "게임사가 밀어주는 캐릭터와 유저가 실제로
 반응하는 캐릭터는 일치하는가?"를 검증하기 위한 원천 데이터 3종을 수집한다.
 
-  python 10_hoyoverse/collect.py [--reviews 3000]
+  python 10_hoyoverse/collect.py [--days 365]
 
 ## 소스별 상태 (실제 테스트 결과 — README.md에도 동일하게 기록)
 
 1. **캐릭터 마스터 데이터** — Project Amber(구 ambr.top)가 이관된 `yatta.moe`
    (`gi.yatta.moe`=원신, `sr.yatta.moe`=붕괴:스타레일). 무료·키 불필요. 동작 확인됨.
-   `zzz.yatta.moe` 등 젠레스 존 제로 서브도메인은 DNS 자체가 뜨지 않아(해당 게임 커버리지
-   없음) 제외했다. 대안으로 지정된 `hakush.in`/`api.hakush.in`도 이 환경에서
-   `getaddrinfo failed`로 완전히 응답하지 않아 사용하지 않았다.
+   `zzz.yatta.moe` 는 DNS 가 없고 `api.hakush.in` 은 2026-09 현재 GitHub 러너에서도
+   DNS 가 뜨지 않는다(서비스 종료로 보인다). 그래서 젠레스 존 제로·붕괴3rd 는
+   sources.py 에서 다른 조각(Enka.Network 저장소·Fandom 위키·수동 한글 표)을 잇는다.
 2. **Google Trends(`pytrends`)** — 이 환경에서 기본 호출조차 최초 요청부터
    `TooManyRequestsError: ... code 429`로 즉시 실패했고, 재시도 로직을 넣기 위해
    `Retry(method_whitelist=...)`를 쓰면 설치된 urllib3 버전이 해당 인자를 제거해
@@ -33,11 +33,14 @@ import re
 import sys
 import time
 import traceback
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pandas as pd
 import requests
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import sources  # noqa: E402  (젠레스 존 제로·붕괴3rd 마스터)
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
@@ -78,6 +81,9 @@ def _get_json(url: str, tries: int = 3) -> dict:
     raise last_exc
 
 
+source_status: dict[str, dict] = {}
+
+
 def fetch_characters() -> pd.DataFrame:
     rows = []
     for g in GAMES:
@@ -101,14 +107,28 @@ def fetch_characters() -> pd.DataFrame:
             )
             rows.append(dict(
                 game=g["game"], name_ko_game=g["name_ko"], char_id=str(cid),
-                name_ko=_clean_name(it.get("name")), route_en=it.get("route"),
-                rank=it.get("rank"),
+                name_ko=_clean_name(it.get("name")), name_en=None, route_en=it.get("route"),
+                rank=it.get("rank"), rarity_label=f"{it.get('rank')}성" if it.get("rank") else None,
                 element=it.get("element") or types.get("combatType"),
                 weapon_or_path=it.get("weaponType") or types.get("pathType"),
                 is_playable_avatar=is_player,   # 여행자/개척자 — 뽑기(가챠) 대상이 아니라 제외
                 release_unix=release_unix, release_date=release_iso,
             ))
         print(f"  {g['name_ko']:14} 캐릭터 {n_total}개 (그 중 플레이어 캐릭터 {n_player}개 제외 예정)")
+        source_status[g["game"]] = dict(names="yatta.moe", release="yatta.moe", ok=True, n=n_total)
+
+    # 젠레스 존 제로 · 붕괴3rd — yatta.moe 가 없는 게임. 조각을 이어 붙인다(sources.py).
+    # 실패해도 여기서 멈추지 않는다: 그 게임만 빠지고 status 에 이유가 남는다.
+    for fn, label in ((sources.zzz_master, "젠레스 존 제로"), (sources.hi3_master, "붕괴3rd")):
+        try:
+            more, st = fn()
+        except Exception as e:  # noqa: BLE001
+            more, st = [], dict(ok=False, error=f"{type(e).__name__}: {str(e)[:160]}")
+        game = "zzz" if fn is sources.zzz_master else "hi3"
+        source_status[game] = st
+        rows.extend(more)
+        print(f"  {label:14} 캐릭터 {len(more)}개 · 출시일 {st.get('n_release', 0)}개 · "
+              f"{'OK' if st.get('ok') else '실패: ' + str(st.get('error'))}")
     return pd.DataFrame(rows)
 
 
@@ -157,16 +177,33 @@ def try_google_trends() -> dict:
 # ---------------------------------------------------------------------------
 # 3. 앱스토어(Google Play) 리뷰
 # ---------------------------------------------------------------------------
+# 한국 Google Play 의 호요버스 4개 게임. 붕괴3rd 는 한국 서버 전용 앱(bh3korea)이 따로 있어
+# 글로벌 앱(bh3global) 대신 그것을 쓴다 — 한국어 리뷰가 거기 달린다.
 APPS = [
-    dict(game="genshin", name_ko="원신", package="com.miHoYo.GenshinImpact"),
+    dict(game="genshin",  name_ko="원신",        package="com.miHoYo.GenshinImpact"),
     dict(game="starrail", name_ko="붕괴:스타레일", package="com.HoYoverse.hkrpgoversea"),
+    dict(game="zzz",      name_ko="젠레스 존 제로", package="com.HoYoverse.Nap"),
+    dict(game="hi3",      name_ko="붕괴3rd",      package="com.miHoYo.bh3korea"),
 ]
 
+# 리뷰 기간은 **모든 게임에 같은 창**을 쓴다.
+#
+# 이전 판은 게임당 "최신 3,000건"이었다. 그러면 기간이 게임마다 달라진다 — 리뷰가 자주 달리는
+# 원신은 3,000건이 710일치인데 스타레일은 888일치였다. 같은 3,000건이 다른 기간을 뜻하므로
+# 월간 추이나 언급량을 게임끼리 나란히 놓을 수 없었다. 지금은 수집 시점부터 거꾸로
+# REVIEW_WINDOW_DAYS 일을 창으로 잡고, 그 창 안의 리뷰를 **전부** 가져온다. 건수는 게임마다
+# 다르지만 기간은 같다. 게임별 건수는 _meta.json 의 reviews_by_game 에 남긴다.
+REVIEW_WINDOW_DAYS = 365
+REVIEW_PAGE = 200          # google-play-scraper 한 페이지
+REVIEW_HARD_CAP = 30000    # 창이 넓어도 이 이상은 받지 않는다(안전장치)
 
-def fetch_reviews(n: int) -> tuple[pd.DataFrame, list[dict]]:
+
+def fetch_reviews(window_days: int, hard_cap: int = REVIEW_HARD_CAP) -> tuple[pd.DataFrame, list[dict], dict]:
     from google_play_scraper import app as gp_app, reviews as gp_reviews, Sort
 
+    since = datetime.now(timezone.utc) - timedelta(days=window_days)
     rows, app_rows = [], []
+    window = dict(days=window_days, since=since.isoformat(), by_game={})
     for a in APPS:
         info = gp_app(a["package"], lang="ko", country="kr")
         app_rows.append(dict(
@@ -175,22 +212,41 @@ def fetch_reviews(n: int) -> tuple[pd.DataFrame, list[dict]]:
             ratings=info.get("ratings"), reviews_total=info.get("reviews"),
             installs=info.get("installs"), version=info.get("version"),
         ))
-        rv, _ = gp_reviews(a["package"], lang="ko", country="kr",
-                            sort=Sort.NEWEST, count=n)
-        for r in rv:
-            rows.append(dict(
-                game=a["game"], name_ko=a["name_ko"],
-                review_id=r.get("reviewId"), content=r.get("content"),
-                score=r.get("score"), thumbs_up=r.get("thumbsUpCount"),
-                at=r.get("at").isoformat() if r.get("at") else None,
-                app_version=r.get("reviewCreatedVersion"),
-            ))
+        got, token, reached_cutoff, n_pages = 0, None, False, 0
+        while True:
+            rv, token = gp_reviews(a["package"], lang="ko", country="kr",
+                                   sort=Sort.NEWEST, count=REVIEW_PAGE,
+                                   continuation_token=token)
+            n_pages += 1
+            for r in rv:
+                at = r.get("at")
+                if at is None:
+                    continue
+                at_utc = at.replace(tzinfo=timezone.utc) if at.tzinfo is None else at
+                if at_utc < since:
+                    reached_cutoff = True
+                    continue
+                rows.append(dict(
+                    game=a["game"], name_ko=a["name_ko"],
+                    review_id=r.get("reviewId"), content=r.get("content"),
+                    score=r.get("score"), thumbs_up=r.get("thumbsUpCount"),
+                    at=at_utc.isoformat(),
+                    app_version=r.get("reviewCreatedVersion"),
+                ))
+                got += 1
+            # 최신순이므로 한 페이지에 창 밖 리뷰가 나오면 그 뒤는 전부 창 밖이다.
+            if reached_cutoff or not rv or token is None or got >= hard_cap:
+                break
+            time.sleep(0.4)
+        window["by_game"][a["game"]] = dict(
+            n=got, pages=n_pages, complete=bool(reached_cutoff),
+            note="" if reached_cutoff else "창 끝에 닿기 전에 페이지가 끝나거나 상한에 걸림 — 창보다 짧을 수 있다")
         print(f"  {a['name_ko']:14} 앱 평점 {info.get('score')} (평가 {info.get('ratings'):,}) · "
-              f"리뷰 {len(rv)}건 수집")
-    return pd.DataFrame(rows), app_rows
+              f"최근 {window_days}일 리뷰 {got}건 ({n_pages}페이지{'' if reached_cutoff else ', 창 미완'})")
+    return pd.DataFrame(rows), app_rows, window
 
 
-def collect(n_reviews: int) -> None:
+def collect(window_days: int) -> None:
     DATA.mkdir(parents=True, exist_ok=True)
 
     print("[1/3] 캐릭터 마스터 데이터 (yatta.moe = Project Amber 후신)")
@@ -207,7 +263,7 @@ def collect(n_reviews: int) -> None:
         print(f"  실패(정상 처리) — {trends_status['error']}")
 
     print("\n[3/3] Google Play 리뷰 (google-play-scraper)")
-    reviews_df, app_rows = fetch_reviews(n_reviews)
+    reviews_df, app_rows, window = fetch_reviews(window_days)
     reviews_df.to_csv(DATA / "reviews.csv", index=False)
     pd.DataFrame(app_rows).to_csv(DATA / "app_summary.csv", index=False)
 
@@ -218,10 +274,18 @@ def collect(n_reviews: int) -> None:
         n_characters=len(chars),
         n_playable_avatars_excluded=int(chars["is_playable_avatar"].sum()),
         n_reviews=len(reviews_df),
-        games=[g["game"] for g in GAMES],
+        games=[g for g in chars["game"].unique().tolist()],   # 캐릭터 마스터가 있는 게임
+        character_sources=source_status,
+        review_games=[a["game"] for a in APPS],           # 리뷰를 모은 게임
         google_trends_ok=trends_status["ok"],
         google_trends_error=trends_status["error"],
-        n_reviews_requested_per_app=n_reviews,
+        review_window_days=window["days"],
+        review_since=window["since"],
+        reviews_by_game=window["by_game"],
+        review_sampling="공통 기간 — 수집 시점부터 review_window_days 일 안의 리뷰 전부(게임마다 건수는 다르고 기간은 같다)",
+        method_changed_at="2026-09-18",
+        method_note="이전에는 게임당 최신 3,000건이라 기간이 게임마다 달랐다(원신 710일, 스타레일 888일). "
+                    "이 시점 이전 스냅샷과 언급량·월간 추이를 직접 비교하지 말 것.",
     )
     (DATA / "_meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\n완료: 캐릭터 {len(chars)}명(플레이어캐릭터 {int(chars['is_playable_avatar'].sum())}명 포함) / "
@@ -230,10 +294,11 @@ def collect(n_reviews: int) -> None:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--reviews", type=int, default=3000, help="게임당 수집할 리뷰 수")
+    ap.add_argument("--days", type=int, default=REVIEW_WINDOW_DAYS,
+                    help="리뷰 창(일). 모든 게임에 같은 창을 쓴다")
     args = ap.parse_args()
     try:
-        collect(args.reviews)
+        collect(args.days)
     except Exception:
         traceback.print_exc()
         sys.exit(1)

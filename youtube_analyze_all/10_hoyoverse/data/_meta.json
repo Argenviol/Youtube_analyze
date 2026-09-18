@@ -1,14 +1,86 @@
 {
-  "fetched_at": "2026-09-12T22:25:37.123959+00:00",
+  "fetched_at": "2026-09-18T08:44:00.930237+00:00",
   "source": "yatta.moe(Project Amber 후신, 캐릭터 마스터) + google-play-scraper(앱스토어 리뷰) + pytrends(Google Trends, 실패)",
-  "n_characters": 231,
+  "n_characters": 326,
   "n_playable_avatars_excluded": 26,
-  "n_reviews": 6000,
+  "n_reviews": 3536,
   "games": [
     "genshin",
-    "starrail"
+    "starrail",
+    "zzz",
+    "hi3"
   ],
-  "google_trends_ok": false,
-  "google_trends_error": "ModuleNotFoundError: No module named 'pytrends'",
-  "n_reviews_requested_per_app": 3000
+  "character_sources": {
+    "genshin": {
+      "names": "yatta.moe",
+      "release": "yatta.moe",
+      "ok": true,
+      "n": 134
+    },
+    "starrail": {
+      "names": "yatta.moe",
+      "release": "yatta.moe",
+      "ok": true,
+      "n": 97
+    },
+    "zzz": {
+      "names": "enka",
+      "release": "fandom",
+      "ok": true,
+      "error": null,
+      "n": 60,
+      "n_release": 59
+    },
+    "hi3": {
+      "names": "manual(data/hi3_names_ko.csv)",
+      "release": "fandom",
+      "ok": true,
+      "error": null,
+      "n": 35,
+      "n_release": 22,
+      "n_battlesuits": 110,
+      "n_named": 35,
+      "names_note": "data/hi3_names_ko.csv (41행, 수동 입력)",
+      "n_versions_dated": 66
+    }
+  },
+  "review_games": [
+    "genshin",
+    "starrail",
+    "zzz",
+    "hi3"
+  ],
+  "google_trends_ok": true,
+  "google_trends_error": null,
+  "review_window_days": 365,
+  "review_since": "2025-09-18T08:43:47.319920+00:00",
+  "reviews_by_game": {
+    "genshin": {
+      "n": 1325,
+      "pages": 7,
+      "complete": true,
+      "note": ""
+    },
+    "starrail": {
+      "n": 994,
+      "pages": 5,
+      "complete": true,
+      "note": ""
+    },
+    "zzz": {
+      "n": 1149,
+      "pages": 6,
+      "complete": true,
+      "note": ""
+    },
+    "hi3": {
+      "n": 68,
+      "pages": 1,
+      "complete": true,
+      "note": ""
+    }
+  },
+  "review_sampling": "공통 기간 — 수집 시점부터 review_window_days 일 안의 리뷰 전부(게임마다 건수는 다르고 기간은 같다)",
+  "method_changed_at": "2026-09-18",
+  "method_note": "이전에는 게임당 최신 3,000건이라 기간이 게임마다 달랐다(원신 710일, 스타레일 888일). 이 시점 이전 스냅샷과 언급량·월간 추이를 직접 비교하지 말 것."
 }

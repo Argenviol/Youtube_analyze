@@ -2,8 +2,8 @@
 
 **질문**: 게임사가 밀어주는 캐릭터와 유저가 실제로 반응하는 캐릭터는 일치하는가?
 
-원신(Genshin Impact)·붕괴:스타레일(Honkai: Star Rail) 캐릭터 마스터 데이터와 한국 Google
-Play 리뷰를 결합해, "공식이 미는 캐릭터"(5성·출시 최신순)와 "유저가 실제로 이야기하는
+원신(Genshin Impact)·붕괴:스타레일(Honkai: Star Rail)·젠레스 존 제로(ZZZ)·붕괴3rd 네 게임의
+캐릭터 마스터 데이터와 한국 Google Play 리뷰를 결합해, "공식이 미는 캐릭터"(5성·출시 최신순)와 "유저가 실제로 이야기하는
 캐릭터"(리뷰 언급량) 사이의 간극을 살펴봅니다. 스텔라이브 소재 프로젝트 1~9와는 완전히
 다른 도메인(가챠 게임)이라 지표·서사가 겹치지 않습니다.
 
@@ -11,7 +11,7 @@ Play 리뷰를 결합해, "공식이 미는 캐릭터"(5성·출시 최신순)�
 
 ```bash
 pip install pandas numpy matplotlib requests tabulate pytrends google-play-scraper
-python collect.py --reviews 3000   # 캐릭터 마스터 + 리뷰 -> data/
+python collect.py --days 365       # 캐릭터 마스터 + 최근 365일 리뷰(네 게임 공통 창) -> data/
 python analyze.py                  # SQL/차트/리포트/사이트 데이터
 python build_site.py               # site/index.html
 ```
@@ -24,7 +24,9 @@ API 키 불필요. 실행 순서를 지켜야 한다(`collect.py`가 만든 `dat
 |---|------|------|------|
 | 1 | 캐릭터/배너 마스터 — `yatta.moe`(Project Amber/ambr.top 후신) | **동작** | `gi.yatta.moe`=원신, `sr.yatta.moe`=붕괴:스타레일. `kr` 로케일로 한글 이름 확보 |
 | 2 | Google Trends — `pytrends` | **사용 불가** | 매 시도 즉시 `TooManyRequestsError`(HTTP 429). 재시도 로직을 넣으면 설치된 urllib3와 `Retry(method_whitelist=...)` 인자가 맞지 않아 `TypeError`. 설계에서 제외 |
-| 3 | 앱스토어 리뷰 — `google-play-scraper` | **동작** | 원신·붕괴:스타레일 한국어 리뷰 수천 건, 최대 약 2년치 |
+| 3 | 앱스토어 리뷰 — `google-play-scraper` | **동작** | 네 게임 한국 Play 스토어. **같은 창(최근 365일)** 안의 리뷰 전부 |
+| 4 | 젠레스 존 제로 마스터 — Enka.Network 공개 저장소 + ZZZ Fandom 위키 API | **동작** (2026-09-18) | 이름(ko/en)·등급은 Enka `store/zzz/avatars.json`+`locs.json`, 출시일은 위키 Agent Infobox `releaseDate` |
+| 5 | 붕괴3rd 마스터 — Honkai Impact 3 Fandom 위키 API + `data/hi3_names_ko.csv` | **반자동** (2026-09-18) | 전투복·등급·버전은 위키, 버전→날짜는 Version 페이지(debut_KR→debut_NA), **한글 이름은 수동 표** |
 
 ### 1. 캐릭터 마스터 데이터 — 무엇을 썼고 무엇을 못 썼는가
 
@@ -34,7 +36,9 @@ API 키 불필요. 실행 순서를 지켜야 한다(`collect.py`가 만든 `dat
 - **젠레스 존 제로(ZZZ)는 뺐다.** `zzz.yatta.moe` 등 후보 서브도메인은 DNS 자체가 뜨지
   않는다 — 이 소스가 ZZZ를 아예 커버하지 않는 것으로 판단했다. 대안으로 지정된
   `hakush.in`/`api.hakush.in`도 **도메인 전체가 DNS로 응답하지 않아**(`getaddrinfo failed`)
-  사용하지 않았다. 그래서 이 프로젝트는 **원신·붕괴:스타레일 2개 게임만** 다룬다.
+  사용하지 않았다. 2026-09-18 확인 결과 `api.hakush.in` 은 GitHub 러너에서도 DNS 가 뜨지 않는다
+  (서비스 종료로 보인다). 그래서 젠레스 존 제로·붕괴3rd 는 `sources.py` 에서 다른 조각을 잇는다
+  (아래 표 4·5행). 처음 판은 원신·붕괴:스타레일 2개였고, 지금은 네 게임이다.
 - **배너/재출시(rerun) 이력 API를 찾지 못했다.** 캐릭터 마스터에는 `release`(최초 출시
   시각)와 `rank`(4성/5성)만 있고, 배너 스케줄 엔드포인트는 여러 경로를 시도했지만 없었다.
   그래서 "공식 푸시"는 **5성 캐릭터를 출시 최신순으로 정렬**한 프록시다(호요버스 가챠는
@@ -67,10 +71,31 @@ PRD가 미리 경고한 대로 `pytrends`는 이 환경에서 완전히 죽어 �
 0~100 상대 지수라도 검색 모집단 전체를 반영하지만, 리뷰 언급량은 리뷰를 남기는 유저(대개
 불만이 있거나 애정이 큰 소수)로 표본이 좁혀진다.
 
-### 3. 앱스토어 리뷰 — google-play-scraper
+### 3. 앱스토어 리뷰 — google-play-scraper · 기간은 네 게임이 같다
 
-원신(`com.miHoYo.GenshinImpact`)·붕괴:스타레일(`com.HoYoverse.hkrpgoversea`) 모두 한국
-Play 스토어에서 정상 동작. 게임당 최근 리뷰 3,000건(약 2024-03~2026-08 범위)을 수집했다.
+원신(`com.miHoYo.GenshinImpact`)·붕괴:스타레일(`com.HoYoverse.hkrpgoversea`)·젠레스 존 제로
+(`com.HoYoverse.Nap`)·붕괴3rd 한국 서버(`com.miHoYo.bh3korea`) 모두 한국 Play 스토어에서 동작.
+
+처음 판은 게임당 **최신 3,000건**이었다. 그러면 기간이 게임마다 달라진다 — 원신은 3,000건이
+710일치, 스타레일은 888일치였다. 같은 건수가 다른 기간을 뜻하므로 월간 추이나 언급량을
+나란히 놓을 수 없었다. 지금은 **수집 시점부터 365일**을 창으로 잡고 그 안의 리뷰를 전부
+받는다. 건수는 게임마다 다르지만(2026-09-18 기준 원신 1,325 · 스타레일 994 · 젠존제 1,149 ·
+붕괴3rd 68) 기간은 같다. 붕괴3rd 는 한 해 리뷰가 두 자릿수라 언급 순위가 사실상 서지 않는다 —
+그것도 결과다.
+
+### 4·5. 젠레스 존 제로·붕괴3rd 마스터 — 조각 잇기
+
+- 젠존제: Enka.Network 저장소(`raw.githubusercontent.com/EnkaNetwork/API-docs`)가 60명의
+  내부 ID·등급(4=S, 3=A)·13개 언어 이름을 준다. 출시일은 ZZZ Fandom 위키 Agent Infobox 의
+  `releaseDate`. 둘은 짧은 영문 이름(Nekomata ↔ brief_name)으로 잇는다.
+- 붕괴3rd: 분석 단위는 **캐릭터**다(리뷰는 "키아나"라고 쓰지 "종언의 율자"라고 쓰지 않는다).
+  Honkai Impact 3 Fandom 의 전투복 페이지(`Battlesuit Introduction`: character·version·rank)를
+  캐릭터로 묶어 최고 등급과 **가장 최근 S급 전투복 출시일**(=가장 최근에 민 것)을 쓴다.
+  버전→날짜는 위키 Version 페이지의 `debut_KR`(없으면 `debut_NA`). 옛 버전은 날짜 페이지가
+  없어 일부 캐릭터는 출시일이 비고, 그 캐릭터는 푸시 순위에서 빠진다.
+- **붕괴3rd 한글 이름은 자동 소스가 없다.** 위키 `Other Languages` 의 `ko` 가 비어 있고
+  한국어 위키·나무위키는 봇을 막는다. `data/hi3_names_ko.csv` 에 사람이 적은 표를 두고
+  `precision` 열에 확실/불확실을 표시했다. 리포트에도 같은 경고를 쓴다.
 평점(1~5)·리뷰 본문·작성일·앱 버전을 담는다.
 
 ## 방법론 — 리뷰 언급 매칭의 한계 (반드시 읽을 것)

@@ -33,6 +33,9 @@ function gameLabel(game: string): string {
 function stars(rank: number): string {
   return "★".repeat(Math.max(0, Math.min(5, Math.round(rank))));
 }
+function rarity(r: Character10): string {
+  return r.rarity_label ?? stars(r.rank);
+}
 
 function dateOnly(iso: string): string {
   return iso.slice(0, 10);
@@ -65,14 +68,14 @@ const MONTHLY_SENTIMENT_SERIES: LineSeriesDatum[] = (() => {
 const GAMES = data.meta.games;
 // 순위는 게임 안에서만 매긴 값이다(meta.ranking_scope === "per_game"). 게임을 섞은 표는 만들지 않는다.
 const BY_GAME = data.by_game;
-const RANKS = [5, 4];
+const RANKS = [5, 4, 3];
 
 function buildCharacterColumns(): TableColumn<Character10>[] {
   return [
     { key: "game", header: "게임", accessor: (r) => gameLabel(r.game) },
-    { key: "name_ko", header: "캐릭터", accessor: (r) => r.name_ko },
-    { key: "rank", header: "희귀도", accessor: (r) => r.rank, align: "right", render: (r) => stars(r.rank) },
-    { key: "element", header: "원소/커맨드", accessor: (r) => r.element },
+    { key: "name_ko", header: "캐릭터", accessor: (r) => r.name_ko ?? "" },
+    { key: "rank", header: "희귀도", accessor: (r) => r.rank, align: "right", render: (r) => rarity(r) },
+    { key: "element", header: "원소/커맨드", accessor: (r) => r.element ?? "" },
     {
       key: "mention_count",
       header: "리뷰 언급수",
@@ -115,8 +118,8 @@ function rankedColumns(rankKey: "push_rank" | "audience_rank", rankLabel: string
   return [
     { key: rankKey, header: rankLabel, accessor: (r) => r[rankKey] ?? Infinity, align: "right" },
     { key: "game", header: "게임", accessor: (r) => gameLabel(r.game) },
-    { key: "name_ko", header: "캐릭터", accessor: (r) => r.name_ko },
-    { key: "rank", header: "희귀도", accessor: (r) => r.rank, align: "right", render: (r) => stars(r.rank) },
+    { key: "name_ko", header: "캐릭터", accessor: (r) => r.name_ko ?? "" },
+    { key: "rank", header: "희귀도", accessor: (r) => r.rank, align: "right", render: (r) => rarity(r) },
     { key: "release_date", header: "출시일", accessor: (r) => r.release_date, render: (r) => dateOnly(r.release_date) },
     {
       key: "mention_count",
@@ -133,7 +136,7 @@ const PUSH_COLUMNS = rankedColumns("push_rank", "푸시 순위");
 const AUDIENCE_COLUMNS = rankedColumns("audience_rank", "반응 순위");
 
 const gapColumns: TableColumn<Character10>[] = [
-  { key: "name_ko", header: "캐릭터", accessor: (r) => r.name_ko },
+  { key: "name_ko", header: "캐릭터", accessor: (r) => r.name_ko ?? "" },
   { key: "game", header: "게임", accessor: (r) => gameLabel(r.game) },
   { key: "push_rank", header: "푸시 순위", accessor: (r) => r.push_rank ?? Infinity, align: "right" },
   { key: "audience_rank", header: "반응 순위", accessor: (r) => r.audience_rank ?? Infinity, align: "right" },
@@ -174,7 +177,7 @@ export default function Page() {
           {GAMES.map((g) => gameLabel(g)).join("·")} 캐릭터 {data.characters.length}종(플레이어 아바타{" "}
           {data.meta.n_playable_avatars_excluded}종 제외) × 앱스토어 리뷰 {data.meta.n_reviews.toLocaleString("ko-KR")}건
           기준. <strong>순위·격차는 게임 안에서만 매긴다</strong> — 출시 주기와 리뷰 표본이 달라 게임을 섞은 순위는
-          만들지 않는다. 젠레스 존 제로·붕괴3rd는 캐릭터 마스터 소스가 없어 아직 없다.
+          만들지 않는다. 리뷰 기간은 네 게임 모두 같다(최근 {data.meta.review_window_days ?? "?"}일).
         </p>
         {data.characters.length !== data.meta.n_characters ? (
           <p className={styles.subhead}>
@@ -186,11 +189,24 @@ export default function Page() {
       </header>
 
       <Card padding="lg" className={styles.warnCard}>
-        <Badge tone="negative">데이터 소스 폐기 — Google Trends 미사용</Badge>
-        <p className={styles.insightText}>
-          Google Trends 비공식 클라이언트({data.trends_status.library})가 매 실행마다 즉시 실패한다:{" "}
-          <code>{data.trends_status.error}</code>. {data.trends_status.note}
-        </p>
+        {data.trends_status.ok ? (
+          <>
+            <Badge tone="cautionary">Google Trends — 호출 성공, 분석 미반영</Badge>
+            <p className={styles.insightText}>
+              이번 실행에서 {data.trends_status.library}가 {data.trends_status.n_rows ?? 0}행을 받았다. 다만 캐릭터 단위
+              검색 관심도는 아직 분석에 넣지 않았다 — 유저 반응 지표는 여전히 리뷰 언급량이다. 상태는 실행마다{" "}
+              <code>data/trends_status.json</code>에 기록된다.
+            </p>
+          </>
+        ) : (
+          <>
+            <Badge tone="negative">Google Trends 미사용</Badge>
+            <p className={styles.insightText}>
+              마지막 실행에서 {data.trends_status.library}가 실패했다: <code>{data.trends_status.error ?? "원인 미기록"}</code>.{" "}
+              {data.trends_status.note ?? ""}
+            </p>
+          </>
+        )}
       </Card>
 
       <Card padding="lg" className={styles.warnCard}>
@@ -248,7 +264,12 @@ export default function Page() {
           <span className={styles.filterRowLabel}>희귀도</span>
           <div className={styles.chips}>
             {RANKS.map((r) => (
-              <FilterChip key={r} label={`${r}★`} active={rankFilter.includes(r)} onClick={() => toggleRank(r)} />
+              <FilterChip
+                key={r}
+                label={r === 5 ? "최고 등급(5★·S)" : r === 4 ? "4★·A" : "B"}
+                active={rankFilter.includes(r)}
+                onClick={() => toggleRank(r)}
+              />
             ))}
           </div>
         </div>
