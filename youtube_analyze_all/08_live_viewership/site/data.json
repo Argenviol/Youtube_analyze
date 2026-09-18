@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-18T13:15:06.283410+00:00",
-    "n_snapshots": 31037,
+    "fetched_at": "2026-09-18T13:25:19.807651+00:00",
+    "n_snapshots": 31048,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-18T13:15:06.283410+00:00"
+      "2026-09-18T13:25:19.807651+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 28189,
-    "n_timepoints": 2819,
-    "span_hours": 895.32,
-    "observed_hours": 480.5,
+    "n_snapshots": 28199,
+    "n_timepoints": 2820,
+    "span_hours": 895.49,
+    "observed_hours": 480.67,
     "coverage_ratio": 0.537,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 7008,
+    "n_live_rows": 7009,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-18T13:15:06.283410+00:00"
+    "last": "2026-09-18T13:25:19.807651+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,14 +30,14 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 165569,
-      "follower_delta": 8828,
-      "follower_per_day": 236.7,
+      "followers": 165575,
+      "follower_delta": 8834,
+      "follower_per_day": 236.8,
       "n_sessions": 56,
-      "n_live_points": 330,
+      "n_live_points": 331,
       "peak_ccu": 38402,
-      "avg_ccu": 3514,
-      "ccu_per_1k_followers": 231.94
+      "avg_ccu": 3524,
+      "ccu_per_1k_followers": 231.93
     },
     {
       "rank": 2,
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 216553,
-      "follower_delta": 6734,
+      "followers": 216554,
+      "follower_delta": 6735,
       "follower_per_day": 180.5,
       "n_sessions": 97,
       "n_live_points": 533,
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 215357,
-      "follower_delta": 7931,
+      "followers": 215360,
+      "follower_delta": 7934,
       "follower_per_day": 212.6,
       "n_sessions": 87,
       "n_live_points": 761,
@@ -100,8 +100,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 217694,
-      "follower_delta": 8359,
+      "followers": 217697,
+      "follower_delta": 8362,
       "follower_per_day": 224.1,
       "n_sessions": 117,
       "n_live_points": 910,
@@ -114,8 +114,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 240885,
-      "follower_delta": 4037,
+      "followers": 240887,
+      "follower_delta": 4039,
       "follower_per_day": 108.2,
       "n_sessions": 119,
       "n_live_points": 923,
@@ -128,8 +128,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 227145,
-      "follower_delta": 8045,
+      "followers": 227149,
+      "follower_delta": 8049,
       "follower_per_day": 215.7,
       "n_sessions": 91,
       "n_live_points": 617,
@@ -156,9 +156,9 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 261050,
-      "follower_delta": 8148,
-      "follower_per_day": 218.4,
+      "followers": 261053,
+      "follower_delta": 8151,
+      "follower_per_day": 218.5,
       "n_sessions": 73,
       "n_live_points": 542,
       "peak_ccu": 8585,
@@ -1080,6 +1080,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-09-18 21:44",
+      "observed_min": 40.9,
+      "n_points": 5,
+      "peak_ccu": 6823,
+      "avg_ccu": 5429,
+      "title": "용가리가 왔어요. 3D 데뷔 끝났어요.",
+      "category": "talk"
+    },
+    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -1234,18 +1246,6 @@
       "avg_ccu": 6533,
       "title": "히나입니댜",
       "category": "더 게임 오브 시시포스"
-    },
-    {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-09-18 21:44",
-      "observed_min": 30.7,
-      "n_points": 4,
-      "peak_ccu": 6497,
-      "avg_ccu": 5081,
-      "title": "용가리가 왔어요. 3D 데뷔 끝났어요.",
-      "category": "talk"
     },
     {
       "name_ko": "텐코 시부키",
@@ -29045,6 +29045,10 @@
         [
           "2026-09-18 22:15",
           6497
+        ],
+        [
+          "2026-09-18 22:25",
+          6823
         ]
       ]
     },
