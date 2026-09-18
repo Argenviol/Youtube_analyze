@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-18T19:13:51.772168+00:00",
-    "n_snapshots": 31433,
+    "fetched_at": "2026-09-18T19:24:04.968689+00:00",
+    "n_snapshots": 31444,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-18T19:13:51.772168+00:00"
+      "2026-09-18T19:24:04.968689+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 28549,
-    "n_timepoints": 2855,
-    "span_hours": 901.3,
-    "observed_hours": 486.63,
+    "n_snapshots": 28559,
+    "n_timepoints": 2856,
+    "span_hours": 901.47,
+    "observed_hours": 486.8,
     "coverage_ratio": 0.54,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 7035,
+    "n_live_rows": 7036,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-18T19:13:51.772168+00:00"
+    "last": "2026-09-18T19:24:04.968689+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 263206,
-      "follower_delta": 7880,
+      "followers": 263207,
+      "follower_delta": 7881,
       "follower_per_day": 209.8,
       "n_sessions": 110,
       "n_live_points": 768,
@@ -142,11 +142,11 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 307740,
-      "follower_delta": 5820,
+      "followers": 307741,
+      "follower_delta": 5821,
       "follower_per_day": 155.0,
       "n_sessions": 97,
-      "n_live_points": 857,
+      "n_live_points": 858,
       "peak_ccu": 8655,
       "avg_ccu": 3217,
       "ccu_per_1k_followers": 28.12
@@ -158,7 +158,7 @@
       "unit": "UNIVERSE",
       "followers": 261077,
       "follower_delta": 8175,
-      "follower_per_day": 217.7,
+      "follower_per_day": 217.6,
       "n_sessions": 73,
       "n_live_points": 542,
       "peak_ccu": 8585,
@@ -5392,10 +5392,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-09-19 00:59",
-      "observed_min": 194.3,
-      "n_points": 20,
+      "observed_min": 204.5,
+      "n_points": 21,
       "peak_ccu": 3745,
-      "avg_ccu": 3265,
+      "avg_ccu": 3257,
       "title": "잠깐 옵치 하러온 사람 ",
       "category": "오버워치"
     },
@@ -22638,6 +22638,10 @@
         [
           "2026-09-19 04:13",
           3157
+        ],
+        [
+          "2026-09-19 04:24",
+          3098
         ]
       ]
     },
