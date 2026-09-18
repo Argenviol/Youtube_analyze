@@ -111,11 +111,18 @@ def trend_table(slug: str) -> str:
     rows = []
     first = wins[0][1]
     for nm in sorted(cur.index, key=lambda x: -first.get(x, -999)):
+        vals = [w.get(nm) for _, w in wins]
+        # 어느 창에도 값이 없는 행(오늘 처음 들어온 채널 — 06 로스터 교체 직후처럼)은
+        # 전부 '—' 인 줄만 늘리므로 싣지 않는다. 내일부터 1일 창에 값이 생기면 나타난다.
+        if all(v is None or v != v for v in vals):
+            continue
         cells = ""
-        for _, w in wins:
-            v = w.get(nm)
-            cls = "up" if v and v > 0.005 else ("dn" if v and v < -0.005 else "zero")
-            cells += f"<td class='{cls}'>{v:+.2f}%</td>" if v == v else "<td class='zero'>—</td>"
+        for v in vals:
+            if v is None or v != v:
+                cells += "<td class='zero'>—</td>"
+                continue
+            cls = "up" if v > 0.005 else ("dn" if v < -0.005 else "zero")
+            cells += f"<td class='{cls}'>{v:+.2f}%</td>"
         rows.append(f"<tr><td class='nm'>{nm}</td>{cells}</tr>")
     note = ""
     if col == "subscribers":
@@ -505,7 +512,8 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
 
   .charts {{ grid-template-columns:1fr; gap:10px; margin-top:16px; }}
   .charts figure {{ break-inside:avoid; }}
-  footer {{ break-before:page; padding-top:0; }}
+  /* 두 줄짜리 푸터를 새 장에 홀로 두면 마지막 장이 빈 종이가 된다. 본문 뒤에 붙인다. */
+  footer {{ break-before:auto; margin-top:24px; padding-top:10px; }}
 }}
 </style>
 
