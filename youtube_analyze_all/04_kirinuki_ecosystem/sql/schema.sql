@@ -12,7 +12,7 @@ CREATE TABLE clips (
     published_at TEXT,
     views INTEGER,
     likes REAL,
-    comments REAL,
+    comments INTEGER,
     clip_channel_subs INTEGER
 );
 

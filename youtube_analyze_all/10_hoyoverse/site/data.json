@@ -1,6 +1,6 @@
 {
   "meta": {
-    "fetched_at": "2026-09-18T08:44:00.930237+00:00",
+    "fetched_at": "2026-09-18T08:50:22.856071+00:00",
     "source": "yatta.moe(Project Amber 후신, 캐릭터 마스터) + google-play-scraper(앱스토어 리뷰) + pytrends(Google Trends, 실패)",
     "n_characters": 300,
     "n_playable_avatars_excluded": 26,
@@ -51,10 +51,10 @@
       "zzz",
       "hi3"
     ],
-    "google_trends_ok": true,
-    "google_trends_error": null,
+    "google_trends_ok": false,
+    "google_trends_error": "TooManyRequestsError: The request failed: Google returned a response with code 429",
     "review_window_days": 365,
-    "review_since": "2025-09-18T08:43:47.319920+00:00",
+    "review_since": "2025-09-18T08:50:08.067372+00:00",
     "reviews_by_game": {
       "genshin": {
         "n": 1325,
@@ -91,12 +91,12 @@
     "ranking_note": "push_rank·audience_rank·gap 은 게임 안에서만 매긴 값이다. 게임을 섞어 비교하지 말 것."
   },
   "trends_status": {
-    "attempted_at": "2026-09-18T08:43:45.746215+00:00",
-    "ok": true,
+    "attempted_at": "2026-09-18T08:50:07.491386+00:00",
+    "ok": false,
     "library": "pytrends",
-    "error": null,
-    "note": null,
-    "n_rows": 32
+    "error": "TooManyRequestsError: The request failed: Google returned a response with code 429",
+    "note": "PRD 지시에 따라 collect.py 실행 시점에 실제로 호출해보고 실패를 그대로 기록한다. 실측에서는 매 실행마다 즉시 429(TooManyRequestsError)가 발생했고, 재시도 로직(Retry(method_whitelist=...))을 넣으면 설치된 urllib3와 인자 불일치로 TypeError가 난다 — 라이브러리가 이 환경의 urllib3 최신 버전과 호환되지 않는다. 분석 단계에서는 이 소스를 사용하지 않는다(허위 데이터로 채우지 않음).",
+    "attempted": true
   },
   "app_summary": [
     {
@@ -116,7 +116,7 @@
       "package": "com.HoYoverse.hkrpgoversea",
       "title": "붕괴: 스타레일",
       "score": 3.6117904,
-      "ratings": 523016,
+      "ratings": 523014,
       "reviews_total": 9637,
       "installs": "10,000,000+",
       "version": "4.5.0"

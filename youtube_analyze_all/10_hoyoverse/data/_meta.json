@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-18T08:44:00.930237+00:00",
+  "fetched_at": "2026-09-18T08:50:22.856071+00:00",
   "source": "yatta.moe(Project Amber 후신, 캐릭터 마스터) + google-play-scraper(앱스토어 리뷰) + pytrends(Google Trends, 실패)",
   "n_characters": 326,
   "n_playable_avatars_excluded": 26,
@@ -50,10 +50,10 @@
     "zzz",
     "hi3"
   ],
-  "google_trends_ok": true,
-  "google_trends_error": null,
+  "google_trends_ok": false,
+  "google_trends_error": "TooManyRequestsError: The request failed: Google returned a response with code 429",
   "review_window_days": 365,
-  "review_since": "2025-09-18T08:43:47.319920+00:00",
+  "review_since": "2025-09-18T08:50:08.067372+00:00",
   "reviews_by_game": {
     "genshin": {
       "n": 1325,
