@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-19T18:29:58.430163+00:00",
-    "n_snapshots": 32984,
+    "fetched_at": "2026-09-19T18:40:12.135372+00:00",
+    "n_snapshots": 32995,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-19T18:29:58.430163+00:00"
+      "2026-09-19T18:40:12.135372+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 29959,
-    "n_timepoints": 2996,
-    "span_hours": 924.57,
-    "observed_hours": 510.68,
+    "n_snapshots": 29969,
+    "n_timepoints": 2997,
+    "span_hours": 924.74,
+    "observed_hours": 510.86,
     "coverage_ratio": 0.552,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 7547,
+    "n_live_rows": 7548,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-19T18:29:58.430163+00:00"
+    "last": "2026-09-19T18:40:12.135372+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,14 +30,14 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 165793,
-      "follower_delta": 9052,
+      "followers": 165794,
+      "follower_delta": 9053,
       "follower_per_day": 235.0,
       "n_sessions": 57,
       "n_live_points": 387,
       "peak_ccu": 38402,
       "avg_ccu": 3418,
-      "ccu_per_1k_followers": 231.63
+      "ccu_per_1k_followers": 231.62
     },
     {
       "rank": 2,
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 216656,
       "follower_delta": 6837,
-      "follower_per_day": 177.5,
+      "follower_per_day": 177.4,
       "n_sessions": 97,
       "n_live_points": 533,
       "peak_ccu": 28071,
@@ -72,9 +72,9 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 215606,
-      "follower_delta": 8180,
-      "follower_per_day": 212.3,
+      "followers": 215615,
+      "follower_delta": 8189,
+      "follower_per_day": 212.5,
       "n_sessions": 88,
       "n_live_points": 821,
       "peak_ccu": 24385,
@@ -100,22 +100,22 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 218096,
-      "follower_delta": 8761,
-      "follower_per_day": 227.4,
+      "followers": 218101,
+      "follower_delta": 8766,
+      "follower_per_day": 227.5,
       "n_sessions": 118,
-      "n_live_points": 974,
+      "n_live_points": 975,
       "peak_ccu": 10461,
-      "avg_ccu": 3380,
-      "ccu_per_1k_followers": 47.97
+      "avg_ccu": 3381,
+      "ccu_per_1k_followers": 47.96
     },
     {
       "rank": 7,
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241130,
-      "follower_delta": 4282,
+      "followers": 241132,
+      "follower_delta": 4284,
       "follower_per_day": 111.2,
       "n_sessions": 121,
       "n_live_points": 988,
@@ -156,14 +156,14 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 261300,
-      "follower_delta": 8398,
-      "follower_per_day": 218.0,
+      "followers": 261299,
+      "follower_delta": 8397,
+      "follower_per_day": 217.9,
       "n_sessions": 74,
       "n_live_points": 580,
       "peak_ccu": 8585,
       "avg_ccu": 3767,
-      "ccu_per_1k_followers": 32.85
+      "ccu_per_1k_followers": 32.86
     }
   ],
   "sessions": [
@@ -3412,10 +3412,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-09-19 17:03",
-      "observed_min": 626.3,
-      "n_points": 64,
+      "observed_min": 636.6,
+      "n_points": 65,
       "peak_ccu": 4689,
-      "avg_ccu": 3190,
+      "avg_ccu": 3200,
       "title": "기자 IS MY JOB",
       "category": "talk"
     },
@@ -41840,6 +41840,10 @@
         [
           "2026-09-20 03:29",
           3449
+        ],
+        [
+          "2026-09-20 03:40",
+          3811
         ]
       ]
     }
