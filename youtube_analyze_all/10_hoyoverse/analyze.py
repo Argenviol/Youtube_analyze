@@ -45,6 +45,16 @@ TOP_N = 15
 SMALL_SAMPLE = 200     # 창 안 리뷰가 이보다 적으면 언급 순위를 해석하지 말라고 리포트에 적는다
 
 
+def _loose_pattern(name: str) -> str:
+    """'은랑 LV.999' → 리뷰 표기(은랑999·은랑 999·은랑 lv.999)까지 잡는 정규식."""
+    import re as _re
+    toks = [t for t in _re.split(r"[^0-9A-Za-z가-힣]+", name) if t]
+    parts = []
+    for t in toks:
+        parts.append("(?:lv)?" if t.lower() == "lv" else _re.escape(t))
+    return r"[\s•·.・]*".join(parts).replace("(?:lv)?", "(?i:lv)?")
+
+
 def games_of(df: pd.DataFrame) -> list[str]:
     """분석 대상 게임 목록. 수집 순서를 유지한다(원신 → 스타레일 → …)."""
     return list(dict.fromkeys(df["game"].tolist()))
@@ -84,12 +94,19 @@ def build_metrics():
         rv = reviews[reviews["game"] == game]
         texts = rv["content"]
         scores = rv["score"]
+        names = g["match_name"].dropna().tolist()
         for _, c in g.iterrows():
             if not c["matchable"]:
                 mention_rows.append(dict(char_id=c["char_id"], mention_count=None,
                                           avg_mention_score=None, mention_rate_per_10k=None))
                 continue
-            mask = texts.str.contains(c["match_name"], regex=False, na=False)
+            # "은랑" 은 "은랑 LV.999"(리뷰에선 은랑999) 안에도 들어 있고, "블레이드"는 "천야•블레이드"
+            # 안에 있다. 긴 이름을 먼저 지운 본문에서 짧은 이름을 찾아 이중 계산을 막는다.
+            longer = [n for n in names if n != c["match_name"] and c["match_name"] in n]
+            t = texts
+            for n in longer:
+                t = t.str.replace(_loose_pattern(n), " ", regex=True)
+            mask = t.str.contains(c["match_name"], regex=False, na=False)
             n = int(mask.sum())
             mention_rows.append(dict(
                 char_id=c["char_id"], mention_count=n,
@@ -282,6 +299,9 @@ def build_charts(gacha, reviews, monthly, push, audience):
     fig, axes = grid(6.5, 4.8)
     for ax, game in zip(axes, games):
         d = gacha[gacha["game"] == game]["element"].value_counts()
+        if d.empty:
+            ax.text(0.5, 0.5, "속성 데이터 없음\n(전투복 등급·버전만 수집)", ha="center", va="center",
+                    transform=ax.transAxes, color=config.INK["text"]); ax.set_xticks([]); ax.set_yticks([])
         ax.barh(d.index[::-1], d.values[::-1], color=S[:len(d)][::-1], zorder=3)
         ax.set_title(f"{game_ko(gacha, game)} 원소/속성 분포"); ax.grid(axis="x", zorder=0)
         ax.spines["left"].set_visible(False)
@@ -304,6 +324,10 @@ def build_charts(gacha, reviews, monthly, push, audience):
     fig.tight_layout(); fig.savefig(CHARTS / "08_mentions_vs_sentiment.png", dpi=140); plt.close(fig)
 
     print(f"차트 8종 -> {CHARTS}")
+
+
+def _per_game_counts(gacha: pd.DataFrame) -> str:
+    return " · ".join(f"{game_ko(gacha, g)} {int((gacha['game'] == g).sum())}명" for g in games_of(gacha))
 
 
 def _window_line(meta: dict) -> str:
@@ -377,8 +401,10 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
             audience_top=_recs(audience[audience["game"] == game].head(TOP_N)),
             # 격차의 부호가 맞는 쪽만. 두 순위에 든 캐릭터가 셋뿐인 게임(붕괴3rd)에서
             # 같은 셋이 양쪽 표에 다 나오는 일을 막는다.
-            gap_overpushed=_recs(b[b["gap"] > 0].sort_values("gap", ascending=False).head(5)),
-            gap_sleeper=_recs(b[b["gap"] < 0].sort_values("gap").head(5)),
+            # "많이 밀렸는데"는 정말 최근에 민 것(출시 최신순 5위 안)만, "덜 밀렸는데"는 15위 밖만.
+            # 그 사이 구간을 넣으면 4위짜리가 '최신 캐릭터'로 읽힌다.
+            gap_overpushed=_recs(b[(b["gap"] > 0) & (b["push_rank"] <= 5)].sort_values("gap", ascending=False).head(5)),
+            gap_sleeper=_recs(b[(b["gap"] < 0) & (b["push_rank"] > 15)].sort_values("gap").head(5)),
         )
 
     site_data = dict(
@@ -424,13 +450,26 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
         if bg["n_reviews"] < SMALL_SAMPLE:
             thin = (f"- ⚠ 같은 {meta.get('review_window_days', '?')}일 창에서 리뷰가 **{bg['n_reviews']}건**뿐이다. "
                     "언급 순위는 한두 건 차이로 뒤집히므로 **해석하지 말 것** — 표본이 이만큼 작다는 것 자체가 결과다.\n")
-        fmt = lambda rows: ", ".join(f"{r['name_ko']}(푸시 {int(r['push_rank'])}위→반응 {int(r['audience_rank'])}위)" for r in rows) or "—"
+        def _sc(r):
+            v = r.get("avg_mention_score")
+            return f", 언급 리뷰 평점 {v:.1f}" if v is not None and v == v else ""
+        fmt = lambda rows: ", ".join(
+            f"{r['name_ko']}(푸시 {int(r['push_rank'])}위→반응 {int(r['audience_rank'])}위, 언급 {int(r['mention_count'])}건{_sc(r)})"
+            for r in rows) or "—"
+        variants = sorted(n for n in g["name_ko"].dropna() if "•" in n or "·" in n)
+        var_line = ""
+        if variants:
+            var_line = ("- 이름에 •가 든 캐릭터(" + ", ".join(variants[:6]) + (" 등" if len(variants) > 6 else "")
+                        + ")는 기존 캐릭터의 **변주판**으로, 마스터 데이터의 별도 출시일을 가진 새 캐릭터로 센다. "
+                        "원본 이름(예: 블레이드)의 언급은 변주판 표기를 지운 뒤 세어 이중 계산하지 않는다.\n")
         return f"""### {bg['name_ko']}
 
 - 가챠 캐릭터 {bg['n_gacha']}명 · 리뷰 {bg['n_reviews']:,}건
 {thin}- **공식 푸시 1위**(최고 등급·최신 출시): {tp['name_ko']} ({str(tp['release_date'])[:10]} 출시)
-- **유저 반응 1위**(리뷰 언급량): {ta['name_ko']} ({int(ta['mention_count'])}건 언급)
-- 매칭 가능한 {bg['n_matchable']}명 중 **{bg['n_zero_mention']}명은 리뷰에서 한 번도 언급되지 않았다**
+- **유저 반응 1위**(리뷰 언급량): {ta['name_ko']} ({int(ta['mention_count'])}건 언급, 언급 리뷰 평점 {ta['avg_mention_score']:.1f} / 게임 평균 {ta['game_avg_score']:.1f})
+- 언급량은 **호불호를 가리지 않는 화제성**이다. 싫어서 쓴 리뷰도 언급이다. 언급 리뷰 평점이 게임 평균보다
+  낮으면 부정 화제로 읽는다(각 항목의 평점 참고).
+{var_line}- 매칭 가능한 {bg['n_matchable']}명 중 **{bg['n_zero_mention']}명은 리뷰에서 한 번도 언급되지 않았다**
 - 많이 밀렸는데 반응이 약한 쪽: {fmt(over)}
 - 덜 밀렸는데 반응이 강한 쪽: {fmt(sleep)}
 {src_line}"""
@@ -448,8 +487,8 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
 - **리뷰 기간은 네 게임 모두 같다**: 수집 시점부터 {meta.get('review_window_days', '?')}일
   ({str(meta.get('review_since', ''))[:10]} ~ {meta['fetched_at'][:10]}). 건수는 게임마다 다르다 —
   {_window_line(meta)}.
-- 수집 {meta['fetched_at'][:10]} · 캐릭터 {meta['n_characters']}명(가챠 대상 {len(gacha)}명,
-  여행자/개척자 {meta['n_playable_avatars_excluded']}명 제외) · 리뷰 {meta['n_reviews']:,}건
+- 수집 {meta['fetched_at'][:10]} · 가챠 캐릭터 {_per_game_counts(gacha)} (플레이어 캐릭터
+  {meta['n_playable_avatars_excluded']}명 제외) · 리뷰 {meta['n_reviews']:,}건
 - {_trends_line(trends_status)}
 
 ## 게임은 따로 본다
