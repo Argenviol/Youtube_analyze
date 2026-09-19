@@ -11,9 +11,11 @@
 
   1) 같은 채널 안의 여러 판 → song_key (제목에서 판 표식·괄호·멤버명을 걷어낸 곡명).
   2) Topic 채널 트랙 → 같은 멤버의 영상 중 **발매일이 ±PAIR_DAYS 안에 있는 곡**과 짝짓기.
-     Topic 트랙 제목은 유통 메타데이터(영문 제목이 흔함)라 제목으로는 못 잇는다.
-     후보가 하나면 붙이고, 둘 이상이거나 없으면 붙이지 않고 unpaired 로 남긴다.
-     사람이 확정한 짝은 topic_pairs_manual.csv 가 우선한다.
+     Topic 트랙은 대부분 오리지널곡 음원이고 커버 음원은 드물다. 그래서 날짜만으로 붙이면
+     같은 날 나온 오리지널(리제 'Festa!')이 그날의 커버('밀월')에 붙는 사고가 난다(실제로
+     났다). 날짜 창 안에 있고 **제목까지 맞아야** 짝이다(title+date). 날짜만 맞는 것은
+     date-only 로 표시만 하고 합산하지 않는다. 사람이 확정한 짝은 topic_pairs_manual.csv 가
+     우선한다. 반주(Inst.) 판은 합산하지 않는다.
 
 이 규칙은 근사다. 정확한 짝은 유통사 메타데이터에만 있고 그건 공개돼 있지 않다.
 """
@@ -25,6 +27,20 @@ from datetime import timedelta
 import pandas as pd
 
 PAIR_DAYS = 3
+INSTRUMENTAL = re.compile(r"\(inst\.?\)|instrumental|off vocal|오프보컬|\bMR\b|karaoke", re.IGNORECASE)
+
+
+def is_instrumental(title: str | None) -> bool:
+    """반주 판. 조회수 합산에서 뺀다 — 노래를 들은 게 아니다."""
+    return bool(INSTRUMENTAL.search(str(title or "")))
+
+
+def titles_match(a: str | None, b: str | None) -> bool:
+    """두 제목이 같은 곡을 가리키는가. 곡 키가 같거나 한쪽이 다른 쪽에 들어 있으면(3자 이상)."""
+    ka, kb = song_key(a), song_key(b)
+    if not ka or not kb:
+        return False
+    return ka == kb or (len(ka) >= 3 and ka in kb) or (len(kb) >= 3 and kb in ka)
 
 # 판 표식 — 곡명이 아니라 "어떤 판인지"를 말하는 토큰. 곡 키에서 걷어낸다.
 VERSION_TOKENS = re.compile(
@@ -77,6 +93,7 @@ def pair_topic_tracks(tracks: pd.DataFrame, items: pd.DataFrame,
     man = {}
     if manual is not None and not manual.empty:
         man = dict(zip(manual["topic_video_id"], manual["member_video_id"]))
+    t["is_instrumental"] = t["title"].map(is_instrumental)
     for i, r in t.iterrows():
         if r["video_id"] in man:
             t.at[i, "paired_video_id"] = man[r["video_id"]]
@@ -85,9 +102,22 @@ def pair_topic_tracks(tracks: pd.DataFrame, items: pd.DataFrame,
         cands = it[(it["name_ko"] == r["name_ko"])
                    & (it["date"] >= r["date"] - timedelta(days=days))
                    & (it["date"] <= r["date"] + timedelta(days=days))]
-        if len(cands) == 1:
-            t.at[i, "paired_video_id"] = cands.iloc[0]["video_id"]
-            t.at[i, "pair_reason"] = f"date±{days}d"
-        elif len(cands) > 1:
-            t.at[i, "pair_reason"] = f"ambiguous({len(cands)})"
+        hit = cands[cands["title"].map(lambda x: titles_match(r["title"], x))]
+        if len(hit) == 1:
+            t.at[i, "paired_video_id"] = hit.iloc[0]["video_id"]
+            t.at[i, "pair_reason"] = "title+date"
+        elif len(hit) > 1:
+            t.at[i, "pair_reason"] = f"ambiguous({len(hit)})"
+        elif len(cands):
+            t.at[i, "pair_reason"] = f"date-only({len(cands)}) 미확정"
     return t
+
+
+SUMMABLE = ("manual", "title+date")
+
+
+def summable(paired: pd.DataFrame) -> pd.DataFrame:
+    """합산에 넣을 짝: 확정된 짝이고 반주 판이 아닌 것."""
+    if paired.empty:
+        return paired
+    return paired[paired["pair_reason"].isin(SUMMABLE) & ~paired["is_instrumental"].fillna(False)]

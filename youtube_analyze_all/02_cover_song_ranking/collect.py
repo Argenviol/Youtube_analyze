@@ -84,13 +84,18 @@ def find_topic_channels(yt: YouTube, roster: list[dict]) -> dict[str, str | None
         if en in TOPIC_SEED:
             cache[en] = TOPIC_SEED[en]
             continue
-        want = f"{en} - Topic".lower()
+        # 유통사가 아티스트명을 영문으로 등록한 멤버(Neneko Mashiro - Topic)도, 한글로 등록한
+        # 멤버(유즈하 리코 - Topic)도 있다. 영문으로 못 찾으면 한글로 한 번 더 찾는다.
         found = None
         try:
-            for it in yt.search(q=f"{en} - Topic", type_="channel", max_results=5):
-                title = (it.get("snippet", {}).get("title") or "").strip().lower()
-                if title == want:
-                    found = it.get("snippet", {}).get("channelId") or it.get("id", {}).get("channelId")
+            for nm in (en, r["name_ko"]):
+                want = f"{nm} - Topic".lower()
+                for it in yt.search(q=f"{nm} - Topic", type_="channel", max_results=5):
+                    title = (it.get("snippet", {}).get("title") or "").strip().lower()
+                    if title == want:
+                        found = it.get("snippet", {}).get("channelId") or it.get("id", {}).get("channelId")
+                        break
+                if found:
                     break
         except Exception as e:  # noqa: BLE001
             print(f"  {r['name_ko']:12} Topic 채널 검색 실패: {type(e).__name__}")

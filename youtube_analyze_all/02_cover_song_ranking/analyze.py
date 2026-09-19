@@ -15,7 +15,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import config
 from common import db, viz
-from common.songs import add_song_key, pair_topic_tracks
+from common.songs import add_song_key, pair_topic_tracks, summable
 import matplotlib.pyplot as plt
 
 HERE = Path(__file__).resolve().parent
@@ -64,10 +64,9 @@ def build_metrics():
     manual = pd.read_csv(manual_p) if manual_p.exists() else None
     paired = pair_topic_tracks(topic, songs, manual) if not topic.empty else topic.assign(
         paired_video_id=None, pair_reason="unpaired")
-    tv = (paired.dropna(subset=["paired_video_id"]).groupby("paired_video_id")["views"].sum()
-          if not paired.empty else pd.Series(dtype=float))
-    tid = (paired.dropna(subset=["paired_video_id"]).groupby("paired_video_id")["video_id"]
-           .agg("|".join) if not paired.empty else pd.Series(dtype=str))
+    ok = summable(paired) if not paired.empty else paired
+    tv = ok.groupby("paired_video_id")["views"].sum() if not ok.empty else pd.Series(dtype=float)
+    tid = ok.groupby("paired_video_id")["video_id"].agg("|".join) if not ok.empty else pd.Series(dtype=str)
     songs["topic_views"] = songs["video_id"].map(tv).fillna(0).astype(int)
     songs["topic_video_ids"] = songs["video_id"].map(tid).fillna("")
     songs["views_incl_topic"] = songs["views"] + songs["topic_views"]
@@ -203,13 +202,14 @@ def build_outputs(df, metrics):
         topic.to_csv(DATA / "topic_pairs.csv", index=False)
     meta = json.loads((DATA / "_meta.json").read_text(encoding="utf-8"))
     n_multi = int((songs["n_versions"] > 1).sum())
-    n_paired = int(topic["paired_video_id"].notna().sum()) if not topic.empty else 0
+    n_paired = int(len(summable(topic))) if not topic.empty else 0
     n_amb = int(topic["pair_reason"].astype(str).str.startswith("ambiguous").sum()) if not topic.empty else 0
     meta["songs"] = dict(n_songs=int(len(songs)), n_videos=int(len(df)), n_multi_version=n_multi,
                          topic_tracks=int(len(topic)), topic_paired_to_covers=n_paired,
                          topic_ambiguous=n_amb,
-                         note="여러 판(MV·4K·3D·쇼츠·티저)은 song_key 로 한 곡. Topic 음원 판은 발매일 ±3일로 짝짓기. "
-                              "짝이 둘 이상이면 붙이지 않는다(ambiguous).")
+                         topic_instrumental=int(topic["is_instrumental"].sum()) if "is_instrumental" in topic else 0,
+                         note="여러 판(MV·4K·3D·쇼츠·티저)은 song_key 로 한 곡. Topic 음원 판은 같은 멤버·발매일 ±3일 "
+                              "안에서 제목까지 맞아야 짝(title+date). 날짜만 맞는 건 합산하지 않는다. 반주(Inst.) 판 제외.")
     top = df.sort_values("views", ascending=False).head(20)[
         ["name_ko", "title", "views", "likes", "comments", "published_at"]].copy()
     top["published_at"] = top["published_at"].astype(str)
@@ -241,8 +241,9 @@ def build_outputs(df, metrics):
 Mashiro - Topic 'Springdream'). 그래서:
 
 - **총 조회수(total_views)** = 멤버 채널에 올라온 커버 영상 전부의 합. 여러 판이면 다 더한다.
-- **음원 포함(total_views_incl_topic)** = 위 + 같은 멤버·발매일 ±3일로 짝지은 Topic 트랙 조회수.
-  Topic 트랙 제목은 유통 메타데이터(영문이 흔함)라 제목으로 못 잇고 날짜로 잇는다 — 근사다.
+- **음원 포함(total_views_incl_topic)** = 위 + 같은 멤버·발매일 ±3일 안에서 **제목까지 맞는** Topic
+  트랙 조회수(반주 판 제외). Topic 트랙은 대부분 오리지널곡 음원이라 커버에 붙는 건 드물다 —
+  날짜만 맞는 것은 붙이지 않는다(같은 날 나온 오리지널이 커버에 붙는 사고를 막기 위해).
 - **곡 수(song_count)** 는 판을 한 곡으로 묶은 수, **영상 수(cover_count)** 는 그대로 센 수.
 
 ## 핵심 요약

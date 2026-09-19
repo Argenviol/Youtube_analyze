@@ -35,7 +35,9 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import config, db, viz  # noqa: E402
+from common import config
+from common import db, viz  # noqa: E402
+from common.songs import is_instrumental  # noqa: E402
 # 연속일 기준은 collect.py 가 정의한다. 여기서 다시 적으면 한쪽만 고쳤을 때
 # 리포트가 실제 기준과 다른 숫자를 말하게 된다.
 from collect import MIN_CONSECUTIVE_DAYS  # noqa: E402
@@ -281,14 +283,22 @@ def original_effect(events: pd.DataFrame, videos: pd.DataFrame,
         topic["date"] = pd.to_datetime(topic["published_at"], format="mixed", utc=True) \
             .dt.tz_convert("Asia/Seoul").dt.date
 
-    def _topic_for(name: str, d) -> tuple[int, str]:
+    def _topic_for(name: str, d, keys: list[str]) -> tuple[int, str]:
+        """MV 발매일 ±3일의 같은 멤버 Topic 트랙 중 반주 판을 뺀 것. 매칭어(match)가 제목에
+        들어 있으면 그것, 아니면 후보가 하나일 때만 쓴다."""
         if topic.empty:
             return 0, ""
         t = topic[(topic["name_ko"] == name) & (topic["date"] >= d - timedelta(days=3))
-                  & (topic["date"] <= d + timedelta(days=3))]
-        if len(t) == 1:
-            return int(t.iloc[0]["views"] or 0), str(t.iloc[0]["title"])[:40]
-        return 0, (f"후보 {len(t)}개" if len(t) else "")
+                  & (topic["date"] <= d + timedelta(days=3))
+                  & ~topic["title"].map(is_instrumental)]
+        if t.empty:
+            return 0, ""
+        low = t["title"].astype(str).str.lower()
+        km = t[low.map(lambda x: any(k.lower() in x for k in keys))]
+        pick = km if len(km) == 1 else (t if len(t) == 1 else pd.DataFrame())
+        if len(pick) == 1:
+            return int(pick.iloc[0]["views"] or 0), str(pick.iloc[0]["title"])[:40]
+        return 0, f"후보 {len(t)}개"
 
     rows = []
     for _, e in events[events["type"] == "오리지널곡"].iterrows():
@@ -302,7 +312,7 @@ def original_effect(events: pd.DataFrame, videos: pd.DataFrame,
                 continue
             # 티저·홍보 쇼츠가 아니라 MV 본편을 잡는다 — 조회수 최대가 본편이다.
             mv = hit.loc[hit["views"].idxmax()]
-            topic_views, topic_title = _topic_for(name, mv["date"])
+            topic_views, topic_title = _topic_for(name, mv["date"], keys)
             song_views = int(mv["views"]) + topic_views
             normal = mine[(~mine["video_id"].isin(cover_ids))
                           & (~mine["video_id"].isin(set(hit["video_id"])))
