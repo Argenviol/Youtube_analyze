@@ -135,7 +135,7 @@ def trend_table(slug: str) -> str:
             f"<tbody>{''.join(rows)}</tbody></table></div>{note}</div>")
 
 
-def charts_html(slug: str, seen: set[str] | None = None) -> str:
+def charts_html(slug: str, seen: set[str] | None = None, limit: int | None = None) -> str:
     """한 절의 차트들. 이미 문서에 실린 것과 픽셀이 같으면 건너뛴다.
 
     파일명이 달라도 내용이 같으면 독자에게는 같은 그림이다. 파일명 규칙에 기대면
@@ -148,6 +148,8 @@ def charts_html(slug: str, seen: set[str] | None = None) -> str:
         if h in seen:
             continue
         seen.add(h)
+        if limit is not None and len(figs) >= limit:
+            break
         figs.append(
             f"<figure><img src='{data_uri(c)}' alt='{c.stem}' loading='lazy'></figure>")
     if not figs:
@@ -155,16 +157,34 @@ def charts_html(slug: str, seen: set[str] | None = None) -> str:
     return f"<div class='charts'>{''.join(figs)}</div>"
 
 
-def section(slug, num, short, acc, conclusion, seen=None) -> str:
+# 요약판에서 "핵심 요약" 대신 쓸 절 — 그 프로젝트에서 실제로 측정·확보한 숫자가 있는 절.
+# (07·09·11 은 핵심 요약 절이 없고, 12 는 15개 렌즈 표가 요약이다.)
+DIGEST_SECTION = {
+    "07_market_analysis": ["StelLive의 시장 포지션", "한국 시장 (치지직 중심)"],
+    "09_dart_financials": ["확보한 데이터로 본 것 (연결재무제표 우선)"],
+    "11_fan_commerce": ["세 레이어를 나란히 놓아보면 (펀치라인 — 증명이 아니라 관찰)"],
+    "12_event_impact": ["한눈에 — 15개 렌즈 종합"],
+    "10_hoyoverse": ["게임별 핵심 요약"],
+}
+DIGEST_MAX_CHARTS = 4
+
+
+def section(slug, num, short, acc, conclusion, seen=None, digest=False) -> str:
     src = ROOT / slug / "REPORT.md"
     date = bd._report_date(src)
     _, sec = bd._split_report(src.read_text(encoding="utf-8")) if src.exists() else ("", {})
 
     intro = mdhtml(sec.get("_intro", ""))
-    glance = mdhtml(sec.get("핵심 요약", ""))
-    detail_names = [n for n in sec if n not in {"_intro", "핵심 요약", "산출물"}]
-    details = "".join(
-        f"<h4>{n}</h4>{mdhtml(sec[n])}" for n in detail_names)
+    if digest:
+        # 요약판: 결론 서술·상세 분석을 빼고, 데이터에서 계산돼 나온 절만 싣는다.
+        names = DIGEST_SECTION.get(slug, ["핵심 요약"])
+        glance = "".join(f"<h4>{n}</h4>{mdhtml(sec[n])}" for n in names if n in sec)
+        details = ""
+    else:
+        glance = mdhtml(sec.get("핵심 요약", ""))
+        detail_names = [n for n in sec if n not in {"_intro", "핵심 요약", "산출물"}]
+        details = "".join(
+            f"<h4>{n}</h4>{mdhtml(sec[n])}" for n in detail_names)
 
     badges = f"<span class='badge'>{CADENCE.get(slug,'')}</span>"
     if date:
@@ -186,12 +206,12 @@ def section(slug, num, short, acc, conclusion, seen=None) -> str:
       <div class="badges">{badges}</div>
     </div>
   </header>
-  <div class="verdict"><p class="verdict-label">결론</p>{mdhtml(conclusion)}</div>
+  {"" if digest else f'<div class="verdict"><p class="verdict-label">결론</p>{mdhtml(conclusion)}</div>'}
   {f"<div class='meta'>{intro}</div>" if intro else ""}
   {f"<div class='glance'>{glance}</div>" if glance else ""}
   {trend}
   {detail_block}
-  {charts_html(slug, seen)}
+  {charts_html(slug, seen, limit=DIGEST_MAX_CHARTS if digest else None)}
 </section>"""
 
 
@@ -238,6 +258,7 @@ REPORTS = [
         title="StelLive 팬덤 애널리틱스",
         kicker="StelLive Fandom Analytics",
         headline="팬덤 지표 {n}개 프로젝트,<br>한 페이지 종합 리포트",
+        digest_headline="팬덤 지표 {n}개 프로젝트,<br>측정된 숫자만 모은 요약판",
         lead="버추얼 크리에이터 그룹 스텔라이브를 소재로, 공개 데이터만으로 팬덤 지표와 "
              "실제 재무를 연결한 분석입니다. 각 프로젝트의 결론 → 지표 → 추세 → 차트를 "
              "이 한 페이지에서 볼 수 있습니다. 멤버 비교는 <strong>탤런트 10명 기준</strong>, "
@@ -250,6 +271,7 @@ REPORTS = [
         title="게임 캐릭터 인기도 애널리틱스",
         kicker="Game Character Analytics",
         headline="게임사가 미는 캐릭터,<br>유저가 반응하는 캐릭터",
+        digest_headline="네 게임 캐릭터 인기도,<br>측정된 숫자만 모은 요약판",
         lead="원신·붕괴:스타레일·젠레스 존 제로·붕괴3rd 네 게임의 캐릭터 마스터와 한국 스토어 리뷰만으로 "
              "<strong>공식 푸시</strong>와 <strong>유저 반응</strong>이 어디서 갈리는지 <strong>게임별로 따로</strong> 봅니다. "
              "리뷰 기간은 네 게임에 같은 창(최근 1년)을 씁니다. "
@@ -268,7 +290,7 @@ def document(body: str) -> str:
             "</head>\n<body>\n" + body + "\n</body>\n</html>\n")
 
 
-def build_report(cfg: dict) -> None:
+def build_report(cfg: dict, digest: bool = False) -> None:
     projects = [p for p in bd.PROJECTS if cfg["include"](p[0])]
     if not projects:
         print(f"건너뜀: {cfg['key']} — 해당 프로젝트 없음")
@@ -276,14 +298,23 @@ def build_report(cfg: dict) -> None:
 
     # 같은 그림을 두 번 싣지 않기 위한 문서 단위 기억. 절 사이를 넘어 공유한다.
     seen: set[str] = set()
-    sections = "".join(section(*p, seen=seen) for p in projects)
+    sections = "".join(section(*p, seen=seen, digest=digest) for p in projects)
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
 
     nav = "".join(f"<a href='#p{num:02d}'><b>{num:02d}</b> {short}</a>"
                   for _, num, short, _, _ in projects)
-    findings = "".join(
-        f"<div class='finding'><h3>{h}</h3><p>{p}</p></div>" for h, p in cfg["findings"])
-    headline = cfg["headline"].replace("{n}", str(len(projects)))
+    if digest:
+        # 요약판 머리: 해석 카드 대신 "무엇을 어떻게 쟀는가" 한 줄과 규칙.
+        findings = ("<div class='finding'><h3>이 문서에 있는 것</h3><p>각 프로젝트의 수집 데이터에서 "
+                    "계산돼 나온 숫자·표·차트만 싣습니다. 결론 서술과 상세 해석은 전체판에 있습니다.</p></div>"
+                    "<div class='finding'><h3>없는 것</h3><p>측정하지 못한 항목은 빈칸이나 '측정 불가'로 "
+                    "남아 있습니다. 추정치로 채우지 않았습니다.</p></div>")
+        headline = cfg["digest_headline"].replace("{n}", str(len(projects)))
+        cfg = dict(cfg, key=cfg["key"].replace("리포트", "요약"), title=cfg["title"] + " 요약판")
+    else:
+        findings = "".join(
+            f"<div class='finding'><h3>{h}</h3><p>{p}</p></div>" for h, p in cfg["findings"])
+        headline = cfg["headline"].replace("{n}", str(len(projects)))
 
     html = f"""<title>{cfg['title']}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -505,7 +536,9 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
 
   table {{ font-size:8.6pt; }}
   th, td {{ padding:4px 7px; }}
-  tr, figure, .trend {{ break-inside:avoid; }}
+  tr, figure {{ break-inside:avoid; }}
+  /* 추세표는 11행이라 통째로 피하면 앞 장이 비어 넘어간다. 행 단위로만 피하고 머리글은 반복한다. */
+  .trend {{ break-inside:auto; }}
   thead {{ display:table-header-group; }}
   .tblwrap {{ overflow:visible; }}
 
@@ -534,10 +567,10 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
 
 {sections}
 
-<footer>
+{"" if digest else """<footer>
   이 문서는 저장소의 최신 수집분으로 자동 생성됐습니다. 수치는 각 절에 적힌 기준일의
   스냅샷이며, 데이터가 부족한 구간은 추정하지 않고 측정 불가로 남겨 뒀습니다.
-</footer>
+</footer>"""}
 </div>
 """
 
@@ -562,5 +595,7 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
         print(f"생성: {f.name}  ({f.stat().st_size/1e6:.1f} MB)  프로젝트 {len(projects)}개")
 
 
+import sys as _sys
+_digest = "--digest" in _sys.argv
 for _cfg in REPORTS:
-    build_report(_cfg)
+    build_report(_cfg, digest=_digest)
