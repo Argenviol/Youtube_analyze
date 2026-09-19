@@ -213,6 +213,53 @@ def hi3_names_ko() -> tuple[dict[str, str], str]:
         f"data/hi3_names_ko.csv ({len(rows)}행, 수동 입력)"
 
 
+def _hi3_fill_from_categories(suits: list[dict]) -> int:
+    """소개 템플릿에 character/rank 가 없는 문서(7.7 이후 신규 전투복은 대개 버전만 적힌 미완성
+    문서다)는 위키 카테고리로 메운다: '<캐릭터> Battlesuits', 'S-rank Battlesuits'."""
+    need = [x for x in suits if not x["character"] or not x["rank"]]
+    filled = 0
+    for i in range(0, len(need), 50):
+        chunk = need[i:i + 50]
+        # cllimit 은 요청 전체의 카테고리 수 상한이라 50이면 앞 몇 문서만 채워진다. max + continue.
+        cats: dict[str, list[str]] = {}
+        cont: dict = {}
+        try:
+            while True:
+                data = _get(HI3_WIKI, dict(action="query", prop="categories", cllimit="max",
+                                           titles="|".join(x["battlesuit"] for x in chunk),
+                                           format="json", formatversion=2, **cont)).json()
+                for p in data.get("query", {}).get("pages", []):
+                    cats.setdefault(p["title"], []).extend(
+                        c["title"].replace("Category:", "") for c in p.get("categories", []))
+                cont = data.get("continue") or {}
+                if not cont:
+                    break
+        except Exception:  # noqa: BLE001
+            pass
+        for x in chunk:
+            cs = cats.get(x["battlesuit"], [])
+            if not x["character"]:
+                who = [c[:-len(" Battlesuits")] for c in cs
+                       if c.endswith(" Battlesuits") and not re.search(r"-(type|rank) Battlesuits$", c)
+                       and c != "Battlesuits"]
+                if len(who) == 1:
+                    x["character"] = who[0]; filled += 1
+            if not x["rank"]:
+                rk = [c[0] for c in cs if re.match(r"^[SAB]-rank Battlesuits$", c)]
+                if len(rk) == 1:
+                    x["rank"] = rk[0]
+    return filled
+
+
+def _hi3_manual_suits() -> dict[str, dict]:
+    """위키가 비워 둔 전투복을 사람이 적은 표. battlesuit,character,rank,note"""
+    p = DATA / "hi3_battlesuits_manual.csv"
+    if not p.exists():
+        return {}
+    with p.open(encoding="utf-8") as f:
+        return {r["battlesuit"].strip(): r for r in csv.DictReader(f)}
+
+
 def hi3_master() -> tuple[list[dict], dict]:
     status = dict(names="manual(data/hi3_names_ko.csv)", release="fandom", ok=False,
                   error=None, n=0, n_release=0, n_battlesuits=0, n_named=0)
@@ -232,6 +279,15 @@ def hi3_master() -> tuple[list[dict], dict]:
                 type=_field(block, "type"),
             ))
         status["n_battlesuits"] = len(suits)
+        status["n_filled_from_categories"] = _hi3_fill_from_categories(suits)
+        manual = _hi3_manual_suits()
+        for x in suits:
+            m = manual.get(x["battlesuit"])
+            if m:
+                x["character"] = x["character"] or m.get("character")
+                x["rank"] = x["rank"] or m.get("rank")
+        status["n_manual_suits"] = sum(1 for x in suits if x["battlesuit"] in manual)
+        status["unresolved_battlesuits"] = sorted(x["battlesuit"] for x in suits if not x["character"] or not x["rank"])
         vdates = _hi3_version_dates({s["version"] for s in suits if s["version"]})
         status["n_versions_dated"] = len(vdates)
 
