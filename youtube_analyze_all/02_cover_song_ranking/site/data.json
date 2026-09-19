@@ -1,8 +1,14 @@
 {
   "meta": {
-    "fetched_at": "2026-09-18T22:27:14.082975+00:00",
+    "fetched_at": "2026-09-19T03:17:01.786238+00:00",
     "n_covers": 382,
     "n_members": 11,
+    "topic": {
+      "ok": true,
+      "error": null,
+      "n_channels": 6,
+      "n_tracks": 23
+    },
     "title_filter": "cover|커버|歌ってみた|うたってみた|불러[봤본]",
     "source": "YouTube Data API v3 (playlistItems 전량 열거 + videos)",
     "method": "uploads_playlist_enumeration",
@@ -12,8 +18,8 @@
       "n_songs": 331,
       "n_videos": 356,
       "n_multi_version": 24,
-      "topic_tracks": 0,
-      "topic_paired_to_covers": 0,
+      "topic_tracks": 23,
+      "topic_paired_to_covers": 2,
       "topic_ambiguous": 0,
       "note": "여러 판(MV·4K·3D·쇼츠·티저)은 song_key 로 한 곡. Topic 음원 판은 발매일 ±3일로 짝짓기. 짝이 둘 이상이면 붙이지 않는다(ambiguous)."
     }
@@ -27,16 +33,16 @@
       "unit": "UNIVERSE",
       "cover_count": 40,
       "song_count": 38,
-      "total_views": 110670740,
-      "topic_views": 0,
-      "total_views_incl_topic": 110670740,
-      "avg_views": 2766768.5,
-      "avg_views_per_song": 2912387.9,
-      "median_views": 1691306.0,
-      "max_views": 14302258,
+      "total_views": 110708562,
+      "topic_views": 2049019,
+      "total_views_incl_topic": 112757581,
+      "avg_views": 2767714.0,
+      "avg_views_per_song": 2967304.8,
+      "median_views": 1692330.5,
+      "max_views": 14311058,
       "best_cover": "출항 [抜錨(발묘) / 나나호시 관현악단 ナナホシ管弦楽団] ㅣ아카네 리제(Akane Lize) 【COVER】",
-      "total_likes": 1008889,
-      "avg_engagement_rate": 0.01733,
+      "total_likes": 1009089,
+      "avg_engagement_rate": 0.01732,
       "collab_share": 0.075
     },
     {
@@ -47,16 +53,16 @@
       "unit": "CLICHE",
       "cover_count": 56,
       "song_count": 52,
-      "total_views": 88093572,
+      "total_views": 88125919,
       "topic_views": 0,
-      "total_views_incl_topic": 88093572,
-      "avg_views": 1573099.5,
-      "avg_views_per_song": 1694107.2,
-      "median_views": 1188554.5,
-      "max_views": 5168454,
+      "total_views_incl_topic": 88125919,
+      "avg_views": 1573677.1,
+      "avg_views_per_song": 1694729.2,
+      "median_views": 1189190.5,
+      "max_views": 5169245,
       "best_cover": "유령도쿄(Ayase) / 아오쿠모 린(Aokumo Rin) Cover",
-      "total_likes": 1025365,
-      "avg_engagement_rate": 0.02055,
+      "total_likes": 1025549,
+      "avg_engagement_rate": 0.02054,
       "collab_share": 0.214
     },
     {
@@ -67,15 +73,15 @@
       "unit": "UNIVERSE",
       "cover_count": 49,
       "song_count": 44,
-      "total_views": 64879675,
+      "total_views": 64895374,
       "topic_views": 0,
-      "total_views_incl_topic": 64879675,
-      "avg_views": 1324075.0,
-      "avg_views_per_song": 1474538.1,
-      "median_views": 984455.0,
-      "max_views": 8052239,
+      "total_views_incl_topic": 64895374,
+      "avg_views": 1324395.4,
+      "avg_views_per_song": 1474894.9,
+      "median_views": 984677.0,
+      "max_views": 8053011,
       "best_cover": "낙향(都落ち) / 시라유키 히나 Cover",
-      "total_likes": 704291,
+      "total_likes": 704371,
       "avg_engagement_rate": 0.02263,
       "collab_share": 0.082
     },
@@ -87,16 +93,16 @@
       "unit": "CLICHE",
       "cover_count": 61,
       "song_count": 56,
-      "total_views": 62342089,
+      "total_views": 62371360,
       "topic_views": 0,
-      "total_views_incl_topic": 62342089,
-      "avg_views": 1022001.5,
-      "avg_views_per_song": 1113251.6,
-      "median_views": 664268.0,
-      "max_views": 3412054,
+      "total_views_incl_topic": 62371360,
+      "avg_views": 1022481.3,
+      "avg_views_per_song": 1113774.3,
+      "median_views": 666744.0,
+      "max_views": 3412826,
       "best_cover": "케세라세라 (Mrs. GREEN APPLE)  / 유즈하 리코(Yuzuha Riko) cover",
-      "total_likes": 809185,
-      "avg_engagement_rate": 0.02859,
+      "total_likes": 809393,
+      "avg_engagement_rate": 0.02858,
       "collab_share": 0.131
     },
     {
@@ -107,16 +113,16 @@
       "unit": "CLICHE",
       "cover_count": 46,
       "song_count": 41,
-      "total_views": 57707565,
+      "total_views": 57763239,
       "topic_views": 0,
-      "total_views_incl_topic": 57707565,
-      "avg_views": 1254512.3,
-      "avg_views_per_song": 1407501.6,
-      "median_views": 791341.0,
-      "max_views": 5478735,
+      "total_views_incl_topic": 57763239,
+      "avg_views": 1255722.6,
+      "avg_views_per_song": 1408859.5,
+      "median_views": 791410.0,
+      "max_views": 5480570,
       "best_cover": "비행정 [飛行艇 - King Gnu] / 하나코 나나 COVER",
-      "total_likes": 821856,
-      "avg_engagement_rate": 0.02462,
+      "total_likes": 822871,
+      "avg_engagement_rate": 0.02457,
       "collab_share": 0.152
     },
     {
@@ -127,16 +133,16 @@
       "unit": "CLICHE",
       "cover_count": 37,
       "song_count": 34,
-      "total_views": 43011306,
+      "total_views": 43029325,
       "topic_views": 0,
-      "total_views_incl_topic": 43011306,
-      "avg_views": 1162467.7,
-      "avg_views_per_song": 1265038.4,
-      "median_views": 467124.0,
-      "max_views": 7276828,
+      "total_views_incl_topic": 43029325,
+      "avg_views": 1162954.7,
+      "avg_views_per_song": 1265568.4,
+      "median_views": 467411.0,
+      "max_views": 7278374,
       "best_cover": "너에게 메롱(一二三) / 텐코 시부키(Tenko Shibuki) cover",
-      "total_likes": 548915,
-      "avg_engagement_rate": 0.02841,
+      "total_likes": 549037,
+      "avg_engagement_rate": 0.0284,
       "collab_share": 0.108
     },
     {
@@ -147,16 +153,16 @@
       "unit": "UNIVERSE",
       "cover_count": 24,
       "song_count": 23,
-      "total_views": 28434178,
+      "total_views": 28447562,
       "topic_views": 0,
-      "total_views_incl_topic": 28434178,
-      "avg_views": 1184757.4,
-      "avg_views_per_song": 1236268.6,
-      "median_views": 907566.0,
-      "max_views": 3969011,
+      "total_views_incl_topic": 28447562,
+      "avg_views": 1185315.1,
+      "avg_views_per_song": 1236850.5,
+      "median_views": 908285.0,
+      "max_views": 3969776,
       "best_cover": "낮에 뜨는 달 ( 안예은 ) / 아라하시 타비 Cover",
-      "total_likes": 330130,
-      "avg_engagement_rate": 0.01768,
+      "total_likes": 330230,
+      "avg_engagement_rate": 0.01767,
       "collab_share": 0.083
     },
     {
@@ -167,15 +173,15 @@
       "unit": "EVERYS",
       "cover_count": 15,
       "song_count": 15,
-      "total_views": 15164718,
+      "total_views": 15167018,
       "topic_views": 0,
-      "total_views_incl_topic": 15164718,
-      "avg_views": 1010981.2,
-      "avg_views_per_song": 1010981.2,
-      "median_views": 780916.0,
-      "max_views": 2961631,
+      "total_views_incl_topic": 15167018,
+      "avg_views": 1011134.5,
+      "avg_views_per_song": 1011134.5,
+      "median_views": 781010.0,
+      "max_views": 2962094,
       "best_cover": "【아야츠노 유니 X 아이리 칸나】 점묘의 노래 (点描の唄) | Cover",
-      "total_likes": 178647,
+      "total_likes": 178663,
       "avg_engagement_rate": 0.01692,
       "collab_share": 0.133
     },
@@ -187,16 +193,16 @@
       "unit": "UNIVERSE",
       "cover_count": 21,
       "song_count": 21,
-      "total_views": 14744011,
+      "total_views": 14748496,
       "topic_views": 0,
-      "total_views_incl_topic": 14744011,
-      "avg_views": 702095.8,
-      "avg_views_per_song": 702095.8,
-      "median_views": 521739.0,
-      "max_views": 2241420,
+      "total_views_incl_topic": 14748496,
+      "avg_views": 702309.3,
+      "avg_views_per_song": 702309.3,
+      "median_views": 521848.0,
+      "max_views": 2241815,
       "best_cover": "Pale (MIMI) / 네네코 마시로 Cover",
-      "total_likes": 185344,
-      "avg_engagement_rate": 0.02524,
+      "total_likes": 185376,
+      "avg_engagement_rate": 0.02523,
       "collab_share": 0.143
     },
     {
@@ -207,16 +213,16 @@
       "unit": "EVERYS",
       "cover_count": 7,
       "song_count": 7,
-      "total_views": 3816554,
+      "total_views": 3819363,
       "topic_views": 0,
-      "total_views_incl_topic": 3816554,
-      "avg_views": 545222.0,
-      "avg_views_per_song": 545222.0,
-      "median_views": 391828.0,
-      "max_views": 1429625,
+      "total_views_incl_topic": 3819363,
+      "avg_views": 545623.3,
+      "avg_views_per_song": 545623.3,
+      "median_views": 392689.0,
+      "max_views": 1430146,
       "best_cover": "별자리가 될 수 있다면 (星座になれたら) l 사키하네 후야(Sakihane Huya) Cover",
-      "total_likes": 93685,
-      "avg_engagement_rate": 0.03252,
+      "total_likes": 93704,
+      "avg_engagement_rate": 0.0325,
       "collab_share": 0.143
     }
   ],
@@ -224,95 +230,95 @@
     {
       "name_ko": "아카네 리제",
       "title": "출항 [抜錨(발묘) / 나나호시 관현악단 ナナホシ管弦楽団] ㅣ아카네 리제(Akane Lize) 【COVER】",
-      "views": 14302258,
-      "likes": 106911.0,
-      "comments": 4538.0,
+      "views": 14311058,
+      "likes": 106959.0,
+      "comments": 4540.0,
       "published_at": "2025-12-04 10:30:06+00:00"
     },
     {
       "name_ko": "아카네 리제",
       "title": "Drowning (WOODZ)ㅣ아카네 리제 (Akane Lize) 【Cover】",
-      "views": 11931593,
-      "likes": 72595.0,
+      "views": 11933336,
+      "likes": 72603.0,
       "comments": 3766.0,
       "published_at": "2024-07-20 10:40:07+00:00"
     },
     {
       "name_ko": "아카네 리제",
       "title": "내일의 밤하늘 초계반(アスノヨゾラ哨戒班)ㅣ아카네 리제(Akane Lize) 【COVER】",
-      "views": 10403585,
-      "likes": 58455.0,
+      "views": 10406226,
+      "likes": 58470.0,
       "comments": 2210.0,
       "published_at": "2025-02-04 11:00:07+00:00"
     },
     {
       "name_ko": "시라유키 히나",
       "title": "낙향(都落ち) / 시라유키 히나 Cover",
-      "views": 8052239,
-      "likes": 44629.0,
+      "views": 8053011,
+      "likes": 44632.0,
       "comments": 2268.0,
       "published_at": "2023-06-08 06:00:09+00:00"
     },
     {
       "name_ko": "아카네 리제",
       "title": "괴물 (怪物) / 아카네 리제 Cover",
-      "views": 7542409,
-      "likes": 41871.0,
+      "views": 7543492,
+      "likes": 41875.0,
       "comments": 1620.0,
       "published_at": "2023-06-09 06:00:09+00:00"
     },
     {
       "name_ko": "텐코 시부키",
       "title": "너에게 메롱(一二三) / 텐코 시부키(Tenko Shibuki) cover",
-      "views": 7276828,
-      "likes": 43891.0,
+      "views": 7278374,
+      "likes": 43899.0,
       "comments": 2525.0,
       "published_at": "2024-05-16 08:00:07+00:00"
     },
     {
       "name_ko": "아카네 리제",
       "title": "선잠 (Leina) / 아카네 리제 Cover",
-      "views": 6244877,
-      "likes": 35530.0,
+      "views": 6245856,
+      "likes": 35540.0,
       "comments": 960.0,
       "published_at": "2024-03-02 10:30:09+00:00"
     },
     {
       "name_ko": "하나코 나나",
       "title": "비행정 [飛行艇 - King Gnu] / 하나코 나나 COVER",
-      "views": 5478735,
-      "likes": 37630.0,
+      "views": 5480570,
+      "likes": 37636.0,
       "comments": 1367.0,
       "published_at": "2025-01-27 12:00:06+00:00"
     },
     {
       "name_ko": "아오쿠모 린",
       "title": "유령도쿄(Ayase) / 아오쿠모 린(Aokumo Rin) Cover",
-      "views": 5168454,
-      "likes": 32530.0,
+      "views": 5169245,
+      "likes": 32535.0,
       "comments": 1249.0,
       "published_at": "2024-05-16 09:00:07+00:00"
     },
     {
       "name_ko": "아오쿠모 린",
       "title": "W/X/Y (Tani Yuuki) / 아오쿠모 린(Aokumo Rin) Cover",
-      "views": 5013806,
-      "likes": 32338.0,
-      "comments": 1155.0,
+      "views": 5015531,
+      "likes": 32342.0,
+      "comments": 1157.0,
       "published_at": "2025-03-08 10:00:06+00:00"
     },
     {
       "name_ko": "시라유키 히나",
       "title": "I Really Want to Stay At Your House (Arrange ver.) | 시라유키 히나 Cover",
-      "views": 4962300,
-      "likes": 48462.0,
+      "views": 4963227,
+      "likes": 48467.0,
       "comments": 1838.0,
       "published_at": "2024-06-29 11:00:07+00:00"
     },
     {
       "name_ko": "시라유키 히나",
       "title": "피날레(フィナーレ。) / 시라유키 히나 Cover",
-      "views": 4900398,
+      "views": 4901054,
       "likes": 31162.0,
       "comments": 1020.0,
       "published_at": "2024-02-11 12:00:07+00:00"
@@ -320,64 +326,64 @@
     {
       "name_ko": "텐코 시부키",
       "title": "여우비 / 텐코 시부키(Tenko Shibuki) cover",
-      "views": 4875402,
-      "likes": 31866.0,
+      "views": 4876095,
+      "likes": 31869.0,
       "comments": 1540.0,
       "published_at": "2024-08-09 11:00:07+00:00"
     },
     {
       "name_ko": "아오쿠모 린",
       "title": "TAEYEON (태연) 'To. X' / 아오쿠모 린(Aokumo Rin) Cover",
-      "views": 4495584,
-      "likes": 32409.0,
-      "comments": 1312.0,
+      "views": 4496983,
+      "likes": 32417.0,
+      "comments": 1313.0,
       "published_at": "2025-02-15 10:30:06+00:00"
     },
     {
       "name_ko": "아카네 리제",
       "title": "Surges (Orangestar)ㅣ아카네 리제(Akane Lize) 【COVER】",
-      "views": 4383004,
-      "likes": 32979.0,
+      "views": 4385517,
+      "likes": 32990.0,
       "comments": 1120.0,
       "published_at": "2025-09-20 12:20:06+00:00"
     },
     {
       "name_ko": "아오쿠모 린",
       "title": "무희 (Vaundy) / 아오쿠모 린(Aokumo Rin) Cover",
-      "views": 4280304,
-      "likes": 30609.0,
+      "views": 4281228,
+      "likes": 30612.0,
       "comments": 918.0,
       "published_at": "2024-09-15 09:00:07+00:00"
     },
     {
       "name_ko": "하나코 나나",
       "title": "サムライハート(Some Like It Hot!!) / 하나코 나나 COVER",
-      "views": 4214093,
-      "likes": 26175.0,
+      "views": 4215360,
+      "likes": 26179.0,
       "comments": 785.0,
       "published_at": "2024-10-05 10:00:31+00:00"
     },
     {
       "name_ko": "아카네 리제",
       "title": "Melt (メルト)  ㅣ아카네 리제 【Cover】",
-      "views": 4118839,
-      "likes": 25764.0,
-      "comments": 915.0,
+      "views": 4119640,
+      "likes": 25768.0,
+      "comments": 916.0,
       "published_at": "2024-06-30 11:10:07+00:00"
     },
     {
       "name_ko": "아오쿠모 린",
       "title": "PLAY (Giga -プレイ) / 아오쿠모 린(Aokumo Rin) Cover",
-      "views": 4099154,
-      "likes": 49265.0,
+      "views": 4100468,
+      "likes": 49272.0,
       "comments": 2284.0,
       "published_at": "2025-08-21 11:00:06+00:00"
     },
     {
       "name_ko": "하나코 나나",
       "title": "Enemy [Imagine Dragons x J.I.D] / 하나코 나나 COVER",
-      "views": 4066289,
-      "likes": 34179.0,
+      "views": 4067631,
+      "likes": 34180.0,
       "comments": 1443.0,
       "published_at": "2025-07-06 12:20:06+00:00"
     }
@@ -392,12 +398,12 @@
       "n_versions": 1,
       "version_ids": "R_B4tmy2DVA",
       "published_at": "2025-12-04T10:30:06+00:00",
-      "views": 14302258,
-      "likes": 106911,
+      "views": 14311058,
+      "likes": 106959,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 14302258
+      "views_incl_topic": 14311058
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -408,12 +414,12 @@
       "n_versions": 1,
       "version_ids": "CyOAmEihVHs",
       "published_at": "2024-07-20T10:40:07+00:00",
-      "views": 11931593,
-      "likes": 72595,
+      "views": 11933336,
+      "likes": 72603,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 11931593
+      "views_incl_topic": 11933336
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -424,12 +430,12 @@
       "n_versions": 1,
       "version_ids": "fTqvR0U0EC4",
       "published_at": "2025-02-04T11:00:07+00:00",
-      "views": 10403585,
-      "likes": 58455,
+      "views": 10406226,
+      "likes": 58470,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 10403585
+      "views_incl_topic": 10406226
     },
     {
       "channel_id": "UC1afpiIuBDcjYlmruAa0HiA",
@@ -440,12 +446,12 @@
       "n_versions": 1,
       "version_ids": "gBWIv6NvLcU",
       "published_at": "2023-06-08T06:00:09+00:00",
-      "views": 8052239,
-      "likes": 44629,
+      "views": 8053011,
+      "likes": 44632,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 8052239
+      "views_incl_topic": 8053011
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -456,12 +462,12 @@
       "n_versions": 2,
       "version_ids": "dxsiVSbpm8k|t6EzltrzGNo",
       "published_at": "2024-03-02T10:30:09+00:00",
-      "views": 7623962,
-      "likes": 55762,
+      "views": 7626173,
+      "likes": 55785,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 7623962
+      "views_incl_topic": 7626173
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -472,12 +478,12 @@
       "n_versions": 1,
       "version_ids": "naWmFCbwi3M",
       "published_at": "2023-06-09T06:00:09+00:00",
-      "views": 7542409,
-      "likes": 41871,
+      "views": 7543492,
+      "likes": 41875,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 7542409
+      "views_incl_topic": 7543492
     },
     {
       "channel_id": "UCYxLMfeX1CbMBll9MsGlzmw",
@@ -488,12 +494,12 @@
       "n_versions": 2,
       "version_ids": "HcfqHPrv5ik|KtZi0BN6lwg",
       "published_at": "2024-05-16T08:00:07+00:00",
-      "views": 7444762,
-      "likes": 52345,
+      "views": 7446458,
+      "likes": 52362,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 7444762
+      "views_incl_topic": 7446458
     },
     {
       "channel_id": "UCcA21_PzN1EhNe7xS4MJGsQ",
@@ -504,12 +510,12 @@
       "n_versions": 1,
       "version_ids": "YC-QnlIEbJU",
       "published_at": "2025-01-27T12:00:06+00:00",
-      "views": 5478735,
-      "likes": 37630,
+      "views": 5480570,
+      "likes": 37636,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 5478735
+      "views_incl_topic": 5480570
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -520,12 +526,12 @@
       "n_versions": 1,
       "version_ids": "UWa_OiXDiQA",
       "published_at": "2024-05-16T09:00:07+00:00",
-      "views": 5168454,
-      "likes": 32530,
+      "views": 5169245,
+      "likes": 32535,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 5168454
+      "views_incl_topic": 5169245
     },
     {
       "channel_id": "UCYxLMfeX1CbMBll9MsGlzmw",
@@ -536,12 +542,12 @@
       "n_versions": 2,
       "version_ids": "L_QZzYfB9Ro|sWZoIawG0tA",
       "published_at": "2024-08-09T11:00:07+00:00",
-      "views": 5065720,
-      "likes": 35572,
+      "views": 5066538,
+      "likes": 35575,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 5065720
+      "views_incl_topic": 5066538
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -552,12 +558,12 @@
       "n_versions": 1,
       "version_ids": "I6bslYOW8Xk",
       "published_at": "2025-03-08T10:00:06+00:00",
-      "views": 5013806,
-      "likes": 32338,
+      "views": 5015531,
+      "likes": 32342,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 5013806
+      "views_incl_topic": 5015531
     },
     {
       "channel_id": "UC1afpiIuBDcjYlmruAa0HiA",
@@ -568,12 +574,12 @@
       "n_versions": 1,
       "version_ids": "RGrSmTKmBA4",
       "published_at": "2024-06-29T11:00:07+00:00",
-      "views": 4962300,
-      "likes": 48462,
+      "views": 4963227,
+      "likes": 48467,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 4962300
+      "views_incl_topic": 4963227
     },
     {
       "channel_id": "UC1afpiIuBDcjYlmruAa0HiA",
@@ -584,12 +590,12 @@
       "n_versions": 1,
       "version_ids": "_-uHa5KiR90",
       "published_at": "2024-02-11T12:00:07+00:00",
-      "views": 4900398,
+      "views": 4901054,
       "likes": 31162,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 4900398
+      "views_incl_topic": 4901054
     },
     {
       "channel_id": "UCcA21_PzN1EhNe7xS4MJGsQ",
@@ -600,12 +606,12 @@
       "n_versions": 2,
       "version_ids": "xw4CWUhn_8Y|8vQfO5tT85k",
       "published_at": "2025-07-06T12:20:06+00:00",
-      "views": 4796183,
-      "likes": 53838,
+      "views": 4797624,
+      "likes": 53840,
       "is_collab": true,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 4796183
+      "views_incl_topic": 4797624
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -616,12 +622,12 @@
       "n_versions": 1,
       "version_ids": "ItUC9TPcb08",
       "published_at": "2025-02-15T10:30:06+00:00",
-      "views": 4495584,
-      "likes": 32409,
+      "views": 4496983,
+      "likes": 32417,
       "is_collab": true,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 4495584
+      "views_incl_topic": 4496983
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -632,12 +638,12 @@
       "n_versions": 1,
       "version_ids": "q2uHl6EJh-k",
       "published_at": "2025-09-20T12:20:06+00:00",
-      "views": 4383004,
-      "likes": 32979,
+      "views": 4385517,
+      "likes": 32990,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 4383004
+      "views_incl_topic": 4385517
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -648,12 +654,12 @@
       "n_versions": 1,
       "version_ids": "O1MqvWf7q58",
       "published_at": "2024-09-15T09:00:07+00:00",
-      "views": 4280304,
-      "likes": 30609,
+      "views": 4281228,
+      "likes": 30612,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 4280304
+      "views_incl_topic": 4281228
     },
     {
       "channel_id": "UCcA21_PzN1EhNe7xS4MJGsQ",
@@ -664,12 +670,12 @@
       "n_versions": 1,
       "version_ids": "qpBCZ6kYVb4",
       "published_at": "2024-10-05T10:00:31+00:00",
-      "views": 4214093,
-      "likes": 26175,
+      "views": 4215360,
+      "likes": 26179,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 4214093
+      "views_incl_topic": 4215360
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -680,12 +686,12 @@
       "n_versions": 2,
       "version_ids": "Wbzf3YE_pfI|JarYu85ctNY",
       "published_at": "2025-08-01T11:00:06+00:00",
-      "views": 4138372,
-      "likes": 58618,
+      "views": 4139504,
+      "likes": 58622,
       "is_collab": true,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 4138372
+      "views_incl_topic": 4139504
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -696,12 +702,12 @@
       "n_versions": 1,
       "version_ids": "ZMgLAy-VKe4",
       "published_at": "2024-06-30T11:10:07+00:00",
-      "views": 4118839,
-      "likes": 25764,
+      "views": 4119640,
+      "likes": 25768,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 4118839
+      "views_incl_topic": 4119640
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -712,12 +718,12 @@
       "n_versions": 1,
       "version_ids": "Bhe35DpMlzk",
       "published_at": "2025-08-21T11:00:06+00:00",
-      "views": 4099154,
-      "likes": 49265,
+      "views": 4100468,
+      "likes": 49272,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 4099154
+      "views_incl_topic": 4100468
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -728,12 +734,12 @@
       "n_versions": 1,
       "version_ids": "yCVZq40vqLk",
       "published_at": "2024-05-04T10:00:07+00:00",
-      "views": 4011099,
-      "likes": 26749,
+      "views": 4011933,
+      "likes": 26756,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 4011099
+      "views_incl_topic": 4011933
     },
     {
       "channel_id": "UCAHVQ44O81aehLWfy9O6Elw",
@@ -744,12 +750,12 @@
       "n_versions": 1,
       "version_ids": "5j8voUwxzmU",
       "published_at": "2023-12-08T11:00:08+00:00",
-      "views": 3969011,
-      "likes": 23227,
+      "views": 3969776,
+      "likes": 23230,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3969011
+      "views_incl_topic": 3969776
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -760,12 +766,12 @@
       "n_versions": 1,
       "version_ids": "KSCTkOn5Niw",
       "published_at": "2025-11-11T09:30:06+00:00",
-      "views": 3573646,
-      "likes": 34168,
+      "views": 3575331,
+      "likes": 34177,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3573646
+      "views_incl_topic": 3575331
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -776,12 +782,12 @@
       "n_versions": 1,
       "version_ids": "zcaAsuA54pI",
       "published_at": "2024-07-21T10:00:07+00:00",
-      "views": 3555321,
-      "likes": 24126,
+      "views": 3555999,
+      "likes": 24129,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3555321
+      "views_incl_topic": 3555999
     },
     {
       "channel_id": "UCcA21_PzN1EhNe7xS4MJGsQ",
@@ -792,12 +798,12 @@
       "n_versions": 1,
       "version_ids": "v7UNI2YuqFc",
       "published_at": "2024-05-17T08:00:07+00:00",
-      "views": 3475663,
-      "likes": 25374,
+      "views": 3476198,
+      "likes": 25378,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3475663
+      "views_incl_topic": 3476198
     },
     {
       "channel_id": "UC1afpiIuBDcjYlmruAa0HiA",
@@ -808,12 +814,12 @@
       "n_versions": 1,
       "version_ids": "bdapY46xR7A",
       "published_at": "2024-01-13T09:00:11+00:00",
-      "views": 3464574,
-      "likes": 20735,
+      "views": 3464960,
+      "likes": 20737,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3464574
+      "views_incl_topic": 3464960
     },
     {
       "channel_id": "UCj0c1jUr91dTetIQP2pFeLA",
@@ -824,12 +830,12 @@
       "n_versions": 1,
       "version_ids": "J49wnPBsyrU",
       "published_at": "2024-11-01T08:00:06+00:00",
-      "views": 3412054,
-      "likes": 22240,
+      "views": 3412826,
+      "likes": 22246,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3412054
+      "views_incl_topic": 3412826
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -840,12 +846,12 @@
       "n_versions": 1,
       "version_ids": "lbBbNysWWCo",
       "published_at": "2023-11-04T10:00:11+00:00",
-      "views": 3387587,
-      "likes": 22154,
+      "views": 3388260,
+      "likes": 22156,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3387587
+      "views_incl_topic": 3388260
     },
     {
       "channel_id": "UCYxLMfeX1CbMBll9MsGlzmw",
@@ -856,12 +862,12 @@
       "n_versions": 1,
       "version_ids": "G5A-UDCxUiI",
       "published_at": "2024-09-30T12:00:22+00:00",
-      "views": 3209968,
-      "likes": 24879,
+      "views": 3210595,
+      "likes": 24881,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3209968
+      "views_incl_topic": 3210595
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -872,12 +878,12 @@
       "n_versions": 1,
       "version_ids": "pM8_wnJ7JsE",
       "published_at": "2024-11-17T11:00:06+00:00",
-      "views": 3187444,
-      "likes": 23489,
+      "views": 3188322,
+      "likes": 23498,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3187444
+      "views_incl_topic": 3188322
     },
     {
       "channel_id": "UCj0c1jUr91dTetIQP2pFeLA",
@@ -888,12 +894,12 @@
       "n_versions": 3,
       "version_ids": "gBq4IXVgEuE|QgqiJKX0yq0|apj5_-osMd4",
       "published_at": "2025-06-07T08:00:06+00:00",
-      "views": 3173868,
-      "likes": 44358,
+      "views": 3176089,
+      "likes": 44369,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3173868
+      "views_incl_topic": 3176089
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -904,12 +910,28 @@
       "n_versions": 1,
       "version_ids": "d_YvT_ULGkc",
       "published_at": "2024-02-17T10:30:07+00:00",
-      "views": 3109333,
-      "likes": 21729,
+      "views": 3109764,
+      "likes": 21735,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3109333
+      "views_incl_topic": 3109764
+    },
+    {
+      "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
+      "name_ko": "아카네 리제",
+      "song_key": "밀월undeuxtrois",
+      "title": "밀월 Un・Deux・Trois (蜜月アン・ドゥ・トロワ)ㅣ아카네 리제(Akane Lize) 【COVER】",
+      "video_id": "7zsY6Ex9dMI",
+      "n_versions": 1,
+      "version_ids": "7zsY6Ex9dMI",
+      "published_at": "2024-10-01T11:59:07+00:00",
+      "views": 1003871,
+      "likes": 11797,
+      "is_collab": false,
+      "topic_views": 2049019,
+      "topic_video_ids": "c-7GJ9VQGe8|87he6Uu1ofQ",
+      "views_incl_topic": 3052890
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -920,12 +942,12 @@
       "n_versions": 1,
       "version_ids": "ebnM6X6B1Yg",
       "published_at": "2024-12-19T11:30:06+00:00",
-      "views": 3048628,
-      "likes": 23848,
+      "views": 3049870,
+      "likes": 23854,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3048628
+      "views_incl_topic": 3049870
     },
     {
       "channel_id": "UCj0c1jUr91dTetIQP2pFeLA",
@@ -936,12 +958,12 @@
       "n_versions": 1,
       "version_ids": "CtXv2_NBBOU",
       "published_at": "2024-07-21T13:00:20+00:00",
-      "views": 3000349,
-      "likes": 24420,
+      "views": 3001048,
+      "likes": 24425,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 3000349
+      "views_incl_topic": 3001048
     },
     {
       "channel_id": "UCAHVQ44O81aehLWfy9O6Elw",
@@ -952,12 +974,12 @@
       "n_versions": 1,
       "version_ids": "HBoqsgRoDw4",
       "published_at": "2024-03-27T08:00:06+00:00",
-      "views": 2979862,
-      "likes": 18940,
+      "views": 2980359,
+      "likes": 18942,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2979862
+      "views_incl_topic": 2980359
     },
     {
       "channel_id": "UCj0c1jUr91dTetIQP2pFeLA",
@@ -968,12 +990,12 @@
       "n_versions": 1,
       "version_ids": "qao2gYtY7bs",
       "published_at": "2025-12-25T09:08:48+00:00",
-      "views": 2975920,
-      "likes": 28273,
+      "views": 2977778,
+      "likes": 28278,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2975920
+      "views_incl_topic": 2977778
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -984,12 +1006,12 @@
       "n_versions": 1,
       "version_ids": "-a6y64hn4DA",
       "published_at": "2024-10-12T13:00:06+00:00",
-      "views": 2971928,
-      "likes": 22277,
+      "views": 2972473,
+      "likes": 22279,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2971928
+      "views_incl_topic": 2972473
     },
     {
       "channel_id": "UClbYIn9LDbbFZ9w2shX3K0g",
@@ -1000,12 +1022,12 @@
       "n_versions": 1,
       "version_ids": "QDIdN_eBvl0",
       "published_at": "2024-12-01T10:58:06+00:00",
-      "views": 2961631,
+      "views": 2962094,
       "likes": 28640,
       "is_collab": true,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2961631
+      "views_incl_topic": 2962094
     },
     {
       "channel_id": "UCj0c1jUr91dTetIQP2pFeLA",
@@ -1016,12 +1038,12 @@
       "n_versions": 1,
       "version_ids": "PBh8a0GaNFs",
       "published_at": "2025-01-28T09:00:07+00:00",
-      "views": 2942630,
-      "likes": 22743,
+      "views": 2943505,
+      "likes": 22754,
       "is_collab": true,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2942630
+      "views_incl_topic": 2943505
     },
     {
       "channel_id": "UCYxLMfeX1CbMBll9MsGlzmw",
@@ -1032,12 +1054,12 @@
       "n_versions": 1,
       "version_ids": "bJqdy8925Oc",
       "published_at": "2025-11-14T10:00:08+00:00",
-      "views": 2939704,
-      "likes": 25492,
+      "views": 2941378,
+      "likes": 25495,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2939704
+      "views_incl_topic": 2941378
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -1048,12 +1070,12 @@
       "n_versions": 2,
       "version_ids": "GoJvrC7GGIg|rxarDgejkZg",
       "published_at": "2025-10-19T09:30:06+00:00",
-      "views": 2906748,
-      "likes": 45930,
+      "views": 2907381,
+      "likes": 45934,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2906748
+      "views_incl_topic": 2907381
     },
     {
       "channel_id": "UC1afpiIuBDcjYlmruAa0HiA",
@@ -1064,12 +1086,12 @@
       "n_versions": 1,
       "version_ids": "L1haw5kPB7Q",
       "published_at": "2025-01-05T12:00:06+00:00",
-      "views": 2851416,
-      "likes": 23490,
+      "views": 2851979,
+      "likes": 23489,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2851416
+      "views_incl_topic": 2851979
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -1080,12 +1102,12 @@
       "n_versions": 1,
       "version_ids": "xDsvYAnq324",
       "published_at": "2025-06-11T12:30:06+00:00",
-      "views": 2846073,
-      "likes": 23132,
+      "views": 2847128,
+      "likes": 23140,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2846073
+      "views_incl_topic": 2847128
     },
     {
       "channel_id": "UC1afpiIuBDcjYlmruAa0HiA",
@@ -1096,12 +1118,12 @@
       "n_versions": 1,
       "version_ids": "xRkZVxvk55U",
       "published_at": "2024-03-15T10:30:07+00:00",
-      "views": 2810525,
-      "likes": 17897,
+      "views": 2810918,
+      "likes": 17899,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2810525
+      "views_incl_topic": 2810918
     },
     {
       "channel_id": "UCj0c1jUr91dTetIQP2pFeLA",
@@ -1112,12 +1134,12 @@
       "n_versions": 1,
       "version_ids": "cu9oCSWGFIM",
       "published_at": "2025-08-05T11:05:06+00:00",
-      "views": 2795795,
-      "likes": 20380,
+      "views": 2797226,
+      "likes": 20387,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2795795
+      "views_incl_topic": 2797226
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -1128,12 +1150,12 @@
       "n_versions": 1,
       "version_ids": "oAa_PoRopSs",
       "published_at": "2024-08-11T11:30:06+00:00",
-      "views": 2787222,
-      "likes": 23993,
+      "views": 2787689,
+      "likes": 23998,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2787222
+      "views_incl_topic": 2787689
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -1144,12 +1166,12 @@
       "n_versions": 1,
       "version_ids": "f3bB5GgEZxw",
       "published_at": "2025-03-09T11:00:06+00:00",
-      "views": 2733493,
+      "views": 2734054,
       "likes": 20332,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2733493
+      "views_incl_topic": 2734054
     },
     {
       "channel_id": "UC1afpiIuBDcjYlmruAa0HiA",
@@ -1160,12 +1182,12 @@
       "n_versions": 2,
       "version_ids": "NAu_CVmP-bw|fAgAE9JmnOs",
       "published_at": "2025-06-30T11:00:06+00:00",
-      "views": 2718223,
-      "likes": 29381,
+      "views": 2719189,
+      "likes": 29383,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2718223
+      "views_incl_topic": 2719189
     },
     {
       "channel_id": "UCcA21_PzN1EhNe7xS4MJGsQ",
@@ -1176,12 +1198,12 @@
       "n_versions": 1,
       "version_ids": "KJzmhOkm4-E",
       "published_at": "2025-08-05T11:00:06+00:00",
-      "views": 2709601,
-      "likes": 20703,
+      "views": 2710840,
+      "likes": 20706,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2709601
+      "views_incl_topic": 2710840
     },
     {
       "channel_id": "UCYxLMfeX1CbMBll9MsGlzmw",
@@ -1192,12 +1214,12 @@
       "n_versions": 2,
       "version_ids": "g0mQQhmXmMg|9KFsI34I1bs",
       "published_at": "2025-07-05T12:20:07+00:00",
-      "views": 2665656,
-      "likes": 36264,
+      "views": 2666254,
+      "likes": 36273,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2665656
+      "views_incl_topic": 2666254
     },
     {
       "channel_id": "UCj0c1jUr91dTetIQP2pFeLA",
@@ -1208,12 +1230,12 @@
       "n_versions": 1,
       "version_ids": "c6G7vRuJyhs",
       "published_at": "2024-11-21T09:00:07+00:00",
-      "views": 2663385,
-      "likes": 18621,
+      "views": 2664068,
+      "likes": 18626,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2663385
+      "views_incl_topic": 2664068
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -1224,12 +1246,12 @@
       "n_versions": 1,
       "version_ids": "76CJ6U2nxeY",
       "published_at": "2025-04-05T11:00:07+00:00",
-      "views": 2662449,
-      "likes": 23143,
+      "views": 2663371,
+      "likes": 23146,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2662449
+      "views_incl_topic": 2663371
     },
     {
       "channel_id": "UCAHVQ44O81aehLWfy9O6Elw",
@@ -1240,12 +1262,12 @@
       "n_versions": 1,
       "version_ids": "Pgd_XVwBVU0",
       "published_at": "2024-10-31T07:59:07+00:00",
-      "views": 2641454,
-      "likes": 21746,
+      "views": 2642399,
+      "likes": 21757,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2641454
+      "views_incl_topic": 2642399
     },
     {
       "channel_id": "UCQmcltnre6aG9SkDRYZqFIg",
@@ -1256,12 +1278,12 @@
       "n_versions": 1,
       "version_ids": "lsshc8umnE4",
       "published_at": "2025-03-17T12:00:07+00:00",
-      "views": 2584704,
-      "likes": 19050,
+      "views": 2585514,
+      "likes": 19057,
       "is_collab": true,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2584704
+      "views_incl_topic": 2585514
     },
     {
       "channel_id": "UC7-m6jQLinZQWIbwm9W-1iw",
@@ -1272,12 +1294,12 @@
       "n_versions": 1,
       "version_ids": "rRvumOvx21Y",
       "published_at": "2025-12-18T14:00:06+00:00",
-      "views": 2566539,
-      "likes": 25098,
+      "views": 2568182,
+      "likes": 25104,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2566539
+      "views_incl_topic": 2568182
     },
     {
       "channel_id": "UC1afpiIuBDcjYlmruAa0HiA",
@@ -1288,12 +1310,12 @@
       "n_versions": 1,
       "version_ids": "VhBXWT6Oqto",
       "published_at": "2024-06-10T12:15:06+00:00",
-      "views": 2551098,
-      "likes": 16672,
+      "views": 2551357,
+      "likes": 16675,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2551098
+      "views_incl_topic": 2551357
     },
     {
       "channel_id": "UCj0c1jUr91dTetIQP2pFeLA",
@@ -1304,12 +1326,12 @@
       "n_versions": 1,
       "version_ids": "fLLX2R-RwVE",
       "published_at": "2026-04-13T14:00:06+00:00",
-      "views": 2531842,
-      "likes": 33589,
+      "views": 2533688,
+      "likes": 33601,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2531842
+      "views_incl_topic": 2533688
     },
     {
       "channel_id": "UCcA21_PzN1EhNe7xS4MJGsQ",
@@ -1320,28 +1342,12 @@
       "n_versions": 1,
       "version_ids": "_C4t1yi0WDQ",
       "published_at": "2024-11-26T08:00:06+00:00",
-      "views": 2488041,
-      "likes": 21857,
+      "views": 2488419,
+      "likes": 21860,
       "is_collab": false,
       "topic_views": 0,
       "topic_video_ids": "",
-      "views_incl_topic": 2488041
-    },
-    {
-      "channel_id": "UCj0c1jUr91dTetIQP2pFeLA",
-      "name_ko": "유즈하 리코",
-      "song_key": "용사",
-      "title": "용사(YOASOBI) / 유즈하 리코(Yuzuha Riko) cover",
-      "video_id": "lfxl4YlY0lE",
-      "n_versions": 1,
-      "version_ids": "lfxl4YlY0lE",
-      "published_at": "2024-05-17T09:00:07+00:00",
-      "views": 2485390,
-      "likes": 18605,
-      "is_collab": false,
-      "topic_views": 0,
-      "topic_video_ids": "",
-      "views_incl_topic": 2485390
+      "views_incl_topic": 2488419
     }
   ]
 }
