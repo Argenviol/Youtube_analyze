@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-09-18T08:50:22.856071+00:00",
+  "fetched_at": "2026-09-19T22:24:22.288454+00:00",
   "source": "yatta.moe(Project Amber 후신, 캐릭터 마스터) + google-play-scraper(앱스토어 리뷰) + pytrends(Google Trends, 실패)",
   "n_characters": 326,
   "n_playable_avatars_excluded": 26,
-  "n_reviews": 3536,
+  "n_reviews": 3526,
   "games": [
     "genshin",
     "starrail",
@@ -50,19 +50,19 @@
     "zzz",
     "hi3"
   ],
-  "google_trends_ok": false,
-  "google_trends_error": "TooManyRequestsError: The request failed: Google returned a response with code 429",
+  "google_trends_ok": true,
+  "google_trends_error": null,
   "review_window_days": 365,
-  "review_since": "2025-09-18T08:50:08.067372+00:00",
+  "review_since": "2025-09-19T22:24:10.164993+00:00",
   "reviews_by_game": {
     "genshin": {
-      "n": 1325,
+      "n": 1319,
       "pages": 7,
       "complete": true,
       "note": ""
     },
     "starrail": {
-      "n": 994,
+      "n": 991,
       "pages": 5,
       "complete": true,
       "note": ""
@@ -74,7 +74,7 @@
       "note": ""
     },
     "hi3": {
-      "n": 68,
+      "n": 67,
       "pages": 1,
       "complete": true,
       "note": ""
