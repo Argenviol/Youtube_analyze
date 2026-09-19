@@ -315,6 +315,9 @@ def build_report(cfg: dict, digest: bool = False) -> None:
         findings = "".join(
             f"<div class='finding'><h3>{h}</h3><p>{p}</p></div>" for h, p in cfg["findings"])
         headline = cfg["headline"].replace("{n}", str(len(projects)))
+    footer_html = "" if digest else (
+        "<footer>\n  이 문서는 저장소의 최신 수집분으로 자동 생성됐습니다. 수치는 각 절에 적힌 기준일의\n"
+        "  스냅샷이며, 데이터가 부족한 구간은 추정하지 않고 측정 불가로 남겨 뒀습니다.\n</footer>")
 
     html = f"""<title>{cfg['title']}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -567,10 +570,7 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
 
 {sections}
 
-{"" if digest else """<footer>
-  이 문서는 저장소의 최신 수집분으로 자동 생성됐습니다. 수치는 각 절에 적힌 기준일의
-  스냅샷이며, 데이터가 부족한 구간은 추정하지 않고 측정 불가로 남겨 뒀습니다.
-</footer>"""}
+{footer_html}
 </div>
 """
 
