@@ -97,3 +97,11 @@ date,end_date,type,title,members,note,source
 - `charts/` · `sql/events.db` · `site/index.html` · `REPORT.md`
 
 REPORT.md 맨 앞 "한눈에 — 15개 렌즈 종합" 표가 전체를 한 장으로 요약한다.
+
+## 커버곡 발매와 조회수 — 판을 합쳐서 (2026-09-19)
+
+- 커버곡 발매 이벤트는 **곡 단위**다. 같은 멤버·같은 곡 키(`common/songs`)의 여러 판(본편·4K·3D·
+  쇼츠·티저)이 7일 안에 있으면 하나로 묶고 제목은 조회수가 큰 판으로 둔다.
+- 커버 효과의 조회수는 02 의 `cover_songs.csv`(판 합산 + Topic 음원 판 포함)를 쓴다.
+- 오리지널곡 효과는 MV(멤버 채널) 조회수에 발매일 ±3일 안의 같은 멤버 Topic 트랙(음원 판)을
+  더한 `song_views` 로 배수를 잰다. 후보가 둘 이상이면 더하지 않고 표에 "후보 n개"로 남긴다.

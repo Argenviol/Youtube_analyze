@@ -41,3 +41,26 @@ python build_site.py                  # site/index.html
 - **역대 최고 조회 커버**: 강지 「내가 죽으려고 생각한 것은(한국어 커버)」 약 14.0M.
 - 커버 수(다작)와 곡당 평균 조회수(파괴력)는 별개 축 — 산점도에서 아카네 리제는 두 축 모두 상위,
   아오쿠모 린은 다작형, 강지는 소수정예 고조회형으로 분화됩니다.
+
+## 조회수를 세는 법 — 한 곡은 한 곡으로 (2026-09-19)
+
+한 곡이 본편 MV·[4K]·3D 라이브·쇼츠·티저로 여러 번 올라온다(2026-09 기준 12곡). 여기에
+유튜브가 음원 유통사 배급분으로 자동 생성하는 **"<이름> - Topic" 채널**의 음원 판이 따로 있다
+— 네네코 마시로 '봄꿈' MV(멤버 채널) ↔ Neneko Mashiro - Topic 'Springdream'. 멤버 채널만
+세면 이 조회수가 통째로 빠진다.
+
+| 지표 | 무엇을 더한 값인가 |
+|---|---|
+| `cover_count` | 커버 **영상** 수 (history.csv 연속성 때문에 이름을 유지) |
+| `song_count` | 여러 판을 한 곡으로 묶은 **곡** 수 (`common/songs.song_key`) |
+| `total_views` | 멤버 채널 커버 영상 조회수 합 — 여러 판이면 전부 더한다 |
+| `topic_views` | 같은 멤버·발매일 ±3일로 짝지은 Topic 음원 판 조회수 합 |
+| `total_views_incl_topic` | 위 둘의 합 — "MV + 음원" 총계 |
+
+Topic 트랙 제목은 유통 메타데이터라 영문인 경우가 많아 제목으로는 못 잇는다. 그래서 날짜로
+잇고, 후보가 둘 이상이면 붙이지 않는다(`topic_pairs.csv` 의 `pair_reason`). 사람이 확정한
+짝은 `data/topic_pairs_manual.csv`(`topic_video_id,member_video_id`)가 우선한다.
+Topic 채널 ID 는 `search.list` 로 한 번 찾아 `data/topic_channels.json` 에 캐시한다.
+
+커버로 짝지어지지 않은 Topic 트랙은 대부분 오리지널곡 음원이고, 프로젝트 12 의 오리지널곡
+효과에서 MV 조회수에 더해진다.

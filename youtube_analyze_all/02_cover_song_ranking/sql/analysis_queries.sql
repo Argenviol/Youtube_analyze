@@ -5,9 +5,13 @@ SELECT name_ko AS 멤버, title AS 곡, views AS 조회수, likes AS 좋아요
 FROM covers ORDER BY views DESC LIMIT 15;
 
 -- 멤버별 커버 성과 랭킹
-SELECT rank AS 순위, name_ko AS 멤버, cover_count AS 곡수,
-       total_views AS 총조회수, CAST(avg_views AS INT) AS 평균조회수
+SELECT rank AS 순위, name_ko AS 멤버, song_count AS 곡수, cover_count AS 영상수,
+       total_views AS 총조회수, total_views_incl_topic AS 음원포함, CAST(avg_views AS INT) AS 영상당평균
 FROM cover_metrics ORDER BY total_views DESC;
+
+-- 여러 판으로 올라온 곡
+SELECT name_ko AS 멤버, title AS 대표제목, n_versions AS 판수, views AS 판합계조회수, topic_views AS 음원조회수
+FROM cover_songs WHERE n_versions > 1 ORDER BY views DESC;
 
 -- 곡당 평균 조회수 상위(5곡 이상)
 SELECT name_ko AS 멤버, cover_count AS 곡수, CAST(avg_views AS INT) AS 평균조회수

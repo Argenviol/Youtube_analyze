@@ -221,6 +221,16 @@ def cover_effect(covers: pd.DataFrame, videos: pd.DataFrame) -> pd.DataFrame:
     cover_ids = set(c["video_id"])
     v["is_cover"] = v["video_id"].isin(cover_ids)
 
+    # 곡 단위: 02 가 만든 cover_songs.csv(여러 판 합산 + Topic 음원 판 포함)가 있으면 그것을 쓴다.
+    # 영상 단위로 재면 같은 곡의 3D 판·쇼츠가 별개 커버로 들어가 중앙값이 흔들린다.
+    songs_p = ROOT / "02_cover_song_ranking" / "data" / "cover_songs.csv"
+    songs = _read(songs_p)
+    if not songs.empty:
+        songs["date"] = pd.to_datetime(songs["published_at"], format="mixed", utc=True) \
+            .dt.tz_convert("Asia/Seoul").dt.date
+        songs["views"] = songs["views_incl_topic"]
+        c = songs
+
     rows = []
     for name, g in v.groupby("name_ko"):
         lo, hi = g["date"].min(), min(g["date"].max(), cut)
@@ -236,6 +246,7 @@ def cover_effect(covers: pd.DataFrame, videos: pd.DataFrame) -> pd.DataFrame:
             "n_covers": int(len(mine)), "cover_median_views": int(cm),
             "n_normal": int(len(normal)), "normal_median_views": int(nm),
             "views_multiple": round(cm / nm, 2),
+            "unit": "곡(판 합산·음원 포함)" if not songs.empty else "영상",
         })
     return pd.DataFrame(rows)
 
@@ -262,6 +273,23 @@ def original_effect(events: pd.DataFrame, videos: pd.DataFrame,
         cov["date"] = pd.to_datetime(cov["published_at"], format="mixed", utc=True) \
             .dt.tz_convert("Asia/Seoul").dt.date
 
+    # Topic 채널 음원 판(02 가 수집). 오리지널곡은 MV(멤버 채널)와 음원(Topic)이 따로 있다 —
+    # 마시로 '봄꿈' MV ↔ Neneko Mashiro - Topic 'Springdream'. MV 발매일 ±3일 안의 같은 멤버
+    # Topic 트랙을 그 곡의 음원 판으로 보고 더한다. 후보가 둘 이상이면 더하지 않는다.
+    topic = _read(ROOT / "02_cover_song_ranking" / "data" / "topic_tracks.csv")
+    if not topic.empty:
+        topic["date"] = pd.to_datetime(topic["published_at"], format="mixed", utc=True) \
+            .dt.tz_convert("Asia/Seoul").dt.date
+
+    def _topic_for(name: str, d) -> tuple[int, str]:
+        if topic.empty:
+            return 0, ""
+        t = topic[(topic["name_ko"] == name) & (topic["date"] >= d - timedelta(days=3))
+                  & (topic["date"] <= d + timedelta(days=3))]
+        if len(t) == 1:
+            return int(t.iloc[0]["views"] or 0), str(t.iloc[0]["title"])[:40]
+        return 0, (f"후보 {len(t)}개" if len(t) else "")
+
     rows = []
     for _, e in events[events["type"] == "오리지널곡"].iterrows():
         keys = [k for k in str(e.get("match_keys") or "").split("|") if k]
@@ -274,6 +302,8 @@ def original_effect(events: pd.DataFrame, videos: pd.DataFrame,
                 continue
             # 티저·홍보 쇼츠가 아니라 MV 본편을 잡는다 — 조회수 최대가 본편이다.
             mv = hit.loc[hit["views"].idxmax()]
+            topic_views, topic_title = _topic_for(name, mv["date"])
+            song_views = int(mv["views"]) + topic_views
             normal = mine[(~mine["video_id"].isin(cover_ids))
                           & (~mine["video_id"].isin(set(hit["video_id"])))
                           & (mine["date"] <= cut)]
@@ -287,11 +317,13 @@ def original_effect(events: pd.DataFrame, videos: pd.DataFrame,
             rows.append({
                 "date": e["date"], "title": e["title"], "name_ko": name,
                 "mv_views": int(mv["views"]), "mv_title": str(mv["title"])[:40],
+                "topic_views": topic_views, "topic_title": topic_title,
+                "song_views": song_views,          # MV + 음원 판 — 이걸로 배수를 잰다
                 "n_related": int(len(hit)),
                 "normal_median": int(nm),
-                "vs_normal": round(mv["views"] / nm, 2),
+                "vs_normal": round(song_views / nm, 2),
                 "cover_median": int(cm) if cm and cm == cm else 0,
-                "vs_cover": round(mv["views"] / cm, 2) if cm and cm == cm else None,
+                "vs_cover": round(song_views / cm, 2) if cm and cm == cm else None,
             })
     return pd.DataFrame(rows)
 
@@ -1396,10 +1428,12 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
             oc_lo, oc_hi = float(vc.min()), float(vc.max())
         r = oe[oe["name_ko"] == "유즈하 리코"]["vs_cover"]
         riko_vc = float(r.iloc[0]) if len(r) and r.iloc[0] == r.iloc[0] else 0.0
-        orig_tbl = ("| 곡 | 멤버 | 공개일 | MV 조회수 | 일반 중앙 | 일반 대비 | 커버 대비 |\n"
+        orig_tbl = ("| 곡 | 멤버 | 공개일 | MV + 음원 조회수 | 일반 중앙 | 일반 대비 | 커버 대비 |\n"
                     "|---|---|---|---|---|---|---|\n" + "\n".join(
                         f"| {str(r.title).split('「')[-1].rstrip('」')} | {r.name_ko} | "
-                        f"{r.date} | {r.mv_views:,} | {r.normal_median:,} | "
+                        f"{r.date} | {r.song_views:,}"
+                        + (f" (MV {r.mv_views:,} + 음원 {r.topic_views:,})" if getattr(r, 'topic_views', 0) else " (음원 판 없음)")
+                        + f" | {r.normal_median:,} | "
                         f"**{r.vs_normal:.1f}배** | "
                         f"{(f'{r.vs_cover:.1f}배' if r.vs_cover == r.vs_cover else '—')} |"
                         for r in oe.itertuples()))

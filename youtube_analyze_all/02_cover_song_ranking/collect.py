@@ -58,6 +58,73 @@ def to_int(x):
         return None
 
 
+# ---------------------------------------------------------------------------
+# Topic 채널 — 음원 판
+#
+# 유튜브는 음원 유통사가 배급한 곡을 "<아티스트> - Topic" 자동 채널에 트랙으로 올린다.
+# 예) 네네코 마시로 '봄꿈' MV(멤버 채널) ↔ Neneko Mashiro - Topic 'Springdream'.
+# 멤버 채널만 보면 이 조회수가 통째로 빠진다. 여기서 Topic 채널을 찾아 트랙을 전량 받고,
+# 곡과의 짝짓기는 분석 단계(common/songs.pair_topic_tracks)에서 한다.
+#
+# 채널 ID 는 search.list(100 units) 로 한 번 찾은 뒤 data/topic_channels.json 에 캐시한다.
+# 못 찾은 멤버는 null 로 남겨 다음 실행에 다시 찾는다(아직 유통곡이 없는 멤버는 채널도 없다).
+# ---------------------------------------------------------------------------
+TOPIC_CACHE = DATA / "topic_channels.json"
+TOPIC_SEED = {  # 공개 영상의 oEmbed 로 확인한 값 (2026-09-19)
+    "Neneko Mashiro": "UC8Gp085DHk7K3VQdG-GU9EQ",
+}
+
+
+def find_topic_channels(yt: YouTube, roster: list[dict]) -> dict[str, str | None]:
+    cache = json.loads(TOPIC_CACHE.read_text(encoding="utf-8")) if TOPIC_CACHE.exists() else {}
+    for r in roster:
+        en = r["name_en"]
+        if cache.get(en):
+            continue
+        if en in TOPIC_SEED:
+            cache[en] = TOPIC_SEED[en]
+            continue
+        want = f"{en} - Topic".lower()
+        found = None
+        try:
+            for it in yt.search(q=f"{en} - Topic", type_="channel", max_results=5):
+                title = (it.get("snippet", {}).get("title") or "").strip().lower()
+                if title == want:
+                    found = it.get("snippet", {}).get("channelId") or it.get("id", {}).get("channelId")
+                    break
+        except Exception as e:  # noqa: BLE001
+            print(f"  {r['name_ko']:12} Topic 채널 검색 실패: {type(e).__name__}")
+        cache[en] = found
+        print(f"  {r['name_ko']:12} Topic 채널 {'찾음 ' + found if found else '없음'}")
+    TOPIC_CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=2), encoding="utf-8")
+    return cache
+
+
+def fetch_topic_tracks(yt: YouTube, roster: list[dict], channels: dict[str, str | None]) -> pd.DataFrame:
+    rows = []
+    for r in roster:
+        cid = channels.get(r["name_en"])
+        if not cid:
+            continue
+        uploads = yt.uploads_playlist_id(cid)
+        if not uploads:
+            print(f"  {r['name_ko']:12} Topic 업로드 목록 없음")
+            continue
+        vids = yt.playlist_videos(uploads, limit=2000)
+        details = yt.videos([v["video_id"] for v in vids])
+        for v in details:
+            vs, sn = v.get("statistics", {}), v.get("snippet", {})
+            rows.append(dict(
+                video_id=v["id"], topic_channel_id=cid,
+                name_ko=r["name_ko"], name_en=r["name_en"], unit=r["unit"],
+                title=sn.get("title"), published_at=sn.get("publishedAt"),
+                views=to_int(vs.get("viewCount")), likes=to_int(vs.get("likeCount")),
+            ))
+        print(f"  {r['name_ko']:12} Topic 트랙 {len(details)}개")
+    cols = ["video_id", "topic_channel_id", "name_ko", "name_en", "unit", "title", "published_at", "views", "likes"]
+    return pd.DataFrame(rows, columns=cols)
+
+
 def collect(max_videos: int = 3000) -> None:
     DATA.mkdir(parents=True, exist_ok=True)
     yt = YouTube(config.get_api_key())
@@ -97,8 +164,23 @@ def collect(max_videos: int = 3000) -> None:
 
     df = pd.DataFrame(rows).drop_duplicates("video_id").reset_index(drop=True)
     df.to_csv(DATA / "covers.csv", index=False)
+
+    print("\n[Topic 채널 — 음원 판]")
+    topic_status = dict(ok=False, error=None, n_channels=0, n_tracks=0)
+    try:
+        channels = find_topic_channels(yt, roster)
+        tracks = fetch_topic_tracks(yt, roster, channels)
+        tracks.to_csv(DATA / "topic_tracks.csv", index=False)
+        topic_status.update(ok=True, n_channels=sum(1 for v in channels.values() if v),
+                            n_tracks=len(tracks))
+    except Exception as e:  # noqa: BLE001
+        # Topic 이 실패해도 커버 본체는 저장된 뒤다. 실패를 메타에 남기고 이전 topic_tracks.csv 는 둔다.
+        topic_status["error"] = f"{type(e).__name__}: {str(e)[:160]}"
+        print(f"  ! Topic 수집 실패 — {topic_status['error']}")
+
     meta = dict(fetched_at=datetime.now(timezone.utc).isoformat(),
                 n_covers=len(df), n_members=df["name_en"].nunique(),
+                topic=topic_status,
                 title_filter=COVER_TOKEN.pattern,
                 source="YouTube Data API v3 (playlistItems 전량 열거 + videos)",
                 method="uploads_playlist_enumeration",

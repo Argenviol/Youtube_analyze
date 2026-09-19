@@ -13,7 +13,9 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common import config, db, viz
+from common import config
+from common import db, viz
+from common.songs import add_song_key, pair_topic_tracks
 import matplotlib.pyplot as plt
 
 HERE = Path(__file__).resolve().parent
@@ -34,14 +36,56 @@ def build_metrics():
     df["engagement_rate"] = np.where(df["views"] >= 1000,
                                      (df["likes"].fillna(0) + df["comments"].fillna(0)) / df["views"], np.nan)
 
+    # ── 곡 단위로 묶는다 ──────────────────────────────────────────────────
+    # 한 곡이 본편·[4K]·3D·쇼츠·티저로 여러 번 올라온다. 영상 수로 세면 곡 수가 부풀고,
+    # 곡당 평균도 왜곡된다. song_key(common/songs)로 같은 채널의 판들을 한 곡으로 묶는다.
+    names = [r["name_ko"] for r in config.member_rows(include_founder=True)] + \
+            [r["name_en"] for r in config.member_rows(include_founder=True)]
+    df = add_song_key(df, member_names=names)
+    song_rows = []
+    for (cid, name_ko, key), g in df.groupby(["channel_id", "name_ko", "song_key"], sort=False):
+        best = g.loc[g["views"].idxmax()]
+        song_rows.append(dict(
+            channel_id=cid, name_ko=name_ko, song_key=key, title=str(best["title"]),
+            video_id=best["video_id"], n_versions=int(len(g)),
+            version_ids="|".join(g["video_id"]),
+            published_at=g["published_at"].min().isoformat(),
+            views=int(g["views"].sum()), likes=int(g["likes"].fillna(0).sum()),
+            is_collab=bool(g["is_collab"].any()),
+        ))
+    songs = pd.DataFrame(song_rows)
+
+    # ── Topic 채널 음원 판을 곡에 붙인다 ───────────────────────────────────
+    # 제목으로는 못 잇는다(봄꿈 ↔ Springdream). 같은 멤버·발매일 ±3일이면 짝으로 본다.
+    topic_p = DATA / "topic_tracks.csv"
+    manual_p = DATA / "topic_pairs_manual.csv"
+    topic = pd.read_csv(topic_p) if topic_p.exists() else pd.DataFrame(
+        columns=["video_id", "topic_channel_id", "name_ko", "name_en", "unit", "title", "published_at", "views", "likes"])
+    manual = pd.read_csv(manual_p) if manual_p.exists() else None
+    paired = pair_topic_tracks(topic, songs, manual) if not topic.empty else topic.assign(
+        paired_video_id=None, pair_reason="unpaired")
+    tv = (paired.dropna(subset=["paired_video_id"]).groupby("paired_video_id")["views"].sum()
+          if not paired.empty else pd.Series(dtype=float))
+    tid = (paired.dropna(subset=["paired_video_id"]).groupby("paired_video_id")["video_id"]
+           .agg("|".join) if not paired.empty else pd.Series(dtype=str))
+    songs["topic_views"] = songs["video_id"].map(tv).fillna(0).astype(int)
+    songs["topic_video_ids"] = songs["video_id"].map(tid).fillna("")
+    songs["views_incl_topic"] = songs["views"] + songs["topic_views"]
+    songs = songs.sort_values("views_incl_topic", ascending=False).reset_index(drop=True)
+
     rows = []
     for (cid, name_ko, name_en, unit), g in df.groupby(["channel_id", "name_ko", "name_en", "unit"]):
         best = g.loc[g["views"].idxmax()]
+        sg = songs[songs["channel_id"] == cid]
         rows.append(dict(
             channel_id=cid, name_ko=name_ko, name_en=name_en, unit=unit,
-            cover_count=len(g),
-            total_views=int(g["views"].sum()),
-            avg_views=round(g["views"].mean(), 1),
+            cover_count=len(g),                       # 영상 수 (history.csv 연속성 때문에 이름 유지)
+            song_count=int(len(sg)),                  # 곡 수 (여러 판을 한 곡으로)
+            total_views=int(g["views"].sum()),        # 멤버 채널 영상 조회수 합
+            topic_views=int(sg["topic_views"].sum()), # 짝지어진 Topic 음원 판 조회수 합
+            total_views_incl_topic=int(g["views"].sum() + sg["topic_views"].sum()),
+            avg_views=round(g["views"].mean(), 1),    # 영상당
+            avg_views_per_song=round(sg["views_incl_topic"].mean(), 1) if len(sg) else None,  # 곡당(음원 포함)
             median_views=round(g["views"].median(), 1),
             max_views=int(g["views"].max()),
             best_cover=str(best["title"]),
@@ -51,6 +95,7 @@ def build_metrics():
         ))
     metrics = pd.DataFrame(rows).sort_values("total_views", ascending=False).reset_index(drop=True)
     metrics.insert(0, "rank", metrics.index + 1)
+    build_metrics.songs, build_metrics.topic = songs, paired
     return df, metrics
 
 
@@ -59,7 +104,7 @@ def build_sql(df, metrics):
     covers = df.copy()
     covers["published_at"] = covers["published_at"].astype(str)
     covers["is_collab"] = covers["is_collab"].astype(int)
-    tables = {"covers": covers, "cover_metrics": metrics}
+    tables = {"covers": covers, "cover_metrics": metrics, "cover_songs": build_metrics.songs}
     db.write_sqlite(SQL / "covers.db", tables)
     db.dump_schema_sql(SQL / "schema.sql", tables, primary_keys={"covers": "video_id"})
     db.dump_insert_sql(SQL / "covers.sql", "covers", covers)
@@ -152,7 +197,19 @@ def build_charts(df, metrics):
 
 def build_outputs(df, metrics):
     metrics.to_csv(DATA / "cover_metrics.csv", index=False)
+    songs, topic = build_metrics.songs, build_metrics.topic
+    songs.to_csv(DATA / "cover_songs.csv", index=False)
+    if not topic.empty:
+        topic.to_csv(DATA / "topic_pairs.csv", index=False)
     meta = json.loads((DATA / "_meta.json").read_text(encoding="utf-8"))
+    n_multi = int((songs["n_versions"] > 1).sum())
+    n_paired = int(topic["paired_video_id"].notna().sum()) if not topic.empty else 0
+    n_amb = int(topic["pair_reason"].astype(str).str.startswith("ambiguous").sum()) if not topic.empty else 0
+    meta["songs"] = dict(n_songs=int(len(songs)), n_videos=int(len(df)), n_multi_version=n_multi,
+                         topic_tracks=int(len(topic)), topic_paired_to_covers=n_paired,
+                         topic_ambiguous=n_amb,
+                         note="여러 판(MV·4K·3D·쇼츠·티저)은 song_key 로 한 곡. Topic 음원 판은 발매일 ±3일로 짝짓기. "
+                              "짝이 둘 이상이면 붙이지 않는다(ambiguous).")
     top = df.sort_values("views", ascending=False).head(20)[
         ["name_ko", "title", "views", "likes", "comments", "published_at"]].copy()
     top["published_at"] = top["published_at"].astype(str)
@@ -160,23 +217,39 @@ def build_outputs(df, metrics):
         meta=meta,
         members=json.loads(metrics.to_json(orient="records", force_ascii=False)),
         top_covers=json.loads(top.to_json(orient="records", force_ascii=False)),
+        songs=json.loads(songs.head(60).to_json(orient="records", force_ascii=False)),
     )
     SITE.mkdir(parents=True, exist_ok=True)
     (SITE / "data.json").write_text(json.dumps(site_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
     king = metrics.iloc[0]
-    most = metrics.iloc[metrics["cover_count"].argmax()]
+    most = metrics.iloc[metrics["song_count"].argmax()]
     besteff = metrics.iloc[metrics["avg_views"].argmax()]
     topcover = df.sort_values("views", ascending=False).iloc[0]
     md = f"""# 프로젝트 2 · StelLive 커버곡 성과 랭킹 분석
 
 - 데이터 소스: YouTube Data API v3 (채널 검색 + 영상 지표), 수집 {meta['fetched_at'][:10]}
-- 멤버 {meta['n_members']}명 · 커버곡 {meta['n_covers']}개
+- 멤버 {meta['n_members']}명 · 커버 영상 {meta['n_covers']}개 = 곡 {meta['songs']['n_songs']}곡
+  (여러 판으로 올라온 곡 {meta['songs']['n_multi_version']}곡)
+- Topic 채널 음원 판: 트랙 {meta['songs']['topic_tracks']}개 중 커버와 짝지어진 것 {meta['songs']['topic_paired_to_covers']}개
+  (짝이 둘 이상이라 안 붙인 것 {meta['songs']['topic_ambiguous']}개). 나머지는 오리지널곡 음원이라 12에서 쓴다.
+
+## 조회수를 세는 법 — 한 곡은 한 곡으로
+
+한 곡이 본편 MV·[4K]·3D 라이브·쇼츠·티저로 여러 번 올라온다. 여기에 유튜브가 유통사 배급분으로
+자동 생성하는 **"<이름> - Topic" 채널의 음원 판**이 따로 있다(예: 마시로 '봄꿈' MV ↔ Neneko
+Mashiro - Topic 'Springdream'). 그래서:
+
+- **총 조회수(total_views)** = 멤버 채널에 올라온 커버 영상 전부의 합. 여러 판이면 다 더한다.
+- **음원 포함(total_views_incl_topic)** = 위 + 같은 멤버·발매일 ±3일로 짝지은 Topic 트랙 조회수.
+  Topic 트랙 제목은 유통 메타데이터(영문이 흔함)라 제목으로 못 잇고 날짜로 잇는다 — 근사다.
+- **곡 수(song_count)** 는 판을 한 곡으로 묶은 수, **영상 수(cover_count)** 는 그대로 센 수.
 
 ## 핵심 요약
-- **커버 총 조회수 1위**: {king['name_ko']} — {king['total_views']/1e6:.1f}M ({king['cover_count']}곡)
-- **최다 커버 업로드**: {most['name_ko']} — {most['cover_count']}곡
-- **곡당 평균 조회수 1위**: {besteff['name_ko']} — {besteff['avg_views']/1e6:.2f}M
+- **커버 총 조회수 1위**: {king['name_ko']} — {king['total_views']/1e6:.1f}M (영상 {king['cover_count']}개 · {king['song_count']}곡
+  · 음원 포함 {king['total_views_incl_topic']/1e6:.1f}M)
+- **최다 커버**: {most['name_ko']} — {most['song_count']}곡 (영상 {most['cover_count']}개)
+- **영상당 평균 조회수 1위**: {besteff['name_ko']} — {besteff['avg_views']/1e6:.2f}M
 - **역대 최고 조회 커버**: {topcover['name_ko']} — {topcover['views']/1e6:.1f}M
   - 「{topcover['title']}」
 
@@ -195,9 +268,12 @@ NAMED_QUERIES = [
 SELECT name_ko AS 멤버, title AS 곡, views AS 조회수, likes AS 좋아요
 FROM covers ORDER BY views DESC LIMIT 15;"""),
     ("멤버별 커버 성과 랭킹", """
-SELECT rank AS 순위, name_ko AS 멤버, cover_count AS 곡수,
-       total_views AS 총조회수, CAST(avg_views AS INT) AS 평균조회수
+SELECT rank AS 순위, name_ko AS 멤버, song_count AS 곡수, cover_count AS 영상수,
+       total_views AS 총조회수, total_views_incl_topic AS 음원포함, CAST(avg_views AS INT) AS 영상당평균
 FROM cover_metrics ORDER BY total_views DESC;"""),
+    ("여러 판으로 올라온 곡", """
+SELECT name_ko AS 멤버, title AS 대표제목, n_versions AS 판수, views AS 판합계조회수, topic_views AS 음원조회수
+FROM cover_songs WHERE n_versions > 1 ORDER BY views DESC;"""),
     ("곡당 평균 조회수 상위(5곡 이상)", """
 SELECT name_ko AS 멤버, cover_count AS 곡수, CAST(avg_views AS INT) AS 평균조회수
 FROM cover_metrics WHERE cover_count>=5 ORDER BY avg_views DESC;"""),

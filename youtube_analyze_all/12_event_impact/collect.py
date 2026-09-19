@@ -430,21 +430,44 @@ def _costume_name(group: list[dict], members: list[str]) -> str:
     return f"{base} ({len(members)}명)"
 
 
+RELEASE_MERGE_DAYS = 7   # 같은 멤버·같은 곡의 여러 판(MV·4K·3D·쇼츠·티저)이 이 안에 있으면 한 발매다
+
+
 def detect_releases(covers: pd.DataFrame) -> list[dict]:
-    """커버곡 발매. published_at 이 곧 이벤트 날짜다."""
-    df = covers.copy()
+    """커버곡 발매. published_at 이 곧 이벤트 날짜다.
+
+    한 곡이 여러 영상으로 올라온다(본편·[4K]·3D·쇼츠·티저). 영상마다 이벤트를 만들면
+    같은 발매가 두세 번 세어진다. 같은 멤버·같은 곡 키(common/songs)가 RELEASE_MERGE_DAYS
+    안에 있으면 하나로 묶고, 제목은 조회수가 가장 큰 판(=본편)으로 둔다.
+    """
+    from common.songs import add_song_key
+    df = add_song_key(covers.copy(), member_names=[r["name_ko"] for r in config.member_rows(include_founder=True)]
+                      + [r["name_en"] for r in config.member_rows(include_founder=True)])
     df["date"] = pd.to_datetime(df["published_at"], format="mixed",
                                 utc=True).dt.tz_convert("Asia/Seoul").dt.date
+    df = df.sort_values(["name_ko", "song_key", "date"])
     out = []
-    for _, r in df.iterrows():
-        out.append({
-            "date": r["date"], "end_date": r["date"], "type": "커버곡",
-            "title": str(r["title"])[:120], "members": r["name_ko"],
-            "n_members": 1 + str(r["title"]).count(" x "),
-            "n_days": 1, "signal": "발매",
-            "source": "자동(YouTube)",
-        })
+    for (name, key), g in df.groupby(["name_ko", "song_key"], sort=False):
+        cluster = []
+        for _, r in g.iterrows():
+            if cluster and (r["date"] - cluster[-1]["date"]).days > RELEASE_MERGE_DAYS:
+                out.append(_release_event(cluster)); cluster = []
+            cluster.append(r)
+        if cluster:
+            out.append(_release_event(cluster))
     return out
+
+
+def _release_event(cluster: list) -> dict:
+    main = max(cluster, key=lambda r: (r.get("views") or 0))
+    first = min(r["date"] for r in cluster)
+    return {
+        "date": first, "end_date": first, "type": "커버곡",
+        "title": str(main["title"])[:120], "members": main["name_ko"],
+        "n_members": 1 + str(main["title"]).count(" x "),
+        "n_days": 1, "signal": "발매" if len(cluster) == 1 else f"발매({len(cluster)}판)",
+        "source": "자동(YouTube)",
+    }
 
 
 def load_manual() -> list[dict]:
