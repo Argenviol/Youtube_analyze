@@ -206,6 +206,7 @@ COMMENT_VIDEO_CAP = 400      # 창 안 영상 상한(안전장치)
 
 def fetch_official_comments(window_days: int) -> tuple[pd.DataFrame, dict]:
     """공식 한국 채널의 창 안 영상 댓글. API 키가 없으면 빈 표와 사유를 돌려준다."""
+    from common import config
     from common.youtube import YouTube
     cols = ["game", "name_ko", "video_id", "video_title", "video_published_at",
             "comment_id", "content", "like_count", "published_at"]
