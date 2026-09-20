@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-20T19:27:17.500745+00:00",
-    "n_snapshots": 34634,
+    "fetched_at": "2026-09-20T19:37:31.934741+00:00",
+    "n_snapshots": 34645,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-20T19:27:17.500745+00:00"
+      "2026-09-20T19:37:31.934741+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 31459,
-    "n_timepoints": 3146,
-    "span_hours": 949.53,
-    "observed_hours": 536.26,
+    "n_snapshots": 31469,
+    "n_timepoints": 3147,
+    "span_hours": 949.7,
+    "observed_hours": 536.43,
     "coverage_ratio": 0.565,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 8093,
+    "n_live_rows": 8094,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-20T19:27:17.500745+00:00"
+    "last": "2026-09-20T19:37:31.934741+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,9 +30,9 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 165882,
-      "follower_delta": 9141,
-      "follower_per_day": 231.1,
+      "followers": 165881,
+      "follower_delta": 9140,
+      "follower_per_day": 231.0,
       "n_sessions": 58,
       "n_live_points": 415,
       "peak_ccu": 38402,
@@ -44,9 +44,9 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 263595,
-      "follower_delta": 8269,
-      "follower_per_day": 209.0,
+      "followers": 263594,
+      "follower_delta": 8268,
+      "follower_per_day": 208.9,
       "n_sessions": 112,
       "n_live_points": 890,
       "peak_ccu": 38237,
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 216698,
       "follower_delta": 6879,
-      "follower_per_day": 173.9,
+      "follower_per_day": 173.8,
       "n_sessions": 98,
       "n_live_points": 560,
       "peak_ccu": 28071,
@@ -114,13 +114,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 218372,
-      "follower_delta": 9037,
+      "followers": 218374,
+      "follower_delta": 9039,
       "follower_per_day": 228.4,
       "n_sessions": 119,
-      "n_live_points": 1041,
+      "n_live_points": 1042,
       "peak_ccu": 10461,
-      "avg_ccu": 3348,
+      "avg_ccu": 3347,
       "ccu_per_1k_followers": 47.9
     },
     {
@@ -128,8 +128,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241351,
-      "follower_delta": 4503,
+      "followers": 241353,
+      "follower_delta": 4505,
       "follower_per_day": 113.8,
       "n_sessions": 123,
       "n_live_points": 1061,
@@ -144,7 +144,7 @@
       "unit": "CLICHE",
       "followers": 227467,
       "follower_delta": 8367,
-      "follower_per_day": 211.5,
+      "follower_per_day": 211.4,
       "n_sessions": 94,
       "n_live_points": 733,
       "peak_ccu": 9414,
@@ -3976,10 +3976,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-09-20 18:11",
-      "observed_min": 615.3,
-      "n_points": 63,
+      "observed_min": 625.6,
+      "n_points": 64,
       "peak_ccu": 4397,
-      "avg_ccu": 2829,
+      "avg_ccu": 2822,
       "title": "이제 진짜 family 맞zi? ",
       "category": "Grand Theft Auto V"
     },
@@ -44180,6 +44180,10 @@
         [
           "2026-09-21 04:27",
           2204
+        ],
+        [
+          "2026-09-21 04:37",
+          2406
         ]
       ]
     }
