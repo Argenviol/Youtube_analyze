@@ -89,13 +89,27 @@ def build_metrics():
     n_reviews_by_game = reviews.groupby("game").size().to_dict()
     # 리뷰가 없는 게임(마스터만 있고 리뷰 수집이 안 된 경우)은 0으로 나누지 않는다.
 
-    # 공식 한국 유튜브 채널 댓글 — 리뷰보다 훨씬 큰 두 번째 표본. 없으면 빈 표.
-    comments_p = DATA / "comments.csv"
-    comments = pd.read_csv(comments_p) if comments_p.exists() else pd.DataFrame(
-        columns=["game", "name_ko", "video_id", "video_title", "video_published_at", "comment_id",
-                 "content", "like_count", "published_at"])
-    comments["content"] = comments["content"].fillna("").astype(str)
-    n_comments_by_game = comments.groupby("game").size().to_dict() if len(comments) else {}
+    # ── 유저 반응 코퍼스 ────────────────────────────────────────────────
+    # 한국어 텍스트를 모을 수 있는 곳을 전부 시험해(reactions.py 주석) 되는 것만 담았다.
+    # 플레이 리뷰는 평점이 붙어 있어 호불호 판단에 쓰고, 나머지는 언급량(화제성)에 쓴다.
+    def _load(name, cols):
+        f = DATA / name
+        d = pd.read_csv(f) if f.exists() else pd.DataFrame(columns=cols)
+        if "content" in d.columns:
+            d["content"] = d["content"].fillna("").astype(str)
+        return d
+
+    comments = _load("comments.csv", ["game", "name_ko", "video_id", "content"])
+    apple = _load("apple_reviews.csv", ["game", "name_ko", "content", "title", "rating", "at"])
+    if len(apple):
+        # 애플은 제목에도 캐릭터 이름이 자주 들어간다.
+        apple["content"] = apple["title"].fillna("").astype(str) + " " + apple["content"]
+    hoyolab = _load("hoyolab.csv", ["game", "name_ko", "post_id", "content", "created_at"])
+
+    CORPUS = {"youtube": comments, "apple": apple, "hoyolab": hoyolab}
+    corpus_n = {k: (v.groupby("game").size().to_dict() if len(v) else {}) for k, v in CORPUS.items()}
+    build_metrics.corpus_n = corpus_n
+    n_comments_by_game = {g: sum(corpus_n[k].get(g, 0) for k in CORPUS) for g in gacha["game"].unique()}
 
     mention_rows = []
     for game, g in gacha.groupby("game"):
@@ -116,16 +130,22 @@ def build_metrics():
                 t = t.str.replace(_loose_pattern(n), " ", regex=True)
             mask = t.str.contains(c["match_name"], regex=False, na=False)
             n = int(mask.sum())
-            # 댓글에서도 같은 규칙(긴 이름 먼저 지움)으로 센다.
-            ct = comments.loc[comments["game"] == game, "content"]
-            for nn in longer:
-                ct = ct.str.replace(_loose_pattern(nn), " ", regex=True)
-            nc = int(ct.str.contains(c["match_name"], regex=False, na=False).sum()) if len(ct) else 0
+            # 나머지 소스도 같은 규칙(긴 이름 먼저 지움)으로 센다.
+            per_source = {}
+            for src, df in CORPUS.items():
+                t2 = df.loc[df["game"] == game, "content"] if len(df) else pd.Series(dtype=str)
+                for nn in longer:
+                    if len(t2):
+                        t2 = t2.str.replace(_loose_pattern(nn), " ", regex=True)
+                per_source[src] = int(t2.str.contains(c["match_name"], regex=False, na=False).sum()) if len(t2) else 0
+            nc = sum(per_source.values())
             mention_rows.append(dict(
                 char_id=c["char_id"], mention_count=n,
                 avg_mention_score=round(float(scores[mask].mean()), 2) if n else None,
                 mention_rate_per_10k=round(n / n_reviews_by_game[game] * 10000, 2) if n_reviews_by_game.get(game) else None,
                 comment_mentions=nc,
+                youtube_mentions=per_source["youtube"], apple_mentions=per_source["apple"],
+                hoyolab_mentions=per_source["hoyolab"],
                 comment_rate_per_10k=round(nc / n_comments_by_game[game] * 10000, 2) if n_comments_by_game.get(game) else None,
             ))
     mentions = pd.DataFrame(mention_rows)
@@ -345,9 +365,26 @@ def build_charts(gacha, reviews, monthly, push, audience):
     print(f"차트 8종 -> {CHARTS}")
 
 
+def _corpus_line(bg: dict) -> str:
+    c = bg.get("corpus") or {}
+    ko = {"reviews": "플레이 리뷰", "youtube": "공식 채널 댓글", "apple": "애플 리뷰", "hoyolab": "HoYoLAB 댓글"}
+    parts = [f"{ko[k]} {v:,}건" for k, v in c.items() if v]
+    return " · ".join(parts) + f" = **{sum(c.values()):,}건**"
+
+
+def _src_line(r) -> str:
+    ko = [("youtube_mentions", "유튜브"), ("hoyolab_mentions", "HoYoLAB"),
+          ("apple_mentions", "애플"), ("mention_count", "플레이")]
+    parts = [f"{label} {int(r[k]):,}" for k, label in ko if r.get(k) == r.get(k) and int(r.get(k) or 0)]
+    return " + ".join(parts) + f" = {int(r['mentions_total']):,}건"
+
+
 def _total_comments(meta: dict) -> int:
-    bg = ((meta.get("official_comments") or {}).get("by_game") or {})
-    return sum(int(v.get("comments") or 0) for v in bg.values())
+    yt = sum(int(v.get("comments") or 0)
+             for v in ((meta.get("official_comments") or {}).get("by_game") or {}).values())
+    ap = sum(int(v.get("n") or 0) for v in (meta.get("apple_reviews") or {}).values())
+    hl = sum(int(v.get("replies") or 0) for v in (meta.get("hoyolab") or {}).values())
+    return yt + ap + hl
 
 
 def _per_game_counts(gacha: pd.DataFrame) -> str:
@@ -420,6 +457,8 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
             n_gacha=int(len(g)),
             n_reviews=int((reviews["game"] == game).sum()),
             n_comments=int(getattr(build_metrics, "n_comments_by_game", {}).get(game, 0)),
+            corpus=dict(reviews=int((reviews["game"] == game).sum()),
+                        **{k: int(v.get(game, 0)) for k, v in getattr(build_metrics, "corpus_n", {}).items()}),
             n_matchable=int(g["matchable"].sum()),
             n_zero_mention=int((g["matchable"] & (g["mentions_total"] == 0)).sum()),
             push_top=_recs(push[push["game"] == game].head(TOP_N)),
@@ -493,9 +532,9 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
                     if ta['avg_mention_score'] == ta['avg_mention_score'] else "")
         return f"""### {bg['name_ko']}
 
-- 가챠 캐릭터 {bg['n_gacha']}명 · 리뷰 {bg['n_reviews']:,}건 · 공식 채널 댓글 {bg['n_comments']:,}건
+- 가챠 캐릭터 {bg['n_gacha']}명 · 한국어 표본 {_corpus_line(bg)}
 {thin}- **공식 푸시 1위**(최고 등급·최신 출시): {tp['name_ko']} ({str(tp['release_date'])[:10]} 출시)
-- **유저 반응 1위**(댓글+리뷰 언급): {ta['name_ko']} (댓글 {int(ta['comment_mentions'] or 0):,}건 + 리뷰 {int(ta['mention_count'])}건{ta_score})
+- **유저 반응 1위**(전체 언급): {ta['name_ko']} ({_src_line(ta)}{ta_score})
 - 언급량은 **호불호를 가리지 않는 화제성**이다. 싫어서 쓴 리뷰도 언급이다. 언급 리뷰 평점이 게임 평균보다
   낮으면 부정 화제로 읽는다(각 항목의 평점 참고).
 {var_line}- 매칭 가능한 {bg['n_matchable']}명 중 **{bg['n_zero_mention']}명은 댓글·리뷰 어디에서도 언급되지 않았다**
@@ -516,10 +555,12 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
 - **수집 기간은 다섯 게임 모두 같다**: 수집 시점부터 {meta.get('review_window_days', '?')}일
   ({str(meta.get('review_since', ''))[:10]} ~ {meta['fetched_at'][:10]}). 건수는 게임마다 다르다 —
   {_window_line(meta)}.
-- **유저 반응은 공식 한국 유튜브 채널 댓글 {_total_comments(meta):,}건 + 리뷰**로 센다. 리뷰만으로는
-  캐릭터당 언급이 한 자릿수~십몇 건이라 순위가 한두 건 차이로 뒤집혔다. 댓글은 캐릭터 PV·소개
-  영상에 이름이 그대로 쓰여 표본이 훨씬 크다. 대신 **공식 채널 댓글은 그 게임을 이미 보는 사람의
-  말**이라 스토어 리뷰보다 호의적으로 기울 수 있다.
+- **유저 반응은 한국어 텍스트 {_total_comments(meta) + meta['n_reviews']:,}건**에서 센다 — 구글 플레이 리뷰,
+  애플 앱스토어 리뷰, 공식 한국 유튜브 채널 댓글, HoYoLAB 한국어 글의 댓글. 플레이 리뷰만 쓰던 때는
+  캐릭터당 언급이 한 자릿수~십몇 건이라 순위가 한두 건 차이로 뒤집혔다. 접근 가능한 소스를 전부
+  시험해 되는 것만 썼고, 막힌 곳(arca.live·dcinside·reddit 등)은 `data/source_probe.json` 에
+  이유와 함께 남겼다. 대신 **공식 채널·HoYoLAB 댓글은 그 게임을 이미 보는 사람의 말**이라
+  스토어 리뷰보다 호의적으로 기울 수 있다. 평점은 스토어 리뷰에서만 나온다.
 - 수집 {meta['fetched_at'][:10]} · 가챠 캐릭터 {_per_game_counts(gacha)} (플레이어 캐릭터
   {meta['n_playable_avatars_excluded']}명 제외) · 리뷰 {meta['n_reviews']:,}건
 - {_trends_line(trends_status)}

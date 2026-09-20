@@ -41,7 +41,8 @@ import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))   # common/ 패키지
 sys.path.insert(0, str(Path(__file__).resolve().parent))       # 이 폴더의 sources.py
-import sources  # noqa: E402  (젠레스 존 제로·붕괴3rd 마스터)
+import sources     # noqa: E402  (젠레스 존 제로·붕괴3rd·블루 아카이브 마스터)
+import reactions  # noqa: E402  (애플 리뷰·HoYoLAB 한국어 댓글)
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
@@ -201,7 +202,7 @@ OFFICIAL_YT = {
     "ba":       ("@bluearchive_kr",     "UCj0iColXMAjPA92rH-AXVGQ"),
 }
 COMMENTS_PER_VIDEO = 300     # 관련도순 상위. 영상당 이보다 많이 받아도 이름 언급 분포는 거의 안 변한다
-COMMENT_VIDEO_CAP = 1200     # 창 안 영상 상한(안전장치). 400 이던 때 원신이 정확히 400 으로 잘렸다
+COMMENT_VIDEO_CAP = 3000     # 창 안 영상 상한(안전장치). 400 이던 때 원신이 정확히 400 으로 잘렸다
 
 
 def fetch_official_comments(window_days: int) -> tuple[pd.DataFrame, dict]:
@@ -314,11 +315,11 @@ def fetch_reviews(window_days: int, hard_cap: int = REVIEW_HARD_CAP) -> tuple[pd
 def collect(window_days: int) -> None:
     DATA.mkdir(parents=True, exist_ok=True)
 
-    print("[1/4] 캐릭터 마스터 데이터 (yatta.moe = Project Amber 후신)")
+    print("[1/6] 캐릭터 마스터 데이터 (yatta.moe = Project Amber 후신)")
     chars = fetch_characters()
     chars.to_csv(DATA / "characters.csv", index=False)
 
-    print("\n[2/4] Google Trends 시도 (pytrends) — 실패해도 그대로 기록")
+    print("\n[2/6] Google Trends 시도 (pytrends) — 실패해도 그대로 기록")
     trends_status = try_google_trends()
     (DATA / "trends_status.json").write_text(
         json.dumps(trends_status, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -327,17 +328,31 @@ def collect(window_days: int) -> None:
     else:
         print(f"  실패(정상 처리) — {trends_status['error']}")
 
-    print("\n[3/4] Google Play 리뷰 (google-play-scraper)")
+    print("\n[3/6] Google Play 리뷰 (google-play-scraper)")
     reviews_df, app_rows, window = fetch_reviews(window_days)
     reviews_df.to_csv(DATA / "reviews.csv", index=False)
     pd.DataFrame(app_rows).to_csv(DATA / "app_summary.csv", index=False)
 
-    print("\n[4/4] 공식 한국 유튜브 채널 댓글 (같은 창)")
+    print("\n[4/6] 공식 한국 유튜브 채널 댓글 (같은 창)")
     comments_df, comments_status = fetch_official_comments(window_days)
     if comments_status["ok"]:
         comments_df.to_csv(DATA / "comments.csv", index=False)
     else:
         print(f"  건너뜀 — {comments_status.get('error') or '수집된 댓글 없음'} (이전 comments.csv 가 있으면 그대로 둔다)")
+
+    print("\n[5/6] Apple App Store 리뷰 (KR, 같은 창)")
+    apple_df, apple_status = reactions.fetch_apple_reviews(APPS, window_days)
+    if len(apple_df):
+        apple_df.to_csv(DATA / "apple_reviews.csv", index=False)
+
+    print("\n[6/6] HoYoLAB 한국어 댓글 (같은 창)")
+    hoyolab_df, hoyolab_status = reactions.fetch_hoyolab(APPS, window_days)
+    if len(hoyolab_df):
+        hoyolab_df.to_csv(DATA / "hoyolab.csv", index=False)
+
+    reactions.write_probe(DATA / "source_probe.json", dict(
+        google_play=window["by_game"], youtube_official=comments_status.get("by_game"),
+        apple=apple_status, hoyolab=hoyolab_status))
 
     meta = dict(
         fetched_at=datetime.now(timezone.utc).isoformat(),
@@ -355,6 +370,8 @@ def collect(window_days: int) -> None:
         review_since=window["since"],
         reviews_by_game=window["by_game"],
         official_comments=comments_status,
+        apple_reviews=apple_status,
+        hoyolab=hoyolab_status,
         review_sampling="공통 기간 — 수집 시점부터 review_window_days 일 안의 리뷰 전부(게임마다 건수는 다르고 기간은 같다)",
         method_changed_at="2026-09-18",
         method_note="이전에는 게임당 최신 3,000건이라 기간이 게임마다 달랐다(원신 710일, 스타레일 888일). "
