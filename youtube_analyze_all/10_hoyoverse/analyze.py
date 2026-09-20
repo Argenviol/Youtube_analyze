@@ -232,21 +232,21 @@ def build_charts(gacha, reviews, monthly, push, audience):
                         fontsize=9, color=config.INK["text"], xytext=(6, 0), textcoords="offset points")
         ax.grid(False); ax.spines["left"].set_visible(False); ax.spines["bottom"].set_visible(False)
     fig.suptitle("공식 푸시 프록시 (게임별 순위 — 게임 간 비교 아님)")
-    fig.tight_layout(); fig.savefig(CHARTS / "01_push_proxy_top15.png", dpi=140); plt.close(fig)
+    fig.tight_layout(rect=(0, 0, 1, 0.97)); fig.savefig(CHARTS / "01_push_proxy_top15.png", dpi=140); plt.close(fig)
 
-    # 2. 유저 반응: 리뷰 언급량 TOP 15 — 게임별
+    # 2. 유저 반응: 댓글+리뷰 언급량 TOP 15 — 게임별
     fig, axes = grid(6.4, 6.4)
     for ax, game in zip(axes, games):
-        d = audience[audience["game"] == game].head(TOP_N).sort_values("mention_count")
-        bars = ax.barh(d["name_ko"], d["mention_count"], color=_gc([game])[0], height=0.72, zorder=3)
-        ax.set_title(f"{game_ko(gacha, game)} · 리뷰 언급량 TOP {TOP_N}")
+        d = audience[audience["game"] == game].head(TOP_N).sort_values("mentions_total")
+        bars = ax.barh(d["name_ko"], d["mentions_total"], color=_gc([game])[0], height=0.72, zorder=3)
+        ax.set_title(f"{game_ko(gacha, game)} · 댓글+리뷰 언급량 TOP {TOP_N}")
         ax.grid(axis="x", zorder=0); ax.grid(axis="y", visible=False); ax.spines["left"].set_visible(False)
-        for b, v in zip(bars, d["mention_count"]):
+        for b, v in zip(bars, d["mentions_total"]):
             ax.annotate(f"{int(v)}건", (b.get_width(), b.get_y()+b.get_height()/2), va="center", ha="left",
                         fontsize=9, color=config.INK["text"], xytext=(4, 0), textcoords="offset points")
         ax.margins(x=0.16)
-    fig.suptitle("유저 반응 프록시 (게임별 — 리뷰 표본 수가 달라 게임 간 건수 비교 아님)")
-    fig.tight_layout(); fig.savefig(CHARTS / "02_audience_mentions_top15.png", dpi=140); plt.close(fig)
+    fig.suptitle("유저 반응 프록시: 공식 채널 댓글 + 스토어 리뷰 (게임별 — 표본 수가 달라 게임 간 건수 비교 아님)")
+    fig.tight_layout(rect=(0, 0, 1, 0.97)); fig.savefig(CHARTS / "02_audience_mentions_top15.png", dpi=140); plt.close(fig)
 
     # 3. 푸시 랭크 vs 반응 랭크 산점도 — 게임별 (두 랭킹에 모두 든 캐릭터)
     fig, axes = grid(6.6, 6.4)
@@ -264,7 +264,7 @@ def build_charts(gacha, reviews, monthly, push, audience):
         ax.set_title(f"{game_ko(gacha, game)} · 푸시 순위 vs 반응 순위")
         ax.invert_yaxis(); ax.grid(True, zorder=0); ax.legend(frameon=False, loc="lower right")
     fig.suptitle("점선 위=반응이 순위보다 약함 · 점선 아래=반응이 순위보다 강함")
-    fig.tight_layout(); fig.savefig(CHARTS / "03_push_vs_audience_rank.png", dpi=140); plt.close(fig)
+    fig.tight_layout(rect=(0, 0, 1, 0.97)); fig.savefig(CHARTS / "03_push_vs_audience_rank.png", dpi=140); plt.close(fig)
 
     # 4. 게임별 월간 평균 평점 추이
     # ⚠ 두 게임의 리뷰 표본 기간이 다르다(붕괴:스타레일 리뷰가 원신보다 6개월 더 과거까지 있음).
@@ -337,12 +337,17 @@ def build_charts(gacha, reviews, monthly, push, audience):
                         xytext=(5, 4), textcoords="offset points", color=config.INK["text"])
         base = reviews[reviews["game"] == game]["score"].mean()
         ax.axhline(base, color=config.INK["grid"], linestyle="--", zorder=1, label=f"게임 평균 평점 {base:.2f}")
-        ax.set_xlabel("리뷰 언급 횟수 (언급 5건 이상만 표시)"); ax.set_ylabel("언급 리뷰 평균 평점")
+        ax.set_xlabel("리뷰 언급 횟수 (평점은 리뷰에서만 나온다 · 5건 이상만 표시)"); ax.set_ylabel("언급 리뷰 평균 평점")
         ax.set_title(f"{game_ko(gacha, game)} · 언급량 vs 언급 리뷰 감성"); ax.grid(True, zorder=0)
         ax.legend(frameon=False, loc="lower right")
     fig.tight_layout(); fig.savefig(CHARTS / "08_mentions_vs_sentiment.png", dpi=140); plt.close(fig)
 
     print(f"차트 8종 -> {CHARTS}")
+
+
+def _total_comments(meta: dict) -> int:
+    bg = ((meta.get("official_comments") or {}).get("by_game") or {})
+    return sum(int(v.get("comments") or 0) for v in bg.values())
 
 
 def _per_game_counts(gacha: pd.DataFrame) -> str:
@@ -351,7 +356,7 @@ def _per_game_counts(gacha: pd.DataFrame) -> str:
 
 def _window_line(meta: dict) -> str:
     bg = meta.get("reviews_by_game") or {}
-    names = {"genshin": "원신", "starrail": "붕괴:스타레일", "zzz": "젠레스 존 제로", "hi3": "붕괴3rd"}
+    names = {"genshin": "원신", "starrail": "붕괴:스타레일", "zzz": "젠레스 존 제로", "hi3": "붕괴3rd", "ba": "블루 아카이브"}
     parts = []
     for g, v in bg.items():
         flag = "" if v.get("complete", True) else "(창 미완)"
@@ -369,7 +374,7 @@ def _trends_line(status: dict) -> str:
     if status.get("ok"):
         return (f"**Google Trends 호출 성공** — 시험 질의(\"Genshin Impact\", 1개월)가 {status.get('n_rows', 0)}행을 "
                 "받았다. 다만 **캐릭터 단위 검색 관심도는 아직 분석에 넣지 않았다** — 유저 반응 지표는 "
-                "리뷰 언급량이다. 이 줄은 소스가 살아 있다는 기록이지 분석에 썼다는 뜻이 아니다.")
+                "댓글+리뷰 언급량이다. 이 줄은 소스가 살아 있다는 기록이지 분석에 썼다는 뜻이 아니다.")
     err = status.get("error") or "원인 미기록"
     if status.get("attempted") is False:
         return (f"**Google Trends 미사용** — 이번 실행에서는 호출하지 않았다(`{err}`). "
@@ -416,7 +421,7 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
             n_reviews=int((reviews["game"] == game).sum()),
             n_comments=int(getattr(build_metrics, "n_comments_by_game", {}).get(game, 0)),
             n_matchable=int(g["matchable"].sum()),
-            n_zero_mention=int((g["matchable"] & (g["mention_count"] == 0)).sum()),
+            n_zero_mention=int((g["matchable"] & (g["mentions_total"] == 0)).sum()),
             push_top=_recs(push[push["game"] == game].head(TOP_N)),
             audience_top=_recs(audience[audience["game"] == game].head(TOP_N)),
             # 격차의 부호가 맞는 쪽만. 두 순위에 든 캐릭터가 셋뿐인 게임(붕괴3rd)에서
@@ -493,13 +498,13 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
 - **유저 반응 1위**(댓글+리뷰 언급): {ta['name_ko']} (댓글 {int(ta['comment_mentions'] or 0):,}건 + 리뷰 {int(ta['mention_count'])}건{ta_score})
 - 언급량은 **호불호를 가리지 않는 화제성**이다. 싫어서 쓴 리뷰도 언급이다. 언급 리뷰 평점이 게임 평균보다
   낮으면 부정 화제로 읽는다(각 항목의 평점 참고).
-{var_line}- 매칭 가능한 {bg['n_matchable']}명 중 **{bg['n_zero_mention']}명은 리뷰에서 한 번도 언급되지 않았다**
+{var_line}- 매칭 가능한 {bg['n_matchable']}명 중 **{bg['n_zero_mention']}명은 댓글·리뷰 어디에서도 언급되지 않았다**
 - 많이 밀렸는데 반응이 약한 쪽: {fmt(over)}
 - 덜 밀렸는데 반응이 강한 쪽: {fmt(sleep)}
 {src_line}"""
 
     game_sections = "\n".join(_game_section(g) for g in games)
-    n_zero_mention = int((gacha["matchable"] & (gacha["mention_count"] == 0)).sum())
+    n_zero_mention = int((gacha["matchable"] & (gacha["mentions_total"] == 0)).sum())
     n_matchable = int(gacha["matchable"].sum())
 
     md = f"""# 프로젝트 10 · 호요버스 캐릭터 인기도 분석
@@ -508,27 +513,31 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
 
 - 데이터 소스: 캐릭터 마스터 — 원신·붕괴:스타레일 yatta.moe / 젠레스 존 제로 Enka.Network 저장소 +
   Fandom 위키(출시일) / 붕괴3rd Fandom 위키(전투복·버전) + 수동 한글 표. 리뷰 — 한국 Google Play.
-- **리뷰 기간은 네 게임 모두 같다**: 수집 시점부터 {meta.get('review_window_days', '?')}일
+- **수집 기간은 다섯 게임 모두 같다**: 수집 시점부터 {meta.get('review_window_days', '?')}일
   ({str(meta.get('review_since', ''))[:10]} ~ {meta['fetched_at'][:10]}). 건수는 게임마다 다르다 —
   {_window_line(meta)}.
+- **유저 반응은 공식 한국 유튜브 채널 댓글 {_total_comments(meta):,}건 + 리뷰**로 센다. 리뷰만으로는
+  캐릭터당 언급이 한 자릿수~십몇 건이라 순위가 한두 건 차이로 뒤집혔다. 댓글은 캐릭터 PV·소개
+  영상에 이름이 그대로 쓰여 표본이 훨씬 크다. 대신 **공식 채널 댓글은 그 게임을 이미 보는 사람의
+  말**이라 스토어 리뷰보다 호의적으로 기울 수 있다.
 - 수집 {meta['fetched_at'][:10]} · 가챠 캐릭터 {_per_game_counts(gacha)} (플레이어 캐릭터
   {meta['n_playable_avatars_excluded']}명 제외) · 리뷰 {meta['n_reviews']:,}건
 - {_trends_line(trends_status)}
 
 ## 게임은 따로 본다
 
-네 게임은 출시 주기·캐릭터 풀·리뷰 표본 수가 다르다. 그래서 **순위(푸시·반응)와 격차는 게임
+다섯 게임은 출시 주기·캐릭터 풀·표본 수가 다르다. 그래서 **순위(푸시·반응)와 격차는 게임
 안에서만 매기고**, 게임을 가로지르는 순위표는 만들지 않는다. 아래 요약과 차트의 모든 순위는
-그 게임 안에서의 순위다. 비교할 수 있게 맞춘 것은 **리뷰 기간** 하나다.
+그 게임 안에서의 순위다. 비교할 수 있게 맞춘 것은 **수집 기간** 하나다.
 
 ## 게임별 핵심 요약
 
 {game_sections}
 ### 공통으로 보이는 것
 
-- 매칭 가능한 캐릭터 대부분이 리뷰에 등장하지 않는다(합쳐서 {n_matchable}명 중
-  {n_zero_mention}명 무언급). 같은 {meta.get('review_window_days', '?')}일 창 안에서도 리뷰에
-  이름이 오르는 캐릭터는 소수다.
+- 매칭 가능한 캐릭터의 상당수가 댓글·리뷰 어디에도 등장하지 않는다(합쳐서 {n_matchable}명 중
+  {n_zero_mention}명 무언급). 리뷰 {meta['n_reviews']:,}건에 공식 채널 댓글
+  {_total_comments(meta):,}건을 더해도 그렇다.
 - **가장 최근에 나온 캐릭터와 가장 많이 언급된 캐릭터는 게임마다 상당 부분 일치하지 않는다** —
   게임별 산점도(`03_push_vs_audience_rank.png`)에서 대각선(순위 일치선)을 얼마나 벗어나는지로 확인.
 - **주의**: 관측 데이터라 "배너를 자주 돌려서 언급량이 늘었다"는 인과 해석은 하지 않는다.

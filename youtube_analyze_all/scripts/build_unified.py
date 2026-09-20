@@ -552,6 +552,9 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
 
   .charts {{ grid-template-columns:1fr; gap:10px; margin-top:16px; }}
   .charts figure {{ break-inside:avoid; }}
+  /* 게임이 늘면서 차트가 2열 × 3행이 돼 세로로 길어졌다. 페이지 높이를 넘으면 뒷장에 빈 종이가
+     남으므로 이미지 높이를 한 페이지 안으로 묶는다(가로는 자동으로 줄어든다). */
+  .charts img {{ max-height:178mm; width:auto; max-width:100%; display:block; margin:0 auto; }}
   /* 두 줄짜리 푸터를 새 장에 홀로 두면 마지막 장이 빈 종이가 된다. 본문 뒤에 붙인다. */
   footer {{ break-before:auto; margin-top:24px; padding-top:10px; }}
 }}

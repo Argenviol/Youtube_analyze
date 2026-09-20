@@ -20,7 +20,7 @@
 | 9 | DART 재무 분석 | [REPORT.md](09_dart_financials/REPORT.md) | 2026-09-04 | — | [5종](09_dart_financials/charts/) | [index.html](09_dart_financials/index.html) |
 | 10 | 게임 캐릭터 인기도 | [REPORT.md](10_hoyoverse/REPORT.md) | 2026-09-20 | — | [8종](10_hoyoverse/charts/) | [index.html](10_hoyoverse/index.html) |
 | 11 | 팬 커머스 | [REPORT.md](11_fan_commerce/REPORT.md) | 2026-09-20 | — | [5종](11_fan_commerce/charts/) | [index.html](11_fan_commerce/index.html) |
-| 12 | 이벤트 임팩트 | [REPORT12 - 20260919.md](12_event_impact/REPORT12%20-%2020260919.md) | 2026-09-19 | 22개 | [4종](12_event_impact/charts/) | [index.html](12_event_impact/index.html) |
+| 12 | 이벤트 임팩트 | [REPORT12 - 20260920.md](12_event_impact/REPORT12%20-%2020260920.md) | 2026-09-20 | 23개 | [4종](12_event_impact/charts/) | [index.html](12_event_impact/index.html) |
 
 프로젝트 12개 · 차트 70종 · 대시보드 12건.
 

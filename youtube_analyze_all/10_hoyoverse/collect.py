@@ -201,7 +201,7 @@ OFFICIAL_YT = {
     "ba":       ("@bluearchive_kr",     "UCj0iColXMAjPA92rH-AXVGQ"),
 }
 COMMENTS_PER_VIDEO = 300     # 관련도순 상위. 영상당 이보다 많이 받아도 이름 언급 분포는 거의 안 변한다
-COMMENT_VIDEO_CAP = 400      # 창 안 영상 상한(안전장치)
+COMMENT_VIDEO_CAP = 1200     # 창 안 영상 상한(안전장치). 400 이던 때 원신이 정확히 400 으로 잘렸다
 
 
 def fetch_official_comments(window_days: int) -> tuple[pd.DataFrame, dict]:
@@ -224,8 +224,11 @@ def fetch_official_comments(window_days: int) -> tuple[pd.DataFrame, dict]:
             continue
         try:
             uploads = yt.uploads_playlist_id(cid)
-            vids = [v for v in yt.playlist_videos(uploads, limit=COMMENT_VIDEO_CAP)
+            listed = yt.playlist_videos(uploads, limit=COMMENT_VIDEO_CAP)
+            vids = [v for v in listed
                     if v.get("published_at") and v["published_at"] >= since.isoformat()]
+            # 상한에 걸렸고 마지막 영상도 창 안이면 창을 다 못 덮은 것이다 — 숨기지 않는다.
+            truncated = len(listed) >= COMMENT_VIDEO_CAP and len(vids) == len(listed)
             n_c = 0
             for v in vids:
                 for it in yt.comment_threads(v["video_id"], limit=COMMENTS_PER_VIDEO):
@@ -237,8 +240,10 @@ def fetch_official_comments(window_days: int) -> tuple[pd.DataFrame, dict]:
                         like_count=sn.get("likeCount"), published_at=sn.get("publishedAt"),
                     ))
                     n_c += 1
-            status["by_game"][a["game"]] = dict(channel=handle, videos=len(vids), comments=n_c)
-            print(f"  {a['name_ko']:14} 공식 채널 {handle} · 창 안 영상 {len(vids)}개 · 댓글 {n_c:,}건")
+            status["by_game"][a["game"]] = dict(channel=handle, videos=len(vids), comments=n_c,
+                                                window_complete=not truncated)
+            print(f"  {a['name_ko']:14} 공식 채널 {handle} · 창 안 영상 {len(vids)}개 · 댓글 {n_c:,}건"
+                  + ("" if not truncated else " (상한에 걸려 창 일부만)"))
         except Exception as e:  # noqa: BLE001
             status["by_game"][a["game"]] = dict(channel=handle, error=f"{type(e).__name__}: {str(e)[:120]}")
             print(f"  {a['name_ko']:14} 공식 채널 댓글 실패: {type(e).__name__}")
