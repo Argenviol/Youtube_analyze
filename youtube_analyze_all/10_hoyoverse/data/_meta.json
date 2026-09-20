@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-20T03:27:36.045154+00:00",
+  "fetched_at": "2026-09-20T04:22:10.630163+00:00",
   "source": "yatta.moe(Project Amber 후신, 캐릭터 마스터) + google-play-scraper(앱스토어 리뷰) + pytrends(Google Trends, 실패)",
   "n_characters": 593,
   "n_playable_avatars_excluded": 26,
@@ -67,7 +67,7 @@
   "google_trends_ok": true,
   "google_trends_error": null,
   "review_window_days": 365,
-  "review_since": "2025-09-20T03:20:32.855224+00:00",
+  "review_since": "2025-09-20T04:07:54.144389+00:00",
   "reviews_by_game": {
     "genshin": {
       "n": 1318,
@@ -106,29 +106,91 @@
     "by_game": {
       "genshin": {
         "channel": "@GenshinImpact_KR",
-        "videos": 400,
-        "comments": 30594
+        "videos": 608,
+        "comments": 48814,
+        "window_complete": true
       },
       "starrail": {
         "channel": "@HonkaiStarRail_KR",
         "videos": 229,
-        "comments": 31290
+        "comments": 31290,
+        "window_complete": true
       },
       "zzz": {
         "channel": "@ZZZ_KO",
-        "videos": 264,
-        "comments": 30776
+        "videos": 263,
+        "comments": 30706,
+        "window_complete": true
       },
       "hi3": {
         "channel": "@HonkaiImpact3rd_KR",
         "videos": 55,
-        "comments": 2728
+        "comments": 2728,
+        "window_complete": true
       },
       "ba": {
         "channel": "@bluearchive_kr",
         "videos": 317,
-        "comments": 24169
+        "comments": 24169,
+        "window_complete": true
       }
+    }
+  },
+  "apple_reviews": {
+    "genshin": {
+      "app_id": 1517783697,
+      "n": 150,
+      "pages": 4,
+      "window_complete": false
+    },
+    "starrail": {
+      "app_id": 1599719154,
+      "n": 202,
+      "pages": 5,
+      "window_complete": true
+    },
+    "zzz": {
+      "app_id": 1606356401,
+      "n": 155,
+      "pages": 4,
+      "window_complete": true
+    },
+    "hi3": {
+      "app_id": 1286705196,
+      "n": 10,
+      "pages": 1,
+      "window_complete": true
+    },
+    "ba": {
+      "app_id": 1571873795,
+      "n": 97,
+      "pages": 2,
+      "window_complete": true
+    }
+  },
+  "hoyolab": {
+    "genshin": {
+      "gid": 2,
+      "posts": 35,
+      "replies": 5240
+    },
+    "starrail": {
+      "gid": 6,
+      "posts": 60,
+      "replies": 5379
+    },
+    "zzz": {
+      "gid": 8,
+      "posts": 60,
+      "replies": 2301
+    },
+    "hi3": {
+      "gid": 1,
+      "posts": 11,
+      "replies": 114
+    },
+    "ba": {
+      "note": "HoYoLAB 에 없는 게임"
     }
   },
   "review_sampling": "공통 기간 — 수집 시점부터 review_window_days 일 안의 리뷰 전부(게임마다 건수는 다르고 기간은 같다)",

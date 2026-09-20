@@ -1,38 +1,127 @@
 {
-  "checked_at": "2026-09-20T03:51:59.771061+00:00",
+  "checked_at": "2026-09-20T04:22:10.629813+00:00",
   "used": {
-    "apple": {
-      "ba": {
-        "n": 97
-      },
+    "google_play": {
       "genshin": {
-        "n": 410
-      },
-      "hi3": {
-        "n": 10
+        "n": 1318,
+        "pages": 7,
+        "complete": true,
+        "note": ""
       },
       "starrail": {
-        "n": 202
+        "n": 991,
+        "pages": 5,
+        "complete": true,
+        "note": ""
       },
       "zzz": {
-        "n": 155
+        "n": 1149,
+        "pages": 6,
+        "complete": true,
+        "note": ""
+      },
+      "hi3": {
+        "n": 66,
+        "pages": 1,
+        "complete": true,
+        "note": ""
+      },
+      "ba": {
+        "n": 469,
+        "pages": 3,
+        "complete": true,
+        "note": ""
+      }
+    },
+    "youtube_official": {
+      "genshin": {
+        "channel": "@GenshinImpact_KR",
+        "videos": 608,
+        "comments": 48814,
+        "window_complete": true
+      },
+      "starrail": {
+        "channel": "@HonkaiStarRail_KR",
+        "videos": 229,
+        "comments": 31290,
+        "window_complete": true
+      },
+      "zzz": {
+        "channel": "@ZZZ_KO",
+        "videos": 263,
+        "comments": 30706,
+        "window_complete": true
+      },
+      "hi3": {
+        "channel": "@HonkaiImpact3rd_KR",
+        "videos": 55,
+        "comments": 2728,
+        "window_complete": true
+      },
+      "ba": {
+        "channel": "@bluearchive_kr",
+        "videos": 317,
+        "comments": 24169,
+        "window_complete": true
+      }
+    },
+    "apple": {
+      "genshin": {
+        "app_id": 1517783697,
+        "n": 150,
+        "pages": 4,
+        "window_complete": false
+      },
+      "starrail": {
+        "app_id": 1599719154,
+        "n": 202,
+        "pages": 5,
+        "window_complete": true
+      },
+      "zzz": {
+        "app_id": 1606356401,
+        "n": 155,
+        "pages": 4,
+        "window_complete": true
+      },
+      "hi3": {
+        "app_id": 1286705196,
+        "n": 10,
+        "pages": 1,
+        "window_complete": true
+      },
+      "ba": {
+        "app_id": 1571873795,
+        "n": 97,
+        "pages": 2,
+        "window_complete": true
       }
     },
     "hoyolab": {
       "genshin": {
+        "gid": 2,
+        "posts": 35,
         "replies": 5240
       },
-      "hi3": {
-        "replies": 114
-      },
       "starrail": {
+        "gid": 6,
+        "posts": 60,
         "replies": 5379
       },
       "zzz": {
+        "gid": 8,
+        "posts": 60,
         "replies": 2301
+      },
+      "hi3": {
+        "gid": 1,
+        "posts": 11,
+        "replies": 114
+      },
+      "ba": {
+        "note": "HoYoLAB 에 없는 게임"
       }
-    },
-    "note": "youtube_official·google_play 은 collect.py 실행 시 채워진다"
+    }
   },
   "unavailable": {
     "arca.live": "Cloudflare 챌린지(HTTP 403) — 우회하지 않는다",
