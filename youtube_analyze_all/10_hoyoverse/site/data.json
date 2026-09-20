@@ -1,10 +1,10 @@
 {
   "meta": {
-    "fetched_at": "2026-09-19T22:58:18.848630+00:00",
+    "fetched_at": "2026-09-20T03:15:28.336317+00:00",
     "source": "yatta.moe(Project Amber 후신, 캐릭터 마스터) + google-play-scraper(앱스토어 리뷰) + pytrends(Google Trends, 실패)",
     "n_characters": 567,
     "n_playable_avatars_excluded": 26,
-    "n_reviews": 3526,
+    "n_reviews": 3993,
     "games": [
       "genshin",
       "starrail",
@@ -47,21 +47,31 @@
         "n_manual_suits": 1,
         "unresolved_battlesuits": [],
         "n_versions_dated": 66
+      },
+      "ba": {
+        "names": "schaledb",
+        "release": "fandom(Global Banner)",
+        "ok": true,
+        "error": null,
+        "n": 263,
+        "n_release": 188,
+        "n_banner_names": 204
       }
     },
     "review_games": [
       "genshin",
       "starrail",
       "zzz",
-      "hi3"
+      "hi3",
+      "ba"
     ],
     "google_trends_ok": true,
     "google_trends_error": null,
     "review_window_days": 365,
-    "review_since": "2025-09-19T22:58:03.148876+00:00",
+    "review_since": "2025-09-20T03:15:12.002896+00:00",
     "reviews_by_game": {
       "genshin": {
-        "n": 1319,
+        "n": 1318,
         "pages": 7,
         "complete": true,
         "note": ""
@@ -79,23 +89,34 @@
         "note": ""
       },
       "hi3": {
-        "n": 67,
+        "n": 66,
         "pages": 1,
+        "complete": true,
+        "note": ""
+      },
+      "ba": {
+        "n": 469,
+        "pages": 3,
         "complete": true,
         "note": ""
       }
     },
+    "official_comments": {
+      "ok": false,
+      "error": "NameError: name 'config' is not defined",
+      "by_game": {}
+    },
     "review_sampling": "공통 기간 — 수집 시점부터 review_window_days 일 안의 리뷰 전부(게임마다 건수는 다르고 기간은 같다)",
     "method_changed_at": "2026-09-18",
     "method_note": "이전에는 게임당 최신 3,000건이라 기간이 게임마다 달랐다(원신 710일, 스타레일 888일). 이 시점 이전 스냅샷과 언급량·월간 추이를 직접 비교하지 말 것.",
-    "n_characters_collected": 330,
+    "n_characters_collected": 593,
     "n_characters_gacha": 567,
-    "n_characters_note": "수집 330명 중 가챠 캐릭터 567명이 분석 대상. 기본 지급 캐릭터(is_playable_avatar)는 제외했다.",
+    "n_characters_note": "수집 593명 중 가챠 캐릭터 567명이 분석 대상. 기본 지급 캐릭터(is_playable_avatar)는 제외했다.",
     "ranking_scope": "per_game",
     "ranking_note": "push_rank·audience_rank·gap 은 게임 안에서만 매긴 값이다. 게임을 섞어 비교하지 말 것."
   },
   "trends_status": {
-    "attempted_at": "2026-09-20T03:11:26.156870+00:00",
+    "attempted_at": "2026-09-20T03:15:11.032764+00:00",
     "ok": true,
     "library": "pytrends",
     "error": null,
@@ -109,7 +130,7 @@
       "package": "com.miHoYo.GenshinImpact",
       "title": "원신-스네즈나야 오픈",
       "score": 3.9112918,
-      "ratings": 5229898,
+      "ratings": 5229917,
       "reviews_total": 45655,
       "installs": "100,000,000+",
       "version": "7.0.1_47144228_47194594"
