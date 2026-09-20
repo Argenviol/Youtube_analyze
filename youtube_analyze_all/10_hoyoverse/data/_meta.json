@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-20T03:15:28.336317+00:00",
+  "fetched_at": "2026-09-20T03:27:36.045154+00:00",
   "source": "yatta.moe(Project Amber 후신, 캐릭터 마스터) + google-play-scraper(앱스토어 리뷰) + pytrends(Google Trends, 실패)",
   "n_characters": 593,
   "n_playable_avatars_excluded": 26,
@@ -67,7 +67,7 @@
   "google_trends_ok": true,
   "google_trends_error": null,
   "review_window_days": 365,
-  "review_since": "2025-09-20T03:15:12.002896+00:00",
+  "review_since": "2025-09-20T03:20:32.855224+00:00",
   "reviews_by_game": {
     "genshin": {
       "n": 1318,
@@ -101,9 +101,35 @@
     }
   },
   "official_comments": {
-    "ok": false,
-    "error": "NameError: name 'config' is not defined",
-    "by_game": {}
+    "ok": true,
+    "error": null,
+    "by_game": {
+      "genshin": {
+        "channel": "@GenshinImpact_KR",
+        "videos": 400,
+        "comments": 30594
+      },
+      "starrail": {
+        "channel": "@HonkaiStarRail_KR",
+        "videos": 229,
+        "comments": 31290
+      },
+      "zzz": {
+        "channel": "@ZZZ_KO",
+        "videos": 264,
+        "comments": 30776
+      },
+      "hi3": {
+        "channel": "@HonkaiImpact3rd_KR",
+        "videos": 55,
+        "comments": 2728
+      },
+      "ba": {
+        "channel": "@bluearchive_kr",
+        "videos": 317,
+        "comments": 24169
+      }
+    }
   },
   "review_sampling": "공통 기간 — 수집 시점부터 review_window_days 일 안의 리뷰 전부(게임마다 건수는 다르고 기간은 같다)",
   "method_changed_at": "2026-09-18",
