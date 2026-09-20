@@ -106,7 +106,11 @@ def build_metrics():
         apple["content"] = apple["title"].fillna("").astype(str) + " " + apple["content"]
     hoyolab = _load("hoyolab.csv", ["game", "name_ko", "post_id", "content", "created_at"])
 
+    # 공통 표본 = 다섯 게임 **모두** 가진 소스. HoYoLAB 은 호요버스 4개에만 있어서 빠진다.
+    # 게임끼리 비교할 때는 공통 표본만 쓴다 — 소스 구성이 다른 수치를 나란히 놓으면
+    # 게임 차이가 아니라 소스 차이를 재게 된다.
     CORPUS = {"youtube": comments, "apple": apple, "hoyolab": hoyolab}
+    COMMON_SOURCES = ("reviews", "youtube", "apple")   # hoyolab 제외
     corpus_n = {k: (v.groupby("game").size().to_dict() if len(v) else {}) for k, v in CORPUS.items()}
     build_metrics.corpus_n = corpus_n
     n_comments_by_game = {g: sum(corpus_n[k].get(g, 0) for k in CORPUS) for g in gacha["game"].unique()}
@@ -152,6 +156,15 @@ def build_metrics():
     gacha = gacha.merge(mentions, on="char_id", how="left")
     # 반응 순위의 기준 = 리뷰 언급 + 댓글 언급. 댓글이 있으면 그쪽이 표본을 지배한다.
     gacha["mentions_total"] = gacha["mention_count"].fillna(0) + gacha["comment_mentions"].fillna(0)
+    # 공통 표본 기준 언급과 만 건당 비율 — 게임 간 비교는 이 열로만 한다.
+    gacha["mentions_common"] = (gacha["mention_count"].fillna(0)
+                                + gacha["youtube_mentions"].fillna(0)
+                                + gacha["apple_mentions"].fillna(0))
+    _common_n = {g: (n_reviews_by_game.get(g, 0) + corpus_n["youtube"].get(g, 0)
+                     + corpus_n["apple"].get(g, 0)) for g in gacha["game"].unique()}
+    gacha["common_sample_n"] = gacha["game"].map(_common_n)
+    gacha["mentions_common_per_10k"] = (gacha["mentions_common"] / gacha["common_sample_n"] * 10000).round(2)
+    build_metrics.common_n = _common_n
     build_metrics.n_comments_by_game = n_comments_by_game
 
     # 게임별 기준선(전체 리뷰 평균 평점) — 캐릭터별 언급 리뷰 평점과 비교할 기준
@@ -365,6 +378,48 @@ def build_charts(gacha, reviews, monthly, push, audience):
     print(f"차트 8종 -> {CHARTS}")
 
 
+def _grand_total(by_game: dict) -> int:
+    return sum(int(v) for bg in by_game.values() for v in (bg.get("corpus") or {}).values())
+
+
+def _cross_game_table(gacha: pd.DataFrame) -> str:
+    """게임 간 비교 — 공통 표본(플레이+애플+유튜브)에서 만 건당 언급."""
+    rows = []
+    for g in games_of(gacha):
+        d = gacha[(gacha["game"] == g) & gacha["matchable"]]
+        if d.empty or not d["common_sample_n"].iloc[0]:
+            continue
+        top = d.nlargest(1, "mentions_common")
+        rows.append((game_ko(gacha, g), int(d["common_sample_n"].iloc[0]),
+                     float(d["mentions_common_per_10k"].sum()),
+                     float((d["mentions_common"] > 0).mean() * 100),
+                     str(top["name_ko"].iloc[0]), float(top["mentions_common_per_10k"].iloc[0])))
+    if not rows:
+        return ""
+    out = ["| 게임 | 공통 표본 | 캐릭터 언급 합(만 건당) | 한 번이라도 언급된 비율 | 1위 캐릭터(만 건당) |",
+           "|---|---:|---:|---:|---|"]
+    for nm, n, tot, share, who, rate in rows:
+        out.append(f"| {nm} | {n:,}건 | {tot:,.0f} | {share:.0f}% | {who} {rate:,.0f} |")
+    return "\n".join(out)
+
+
+def _sample_table(by_game: dict, meta: dict) -> str:
+    ko = {"reviews": "플레이 리뷰", "apple": "애플 리뷰", "youtube": "공식 유튜브 댓글", "hoyolab": "HoYoLAB 댓글"}
+    keys = ["reviews", "apple", "youtube", "hoyolab"]
+    head = "| 게임 | " + " | ".join(ko[k] for k in keys) + " | 전체 | 공통 표본 |"
+    sep = "|---|" + "---:|" * (len(keys) + 2)
+    lines = [head, sep]
+    for g, bg in by_game.items():
+        c = bg.get("corpus") or {}
+        cells = [f"{int(c.get(k, 0)):,}" if c.get(k) else "—" for k in keys]
+        lines.append(f"| {bg['name_ko']} | " + " | ".join(cells)
+                     + f" | {sum(int(v) for v in c.values()):,} | {int(bg.get('common_sample', 0)):,} |")
+    days = meta.get("review_window_days", "?")
+    return ("\n".join(lines) + f"\n\n모두 같은 기간({days}일, {str(meta.get('review_since',''))[:10]} ~ "
+            f"{meta['fetched_at'][:10]})에 쓰인 한국어 텍스트다. 접근을 시험했지만 막힌 곳은 "
+            "`data/source_probe.json` 에 이유와 함께 남겼다.")
+
+
 def _corpus_line(bg: dict) -> str:
     c = bg.get("corpus") or {}
     ko = {"reviews": "플레이 리뷰", "youtube": "공식 채널 댓글", "apple": "애플 리뷰", "hoyolab": "HoYoLAB 댓글"}
@@ -459,6 +514,7 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
             n_comments=int(getattr(build_metrics, "n_comments_by_game", {}).get(game, 0)),
             corpus=dict(reviews=int((reviews["game"] == game).sum()),
                         **{k: int(v.get(game, 0)) for k, v in getattr(build_metrics, "corpus_n", {}).items()}),
+            common_sample=int(getattr(build_metrics, "common_n", {}).get(game, 0)),
             n_matchable=int(g["matchable"].sum()),
             n_zero_mention=int((g["matchable"] & (g["mentions_total"] == 0)).sum()),
             push_top=_recs(push[push["game"] == game].head(TOP_N)),
@@ -565,6 +621,16 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
   {meta['n_playable_avatars_excluded']}명 제외) · 리뷰 {meta['n_reviews']:,}건
 - {_trends_line(trends_status)}
 
+## 표본 — 무엇을 세었나
+
+{_sample_table(by_game, meta)}
+
+**게임끼리 비교할 때는 공통 표본만 쓴다.** 다섯 게임이 모두 가진 소스는 플레이 리뷰·애플 리뷰·
+공식 유튜브 댓글 셋이다. HoYoLAB 은 호요버스 4개에만 있어 블루 아카이브와 견줄 수 없으므로
+게임 간 수치에서는 뺀다. 게임 **안에서의** 순위는 그 게임의 모든 캐릭터가 같은 표본을 보므로
+전체 표본(HoYoLAB 포함)을 쓴다. 두 값은 `mentions_total`(게임 안) 과
+`mentions_common_per_10k`(게임 간)로 나눠 저장한다.
+
 ## 게임은 따로 본다
 
 다섯 게임은 출시 주기·캐릭터 풀·표본 수가 다르다. 그래서 **순위(푸시·반응)와 격차는 게임
@@ -576,11 +642,14 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
 {game_sections}
 ### 공통으로 보이는 것
 
-- 매칭 가능한 캐릭터의 상당수가 댓글·리뷰 어디에도 등장하지 않는다(합쳐서 {n_matchable}명 중
-  {n_zero_mention}명 무언급). 리뷰 {meta['n_reviews']:,}건에 공식 채널 댓글
-  {_total_comments(meta):,}건을 더해도 그렇다.
+- 매칭 가능한 캐릭터의 상당수가 네 소스 어디에도 등장하지 않는다(합쳐서 {n_matchable}명 중
+  {n_zero_mention}명 무언급). 한국어 텍스트를 {_grand_total(by_game):,}건까지 모아도 그렇다.
 - **가장 최근에 나온 캐릭터와 가장 많이 언급된 캐릭터는 게임마다 상당 부분 일치하지 않는다** —
   게임별 산점도(`03_push_vs_audience_rank.png`)에서 대각선(순위 일치선)을 얼마나 벗어나는지로 확인.
+- 게임 간 비교가 필요한 값은 **공통 표본 만 건당 언급**으로만 적는다(아래 표). 원 건수는 소스
+  구성이 게임마다 달라 나란히 놓을 수 없다.
+
+{_cross_game_table(gacha)}
 - **주의**: 관측 데이터라 "배너를 자주 돌려서 언급량이 늘었다"는 인과 해석은 하지 않는다.
   언급량은 리뷰 작성 시점의 여러 이유(신캐 출시, 밸런스 논란, 버그 등)가 섞인 결과다.
 
