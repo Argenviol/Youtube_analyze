@@ -336,19 +336,28 @@ def collect(window_days: int) -> None:
     print("\n[4/6] 공식 한국 유튜브 채널 댓글 (같은 창)")
     comments_df, comments_status = fetch_official_comments(window_days)
     if comments_status["ok"]:
-        comments_df.to_csv(DATA / "comments.csv", index=False)
+        merged = reactions.merge_window(comments_df, DATA / "comments.csv", "comment_id",
+                                        "published_at", window_days)
+        merged.to_csv(DATA / "comments.csv", index=False)
+        print(f"  누적 {len(merged):,}건 (이번 수집 {len(comments_df):,}건 + 이전분, 창 밖은 제외)")
     else:
         print(f"  건너뜀 — {comments_status.get('error') or '수집된 댓글 없음'} (이전 comments.csv 가 있으면 그대로 둔다)")
 
     print("\n[5/6] Apple App Store 리뷰 (KR, 같은 창)")
     apple_df, apple_status = reactions.fetch_apple_reviews(APPS, window_days)
-    if len(apple_df):
-        apple_df.to_csv(DATA / "apple_reviews.csv", index=False)
+    apple_merged = reactions.merge_window(apple_df, DATA / "apple_reviews.csv", "review_id",
+                                          "at", window_days)
+    apple_merged.to_csv(DATA / "apple_reviews.csv", index=False)
+    apple_status["merged_total"] = int(len(apple_merged))
+    print(f"  누적 {len(apple_merged):,}건 (이번 수집 {len(apple_df):,}건 + 이전분)")
 
     print("\n[6/6] HoYoLAB 한국어 댓글 (같은 창)")
     hoyolab_df, hoyolab_status = reactions.fetch_hoyolab(APPS, window_days)
-    if len(hoyolab_df):
-        hoyolab_df.to_csv(DATA / "hoyolab.csv", index=False)
+    hoyolab_merged = reactions.merge_window(hoyolab_df, DATA / "hoyolab.csv", "reply_id",
+                                            "created_at", window_days)
+    hoyolab_merged.to_csv(DATA / "hoyolab.csv", index=False)
+    hoyolab_status["merged_total"] = int(len(hoyolab_merged))
+    print(f"  누적 {len(hoyolab_merged):,}건 (이번 수집 {len(hoyolab_df):,}건 + 이전분)")
 
     reactions.write_probe(DATA / "source_probe.json", dict(
         google_play=window["by_game"], youtube_official=comments_status.get("by_game"),
