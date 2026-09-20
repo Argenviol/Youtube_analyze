@@ -618,6 +618,14 @@ export type Character10 = {
   name_en?: string | null;
   /** 리뷰에서 실제로 찾는 문자열(붕괴3rd 는 "키아나"처럼 이름만). 없으면 name_ko. */
   match_name?: string | null;
+  /** 공식 한국 유튜브 채널 댓글 언급 수(같은 창). 리뷰보다 표본이 훨씬 크다. */
+  comment_mentions?: number | null;
+  comment_rate_per_10k?: number | null;
+  /** 리뷰 언급 + 댓글 언급 — 반응 순위의 기준. */
+  mentions_total?: number | null;
+  /** 블루 아카이브: SchaleDB 구현 순서, 한정 여부. */
+  default_order?: number | null;
+  is_limited?: number | null;
   game: string;
   name_ko_game: string;
   char_id: string;
@@ -657,6 +665,8 @@ export type GameBlock10 = {
   audience_top: Character10[];
   gap_overpushed: Character10[];
   gap_sleeper: Character10[];
+  /** 공식 채널 댓글 수(같은 창). 0이면 댓글 수집이 안 된 것. */
+  n_comments?: number;
 };
 
 export type Data10 = {

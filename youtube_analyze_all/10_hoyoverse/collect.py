@@ -39,7 +39,8 @@ from pathlib import Path
 import pandas as pd
 import requests
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))   # common/ 패키지
+sys.path.insert(0, str(Path(__file__).resolve().parent))       # 이 폴더의 sources.py
 import sources  # noqa: E402  (젠레스 존 제로·붕괴3rd 마스터)
 
 HERE = Path(__file__).resolve().parent
@@ -119,12 +120,13 @@ def fetch_characters() -> pd.DataFrame:
 
     # 젠레스 존 제로 · 붕괴3rd — yatta.moe 가 없는 게임. 조각을 이어 붙인다(sources.py).
     # 실패해도 여기서 멈추지 않는다: 그 게임만 빠지고 status 에 이유가 남는다.
-    for fn, label in ((sources.zzz_master, "젠레스 존 제로"), (sources.hi3_master, "붕괴3rd")):
+    for fn, game, label in ((sources.zzz_master, "zzz", "젠레스 존 제로"),
+                            (sources.hi3_master, "hi3", "붕괴3rd"),
+                            (sources.ba_master, "ba", "블루 아카이브")):
         try:
             more, st = fn()
         except Exception as e:  # noqa: BLE001
             more, st = [], dict(ok=False, error=f"{type(e).__name__}: {str(e)[:160]}")
-        game = "zzz" if fn is sources.zzz_master else "hi3"
         source_status[game] = st
         rows.extend(more)
         print(f"  {label:14} 캐릭터 {len(more)}개 · 출시일 {st.get('n_release', 0)}개 · "
@@ -184,7 +186,64 @@ APPS = [
     dict(game="starrail", name_ko="붕괴:스타레일", package="com.HoYoverse.hkrpgoversea"),
     dict(game="zzz",      name_ko="젠레스 존 제로", package="com.HoYoverse.Nap"),
     dict(game="hi3",      name_ko="붕괴3rd",      package="com.miHoYo.bh3korea"),
+    dict(game="ba",       name_ko="블루 아카이브",  package="com.nexon.bluearchive"),
 ]
+
+# 공식 한국 유튜브 채널 — 유저 반응의 두 번째(더 큰) 표본.
+# 한국 Play 리뷰는 1년에 게임당 수백~천 건이라 캐릭터별 언급이 한 자릿수~십몇 건에 그친다.
+# 공식 채널 영상 댓글은 영상 하나에 수백 건이고 캐릭터 PV·소개 영상에 이름이 그대로 쓰인다.
+# 채널 ID 는 youtube.com/@핸들 페이지의 externalId 로 확인했다(2026-09-20).
+OFFICIAL_YT = {
+    "genshin":  ("@GenshinImpact_KR",   "UCcum1rCJ5GJeQ_xv0xrohqg"),
+    "starrail": ("@HonkaiStarRail_KR",  "UCH33CJMcI0XZUpIhWRHiUuw"),
+    "zzz":      ("@ZZZ_KO",             "UCmry1hfaRHI_iTfxUMhC8mA"),
+    "hi3":      ("@HonkaiImpact3rd_KR", "UCHnxdu0qphnV3vrERNtCqpw"),
+    "ba":       ("@bluearchive_kr",     "UCj0iColXMAjPA92rH-AXVGQ"),
+}
+COMMENTS_PER_VIDEO = 300     # 관련도순 상위. 영상당 이보다 많이 받아도 이름 언급 분포는 거의 안 변한다
+COMMENT_VIDEO_CAP = 400      # 창 안 영상 상한(안전장치)
+
+
+def fetch_official_comments(window_days: int) -> tuple[pd.DataFrame, dict]:
+    """공식 한국 채널의 창 안 영상 댓글. API 키가 없으면 빈 표와 사유를 돌려준다."""
+    from common.youtube import YouTube
+    cols = ["game", "name_ko", "video_id", "video_title", "video_published_at",
+            "comment_id", "content", "like_count", "published_at"]
+    status = dict(ok=False, error=None, by_game={})
+    try:
+        yt = YouTube(config.get_api_key())
+    except Exception as e:  # noqa: BLE001
+        status["error"] = f"{type(e).__name__}: {str(e)[:120]}"
+        return pd.DataFrame(columns=cols), status
+    since = datetime.now(timezone.utc) - timedelta(days=window_days)
+    rows = []
+    for a in APPS:
+        handle, cid = OFFICIAL_YT.get(a["game"], (None, None))
+        if not cid:
+            continue
+        try:
+            uploads = yt.uploads_playlist_id(cid)
+            vids = [v for v in yt.playlist_videos(uploads, limit=COMMENT_VIDEO_CAP)
+                    if v.get("published_at") and v["published_at"] >= since.isoformat()]
+            n_c = 0
+            for v in vids:
+                for it in yt.comment_threads(v["video_id"], limit=COMMENTS_PER_VIDEO):
+                    sn = it.get("snippet", {}).get("topLevelComment", {}).get("snippet", {})
+                    rows.append(dict(
+                        game=a["game"], name_ko=a["name_ko"], video_id=v["video_id"],
+                        video_title=v["title"], video_published_at=v["published_at"],
+                        comment_id=it.get("id"), content=sn.get("textDisplay") or sn.get("textOriginal"),
+                        like_count=sn.get("likeCount"), published_at=sn.get("publishedAt"),
+                    ))
+                    n_c += 1
+            status["by_game"][a["game"]] = dict(channel=handle, videos=len(vids), comments=n_c)
+            print(f"  {a['name_ko']:14} 공식 채널 {handle} · 창 안 영상 {len(vids)}개 · 댓글 {n_c:,}건")
+        except Exception as e:  # noqa: BLE001
+            status["by_game"][a["game"]] = dict(channel=handle, error=f"{type(e).__name__}: {str(e)[:120]}")
+            print(f"  {a['name_ko']:14} 공식 채널 댓글 실패: {type(e).__name__}")
+    status["ok"] = bool(rows)
+    return pd.DataFrame(rows, columns=cols), status
+
 
 # 리뷰 기간은 **모든 게임에 같은 창**을 쓴다.
 #
@@ -249,11 +308,11 @@ def fetch_reviews(window_days: int, hard_cap: int = REVIEW_HARD_CAP) -> tuple[pd
 def collect(window_days: int) -> None:
     DATA.mkdir(parents=True, exist_ok=True)
 
-    print("[1/3] 캐릭터 마스터 데이터 (yatta.moe = Project Amber 후신)")
+    print("[1/4] 캐릭터 마스터 데이터 (yatta.moe = Project Amber 후신)")
     chars = fetch_characters()
     chars.to_csv(DATA / "characters.csv", index=False)
 
-    print("\n[2/3] Google Trends 시도 (pytrends) — 실패해도 그대로 기록")
+    print("\n[2/4] Google Trends 시도 (pytrends) — 실패해도 그대로 기록")
     trends_status = try_google_trends()
     (DATA / "trends_status.json").write_text(
         json.dumps(trends_status, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -262,10 +321,17 @@ def collect(window_days: int) -> None:
     else:
         print(f"  실패(정상 처리) — {trends_status['error']}")
 
-    print("\n[3/3] Google Play 리뷰 (google-play-scraper)")
+    print("\n[3/4] Google Play 리뷰 (google-play-scraper)")
     reviews_df, app_rows, window = fetch_reviews(window_days)
     reviews_df.to_csv(DATA / "reviews.csv", index=False)
     pd.DataFrame(app_rows).to_csv(DATA / "app_summary.csv", index=False)
+
+    print("\n[4/4] 공식 한국 유튜브 채널 댓글 (같은 창)")
+    comments_df, comments_status = fetch_official_comments(window_days)
+    if comments_status["ok"]:
+        comments_df.to_csv(DATA / "comments.csv", index=False)
+    else:
+        print(f"  건너뜀 — {comments_status.get('error') or '수집된 댓글 없음'} (이전 comments.csv 가 있으면 그대로 둔다)")
 
     meta = dict(
         fetched_at=datetime.now(timezone.utc).isoformat(),
@@ -282,6 +348,7 @@ def collect(window_days: int) -> None:
         review_window_days=window["days"],
         review_since=window["since"],
         reviews_by_game=window["by_game"],
+        official_comments=comments_status,
         review_sampling="공통 기간 — 수집 시점부터 review_window_days 일 안의 리뷰 전부(게임마다 건수는 다르고 기간은 같다)",
         method_changed_at="2026-09-18",
         method_note="이전에는 게임당 최신 3,000건이라 기간이 게임마다 달랐다(원신 710일, 스타레일 888일). "

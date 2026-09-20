@@ -40,6 +40,9 @@ DATA = HERE / "data"
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
       "Accept": "application/json, text/html;q=0.9, */*;q=0.8"}
 ENKA = "https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/zzz/"
+# GitHub 저장소(main)는 2025년 초에 멈춰 있다(194명). 사이트가 직접 내주는 데이터가 최신이다(275명).
+SCHALE = "https://schaledb.com/data/"
+BA_WIKI = "https://bluearchive.fandom.com/api.php"
 ZZZ_WIKI = "https://zenless-zone-zero.fandom.com/api.php"
 HI3_WIKI = "https://honkaiimpact3.fandom.com/api.php"
 DATE_RE = re.compile(r"(20\d{2})-(\d{2})-(\d{2})")
@@ -78,7 +81,7 @@ def _parse_date(text: str | None) -> str | None:
     m = DATE_RE.search(text)
     if m:
         return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
-    m = re.search(r"([A-Za-z]{3,9})\.?\s+(\d{1,2}),?\s+(20\d{2})", text)
+    m = re.search(r"([A-Za-z]{3,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(20\d{2})", text)
     if m:
         mon = m.group(1).lower()
         key = next((k for k in MONTHS if k.startswith(mon[:3])), None)
@@ -322,3 +325,86 @@ def hi3_master() -> tuple[list[dict], dict]:
     except Exception as e:  # noqa: BLE001
         status["error"] = f"{type(e).__name__}: {str(e)[:160]}"
         return [], status
+
+
+# ---------------------------------------------------------------------------
+# 블루 아카이브 (넥슨 · 한국 서버 = Global 일정)
+#   · 이름(kr/en)·등급(1~3★)·구현 순서 — SchaleDB 공개 저장소(data/kr, data/en students.json).
+#     SchaleDB 에는 출시일이 없다(ReleaseDate 가 비어 있다).
+#   · 출시일 — Blue Archive Fandom 위키 "Global Banner/<연도>" 페이지의 픽업 모집 기록.
+#     Rerun(복각)이 아닌 첫 픽업의 시작일을 그 학생의 출시일로 본다. 한국 서버는 Global 과
+#     같은 일정이다. 픽업 기록에 없는 학생(초기 상시·이벤트 배포)은 출시일이 빈다.
+#   · 분석 단위는 학생(변형판 '마시로(수영복)' 은 별도 학생). 3★ = 최고 등급.
+# ---------------------------------------------------------------------------
+_BA_GACHA_RE = re.compile(r"\{\{Detailed Gacha(.*?)\n\}\}", re.S)
+
+
+def _ba_banner_dates(years=range(2021, 2027)) -> dict[str, str]:
+    """{정규화된 영문 이름: 첫 신규 픽업 시작일}. Rerun 은 건너뛴다."""
+    first: dict[str, str] = {}
+    for y in years:
+        try:
+            data = _get(BA_WIKI, dict(action="parse", page=f"Global_Banner/{y}", prop="wikitext",
+                                      format="json")).json()
+        except Exception:  # noqa: BLE001
+            continue
+        wt = (data.get("parse") or {}).get("wikitext", {}).get("*", "")
+        for block in _BA_GACHA_RE.findall(wt):
+            status = (_field(block, "status") or "")
+            if "rerun" in status.lower():
+                continue
+            title = _field(block, "eng&kanji") or ""
+            m = re.match(r"\s*\d★\s*(.+?)\s+Pick\s*Up", title, re.I)
+            names = []
+            if m and m.group(1).strip().upper() != "UNIQUE":
+                # "Kikyou (Swimsuit) and 2★ Renge (Swimsuit)" 처럼 둘이 묶인 제목도 있다
+                names = [n for n in re.split(r"\s+and\s+\d?★?\s*", m.group(1)) if n.strip()]
+            else:
+                # 한정("UNIQUE") 배너는 제목에 이름이 없다. 아이콘 템플릿 {{Hoshino Armed Icon}} 에서 읽는다.
+                names = [n for n in re.findall(r"\{\{([^}|]+?) Icon\}\}", block)
+                         if not n.startswith("GL ")]
+            date = _parse_date(_field(block, "startdate1"))
+            if not date:
+                continue
+            for n in names:
+                key = _norm(n)
+                if key and (key not in first or date < first[key]):
+                    first[key] = date
+        time.sleep(0.3)
+    return first
+
+
+def ba_master() -> tuple[list[dict], dict]:
+    status = dict(names="schaledb", release="fandom(Global Banner)", ok=False, error=None, n=0, n_release=0)
+    kr = _get(SCHALE + "kr/students.min.json").json()
+    en = _get(SCHALE + "en/students.min.json").json()
+    kr = list(kr.values()) if isinstance(kr, dict) else kr
+    en = {s["Id"]: s for s in (en.values() if isinstance(en, dict) else en)}
+    # 한국 서버는 Global 일정이다. 일본 서버에만 나온 학생(IsReleased[1] == False)은 아직 한국에 없다.
+    kr = [st for st in kr if (st.get("IsReleased") or [True, True])[1]]
+    rows = []
+    for st in kr:
+        e = en.get(st["Id"], {})
+        grade = int(st.get("StarGrade") or 0)
+        rows.append(dict(
+            game="ba", name_ko_game="블루 아카이브", char_id=f"ba:{st['Id']}",
+            name_ko=st.get("Name"), name_en=e.get("Name"), route_en=None,
+            rank={3: 5, 2: 4, 1: 3}.get(grade), rarity_label=f"{grade}★",
+            element=st.get("BulletType"), weapon_or_path=st.get("WeaponType") or st.get("SquadType"),
+            is_playable_avatar=False, release_unix=None, release_date=None,
+            default_order=st.get("DefaultOrder"), is_limited=st.get("IsLimited"),
+        ))
+    status["n"] = len(rows)
+    try:
+        dates = _ba_banner_dates()
+        status["n_banner_names"] = len(dates)
+        for r in rows:
+            k = _norm(r["name_en"])
+            d = dates.get(k)
+            if d:
+                r["release_date"] = _iso_dt(d); r["release_unix"] = _iso_to_unix(d)
+        status["n_release"] = sum(1 for r in rows if r["release_date"])
+        status["ok"] = True
+    except Exception as e:  # noqa: BLE001
+        status["error"] = f"{type(e).__name__}: {str(e)[:160]}"
+    return rows, status

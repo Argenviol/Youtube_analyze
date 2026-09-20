@@ -89,6 +89,14 @@ def build_metrics():
     n_reviews_by_game = reviews.groupby("game").size().to_dict()
     # 리뷰가 없는 게임(마스터만 있고 리뷰 수집이 안 된 경우)은 0으로 나누지 않는다.
 
+    # 공식 한국 유튜브 채널 댓글 — 리뷰보다 훨씬 큰 두 번째 표본. 없으면 빈 표.
+    comments_p = DATA / "comments.csv"
+    comments = pd.read_csv(comments_p) if comments_p.exists() else pd.DataFrame(
+        columns=["game", "name_ko", "video_id", "video_title", "video_published_at", "comment_id",
+                 "content", "like_count", "published_at"])
+    comments["content"] = comments["content"].fillna("").astype(str)
+    n_comments_by_game = comments.groupby("game").size().to_dict() if len(comments) else {}
+
     mention_rows = []
     for game, g in gacha.groupby("game"):
         rv = reviews[reviews["game"] == game]
@@ -108,13 +116,23 @@ def build_metrics():
                 t = t.str.replace(_loose_pattern(n), " ", regex=True)
             mask = t.str.contains(c["match_name"], regex=False, na=False)
             n = int(mask.sum())
+            # 댓글에서도 같은 규칙(긴 이름 먼저 지움)으로 센다.
+            ct = comments.loc[comments["game"] == game, "content"]
+            for nn in longer:
+                ct = ct.str.replace(_loose_pattern(nn), " ", regex=True)
+            nc = int(ct.str.contains(c["match_name"], regex=False, na=False).sum()) if len(ct) else 0
             mention_rows.append(dict(
                 char_id=c["char_id"], mention_count=n,
                 avg_mention_score=round(float(scores[mask].mean()), 2) if n else None,
                 mention_rate_per_10k=round(n / n_reviews_by_game[game] * 10000, 2) if n_reviews_by_game.get(game) else None,
+                comment_mentions=nc,
+                comment_rate_per_10k=round(nc / n_comments_by_game[game] * 10000, 2) if n_comments_by_game.get(game) else None,
             ))
     mentions = pd.DataFrame(mention_rows)
     gacha = gacha.merge(mentions, on="char_id", how="left")
+    # 반응 순위의 기준 = 리뷰 언급 + 댓글 언급. 댓글이 있으면 그쪽이 표본을 지배한다.
+    gacha["mentions_total"] = gacha["mention_count"].fillna(0) + gacha["comment_mentions"].fillna(0)
+    build_metrics.n_comments_by_game = n_comments_by_game
 
     # 게임별 기준선(전체 리뷰 평균 평점) — 캐릭터별 언급 리뷰 평점과 비교할 기준
     baseline = reviews.groupby("game")["score"].mean().round(2).to_dict()
@@ -133,8 +151,8 @@ def build_metrics():
 
     # 유저 반응 랭킹: 매칭 가능한 캐릭터 중 언급량 많은 순 (전체 등급 포함, 게임별)
     # 언급 0건은 순위가 아니다 — 리뷰가 68건뿐인 게임에서 0건 캐릭터가 "반응 4위"로 찍히지 않게.
-    audience = (gacha[gacha["matchable"] & (gacha["mention_count"].fillna(0) > 0)]
-                .sort_values(["game", "mention_count"], ascending=[True, False])
+    audience = (gacha[gacha["matchable"] & (gacha["mentions_total"] > 0)]
+                .sort_values(["game", "mentions_total"], ascending=[True, False])
                 .reset_index(drop=True))
     audience["audience_rank"] = audience.groupby("game").cumcount() + 1
 
@@ -172,7 +190,8 @@ def build_sql(gacha, reviews, monthly, app_summary):
 
 
 GAME_COLOR = {"genshin": config.PALETTE["series"][0], "starrail": config.PALETTE["series"][1],
-              "zzz": config.PALETTE["series"][2], "hi3": config.PALETTE["series"][3]}
+              "zzz": config.PALETTE["series"][2], "hi3": config.PALETTE["series"][3],
+              "ba": config.PALETTE["series"][4]}
 
 
 def _gc(games):
@@ -395,6 +414,7 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
             name_ko=game_ko(gacha, game),
             n_gacha=int(len(g)),
             n_reviews=int((reviews["game"] == game).sum()),
+            n_comments=int(getattr(build_metrics, "n_comments_by_game", {}).get(game, 0)),
             n_matchable=int(g["matchable"].sum()),
             n_zero_mention=int((g["matchable"] & (g["mention_count"] == 0)).sum()),
             push_top=_recs(push[push["game"] == game].head(TOP_N)),
@@ -447,14 +467,16 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
         over = bg["gap_overpushed"][:3]
         sleep = bg["gap_sleeper"][:3]
         thin = ""
-        if bg["n_reviews"] < SMALL_SAMPLE:
-            thin = (f"- ⚠ 같은 {meta.get('review_window_days', '?')}일 창에서 리뷰가 **{bg['n_reviews']}건**뿐이다. "
-                    "언급 순위는 한두 건 차이로 뒤집히므로 **해석하지 말 것** — 표본이 이만큼 작다는 것 자체가 결과다.\n")
+        sample = bg["n_reviews"] + bg["n_comments"]
+        if sample < SMALL_SAMPLE:
+            thin = (f"- ⚠ 같은 {meta.get('review_window_days', '?')}일 창에서 리뷰 {bg['n_reviews']}건 + 공식 채널 댓글 "
+                    f"{bg['n_comments']:,}건 = **{sample:,}건**뿐이다. 언급 순위는 한두 건 차이로 뒤집히므로 "
+                    "**해석하지 말 것** — 표본이 이만큼 작다는 것 자체가 결과다.\n")
         def _sc(r):
             v = r.get("avg_mention_score")
             return f", 언급 리뷰 평점 {v:.1f}" if v is not None and v == v else ""
         fmt = lambda rows: ", ".join(
-            f"{r['name_ko']}(푸시 {int(r['push_rank'])}위→반응 {int(r['audience_rank'])}위, 언급 {int(r['mention_count'])}건{_sc(r)})"
+            f"{r['name_ko']}(푸시 {int(r['push_rank'])}위→반응 {int(r['audience_rank'])}위, 언급 {int(r.get('mentions_total') or 0):,}건{_sc(r)})"
             for r in rows) or "—"
         variants = sorted(n for n in g["name_ko"].dropna() if "•" in n or "·" in n)
         var_line = ""
@@ -462,11 +484,13 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
             var_line = ("- 이름에 •가 든 캐릭터(" + ", ".join(variants[:6]) + (" 등" if len(variants) > 6 else "")
                         + ")는 기존 캐릭터의 **변주판**으로, 마스터 데이터의 별도 출시일을 가진 새 캐릭터로 센다. "
                         "원본 이름(예: 블레이드)의 언급은 변주판 표기를 지운 뒤 세어 이중 계산하지 않는다.\n")
+        ta_score = (f", 언급 리뷰 평점 {ta['avg_mention_score']:.1f} / 게임 평균 {ta['game_avg_score']:.1f}"
+                    if ta['avg_mention_score'] == ta['avg_mention_score'] else "")
         return f"""### {bg['name_ko']}
 
-- 가챠 캐릭터 {bg['n_gacha']}명 · 리뷰 {bg['n_reviews']:,}건
+- 가챠 캐릭터 {bg['n_gacha']}명 · 리뷰 {bg['n_reviews']:,}건 · 공식 채널 댓글 {bg['n_comments']:,}건
 {thin}- **공식 푸시 1위**(최고 등급·최신 출시): {tp['name_ko']} ({str(tp['release_date'])[:10]} 출시)
-- **유저 반응 1위**(리뷰 언급량): {ta['name_ko']} ({int(ta['mention_count'])}건 언급, 언급 리뷰 평점 {ta['avg_mention_score']:.1f} / 게임 평균 {ta['game_avg_score']:.1f})
+- **유저 반응 1위**(댓글+리뷰 언급): {ta['name_ko']} (댓글 {int(ta['comment_mentions'] or 0):,}건 + 리뷰 {int(ta['mention_count'])}건{ta_score})
 - 언급량은 **호불호를 가리지 않는 화제성**이다. 싫어서 쓴 리뷰도 언급이다. 언급 리뷰 평점이 게임 평균보다
   낮으면 부정 화제로 읽는다(각 항목의 평점 참고).
 {var_line}- 매칭 가능한 {bg['n_matchable']}명 중 **{bg['n_zero_mention']}명은 리뷰에서 한 번도 언급되지 않았다**
