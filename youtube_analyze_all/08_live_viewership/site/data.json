@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-21T19:15:29.774256+00:00",
-    "n_snapshots": 36218,
+    "fetched_at": "2026-09-21T19:25:44.192448+00:00",
+    "n_snapshots": 36229,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-21T19:15:29.774256+00:00"
+      "2026-09-21T19:25:44.192448+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 32899,
-    "n_timepoints": 3290,
-    "span_hours": 973.33,
-    "observed_hours": 560.84,
+    "n_snapshots": 32909,
+    "n_timepoints": 3291,
+    "span_hours": 973.5,
+    "observed_hours": 561.01,
     "coverage_ratio": 0.576,
     "largest_gap_hours": 11.3,
     "n_live_rows": 8556,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-21T19:15:29.774256+00:00"
+    "last": "2026-09-21T19:25:44.192448+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 165965,
       "follower_delta": 9224,
-      "follower_per_day": 227.5,
+      "follower_per_day": 227.4,
       "n_sessions": 59,
       "n_live_points": 450,
       "peak_ccu": 38402,
@@ -46,7 +46,7 @@
       "unit": "UNIVERSE",
       "followers": 263687,
       "follower_delta": 8361,
-      "follower_per_day": 206.2,
+      "follower_per_day": 206.1,
       "n_sessions": 113,
       "n_live_points": 946,
       "peak_ccu": 38237,
@@ -116,7 +116,7 @@
       "unit": "CLICHE",
       "followers": 218504,
       "follower_delta": 9169,
-      "follower_per_day": 226.1,
+      "follower_per_day": 226.0,
       "n_sessions": 120,
       "n_live_points": 1112,
       "peak_ccu": 10461,
