@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-21T18:13:04.152300+00:00",
-    "n_snapshots": 36141,
+    "fetched_at": "2026-09-21T18:23:19.193973+00:00",
+    "n_snapshots": 36152,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-21T18:13:04.152300+00:00"
+      "2026-09-21T18:23:19.193973+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 32829,
-    "n_timepoints": 3283,
-    "span_hours": 972.29,
-    "observed_hours": 559.64,
+    "n_snapshots": 32839,
+    "n_timepoints": 3284,
+    "span_hours": 972.46,
+    "observed_hours": 559.81,
     "coverage_ratio": 0.576,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 8553,
+    "n_live_rows": 8554,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-21T18:13:04.152300+00:00"
+    "last": "2026-09-21T18:23:19.193973+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 165964,
-      "follower_delta": 9223,
+      "followers": 165965,
+      "follower_delta": 9224,
       "follower_per_day": 227.7,
       "n_sessions": 59,
       "n_live_points": 450,
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 263688,
-      "follower_delta": 8362,
+      "followers": 263689,
+      "follower_delta": 8363,
       "follower_per_day": 206.4,
       "n_sessions": 113,
       "n_live_points": 946,
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 216710,
-      "follower_delta": 6891,
+      "followers": 216711,
+      "follower_delta": 6892,
       "follower_per_day": 170.1,
       "n_sessions": 100,
       "n_live_points": 581,
@@ -86,8 +86,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 248417,
-      "follower_delta": 7300,
+      "followers": 248418,
+      "follower_delta": 7301,
       "follower_per_day": 180.2,
       "n_sessions": 98,
       "n_live_points": 961,
@@ -114,27 +114,27 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 218506,
-      "follower_delta": 9171,
+      "followers": 218508,
+      "follower_delta": 9173,
       "follower_per_day": 226.4,
       "n_sessions": 120,
       "n_live_points": 1112,
       "peak_ccu": 10461,
       "avg_ccu": 3312,
-      "ccu_per_1k_followers": 47.88
+      "ccu_per_1k_followers": 47.87
     },
     {
       "rank": 8,
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241557,
-      "follower_delta": 4709,
-      "follower_per_day": 116.2,
+      "followers": 241559,
+      "follower_delta": 4711,
+      "follower_per_day": 116.3,
       "n_sessions": 124,
-      "n_live_points": 1124,
+      "n_live_points": 1125,
       "peak_ccu": 9749,
-      "avg_ccu": 3261,
+      "avg_ccu": 3263,
       "ccu_per_1k_followers": 40.36
     },
     {
@@ -142,8 +142,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 227641,
-      "follower_delta": 8541,
+      "followers": 227642,
+      "follower_delta": 8542,
       "follower_per_day": 210.8,
       "n_sessions": 95,
       "n_live_points": 784,
@@ -640,10 +640,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-21 16:56",
-      "observed_min": 617.0,
-      "n_points": 63,
+      "observed_min": 627.3,
+      "n_points": 64,
       "peak_ccu": 7778,
-      "avg_ccu": 4620,
+      "avg_ccu": 4630,
       "title": "와우우",
       "category": "talk"
     },
@@ -37838,6 +37838,10 @@
         [
           "2026-09-22 03:13",
           3916
+        ],
+        [
+          "2026-09-22 03:23",
+          5305
         ]
       ]
     },
