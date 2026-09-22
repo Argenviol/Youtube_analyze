@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-22T19:23:26.013411+00:00",
-    "n_snapshots": 37813,
+    "fetched_at": "2026-09-22T19:33:39.715679+00:00",
+    "n_snapshots": 37824,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-22T19:23:26.013411+00:00"
+      "2026-09-22T19:33:39.715679+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 34349,
-    "n_timepoints": 3435,
-    "span_hours": 997.46,
-    "observed_hours": 585.62,
+    "n_snapshots": 34359,
+    "n_timepoints": 3436,
+    "span_hours": 997.63,
+    "observed_hours": 585.79,
     "coverage_ratio": 0.587,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 9080,
+    "n_live_rows": 9081,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-22T19:23:26.013411+00:00"
+    "last": "2026-09-22T19:33:39.715679+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 166034,
-      "follower_delta": 9293,
+      "followers": 166036,
+      "follower_delta": 9295,
       "follower_per_day": 223.6,
       "n_sessions": 60,
       "n_live_points": 486,
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 263762,
-      "follower_delta": 8436,
+      "followers": 263763,
+      "follower_delta": 8437,
       "follower_per_day": 203.0,
       "n_sessions": 114,
       "n_live_points": 1007,
@@ -58,27 +58,27 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 216756,
-      "follower_delta": 6937,
+      "followers": 216757,
+      "follower_delta": 6938,
       "follower_per_day": 166.9,
       "n_sessions": 101,
       "n_live_points": 619,
       "peak_ccu": 28071,
       "avg_ccu": 3413,
-      "ccu_per_1k_followers": 129.51
+      "ccu_per_1k_followers": 129.5
     },
     {
       "rank": 4,
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 216040,
-      "follower_delta": 8614,
+      "followers": 216044,
+      "follower_delta": 8618,
       "follower_per_day": 207.3,
       "n_sessions": 91,
-      "n_live_points": 908,
+      "n_live_points": 909,
       "peak_ccu": 24385,
-      "avg_ccu": 3154,
+      "avg_ccu": 3155,
       "ccu_per_1k_followers": 112.87
     },
     {
@@ -114,9 +114,9 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 218652,
-      "follower_delta": 9317,
-      "follower_per_day": 224.2,
+      "followers": 218651,
+      "follower_delta": 9316,
+      "follower_per_day": 224.1,
       "n_sessions": 121,
       "n_live_points": 1168,
       "peak_ccu": 10461,
@@ -142,8 +142,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 227761,
-      "follower_delta": 8661,
+      "followers": 227762,
+      "follower_delta": 8662,
       "follower_per_day": 208.4,
       "n_sessions": 96,
       "n_live_points": 839,
@@ -156,8 +156,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 261828,
-      "follower_delta": 8926,
+      "followers": 261829,
+      "follower_delta": 8927,
       "follower_per_day": 214.8,
       "n_sessions": 77,
       "n_live_points": 741,
@@ -6660,6 +6660,18 @@
       "category": "데드 바이 데이라이트"
     },
     {
+      "name_ko": "하나코 나나",
+      "name_en": "Hanako Nana",
+      "unit": "CLICHE",
+      "start_kst": "2026-09-23 02:41",
+      "observed_min": 112.6,
+      "n_points": 12,
+      "peak_ccu": 3462,
+      "avg_ccu": 2666,
+      "title": "잠이 안와서 기력빼려고 하는 노래방 (기대 ㄴㄴ)",
+      "category": "talk"
+    },
+    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -6708,18 +6720,6 @@
       "category": "구스 구스 덕"
     },
     {
-      "name_ko": "하나코 나나",
-      "name_en": "Hanako Nana",
-      "unit": "CLICHE",
-      "start_kst": "2026-09-15 18:14",
-      "observed_min": 535.1,
-      "n_points": 55,
-      "peak_ccu": 3450,
-      "avg_ccu": 2725,
-      "title": "[봉누도2] 부산 억척 아지매 한세월인데예",
-      "category": "Grand Theft Auto V"
-    },
-    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -6735,13 +6735,13 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "start_kst": "2026-09-23 02:41",
-      "observed_min": 102.3,
-      "n_points": 11,
-      "peak_ccu": 3442,
-      "avg_ccu": 2594,
-      "title": "잠이 안와서 기력빼려고 하는 노래방 (기대 ㄴㄴ)",
-      "category": "talk"
+      "start_kst": "2026-09-15 18:14",
+      "observed_min": 535.1,
+      "n_points": 55,
+      "peak_ccu": 3450,
+      "avg_ccu": 2725,
+      "title": "[봉누도2] 부산 억척 아지매 한세월인데예",
+      "category": "Grand Theft Auto V"
     },
     {
       "name_ko": "사키하네 후야",
@@ -30395,6 +30395,10 @@
         [
           "2026-09-23 04:23",
           3442
+        ],
+        [
+          "2026-09-23 04:33",
+          3462
         ]
       ]
     },
