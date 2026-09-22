@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-22T20:14:35.358006+00:00",
-    "n_snapshots": 37868,
+    "fetched_at": "2026-09-22T20:24:49.571479+00:00",
+    "n_snapshots": 37879,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-22T20:14:35.358006+00:00"
+      "2026-09-22T20:24:49.571479+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 34399,
-    "n_timepoints": 3440,
-    "span_hours": 998.32,
-    "observed_hours": 586.48,
-    "coverage_ratio": 0.587,
+    "n_snapshots": 34409,
+    "n_timepoints": 3441,
+    "span_hours": 998.49,
+    "observed_hours": 586.65,
+    "coverage_ratio": 0.588,
     "largest_gap_hours": 11.3,
     "n_live_rows": 9082,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-22T20:14:35.358006+00:00"
+    "last": "2026-09-22T20:24:49.571479+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -46,7 +46,7 @@
       "unit": "UNIVERSE",
       "followers": 263765,
       "follower_delta": 8439,
-      "follower_per_day": 202.9,
+      "follower_per_day": 202.8,
       "n_sessions": 114,
       "n_live_points": 1007,
       "peak_ccu": 38237,
@@ -74,7 +74,7 @@
       "unit": "CLICHE",
       "followers": 216052,
       "follower_delta": 8626,
-      "follower_per_day": 207.4,
+      "follower_per_day": 207.3,
       "n_sessions": 91,
       "n_live_points": 910,
       "peak_ccu": 24385,
@@ -116,7 +116,7 @@
       "unit": "CLICHE",
       "followers": 218652,
       "follower_delta": 9317,
-      "follower_per_day": 224.0,
+      "follower_per_day": 223.9,
       "n_sessions": 121,
       "n_live_points": 1168,
       "peak_ccu": 10461,
@@ -128,8 +128,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241592,
-      "follower_delta": 4744,
+      "followers": 241591,
+      "follower_delta": 4743,
       "follower_per_day": 114.0,
       "n_sessions": 125,
       "n_live_points": 1184,
