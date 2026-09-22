@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-22T19:13:12.232193+00:00",
-    "n_snapshots": 37802,
+    "fetched_at": "2026-09-22T19:23:26.013411+00:00",
+    "n_snapshots": 37813,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-22T19:13:12.232193+00:00"
+      "2026-09-22T19:23:26.013411+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 34339,
-    "n_timepoints": 3434,
-    "span_hours": 997.29,
-    "observed_hours": 585.45,
+    "n_snapshots": 34349,
+    "n_timepoints": 3435,
+    "span_hours": 997.46,
+    "observed_hours": 585.62,
     "coverage_ratio": 0.587,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 9079,
+    "n_live_rows": 9080,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-22T19:13:12.232193+00:00"
+    "last": "2026-09-22T19:23:26.013411+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 166033,
-      "follower_delta": 9292,
+      "followers": 166034,
+      "follower_delta": 9293,
       "follower_per_day": 223.6,
       "n_sessions": 60,
       "n_live_points": 486,
@@ -72,11 +72,11 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 216038,
-      "follower_delta": 8612,
-      "follower_per_day": 207.2,
+      "followers": 216040,
+      "follower_delta": 8614,
+      "follower_per_day": 207.3,
       "n_sessions": 91,
-      "n_live_points": 907,
+      "n_live_points": 908,
       "peak_ccu": 24385,
       "avg_ccu": 3154,
       "ccu_per_1k_followers": 112.87
@@ -86,9 +86,9 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 248526,
-      "follower_delta": 7409,
-      "follower_per_day": 178.3,
+      "followers": 248525,
+      "follower_delta": 7408,
+      "follower_per_day": 178.2,
       "n_sessions": 99,
       "n_live_points": 1033,
       "peak_ccu": 13363,
@@ -114,8 +114,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 218651,
-      "follower_delta": 9316,
+      "followers": 218652,
+      "follower_delta": 9317,
       "follower_per_day": 224.2,
       "n_sessions": 121,
       "n_live_points": 1168,
@@ -130,7 +130,7 @@
       "unit": "UNIVERSE",
       "followers": 241592,
       "follower_delta": 4744,
-      "follower_per_day": 114.2,
+      "follower_per_day": 114.1,
       "n_sessions": 125,
       "n_live_points": 1184,
       "peak_ccu": 9749,
@@ -142,8 +142,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 227760,
-      "follower_delta": 8660,
+      "followers": 227761,
+      "follower_delta": 8661,
       "follower_per_day": 208.4,
       "n_sessions": 96,
       "n_live_points": 839,
@@ -6732,6 +6732,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "하나코 나나",
+      "name_en": "Hanako Nana",
+      "unit": "CLICHE",
+      "start_kst": "2026-09-23 02:41",
+      "observed_min": 102.3,
+      "n_points": 11,
+      "peak_ccu": 3442,
+      "avg_ccu": 2594,
+      "title": "잠이 안와서 기력빼려고 하는 노래방 (기대 ㄴㄴ)",
+      "category": "talk"
+    },
+    {
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
@@ -6780,18 +6792,6 @@
       "category": "머신 파티"
     },
     {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-15 18:15",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3429,
-      "avg_ccu": 3429,
-      "title": "여언습",
-      "category": "talk"
-    },
-    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -6804,15 +6804,15 @@
       "category": "발로란트"
     },
     {
-      "name_ko": "하나코 나나",
-      "name_en": "Hanako Nana",
-      "unit": "CLICHE",
-      "start_kst": "2026-09-23 02:41",
-      "observed_min": 92.1,
-      "n_points": 10,
-      "peak_ccu": 3428,
-      "avg_ccu": 2509,
-      "title": "잠이 안와서 기력빼려고 하는 노래방 (기대 ㄴㄴ)",
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-15 18:15",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3429,
+      "avg_ccu": 3429,
+      "title": "여언습",
       "category": "talk"
     },
     {
@@ -30391,6 +30391,10 @@
         [
           "2026-09-23 04:13",
           3392
+        ],
+        [
+          "2026-09-23 04:23",
+          3442
         ]
       ]
     },
