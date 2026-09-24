@@ -12,6 +12,13 @@ import requests
 BASE = "https://www.googleapis.com/youtube/v3"
 
 
+class QuotaExceeded(RuntimeError):
+    """일일 한도 소진. 재시도해도 한도가 풀리는 태평양 자정(UTC 07/08시)까지는 안 된다."""
+
+
+QUOTA_REASONS = ("quotaExceeded", "dailyLimitExceeded", "rateLimitExceeded")
+
+
 class YouTube:
     def __init__(self, api_key: str, session: requests.Session | None = None):
         self.key = api_key
@@ -19,16 +26,23 @@ class YouTube:
 
     def _get(self, endpoint: str, params: dict) -> dict:
         params = {**params, "key": self.key}
+        r = None
         for attempt in range(4):
             r = self.s.get(f"{BASE}/{endpoint}", params=params, timeout=30)
             if r.status_code == 200:
                 return r.json()
+            if r.status_code == 403 and any(k in r.text for k in QUOTA_REASONS):
+                raise QuotaExceeded(f"{endpoint} 한도 소진 403: {r.text[:300]}")
             # 429/5xx 재시도
             if r.status_code in (429, 500, 503):
                 time.sleep(2 ** attempt)
                 continue
             raise RuntimeError(f"{endpoint} 실패 {r.status_code}: {r.text[:300]}")
-        raise RuntimeError(f"{endpoint} 재시도 초과")
+        # 429 가 네 번 연속이면 일시적 혼잡이 아니라 한도다(2026-09-20: search.list 일일 100회를
+        # weekly 세 번이 같은 날 나눠 쓰다 세 번째에서 막혔다).
+        if r is not None and r.status_code == 429:
+            raise QuotaExceeded(f"{endpoint} 한도 소진 429: {r.text[:300]}")
+        raise RuntimeError(f"{endpoint} 재시도 초과 {r.status_code if r is not None else ''}")
 
     # -- 채널 --------------------------------------------------------------
     def channels(self, ids: list[str], part="snippet,statistics,contentDetails,brandingSettings") -> list[dict]:

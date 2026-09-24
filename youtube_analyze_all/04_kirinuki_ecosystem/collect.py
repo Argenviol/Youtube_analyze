@@ -19,10 +19,14 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import config
-from common.youtube import YouTube
+from common.youtube import QuotaExceeded, YouTube
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
+# search.list 는 하루 100회 한도가 따로 있고 이 수집이 한 번에 33회를 쓴다. 같은 날 weekly 를
+# 손으로 몇 번 더 돌리면 막힌다. 직전 수집이 이만큼 안쪽이면 이번 주 몫은 이미 있는 것이므로
+# 실패로 치지 않고 기존 데이터를 둔다. 그보다 오래됐으면 진짜 결측이라 실패로 낸다.
+FRESH_DAYS = 6
 SUFFIX = ["키리누키", "클립", "切り抜き"]
 # 검색 노이즈(무관한 대형 쇼츠·커버 등) 제거: 제목 또는 채널명에 키리누키/클립 토큰이 있어야 팬클립으로 인정
 KIRI_TOKEN = re.compile(r"키리누키|클립|切り抜き|切りぬき|キリヌキ|kirinuki|clip", re.IGNORECASE)
@@ -88,7 +92,23 @@ def collect(per_query: int = 40) -> None:
     print(f"\n완료: 클립 {len(df)}개 / 팬채널 {df['clip_channel_id'].nunique()}개 -> {DATA}")
 
 
+def _last_fetch_age_days() -> float | None:
+    try:
+        meta = json.loads((DATA / "_meta.json").read_text(encoding="utf-8"))
+        at = datetime.fromisoformat(meta["fetched_at"])
+    except (OSError, KeyError, ValueError):
+        return None
+    return (datetime.now(timezone.utc) - at).total_seconds() / 86400
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--per-query", type=int, default=40)
-    collect(ap.parse_args().per_query)
+    try:
+        collect(ap.parse_args().per_query)
+    except QuotaExceeded as e:
+        age = _last_fetch_age_days()
+        if age is not None and age < FRESH_DAYS:
+            print(f"::warning::04 search 한도 소진 — {age:.1f}일 전 수집분을 그대로 둔다 ({e})")
+            sys.exit(0)
+        raise
