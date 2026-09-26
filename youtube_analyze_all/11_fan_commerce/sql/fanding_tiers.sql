@@ -1,5 +1,7 @@
--- fanding_tiers 데이터 (67 rows)
+-- fanding_tiers 데이터 (69 rows)
 
+INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('my7Ys8wvNgG9', '나초 nacho', 0, '나초 치즈먹이기', 4000);
+INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('my7Ys8wvNgG9', '나초 nacho', 1, '나초에게 쌀먹이기', 10000);
 INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('myjZVWA2LSO4', '유키링 yukilling', 0, '키링이 환생 도와주기', 45000);
 INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('hananeno_chuchu', '하나네노 츄츄', 0, '츄츄와 DM 멤버십', 3700);
 INSERT INTO fanding_tiers (creator_url, nickname, tier_index, tier_title, price_krw) VALUES ('LNFyxMaszUEC', '빅터 KR', 0, '소량 투자', 1000);

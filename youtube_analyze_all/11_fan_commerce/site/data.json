@@ -1,10 +1,10 @@
 {
   "meta": {
-    "fetched_at": "2026-09-20T04:24:02.531800+00:00",
+    "fetched_at": "2026-09-26T23:21:46.733261+00:00",
     "source": "팬딩(Fanding) 공개 REST(/rest/explorer/creator_list, /@.../membership) + 텀블벅(Tumblbug) 공개 결과 정적 큐레이션(로봇배제표준상 /api/ 자동수집 불가) + 09_dart_financials 재사용(DART 재수집 없음)",
-    "n_fanding_creators": 112,
-    "n_fanding_creators_with_tiers": 57,
-    "n_fanding_tiers": 67,
+    "n_fanding_creators": 113,
+    "n_fanding_creators_with_tiers": 58,
+    "n_fanding_tiers": 69,
     "n_crowdfunding_projects": 6,
     "n_financial_company_years": 10,
     "tumblbug_blocked_by_robots": true,
@@ -13,16 +13,16 @@
   },
   "fanding": {
     "stats": {
-      "n_tiers": 67,
-      "n_creators_with_tiers": 57,
+      "n_tiers": 69,
+      "n_creators_with_tiers": 58,
       "min_price": 1000,
       "max_price": 550000,
       "median_price": 7200,
-      "mean_price": 20189.0,
+      "mean_price": 19807.0,
       "stellive_prices": [
         24000
       ],
-      "stellive_percentile": 83.6
+      "stellive_percentile": 84.1
     },
     "creator_summary": [
       {
@@ -82,16 +82,16 @@
         "avg_price": 29000
       },
       {
-        "creator_url": "stellive",
-        "nickname": "스텔라이브",
+        "creator_url": "STARDAYS",
+        "nickname": "스타데이즈",
         "n_tiers": 1,
         "min_price": 24000,
         "max_price": 24000,
         "avg_price": 24000
       },
       {
-        "creator_url": "STARDAYS",
-        "nickname": "스타데이즈",
+        "creator_url": "stellive",
+        "nickname": "스텔라이브",
         "n_tiers": 1,
         "min_price": 24000,
         "max_price": 24000,
@@ -146,14 +146,6 @@
         "avg_price": 13200
       },
       {
-        "creator_url": "dalchesom",
-        "nickname": "Dalchesom",
-        "n_tiers": 1,
-        "min_price": 11000,
-        "max_price": 11000,
-        "avg_price": 11000
-      },
-      {
         "creator_url": "quLa8SzFA0Db",
         "nickname": "모야__",
         "n_tiers": 1,
@@ -162,16 +154,24 @@
         "avg_price": 11000
       },
       {
-        "creator_url": "aho0226",
-        "nickname": "아호_aho",
+        "creator_url": "dalchesom",
+        "nickname": "Dalchesom",
         "n_tiers": 1,
         "min_price": 11000,
         "max_price": 11000,
         "avg_price": 11000
       },
       {
-        "creator_url": "hiyoko",
-        "nickname": "히요코_POCOTONE",
+        "creator_url": "imducko3o",
+        "nickname": "오리꿍_Fanding",
+        "n_tiers": 1,
+        "min_price": 11000,
+        "max_price": 11000,
+        "avg_price": 11000
+      },
+      {
+        "creator_url": "Y1Y4_",
+        "nickname": "이야",
         "n_tiers": 1,
         "min_price": 11000,
         "max_price": 11000,
@@ -186,8 +186,8 @@
         "avg_price": 11000
       },
       {
-        "creator_url": "imducko3o",
-        "nickname": "오리꿍_Fanding",
+        "creator_url": "hiyoko",
+        "nickname": "히요코_POCOTONE",
         "n_tiers": 1,
         "min_price": 11000,
         "max_price": 11000,
@@ -218,8 +218,8 @@
         "avg_price": 11000
       },
       {
-        "creator_url": "Y1Y4_",
-        "nickname": "이야",
+        "creator_url": "aho0226",
+        "nickname": "아호_aho",
         "n_tiers": 1,
         "min_price": 11000,
         "max_price": 11000,
@@ -258,16 +258,16 @@
         "avg_price": 7200
       },
       {
-        "creator_url": "visoe",
-        "nickname": "이소에",
-        "n_tiers": 1,
-        "min_price": 5500,
-        "max_price": 5500,
-        "avg_price": 5500
+        "creator_url": "my7Ys8wvNgG9",
+        "nickname": "나초 nacho",
+        "n_tiers": 2,
+        "min_price": 4000,
+        "max_price": 10000,
+        "avg_price": 7000
       },
       {
-        "creator_url": "vrecord",
-        "nickname": "브이레코드_VRECORD",
+        "creator_url": "visoe",
+        "nickname": "이소에",
         "n_tiers": 1,
         "min_price": 5500,
         "max_price": 5500,
@@ -284,6 +284,14 @@
       {
         "creator_url": "moonmomo",
         "nickname": "문모모",
+        "n_tiers": 1,
+        "min_price": 5500,
+        "max_price": 5500,
+        "avg_price": 5500
+      },
+      {
+        "creator_url": "vrecord",
+        "nickname": "브이레코드_VRECORD",
         "n_tiers": 1,
         "min_price": 5500,
         "max_price": 5500,
@@ -322,16 +330,16 @@
         "avg_price": 3630
       },
       {
-        "creator_url": "shiroko",
-        "nickname": "시로코 SHIROKO",
+        "creator_url": "iPsXc7F1ldLn",
+        "nickname": "앰구",
         "n_tiers": 1,
         "min_price": 3300,
         "max_price": 3300,
         "avg_price": 3300
       },
       {
-        "creator_url": "iPsXc7F1ldLn",
-        "nickname": "앰구",
+        "creator_url": "shiroko",
+        "nickname": "시로코 SHIROKO",
         "n_tiers": 1,
         "min_price": 3300,
         "max_price": 3300,
@@ -354,8 +362,8 @@
         "avg_price": 2000
       },
       {
-        "creator_url": "Reana",
-        "nickname": "레아나 Reana",
+        "creator_url": "Ux35RL4tPZJY",
+        "nickname": "아티손즈",
         "n_tiers": 1,
         "min_price": 1100,
         "max_price": 1100,
@@ -386,16 +394,16 @@
         "avg_price": 1100
       },
       {
-        "creator_url": "Veginning",
-        "nickname": "VGG",
+        "creator_url": "WXSt8G3KxVno",
+        "nickname": "여름어름",
         "n_tiers": 1,
         "min_price": 1100,
         "max_price": 1100,
         "avg_price": 1100
       },
       {
-        "creator_url": "Ux35RL4tPZJY",
-        "nickname": "아티손즈",
+        "creator_url": "Reana",
+        "nickname": "레아나 Reana",
         "n_tiers": 1,
         "min_price": 1100,
         "max_price": 1100,
@@ -410,8 +418,8 @@
         "avg_price": 1100
       },
       {
-        "creator_url": "WXSt8G3KxVno",
-        "nickname": "여름어름",
+        "creator_url": "Veginning",
+        "nickname": "VGG",
         "n_tiers": 1,
         "min_price": 1100,
         "max_price": 1100,
@@ -483,6 +491,20 @@
       }
     ],
     "tiers": [
+      {
+        "creator_url": "my7Ys8wvNgG9",
+        "nickname": "나초 nacho",
+        "tier_index": 0,
+        "tier_title": "나초 치즈먹이기",
+        "price_krw": 4000
+      },
+      {
+        "creator_url": "my7Ys8wvNgG9",
+        "nickname": "나초 nacho",
+        "tier_index": 1,
+        "tier_title": "나초에게 쌀먹이기",
+        "price_krw": 10000
+      },
       {
         "creator_url": "myjZVWA2LSO4",
         "nickname": "유키링 yukilling",

@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-09-20T04:22:10.630163+00:00",
+  "fetched_at": "2026-09-26T23:19:49.767857+00:00",
   "source": "yatta.moe(Project Amber 후신, 캐릭터 마스터) + google-play-scraper(앱스토어 리뷰) + pytrends(Google Trends, 실패)",
-  "n_characters": 593,
+  "n_characters": 595,
   "n_playable_avatars_excluded": 26,
-  "n_reviews": 3993,
+  "n_reviews": 3989,
   "games": [
     "genshin",
     "starrail",
@@ -16,7 +16,7 @@
       "names": "yatta.moe",
       "release": "yatta.moe",
       "ok": true,
-      "n": 134
+      "n": 136
     },
     "starrail": {
       "names": "yatta.moe",
@@ -67,22 +67,22 @@
   "google_trends_ok": true,
   "google_trends_error": null,
   "review_window_days": 365,
-  "review_since": "2025-09-20T04:07:54.144389+00:00",
+  "review_since": "2025-09-26T23:02:47.600326+00:00",
   "reviews_by_game": {
     "genshin": {
-      "n": 1318,
+      "n": 1333,
       "pages": 7,
       "complete": true,
       "note": ""
     },
     "starrail": {
-      "n": 991,
+      "n": 980,
       "pages": 5,
       "complete": true,
       "note": ""
     },
     "zzz": {
-      "n": 1149,
+      "n": 1151,
       "pages": 6,
       "complete": true,
       "note": ""
@@ -94,7 +94,7 @@
       "note": ""
     },
     "ba": {
-      "n": 469,
+      "n": 459,
       "pages": 3,
       "complete": true,
       "note": ""
@@ -106,20 +106,20 @@
     "by_game": {
       "genshin": {
         "channel": "@GenshinImpact_KR",
-        "videos": 608,
-        "comments": 48814,
+        "videos": 612,
+        "comments": 48932,
         "window_complete": true
       },
       "starrail": {
         "channel": "@HonkaiStarRail_KR",
-        "videos": 229,
-        "comments": 31290,
+        "videos": 232,
+        "comments": 31598,
         "window_complete": true
       },
       "zzz": {
         "channel": "@ZZZ_KO",
-        "videos": 263,
-        "comments": 30706,
+        "videos": 262,
+        "comments": 30657,
         "window_complete": true
       },
       "hi3": {
@@ -130,49 +130,60 @@
       },
       "ba": {
         "channel": "@bluearchive_kr",
-        "videos": 317,
-        "comments": 24169,
+        "videos": 305,
+        "comments": 23484,
         "window_complete": true
       }
     }
   },
   "apple_reviews": {
-    "ba": {
-      "n": 97,
-      "note": "여러 실행 누적(RSS 스로틀 대비 merge)"
-    },
     "genshin": {
-      "n": 410,
-      "note": "여러 실행 누적(RSS 스로틀 대비 merge)"
-    },
-    "hi3": {
-      "n": 10,
-      "note": "여러 실행 누적(RSS 스로틀 대비 merge)"
+      "app_id": 1517783697,
+      "n": 419,
+      "pages": 9,
+      "window_complete": true
     },
     "starrail": {
-      "n": 202,
-      "note": "여러 실행 누적(RSS 스로틀 대비 merge)"
+      "app_id": 1599719154,
+      "n": 190,
+      "pages": 4,
+      "window_complete": true
     },
     "zzz": {
-      "n": 155,
-      "note": "여러 실행 누적(RSS 스로틀 대비 merge)"
-    }
+      "app_id": 1606356401,
+      "n": 153,
+      "pages": 4,
+      "window_complete": true
+    },
+    "hi3": {
+      "app_id": 1286705196,
+      "n": 10,
+      "pages": 1,
+      "window_complete": true
+    },
+    "ba": {
+      "app_id": 1571873795,
+      "n": 90,
+      "pages": 2,
+      "window_complete": true
+    },
+    "merged_total": 1713
   },
   "hoyolab": {
     "genshin": {
       "gid": 2,
-      "posts": 35,
-      "replies": 5240
+      "posts": 37,
+      "replies": 5687
     },
     "starrail": {
       "gid": 6,
       "posts": 60,
-      "replies": 5379
+      "replies": 4370
     },
     "zzz": {
       "gid": 8,
       "posts": 60,
-      "replies": 2301
+      "replies": 2138
     },
     "hi3": {
       "gid": 1,
@@ -181,7 +192,8 @@
     },
     "ba": {
       "note": "HoYoLAB 에 없는 게임"
-    }
+    },
+    "merged_total": 25302
   },
   "review_sampling": "공통 기간 — 수집 시점부터 review_window_days 일 안의 리뷰 전부(게임마다 건수는 다르고 기간은 같다)",
   "method_changed_at": "2026-09-18",
