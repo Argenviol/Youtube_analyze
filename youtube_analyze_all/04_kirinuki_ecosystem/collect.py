@@ -104,8 +104,16 @@ def _last_fetch_age_days() -> float | None:
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--per-query", type=int, default=40)
+    ap.add_argument("--force", action="store_true", help="직전 수집이 FRESH_DAYS 안쪽이어도 다시 검색")
+    args = ap.parse_args()
+    # 한 번에 search 33회(3,300 units). 주 1회 정기 실행이면 충분하고, 같은 주에 weekly 를
+    # 손으로 다시 돌려도 검색을 또 쓰지 않는다 — 한도를 먹기 전에 여기서 멈춘다.
+    age = _last_fetch_age_days()
+    if not args.force and age is not None and age < FRESH_DAYS:
+        print(f"04 수집 건너뜀 — {age:.1f}일 전 수집분이 있다(FRESH_DAYS={FRESH_DAYS}, 다시 받으려면 --force)")
+        sys.exit(0)
     try:
-        collect(ap.parse_args().per_query)
+        collect(args.per_query)
     except QuotaExceeded as e:
         age = _last_fetch_age_days()
         if age is not None and age < FRESH_DAYS:

@@ -4,12 +4,27 @@ requests 만으로 동작(외부 SDK 불필요). 페이지네이션/배치 처�
 """
 from __future__ import annotations
 
+import json
+import sys
 import time
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from typing import Iterable, Iterator
 
 import requests
 
 BASE = "https://www.googleapis.com/youtube/v3"
+
+# -- 일일 예산 ---------------------------------------------------------------
+# Google 한도는 10,000 units/일 + search.list 100회/일, 태평양 자정에 풀린다.
+# 한도에 닿기 **전에** 멈추려고 호출마다 장부에 적고, 자체 예산을 넘길 호출은 보내지 않는다.
+# 20% 여유는 수동 실행·로컬 시험 몫이다. 장부는 저장소에 커밋되므로 CI 실행끼리(같은 날
+# daily·weekly·수동 재실행) 서로의 소모를 본다.
+DAILY_UNIT_BUDGET = 8_000
+DAILY_SEARCH_BUDGET = 90
+COST = {"search": 100}          # 나머지 list 엔드포인트는 1 unit
+LEDGER = Path(__file__).resolve().parents[1] / "_state" / "youtube_quota.json"
+LEDGER_KEEP_DAYS = 14
 
 
 class QuotaExceeded(RuntimeError):
@@ -19,6 +34,63 @@ class QuotaExceeded(RuntimeError):
 QUOTA_REASONS = ("quotaExceeded", "dailyLimitExceeded", "rateLimitExceeded")
 
 
+def _quota_day() -> str:
+    """쿼터 날짜 = 미국 태평양 날짜."""
+    try:
+        from zoneinfo import ZoneInfo
+        return datetime.now(ZoneInfo("America/Los_Angeles")).date().isoformat()
+    except Exception:  # noqa: BLE001  tzdata 가 없으면 PST 고정(경계가 한 시간 늦게 넘어갈 뿐)
+        return (datetime.now(timezone.utc) - timedelta(hours=8)).date().isoformat()
+
+
+def _caller() -> str:
+    """장부에 적을 호출자 = 실행 중인 스크립트의 프로젝트 폴더명."""
+    try:
+        return Path(sys.argv[0]).resolve().parent.name or "?"
+    except Exception:  # noqa: BLE001
+        return "?"
+
+
+def _load_ledger() -> dict:
+    try:
+        return json.loads(LEDGER.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def usage_today() -> dict:
+    return _load_ledger().get(_quota_day(), {"units": 0, "search": 0})
+
+
+def _record(endpoint: str, cost: int, exhausted: bool = False) -> None:
+    led = _load_ledger()
+    day = _quota_day()
+    d = led.setdefault(day, {"units": 0, "search": 0, "by_caller": {}})
+    d["units"] = d.get("units", 0) + cost
+    if endpoint == "search":
+        d["search"] = d.get("search", 0) + 1
+    who = _caller()
+    d.setdefault("by_caller", {})[who] = d["by_caller"].get(who, 0) + cost
+    if exhausted:
+        d["exhausted"] = True
+    cutoff = (datetime.fromisoformat(day) - timedelta(days=LEDGER_KEEP_DAYS)).date().isoformat()
+    led = {k: v for k, v in sorted(led.items()) if k >= cutoff}
+    LEDGER.parent.mkdir(parents=True, exist_ok=True)
+    LEDGER.write_text(json.dumps(led, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
+def _check_budget(endpoint: str, cost: int) -> None:
+    d = usage_today()
+    if d.get("exhausted"):
+        raise QuotaExceeded(f"{endpoint} 건너뜀 — 오늘({_quota_day()} PT) Google 한도가 이미 소진됨")
+    if d.get("units", 0) + cost > DAILY_UNIT_BUDGET:
+        raise QuotaExceeded(f"{endpoint} 건너뜀 — 자체 예산 {DAILY_UNIT_BUDGET:,} units 중 "
+                            f"{d.get('units', 0):,} 사용({_quota_day()} PT)")
+    if endpoint == "search" and d.get("search", 0) + 1 > DAILY_SEARCH_BUDGET:
+        raise QuotaExceeded(f"search 건너뜀 — 자체 예산 {DAILY_SEARCH_BUDGET}회 중 "
+                            f"{d.get('search', 0)}회 사용({_quota_day()} PT)")
+
+
 class YouTube:
     def __init__(self, api_key: str, session: requests.Session | None = None):
         self.key = api_key
@@ -26,12 +98,16 @@ class YouTube:
 
     def _get(self, endpoint: str, params: dict) -> dict:
         params = {**params, "key": self.key}
+        cost = COST.get(endpoint, 1)
         r = None
         for attempt in range(4):
+            _check_budget(endpoint, cost)
             r = self.s.get(f"{BASE}/{endpoint}", params=params, timeout=30)
+            quota_hit = (r.status_code == 403 and any(k in r.text for k in QUOTA_REASONS))
+            _record(endpoint, cost, exhausted=quota_hit)   # 실패한 호출도 쿼터를 먹는다
             if r.status_code == 200:
                 return r.json()
-            if r.status_code == 403 and any(k in r.text for k in QUOTA_REASONS):
+            if quota_hit:
                 raise QuotaExceeded(f"{endpoint} 한도 소진 403: {r.text[:300]}")
             # 429/5xx 재시도
             if r.status_code in (429, 500, 503):
@@ -41,6 +117,7 @@ class YouTube:
         # 429 가 네 번 연속이면 일시적 혼잡이 아니라 한도다(2026-09-20: search.list 일일 100회를
         # weekly 세 번이 같은 날 나눠 쓰다 세 번째에서 막혔다).
         if r is not None and r.status_code == 429:
+            _record(endpoint, 0, exhausted=True)
             raise QuotaExceeded(f"{endpoint} 한도 소진 429: {r.text[:300]}")
         raise RuntimeError(f"{endpoint} 재시도 초과 {r.status_code if r is not None else ''}")
 
@@ -144,6 +221,8 @@ class YouTube:
                 params["pageToken"] = token
             try:
                 data = self._get("commentThreads", params)
+            except QuotaExceeded:
+                raise  # 한도는 영상 탓이 아니다 — 삼키면 남은 영상마다 재시도하며 잡 시간을 다 쓴다
             except RuntimeError:
                 break  # 댓글 사용 중지된 영상 등
             items.extend(data.get("items", []))

@@ -203,6 +203,10 @@ OFFICIAL_YT = {
 }
 COMMENTS_PER_VIDEO = 300     # 관련도순 상위. 영상당 이보다 많이 받아도 이름 언급 분포는 거의 안 변한다
 COMMENT_VIDEO_CAP = 3000     # 창 안 영상 상한(안전장치). 400 이던 때 원신이 정확히 400 으로 잘렸다
+# 댓글은 누적 저장(comments.csv)이라 매주 창 안 영상 1,400여 개를 전부 다시 받을 필요가 없다 —
+# 그러면 주 3,000 units 가까이 든다. 최근 영상(댓글이 아직 붙는 중)과 아직 한 번도 못 받은
+# 영상만 받고, 나머지는 쌓아 둔 댓글을 그대로 쓴다. 한 주 몫이면 수백 units 로 끝난다.
+COMMENT_REFRESH_DAYS = 21
 
 
 def fetch_official_comments(window_days: int) -> tuple[pd.DataFrame, dict]:
@@ -218,6 +222,10 @@ def fetch_official_comments(window_days: int) -> tuple[pd.DataFrame, dict]:
         status["error"] = f"{type(e).__name__}: {str(e)[:120]}"
         return pd.DataFrame(columns=cols), status
     since = datetime.now(timezone.utc) - timedelta(days=window_days)
+    fresh_since = (datetime.now(timezone.utc) - timedelta(days=COMMENT_REFRESH_DAYS)).isoformat()
+    known: set[str] = set()
+    if (DATA / "comments.csv").exists():
+        known = set(pd.read_csv(DATA / "comments.csv", usecols=["video_id"])["video_id"].dropna().astype(str))
     rows = []
     for a in APPS:
         handle, cid = OFFICIAL_YT.get(a["game"], (None, None))
@@ -230,8 +238,9 @@ def fetch_official_comments(window_days: int) -> tuple[pd.DataFrame, dict]:
                     if v.get("published_at") and v["published_at"] >= since.isoformat()]
             # 상한에 걸렸고 마지막 영상도 창 안이면 창을 다 못 덮은 것이다 — 숨기지 않는다.
             truncated = len(listed) >= COMMENT_VIDEO_CAP and len(vids) == len(listed)
+            todo = [v for v in vids if v["video_id"] not in known or v["published_at"] >= fresh_since]
             n_c = 0
-            for v in vids:
+            for v in todo:
                 for it in yt.comment_threads(v["video_id"], limit=COMMENTS_PER_VIDEO):
                     sn = it.get("snippet", {}).get("topLevelComment", {}).get("snippet", {})
                     rows.append(dict(
@@ -241,9 +250,10 @@ def fetch_official_comments(window_days: int) -> tuple[pd.DataFrame, dict]:
                         like_count=sn.get("likeCount"), published_at=sn.get("publishedAt"),
                     ))
                     n_c += 1
-            status["by_game"][a["game"]] = dict(channel=handle, videos=len(vids), comments=n_c,
-                                                window_complete=not truncated)
-            print(f"  {a['name_ko']:14} 공식 채널 {handle} · 창 안 영상 {len(vids)}개 · 댓글 {n_c:,}건"
+            status["by_game"][a["game"]] = dict(channel=handle, videos=len(vids), fetched_videos=len(todo),
+                                                comments=n_c, window_complete=not truncated)
+            print(f"  {a['name_ko']:14} 공식 채널 {handle} · 창 안 영상 {len(vids)}개 중 {len(todo)}개 수집"
+                  f" · 댓글 {n_c:,}건 (나머지는 누적분)"
                   + ("" if not truncated else " (상한에 걸려 창 일부만)"))
         except Exception as e:  # noqa: BLE001
             status["by_game"][a["game"]] = dict(channel=handle, error=f"{type(e).__name__}: {str(e)[:120]}")

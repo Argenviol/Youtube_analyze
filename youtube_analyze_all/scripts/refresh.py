@@ -16,16 +16,22 @@
   02 커버곡    search  0회 =   ~173 units   (2026-08-12 전량 열거로 전환)
   01/06        search  0회 =    ~40 units
   05 댓글      search  0회 =    ~50 units
+  10 호요버스  search  0회 =   ~300 units   (최근 21일 영상 + 처음 보는 영상만. 전량이면 ~3,000)
   --------------------------------------------
   daily 전체   search  0회 =   ~250 units   → 매일 돌려도 한도의 2.5%
+  weekly 전체  search 33회 = ~3,700 units
+
+common/youtube.py 가 모든 호출을 _state/youtube_quota.json(태평양 날짜별)에 적고, 자체 예산
+8,000 units·search 90회를 넘길 호출은 보내기 전에 QuotaExceeded 로 멈춘다. Google 이 한도
+소진을 알려 오면 그날은 exhausted 로 표시해 뒤따르는 프로젝트도 호출하지 않는다.
 
 04만 search.list 에 의존해 weekly 로 남겼다. 02와 같은 방식(업로드 재생목록 전량 열거)으로
 바꾸면 04도 daily 로 내릴 수 있지만, 04는 **남의 채널**에서 키리누키를 찾는 것이라
 채널 목록을 미리 알 수 없어 검색이 불가피하다. 성격이 다른 문제다.
 
 search.list 100회/일 은 04 한 번(33회)으로 3번이면 찬다. 같은 태평양 날짜(UTC 07~08시 경계)에
-weekly 를 손으로 여러 번 돌리면 세 번째부터 429 가 난다(2026-09-20 #56·#57). 04 는 이때 직전
-수집이 6일 안쪽이면 경고만 내고 기존 데이터를 둔다(04_kirinuki_ecosystem/collect.py FRESH_DAYS).
+weekly 를 손으로 여러 번 돌리면 세 번째부터 429 가 났다(2026-09-20 #56·#57). 이제 04 는 직전
+수집이 6일 안쪽이면 **검색 전에** 건너뛴다(04_kirinuki_ecosystem/collect.py FRESH_DAYS, 강제는 --force).
 """
 from __future__ import annotations
 
