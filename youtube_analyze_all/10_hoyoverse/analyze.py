@@ -379,6 +379,12 @@ def build_charts(gacha, reviews, monthly, push, audience):
 
 
 def _grand_total(by_game: dict) -> int:
+    """분석이 실제로 센 텍스트 수(누적 CSV 기준).
+
+    _meta.json 의 수집 상태로 합산하면 안 된다 — 거기 n 은 **이번 실행에서 받은 것**이고
+    누적분이 아니며, merged_total 같은 정수 키가 섞여 있다(2026-09-26 weekly #65 가
+    `'int' object has no attribute 'get'` 로 여기서 죽었다).
+    """
     return sum(int(v) for bg in by_game.values() for v in (bg.get("corpus") or {}).values())
 
 
@@ -432,14 +438,6 @@ def _src_line(r) -> str:
           ("apple_mentions", "애플"), ("mention_count", "플레이")]
     parts = [f"{label} {int(r[k]):,}" for k, label in ko if r.get(k) == r.get(k) and int(r.get(k) or 0)]
     return " + ".join(parts) + f" = {int(r['mentions_total']):,}건"
-
-
-def _total_comments(meta: dict) -> int:
-    yt = sum(int(v.get("comments") or 0)
-             for v in ((meta.get("official_comments") or {}).get("by_game") or {}).values())
-    ap = sum(int(v.get("n") or 0) for v in (meta.get("apple_reviews") or {}).values())
-    hl = sum(int(v.get("replies") or 0) for v in (meta.get("hoyolab") or {}).values())
-    return yt + ap + hl
 
 
 def _per_game_counts(gacha: pd.DataFrame) -> str:
@@ -611,7 +609,7 @@ def build_outputs(chars, gacha, reviews, monthly, app_summary, push, audience):
 - **수집 기간은 다섯 게임 모두 같다**: 수집 시점부터 {meta.get('review_window_days', '?')}일
   ({str(meta.get('review_since', ''))[:10]} ~ {meta['fetched_at'][:10]}). 건수는 게임마다 다르다 —
   {_window_line(meta)}.
-- **유저 반응은 한국어 텍스트 {_total_comments(meta) + meta['n_reviews']:,}건**에서 센다 — 구글 플레이 리뷰,
+- **유저 반응은 한국어 텍스트 {_grand_total(by_game):,}건**에서 센다 — 구글 플레이 리뷰,
   애플 앱스토어 리뷰, 공식 한국 유튜브 채널 댓글, HoYoLAB 한국어 글의 댓글. 플레이 리뷰만 쓰던 때는
   캐릭터당 언급이 한 자릿수~십몇 건이라 순위가 한두 건 차이로 뒤집혔다. 접근 가능한 소스를 전부
   시험해 되는 것만 썼고, 막힌 곳(arca.live·dcinside·reddit 등)은 `data/source_probe.json` 에
