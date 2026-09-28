@@ -91,8 +91,29 @@ cd app && npm run build                                       # 정적 대시보
 
 ## 인수인계서
 
-> 최종 갱신 **2026-09-28**. 위쪽 절(지금 상태 ~ 남은 일)은 **현재 기준으로 고쳐 쓰고**, 맨 아래
-> 변경 이력에는 **그날 달라진 것만** 한 줄씩 더한다. 이미 적힌 내용은 반복하지 않는다(`CLAUDE.md`).
+> 최종 갱신 **2026-09-28**. 이 절만 읽으면 이어서 작업할 수 있게 쓴다. 상태 절은 **현재 기준으로 고쳐
+> 쓰고**, 맨 아래 변경 이력에는 **그날 달라진 것만** 한 줄씩 더한다. 이미 적힌 내용은 반복하지 않는다(`CLAUDE.md`).
+
+### 이어받을 때 먼저 할 것
+
+1. **읽기** — `CLAUDE.md`(작업 기준) → 이 절 → `youtube_analyze_all/scripts/refresh.py` 머리말(그룹·쿼터 실측).
+2. **최신으로** — `git pull origin main`. 봇이 10분마다 08 스냅샷을 커밋하므로 작업 전·푸시 전에 꼭 당긴다.
+3. **상태 확인** — 셋만 보면 된다.
+   - GitHub Actions `collect-scheduled` 최근 실행: 빨간색이면 로그의 `[refresh] 실패:` 줄.
+   - `youtube_analyze_all/_state/youtube_quota.json`: 날짜별 사용량. `exhausted` 가 있으면 그날 한도가 찼다.
+   - 각 프로젝트 `data/_meta.json` 의 `fetched_at`: 마지막으로 수집된 시각.
+4. **키** — 로컬에서 수집까지 돌리려면 `YOUTUBE_API_KEY`·`DART_API_KEY` 환경변수가 필요하다. 없으면
+   `refresh.py --skip-collect` 로 분석·사이트 재생성만 할 수 있다.
+
+### 다음 할 일 (위가 먼저)
+
+| # | 할 일 | 방법 · 완료 기준 |
+|---|---|---|
+| 1 | **10/4(일) 05:30 weekly 결과 확인** — 쿼터 예산·04 건너뛰기·10 증분 수집이 실제 API 로 처음 돈다 | 실행이 초록색. 장부의 그날 합계가 ~4,000 units 안팎. 04 는 직전 수집이 7일 전이라 **검색해야 정상**. 10 로그에 `창 안 영상 N개 중 M개 수집`(M 이 100 안팎) |
+| 2 | 리포트 PDF 4종 다시 만들기 — 지금 파일은 9/20 기준 | `결과물/리포트/README.md` 의 명령. 휴대폰 화면에서 읽히는지 확인 후 커밋 |
+| 3 | 저장소 전체 "최적화" 점검 — 지금까지는 최근 변경분만 했다 | 12개 프로젝트 + `app/` 에 `CLAUDE.md` 7개 기준. `app/` 은 느린 CPU 설정으로 전환·스크롤을 재고 PC·폰 화면을 확인 |
+| 4 | 유즈하 리코 Topic 채널 확인 — 주석엔 있다는데 검색 결과는 없음 | 실제 채널이 있으면 `02_cover_song_ranking/collect.py` 의 `TOPIC_SEED` 에 채널 ID 추가 |
+| 5 | Actions Node.js 20 경고 정리 | `actions/checkout`·`actions/setup-python` 을 Node 24 지원 버전으로. 지금은 강제 실행돼 동작엔 문제없음 |
 
 ### 지금 상태
 
@@ -108,7 +129,6 @@ cd app && npm run build                                       # 정적 대시보
 - `refresh.py` 는 프로젝트별로 실패를 격리한다. 하나가 죽어도 나머지는 커밋되고 잡만 빨간색이 된다.
   실패 알림이 오면 로그의 `[refresh] 실패:` 줄부터 본다.
 - 최근 실패와 조치 — #56·#57(9/20, 04 검색 한도), #65(9/26, 10 분석 오류) 모두 수정됨. #66(9/27 daily) 정상.
-- **다음 확인 지점: 10/4(일) 05:30 weekly** — 04 건너뛰기 판단과 10 증분 댓글 수집이 실제 API 로 처음 돈다.
 
 ### YouTube 쿼터
 
@@ -142,12 +162,28 @@ cd app && npm run build                                       # 정적 대시보
 ### 결과물 · 리포트
 
 - `결과물/` 은 daily·weekly 가 끝날 때마다 자동으로 다시 만든다.
-- 리포트 PDF 4종(`결과물/리포트/`)은 **수동**이다. 현재 파일은 **2026-09-20 기준**이라 그 뒤 수집분
-  (10 의 9/26 갱신 등)이 반영돼 있지 않다. 다시 만드는 법은 `결과물/리포트/README.md`.
+- 리포트 PDF 4종(`결과물/리포트/`)은 자동 수집으로 만들어지지 않는 **수동 산출물**이다. 만드는 법은
+  `결과물/리포트/README.md`.
 - 스텔라이브 리포트와 게임 리포트는 **따로** 낸다. 요약판은 측정된 숫자만 싣되, 출처가 있는 공개 자료
   (07 시장 규모, 09 DART 재무)는 그대로 둔다.
 - 커버곡 조회수는 **공식 MV + Topic 채널 음원 판을 곡 단위로 합산**한다(02·12).
 - PDF 는 휴대폰에 맞춘 150×210mm. 바꿀 때마다 모바일에서 읽히는지 확인한다.
+
+### 어디를 고치나
+
+| 하려는 일 | 파일 |
+|---|---|
+| 그룹 구성·실행 순서, 수집 생략 프로젝트 | `youtube_analyze_all/scripts/refresh.py` (`GROUPS`, `NO_COLLECT`) |
+| 실행 주기 | `.github/workflows/collect-scheduled.yml`, `collect-live.yml` |
+| YouTube 호출·재시도·쿼터 예산 | `youtube_analyze_all/common/youtube.py` (`DAILY_UNIT_BUDGET`, `DAILY_SEARCH_BUDGET`) |
+| 멤버 로스터·채널 ID | `youtube_analyze_all/common/config.py` |
+| 커버곡 MV↔Topic 음원 짝짓기 | `youtube_analyze_all/common/songs.py`, Topic 채널 탐색은 `02_cover_song_ranking/collect.py` |
+| 10 수집(기간·소스·댓글 증분) | `10_hoyoverse/collect.py` (`REVIEW_WINDOW_DAYS`, `COMMENT_REFRESH_DAYS`), 애플·HoYoLAB·누적은 `reactions.py` |
+| 10 지표·리포트 본문 | `10_hoyoverse/analyze.py` (`COMMON_SOURCES` = 게임 간 비교 표본) |
+| 붕괴3rd 한글 이름·전투복 수동 보완 | `10_hoyoverse/data/hi3_names_ko.csv`, `hi3_battlesuits_manual.csv` |
+| `결과물/` 생성 | `youtube_analyze_all/scripts/build_deliverables.py` |
+| 종합 리포트 HTML(전체판·`--digest` 요약판) | `youtube_analyze_all/scripts/build_unified.py` |
+| 통합 대시보드 | `app/` (Next.js), 방법론 페이지 `app/src/app/methodology/page.tsx` |
 
 ### 작업 규칙
 
@@ -157,20 +193,11 @@ cd app && npm run build                                       # 정적 대시보
 - `_meta.json` 의 한 dict 안에 성격이 다른 값(게임별 dict 와 합계 정수 등)을 섞지 않는다 — #65 의 원인.
 - 작업은 `main` 에 바로 올린다. 마무리는 `CLAUDE.md` 의 "최적화" 7개 기준으로 확인하고 보고한다.
 
-### 알려진 문제 · 남은 일
-
-- 02 코드 주석에는 "유즈하 리코 - Topic" 채널이 있다고 돼 있으나 검색 결과는 계속 없음. 실제 채널이
-  확인되면 `02_cover_song_ranking/collect.py` 의 `TOPIC_SEED` 에 넣는다.
-- 저장소 전체(12개 프로젝트 + `app/`)에 대한 "최적화" 7개 기준 점검은 아직 안 했다. 최근 변경분만 했다.
-- 리포트 PDF 가 9/20 기준으로 멈춰 있다(위 참고).
-- Actions 로그에 Node.js 20 지원 종료 경고(`actions/checkout@v4`, `actions/setup-python@v5`). 지금은
-  Node 24 로 강제 실행돼 동작에는 문제없다.
-
 ### 변경 이력
 
 | 날짜 | 달라진 것 |
 |---|---|
-| 2026-09-28 | 02 Topic 채널 "없음" 재확인을 매일 → 7일에 한 번(하루 800 units 절약). 순간 속도 제한을 하루 한도 소진으로 오판하던 것, 검색 한도만 찼을 때 다른 호출까지 막던 것 수정. `CLAUDE.md`(최적화 기준)·인수인계서 신설 |
+| 2026-09-28 | 02 Topic 채널 "없음" 재확인을 매일 → 7일에 한 번(하루 800 units 절약). 순간 속도 제한을 하루 한도 소진으로 오판하던 것, 검색 한도만 찼을 때 다른 호출까지 막던 것 수정. `CLAUDE.md`(최적화 기준)·인수인계서 신설, 이어받는 순서·다음 할 일·파일 지도 추가 |
 | 2026-09-27 | YouTube 쿼터 장부·자체 예산 도입. 04 는 6일 안쪽이면 검색 전에 건너뜀. 10 유튜브 댓글을 증분 수집(주 ~3,000 → ~300 units). #65 수정 — 10 리포트 총 건수를 누적 표본에서 셈 |
 | 2026-09-24 | #56·#57 수정 — 04 검색 한도 소진 시 실패 대신 기존 데이터 유지 |
 | 2026-09-20 | 10 에 블루 아카이브 추가, 한국어 반응 소스 4종, 표본 명시와 공통 표본 비교, 수집을 누적 합치기로. 리포트 PDF 갱신 |
