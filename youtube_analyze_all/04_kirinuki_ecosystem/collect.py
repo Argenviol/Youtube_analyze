@@ -23,9 +23,10 @@ from common.youtube import QuotaExceeded, YouTube
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
-# search.list 는 하루 100회 한도가 따로 있고 이 수집이 한 번에 33회를 쓴다. 같은 날 weekly 를
-# 손으로 몇 번 더 돌리면 막힌다. 직전 수집이 이만큼 안쪽이면 이번 주 몫은 이미 있는 것이므로
-# 실패로 치지 않고 기존 데이터를 둔다. 그보다 오래됐으면 진짜 결측이라 실패로 낸다.
+# search.list 는 하루 100회 한도가 따로 있고 이 수집이 한 번에 33회를 쓴다. 직전 수집이 이만큼
+# 안쪽이면 이번 주 몫은 이미 있는 것이므로 검색하지 않는다(주 1회 정기 실행 간격은 7일).
+# --force 로 돌렸다가 한도에 걸려도 같은 기준으로 기존 데이터를 두고, 그보다 오래됐으면
+# 진짜 결측이라 실패로 낸다.
 FRESH_DAYS = 6
 SUFFIX = ["키리누키", "클립", "切り抜き"]
 # 검색 노이즈(무관한 대형 쇼츠·커버 등) 제거: 제목 또는 채널명에 키리누키/클립 토큰이 있어야 팬클립으로 인정
@@ -106,17 +107,15 @@ if __name__ == "__main__":
     ap.add_argument("--per-query", type=int, default=40)
     ap.add_argument("--force", action="store_true", help="직전 수집이 FRESH_DAYS 안쪽이어도 다시 검색")
     args = ap.parse_args()
-    # 한 번에 search 33회(3,300 units). 주 1회 정기 실행이면 충분하고, 같은 주에 weekly 를
-    # 손으로 다시 돌려도 검색을 또 쓰지 않는다 — 한도를 먹기 전에 여기서 멈춘다.
     age = _last_fetch_age_days()
-    if not args.force and age is not None and age < FRESH_DAYS:
+    fresh = age is not None and age < FRESH_DAYS
+    if fresh and not args.force:
         print(f"04 수집 건너뜀 — {age:.1f}일 전 수집분이 있다(FRESH_DAYS={FRESH_DAYS}, 다시 받으려면 --force)")
         sys.exit(0)
     try:
         collect(args.per_query)
     except QuotaExceeded as e:
-        age = _last_fetch_age_days()
-        if age is not None and age < FRESH_DAYS:
+        if fresh:
             print(f"::warning::04 search 한도 소진 — {age:.1f}일 전 수집분을 그대로 둔다 ({e})")
             sys.exit(0)
         raise

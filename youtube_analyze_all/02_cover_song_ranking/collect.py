@@ -34,7 +34,7 @@ import argparse
 import json
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 import pandas as pd
@@ -67,22 +67,40 @@ def to_int(x):
 # 곡과의 짝짓기는 분석 단계(common/songs.pair_topic_tracks)에서 한다.
 #
 # 채널 ID 는 search.list(100 units) 로 한 번 찾은 뒤 data/topic_channels.json 에 캐시한다.
-# 못 찾은 멤버는 null 로 남겨 다음 실행에 다시 찾는다(아직 유통곡이 없는 멤버는 채널도 없다).
+# 못 찾은 멤버(아직 유통곡이 없으면 채널도 없다)는 확인한 날짜를 적어 두고 TOPIC_RECHECK_DAYS 가
+# 지나야 다시 찾는다. 예전에는 null 만 남겨 매일 다시 찾았고, 네 명 × 영문·한글 = search 8회,
+# 하루 800 units 를 "없음"을 재확인하는 데 썼다(2026-09-27 쿼터 장부).
 # ---------------------------------------------------------------------------
 TOPIC_CACHE = DATA / "topic_channels.json"
+TOPIC_RECHECK_DAYS = 7
 TOPIC_SEED = {  # 공개 영상의 oEmbed 로 확인한 값 (2026-09-19)
     "Neneko Mashiro": "UC8Gp085DHk7K3VQdG-GU9EQ",
 }
 
 
+def _load_topic_cache() -> dict:
+    raw = json.loads(TOPIC_CACHE.read_text(encoding="utf-8")) if TOPIC_CACHE.exists() else {}
+    if "channels" not in raw:           # 옛 형식: {멤버: 채널ID|null}
+        raw = {"channels": raw}
+    raw.setdefault("not_found_checked_at", {})
+    return raw
+
+
 def find_topic_channels(yt: YouTube, roster: list[dict]) -> dict[str, str | None]:
-    cache = json.loads(TOPIC_CACHE.read_text(encoding="utf-8")) if TOPIC_CACHE.exists() else {}
+    cache = _load_topic_cache()
+    channels, checked = cache["channels"], cache["not_found_checked_at"]
+    today = datetime.now(timezone.utc).date()
     for r in roster:
         en = r["name_en"]
-        if cache.get(en):
+        if channels.get(en):
             continue
         if en in TOPIC_SEED:
-            cache[en] = TOPIC_SEED[en]
+            channels[en] = TOPIC_SEED[en]
+            continue
+        last = checked.get(en)
+        if last and (today - date.fromisoformat(last)).days < TOPIC_RECHECK_DAYS:
+            channels.setdefault(en, None)
+            print(f"  {r['name_ko']:12} Topic 채널 없음 ({last} 확인, {TOPIC_RECHECK_DAYS}일 뒤 재확인)")
             continue
         # 유통사가 아티스트명을 영문으로 등록한 멤버(Neneko Mashiro - Topic)도, 한글로 등록한
         # 멤버(유즈하 리코 - Topic)도 있다. 영문으로 못 찾으면 한글로 한 번 더 찾는다.
@@ -98,11 +116,18 @@ def find_topic_channels(yt: YouTube, roster: list[dict]) -> dict[str, str | None
                 if found:
                     break
         except Exception as e:  # noqa: BLE001
+            # 검색이 끝까지 못 돌았으면 "없음"으로 적지 않는다 — 다음 실행에 다시 찾는다.
+            channels.setdefault(en, None)
             print(f"  {r['name_ko']:12} Topic 채널 검색 실패: {type(e).__name__}")
-        cache[en] = found
+            continue
+        channels[en] = found
+        if found:
+            checked.pop(en, None)
+        else:
+            checked[en] = today.isoformat()
         print(f"  {r['name_ko']:12} Topic 채널 {'찾음 ' + found if found else '없음'}")
     TOPIC_CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=2), encoding="utf-8")
-    return cache
+    return channels
 
 
 def fetch_topic_tracks(yt: YouTube, roster: list[dict], channels: dict[str, str | None]) -> pd.DataFrame:

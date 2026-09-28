@@ -147,7 +147,7 @@ def _monthly_svg(monthly: list[dict], width=820, height=300, pad=48):
     )
     return (f'<svg viewBox="0 0 {width} {height}" class="chart">{grid}{xlabels}'
             + "".join(paths) + "</svg>"
-            + f'<div class="legend">'
+            + '<div class="legend">'
             + "".join(f'<span class="lg"><i style="background:{_c(g)}"></i>{GAME_KO.get(g, g)}</span>' for g in by_game)
             + "</div>")
 

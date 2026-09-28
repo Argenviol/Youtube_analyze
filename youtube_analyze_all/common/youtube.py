@@ -9,7 +9,6 @@ import sys
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Iterable, Iterator
 
 import requests
 
@@ -31,7 +30,11 @@ class QuotaExceeded(RuntimeError):
     """일일 한도 소진. 재시도해도 한도가 풀리는 태평양 자정(UTC 07/08시)까지는 안 된다."""
 
 
-QUOTA_REASONS = ("quotaExceeded", "dailyLimitExceeded", "rateLimitExceeded")
+# 하루 한도 소진을 뜻하는 403 사유. rateLimitExceeded(초당 속도 제한)는 잠깐 쉬면 풀리므로
+# 여기 넣지 않는다 — 넣으면 순간 스로틀 한 번에 그날 YouTube 수집이 전부 멈춘다.
+QUOTA_REASONS = ("quotaExceeded", "dailyLimitExceeded")
+RETRY_REASONS = ("rateLimitExceeded", "userRateLimitExceeded")
+TRIES = 4
 
 
 def _quota_day() -> str:
@@ -62,7 +65,8 @@ def usage_today() -> dict:
     return _load_ledger().get(_quota_day(), {"units": 0, "search": 0})
 
 
-def _record(endpoint: str, cost: int, exhausted: bool = False) -> None:
+def _record(endpoint: str, cost: int, exhausted: str | None = None) -> None:
+    """호출 한 번을 장부에 적는다. exhausted 는 "units"(전부 소진) 또는 "search"(검색 한도만)."""
     led = _load_ledger()
     day = _quota_day()
     d = led.setdefault(day, {"units": 0, "search": 0, "by_caller": {}})
@@ -72,7 +76,9 @@ def _record(endpoint: str, cost: int, exhausted: bool = False) -> None:
     who = _caller()
     d.setdefault("by_caller", {})[who] = d["by_caller"].get(who, 0) + cost
     if exhausted:
-        d["exhausted"] = True
+        d.setdefault("exhausted", [])
+        if exhausted not in d["exhausted"]:
+            d["exhausted"].append(exhausted)
     cutoff = (datetime.fromisoformat(day) - timedelta(days=LEDGER_KEEP_DAYS)).date().isoformat()
     led = {k: v for k, v in sorted(led.items()) if k >= cutoff}
     LEDGER.parent.mkdir(parents=True, exist_ok=True)
@@ -81,8 +87,10 @@ def _record(endpoint: str, cost: int, exhausted: bool = False) -> None:
 
 def _check_budget(endpoint: str, cost: int) -> None:
     d = usage_today()
-    if d.get("exhausted"):
-        raise QuotaExceeded(f"{endpoint} 건너뜀 — 오늘({_quota_day()} PT) Google 한도가 이미 소진됨")
+    gone = d.get("exhausted") or []
+    if "units" in gone or (endpoint == "search" and "search" in gone):
+        what = "search 한도" if "units" not in gone else "한도"
+        raise QuotaExceeded(f"{endpoint} 건너뜀 — 오늘({_quota_day()} PT) Google {what}가 이미 소진됨")
     if d.get("units", 0) + cost > DAILY_UNIT_BUDGET:
         raise QuotaExceeded(f"{endpoint} 건너뜀 — 자체 예산 {DAILY_UNIT_BUDGET:,} units 중 "
                             f"{d.get('units', 0):,} 사용({_quota_day()} PT)")
@@ -100,24 +108,26 @@ class YouTube:
         params = {**params, "key": self.key}
         cost = COST.get(endpoint, 1)
         r = None
-        for attempt in range(4):
+        for attempt in range(TRIES):
             _check_budget(endpoint, cost)
             r = self.s.get(f"{BASE}/{endpoint}", params=params, timeout=30)
             quota_hit = (r.status_code == 403 and any(k in r.text for k in QUOTA_REASONS))
-            _record(endpoint, cost, exhausted=quota_hit)   # 실패한 호출도 쿼터를 먹는다
+            _record(endpoint, cost, exhausted="units" if quota_hit else None)   # 실패한 호출도 쿼터를 먹는다
             if r.status_code == 200:
                 return r.json()
             if quota_hit:
                 raise QuotaExceeded(f"{endpoint} 한도 소진 403: {r.text[:300]}")
-            # 429/5xx 재시도
-            if r.status_code in (429, 500, 503):
-                time.sleep(2 ** attempt)
+            # 429/5xx·속도 제한 403 은 재시도(마지막 시도 뒤에는 기다리지 않는다)
+            if r.status_code in (429, 500, 503) or (
+                    r.status_code == 403 and any(k in r.text for k in RETRY_REASONS)):
+                if attempt < TRIES - 1:
+                    time.sleep(2 ** attempt)
                 continue
             raise RuntimeError(f"{endpoint} 실패 {r.status_code}: {r.text[:300]}")
-        # 429 가 네 번 연속이면 일시적 혼잡이 아니라 한도다(2026-09-20: search.list 일일 100회를
-        # weekly 세 번이 같은 날 나눠 쓰다 세 번째에서 막혔다).
+        # 429 가 TRIES 번 연속이면 일시적 혼잡이 아니라 한도다(2026-09-20: search.list 일일 100회를
+        # weekly 세 번이 같은 날 나눠 쓰다 세 번째에서 막혔다). search 면 검색만 막고 나머지는 둔다.
         if r is not None and r.status_code == 429:
-            _record(endpoint, 0, exhausted=True)
+            _record(endpoint, 0, exhausted="search" if endpoint == "search" else "units")
             raise QuotaExceeded(f"{endpoint} 한도 소진 429: {r.text[:300]}")
         raise RuntimeError(f"{endpoint} 재시도 초과 {r.status_code if r is not None else ''}")
 

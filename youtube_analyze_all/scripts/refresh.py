@@ -10,22 +10,22 @@
   python scripts/refresh.py --group daily --skip-collect   # 수집 없이 재분석만
 
 ## YouTube 쿼터 메모
-실측 기준 소모량 (한도: 10,000 units/일 + search.list 별도 100회/일).
+한도: 10,000 units/일 + search.list 별도 100회/일(태평양 자정에 풀림). 실측은 _state/youtube_quota.json.
 
-  04 키리누키  search 33회 = 3,300 units   ← 유일하게 비싼 프로젝트
-  02 커버곡    search  0회 =   ~173 units   (2026-08-12 전량 열거로 전환)
-  01/06        search  0회 =    ~40 units
-  05 댓글      search  0회 =    ~50 units
+  04 키리누키  search 33회 = 3,300 units   ← 유일하게 비싼 프로젝트(weekly)
   10 호요버스  search  0회 =   ~300 units   (최근 21일 영상 + 처음 보는 영상만. 전량이면 ~3,000)
+  02 커버곡    search  0회 =   ~210 units   (Topic 채널 없는 멤버 재확인은 7일에 한 번 search 8회)
+  06 경쟁사    search  0회 =    ~85 units
+  05 댓글      search  0회 =    ~50 units
+  01 멤버      search  0회 =    ~25 units
   --------------------------------------------
-  daily 전체   search  0회 =   ~250 units   → 매일 돌려도 한도의 2.5%
-  weekly 전체  search 33회 = ~3,700 units
+  daily 전체   ~320 units(재확인 날 +800)   weekly 전체 search 33회 ~3,650 units
 
-common/youtube.py 가 모든 호출을 _state/youtube_quota.json(태평양 날짜별)에 적고, 자체 예산
-8,000 units·search 90회를 넘길 호출은 보내기 전에 QuotaExceeded 로 멈춘다. Google 이 한도
-소진을 알려 오면 그날은 exhausted 로 표시해 뒤따르는 프로젝트도 호출하지 않는다.
+common/youtube.py 가 모든 호출을 장부에 적고, 자체 예산 8,000 units·search 90회를 넘길 호출은
+보내기 전에 QuotaExceeded 로 멈춘다. Google 이 한도 소진을 알려 오면 그날을 exhausted 로 표시해
+뒤따르는 프로젝트도 호출하지 않는다(search 한도만 찼으면 search 만 막는다).
 
-04만 search.list 에 의존해 weekly 로 남겼다. 02와 같은 방식(업로드 재생목록 전량 열거)으로
+매번 search.list 를 쓰는 건 04뿐이라 weekly 로 남겼다. 02와 같은 방식(업로드 재생목록 전량 열거)으로
 바꾸면 04도 daily 로 내릴 수 있지만, 04는 **남의 채널**에서 키리누키를 찾는 것이라
 채널 목록을 미리 알 수 없어 검색이 불가피하다. 성격이 다른 문제다.
 

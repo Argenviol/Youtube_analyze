@@ -157,11 +157,10 @@ def build_metrics():
     # 반응 순위의 기준 = 리뷰 언급 + 댓글 언급. 댓글이 있으면 그쪽이 표본을 지배한다.
     gacha["mentions_total"] = gacha["mention_count"].fillna(0) + gacha["comment_mentions"].fillna(0)
     # 공통 표본 기준 언급과 만 건당 비율 — 게임 간 비교는 이 열로만 한다.
-    gacha["mentions_common"] = (gacha["mention_count"].fillna(0)
-                                + gacha["youtube_mentions"].fillna(0)
-                                + gacha["apple_mentions"].fillna(0))
-    _common_n = {g: (n_reviews_by_game.get(g, 0) + corpus_n["youtube"].get(g, 0)
-                     + corpus_n["apple"].get(g, 0)) for g in gacha["game"].unique()}
+    mention_col = {"reviews": "mention_count", "youtube": "youtube_mentions", "apple": "apple_mentions"}
+    sample_n = {"reviews": n_reviews_by_game, **corpus_n}
+    gacha["mentions_common"] = sum(gacha[mention_col[k]].fillna(0) for k in COMMON_SOURCES)
+    _common_n = {g: sum(sample_n[k].get(g, 0) for k in COMMON_SOURCES) for g in gacha["game"].unique()}
     gacha["common_sample_n"] = gacha["game"].map(_common_n)
     gacha["mentions_common_per_10k"] = (gacha["mentions_common"] / gacha["common_sample_n"] * 10000).round(2)
     build_metrics.common_n = _common_n
