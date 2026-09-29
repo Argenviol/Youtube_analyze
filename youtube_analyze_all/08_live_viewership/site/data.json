@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-29T08:26:43.441154+00:00",
-    "n_snapshots": 48031,
+    "fetched_at": "2026-09-29T08:27:37.637570+00:00",
+    "n_snapshots": 48042,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-29T08:26:43.441154+00:00"
+      "2026-09-29T08:27:37.637570+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 43625,
-    "n_timepoints": 4377,
-    "span_hours": 1154.52,
-    "observed_hours": 746.5,
+    "n_snapshots": 43635,
+    "n_timepoints": 4378,
+    "span_hours": 1154.53,
+    "observed_hours": 746.67,
     "coverage_ratio": 0.647,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 11784,
+    "n_live_rows": 11785,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-29T08:26:43.441154+00:00"
+    "last": "2026-09-29T08:27:37.637570+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,13 +44,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 264571,
-      "follower_delta": 9245,
+      "followers": 264573,
+      "follower_delta": 9247,
       "follower_per_day": 192.2,
       "n_sessions": 120,
-      "n_live_points": 1327,
+      "n_live_points": 1328,
       "peak_ccu": 38237,
-      "avg_ccu": 5276,
+      "avg_ccu": 5274,
       "ccu_per_1k_followers": 144.52
     },
     {
@@ -7576,10 +7576,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-09-29 17:06",
-      "observed_min": 20.4,
-      "n_points": 3,
+      "observed_min": 21.4,
+      "n_points": 4,
       "peak_ccu": 3319,
-      "avg_ccu": 2578,
+      "avg_ccu": 2763,
       "title": "[봉누도 2] 블랙리스트 황짠기리입니댜",
       "category": "Grand Theft Auto V"
     },
@@ -26536,6 +26536,10 @@
         ],
         [
           "2026-09-29 17:26",
+          3319
+        ],
+        [
+          "2026-09-29 17:27",
           3319
         ]
       ]
