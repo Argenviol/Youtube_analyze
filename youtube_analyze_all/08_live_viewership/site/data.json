@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-30T08:05:38.306217+00:00",
-    "n_snapshots": 49604,
+    "fetched_at": "2026-09-30T08:15:52.539185+00:00",
+    "n_snapshots": 49615,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-30T08:05:38.306217+00:00"
+      "2026-09-30T08:15:52.539185+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 45055,
-    "n_timepoints": 4520,
-    "span_hours": 1178.17,
-    "observed_hours": 770.91,
+    "n_snapshots": 45065,
+    "n_timepoints": 4521,
+    "span_hours": 1178.34,
+    "observed_hours": 771.08,
     "coverage_ratio": 0.654,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 12274,
+    "n_live_rows": 12276,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-30T08:05:38.306217+00:00"
+    "last": "2026-09-30T08:15:52.539185+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 166799,
-      "follower_delta": 10058,
+      "followers": 166801,
+      "follower_delta": 10060,
       "follower_per_day": 204.9,
       "n_sessions": 66,
       "n_live_points": 795,
@@ -44,13 +44,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 264696,
-      "follower_delta": 9370,
+      "followers": 264697,
+      "follower_delta": 9371,
       "follower_per_day": 190.9,
       "n_sessions": 121,
-      "n_live_points": 1392,
+      "n_live_points": 1393,
       "peak_ccu": 38237,
-      "avg_ccu": 5249,
+      "avg_ccu": 5247,
       "ccu_per_1k_followers": 144.46
     },
     {
@@ -62,9 +62,9 @@
       "follower_delta": 7188,
       "follower_per_day": 146.4,
       "n_sessions": 106,
-      "n_live_points": 767,
+      "n_live_points": 768,
       "peak_ccu": 28071,
-      "avg_ccu": 3112,
+      "avg_ccu": 3110,
       "ccu_per_1k_followers": 129.36
     },
     {
@@ -72,9 +72,9 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 217782,
-      "follower_delta": 10356,
-      "follower_per_day": 211.0,
+      "followers": 217783,
+      "follower_delta": 10357,
+      "follower_per_day": 210.9,
       "n_sessions": 97,
       "n_live_points": 1201,
       "peak_ccu": 24385,
@@ -86,8 +86,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 249165,
-      "follower_delta": 8048,
+      "followers": 249164,
+      "follower_delta": 8047,
       "follower_per_day": 163.9,
       "n_sessions": 105,
       "n_live_points": 1390,
@@ -100,8 +100,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 308857,
-      "follower_delta": 6937,
+      "followers": 308858,
+      "follower_delta": 6938,
       "follower_per_day": 141.3,
       "n_sessions": 110,
       "n_live_points": 1436,
@@ -114,9 +114,9 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 219468,
-      "follower_delta": 10133,
-      "follower_per_day": 206.4,
+      "followers": 219466,
+      "follower_delta": 10131,
+      "follower_per_day": 206.3,
       "n_sessions": 127,
       "n_live_points": 1538,
       "peak_ccu": 10461,
@@ -144,7 +144,7 @@
       "unit": "CLICHE",
       "followers": 228426,
       "follower_delta": 9326,
-      "follower_per_day": 190.0,
+      "follower_per_day": 189.9,
       "n_sessions": 103,
       "n_live_points": 1184,
       "peak_ccu": 9414,
@@ -156,8 +156,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 262896,
-      "follower_delta": 9994,
+      "followers": 262898,
+      "follower_delta": 9996,
       "follower_per_day": 203.6,
       "n_sessions": 83,
       "n_live_points": 1045,
@@ -11052,6 +11052,18 @@
       "category": "Grand Theft Auto V"
     },
     {
+      "name_ko": "아라하시 타비",
+      "name_en": "Arahashi Tabi",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-30 17:05",
+      "observed_min": 10.2,
+      "n_points": 2,
+      "peak_ccu": 2392,
+      "avg_ccu": 1961,
+      "title": "[봉누도 2] 블랙리스트 황짠기리입니댜",
+      "category": "Grand Theft Auto V"
+    },
+    {
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
@@ -11400,18 +11412,6 @@
       "category": "Grand Theft Auto V"
     },
     {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-16 19:57",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 2208,
-      "avg_ccu": 2208,
-      "title": "7시 스텔+삐부 님 데바데 내전 스텔의 히구 출동",
-      "category": "데드 바이 데이라이트"
-    },
-    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -11421,6 +11421,18 @@
       "peak_ccu": 2208,
       "avg_ccu": 2208,
       "title": "스텔데바데내전 으마무시한 살인마 등장",
+      "category": "데드 바이 데이라이트"
+    },
+    {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-16 19:57",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 2208,
+      "avg_ccu": 2208,
+      "title": "7시 스텔+삐부 님 데바데 내전 스텔의 히구 출동",
       "category": "데드 바이 데이라이트"
     },
     {
@@ -11506,6 +11518,18 @@
       "avg_ccu": 2174,
       "title": "[떠비큐어] 다 찌발라야해 (연습 2일차)",
       "category": "이터널 리턴"
+    },
+    {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-30 16:14",
+      "observed_min": 61.4,
+      "n_points": 7,
+      "peak_ccu": 2169,
+      "avg_ccu": 1484,
+      "title": "찌이로~",
+      "category": "talk"
     },
     {
       "name_ko": "유즈하 리코",
@@ -11604,18 +11628,6 @@
       "category": "데드 바이 데이라이트"
     },
     {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-30 16:14",
-      "observed_min": 51.2,
-      "n_points": 6,
-      "peak_ccu": 2129,
-      "avg_ccu": 1369,
-      "title": "찌이로~",
-      "category": "talk"
-    },
-    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -11652,18 +11664,6 @@
       "category": "머신 파티"
     },
     {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-08-23 22:36",
-      "observed_min": 22.7,
-      "n_points": 2,
-      "peak_ccu": 2092,
-      "avg_ccu": 2015,
-      "title": "일어나라...",
-      "category": "로블록스"
-    },
-    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -11674,6 +11674,18 @@
       "avg_ccu": 2092,
       "title": "스텔라이브 데바데 내전 (w.삐부님)",
       "category": "데드 바이 데이라이트"
+    },
+    {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-23 22:36",
+      "observed_min": 22.7,
+      "n_points": 2,
+      "peak_ccu": 2092,
+      "avg_ccu": 2015,
+      "title": "일어나라...",
+      "category": "로블록스"
     },
     {
       "name_ko": "아야츠노 유니",
@@ -11856,18 +11868,6 @@
       "category": "이터널 리턴"
     },
     {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-23 17:33",
-      "observed_min": 391.6,
-      "n_points": 41,
-      "peak_ccu": 2009,
-      "avg_ccu": 1749,
-      "title": "멋쉬룸",
-      "category": "talk"
-    },
-    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -11878,6 +11878,18 @@
       "avg_ccu": 2009,
       "title": "[떠비큐어] 다 찌발라야해 (연습 2일차)",
       "category": "이터널 리턴"
+    },
+    {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-23 17:33",
+      "observed_min": 391.6,
+      "n_points": 41,
+      "peak_ccu": 2009,
+      "avg_ccu": 1749,
+      "title": "멋쉬룸",
+      "category": "talk"
     },
     {
       "name_ko": "하나코 나나",
@@ -11979,24 +11991,24 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "start_kst": "2026-08-23 23:33",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 1891,
-      "avg_ccu": 1891,
-      "title": "일어나라...",
-      "category": "talk"
-    },
-    {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
       "start_kst": "2026-08-12 15:57",
       "observed_min": 50.4,
       "n_points": 7,
       "peak_ccu": 1891,
       "avg_ccu": 1503,
       "title": "오 케 마 루",
+      "category": "talk"
+    },
+    {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-23 23:33",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 1891,
+      "avg_ccu": 1891,
+      "title": "일어나라...",
       "category": "talk"
     },
     {
@@ -12228,18 +12240,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-08-14 20:08",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 1716,
-      "avg_ccu": 1716,
-      "title": "감기용가리의 늙크크 수리점...(´。＿。｀)",
-      "category": "리스토리: 칠 일렉트로닉스 리페어스"
-    },
-    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -12255,11 +12255,11 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "start_kst": "2026-08-14 20:57",
+      "start_kst": "2026-08-14 20:08",
       "observed_min": 0.0,
       "n_points": 1,
-      "peak_ccu": 1700,
-      "avg_ccu": 1700,
+      "peak_ccu": 1716,
+      "avg_ccu": 1716,
       "title": "감기용가리의 늙크크 수리점...(´。＿。｀)",
       "category": "리스토리: 칠 일렉트로닉스 리페어스"
     },
@@ -12274,6 +12274,18 @@
       "avg_ccu": 1700,
       "title": "방제모",
       "category": "talk"
+    },
+    {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-14 20:57",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 1700,
+      "avg_ccu": 1700,
+      "title": "감기용가리의 늙크크 수리점...(´。＿。｀)",
+      "category": "리스토리: 칠 일렉트로닉스 리페어스"
     },
     {
       "name_ko": "사키하네 후야",
@@ -12336,18 +12348,6 @@
       "category": "로블록스"
     },
     {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-21 21:23",
-      "observed_min": 113.7,
-      "n_points": 13,
-      "peak_ccu": 1630,
-      "avg_ccu": 1476,
-      "title": "찌로",
-      "category": "talk"
-    },
-    {
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
@@ -12358,6 +12358,18 @@
       "avg_ccu": 1630,
       "title": "게임 공부 중...",
       "category": "로블록스"
+    },
+    {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-21 21:23",
+      "observed_min": 113.7,
+      "n_points": 13,
+      "peak_ccu": 1630,
+      "avg_ccu": 1476,
+      "title": "찌로",
+      "category": "talk"
     },
     {
       "name_ko": "아카네 리제",
@@ -12442,18 +12454,6 @@
       "avg_ccu": 1587,
       "title": "[수동암즈] 이리 대회 연습 2일차",
       "category": "이터널 리턴"
-    },
-    {
-      "name_ko": "아라하시 타비",
-      "name_en": "Arahashi Tabi",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-30 17:05",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 1530,
-      "avg_ccu": 1530,
-      "title": "[봉누도 2] 블랙리스트 황짠기리입니댜",
-      "category": "Grand Theft Auto V"
     },
     {
       "name_ko": "유즈하 리코",
@@ -27253,6 +27253,10 @@
         [
           "2026-09-30 17:05",
           1530
+        ],
+        [
+          "2026-09-30 17:15",
+          2392
         ]
       ]
     },
@@ -40884,6 +40888,10 @@
         [
           "2026-09-30 17:05",
           2129
+        ],
+        [
+          "2026-09-30 17:15",
+          2169
         ]
       ]
     },
