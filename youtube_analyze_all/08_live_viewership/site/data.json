@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-30T06:43:45.473322+00:00",
-    "n_snapshots": 49516,
+    "fetched_at": "2026-09-30T06:53:59.214661+00:00",
+    "n_snapshots": 49527,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-30T06:43:45.473322+00:00"
+      "2026-09-30T06:53:59.214661+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 44975,
-    "n_timepoints": 4512,
-    "span_hours": 1176.8,
-    "observed_hours": 769.54,
+    "n_snapshots": 44985,
+    "n_timepoints": 4513,
+    "span_hours": 1176.97,
+    "observed_hours": 769.71,
     "coverage_ratio": 0.654,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 12259,
+    "n_live_rows": 12260,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-30T06:43:45.473322+00:00"
+    "last": "2026-09-30T06:53:59.214661+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,13 +30,13 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 166781,
-      "follower_delta": 10040,
+      "followers": 166783,
+      "follower_delta": 10042,
       "follower_per_day": 204.8,
       "n_sessions": 66,
-      "n_live_points": 787,
+      "n_live_points": 788,
       "peak_ccu": 38402,
-      "avg_ccu": 2462,
+      "avg_ccu": 2461,
       "ccu_per_1k_followers": 230.25
     },
     {
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 264688,
-      "follower_delta": 9362,
+      "followers": 264689,
+      "follower_delta": 9363,
       "follower_per_day": 190.9,
       "n_sessions": 120,
       "n_live_points": 1391,
@@ -58,9 +58,9 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217010,
-      "follower_delta": 7191,
-      "follower_per_day": 146.7,
+      "followers": 217009,
+      "follower_delta": 7190,
+      "follower_per_day": 146.6,
       "n_sessions": 105,
       "n_live_points": 761,
       "peak_ccu": 28071,
@@ -72,14 +72,14 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 217770,
-      "follower_delta": 10344,
+      "followers": 217772,
+      "follower_delta": 10346,
       "follower_per_day": 211.0,
       "n_sessions": 97,
       "n_live_points": 1201,
       "peak_ccu": 24385,
       "avg_ccu": 3350,
-      "ccu_per_1k_followers": 111.98
+      "ccu_per_1k_followers": 111.97
     },
     {
       "rank": 5,
@@ -114,8 +114,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 219463,
-      "follower_delta": 10128,
+      "followers": 219465,
+      "follower_delta": 10130,
       "follower_per_day": 206.6,
       "n_sessions": 127,
       "n_live_points": 1538,
@@ -142,8 +142,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 228422,
-      "follower_delta": 9322,
+      "followers": 228423,
+      "follower_delta": 9323,
       "follower_per_day": 190.1,
       "n_sessions": 103,
       "n_live_points": 1184,
@@ -12348,6 +12348,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-09-30 15:33",
+      "observed_min": 20.5,
+      "n_points": 3,
+      "peak_ccu": 1627,
+      "avg_ccu": 1228,
+      "title": "뱅드림 아워노트 드디어 해본당!",
+      "category": "talk"
+    },
+    {
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
@@ -12561,18 +12573,6 @@
       "peak_ccu": 1266,
       "avg_ccu": 1266,
       "title": "켈룪켈룩떼껄룩캥캥",
-      "category": "talk"
-    },
-    {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-09-30 15:33",
-      "observed_min": 10.2,
-      "n_points": 2,
-      "peak_ccu": 1247,
-      "avg_ccu": 1028,
-      "title": "뱅드림 아워노트 드디어 해본당!",
       "category": "talk"
     },
     {
@@ -43985,6 +43985,10 @@
         [
           "2026-09-30 15:43",
           1247
+        ],
+        [
+          "2026-09-30 15:53",
+          1627
         ]
       ]
     },
