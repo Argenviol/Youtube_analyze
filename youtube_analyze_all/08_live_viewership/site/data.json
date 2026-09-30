@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-30T06:53:59.214661+00:00",
-    "n_snapshots": 49527,
+    "fetched_at": "2026-09-30T07:04:12.851099+00:00",
+    "n_snapshots": 49538,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-30T06:53:59.214661+00:00"
+      "2026-09-30T07:04:12.851099+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 44985,
-    "n_timepoints": 4513,
-    "span_hours": 1176.97,
-    "observed_hours": 769.71,
+    "n_snapshots": 44995,
+    "n_timepoints": 4514,
+    "span_hours": 1177.14,
+    "observed_hours": 769.88,
     "coverage_ratio": 0.654,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 12260,
+    "n_live_rows": 12261,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-30T06:53:59.214661+00:00"
+    "last": "2026-09-30T07:04:12.851099+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,13 +30,13 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 166783,
-      "follower_delta": 10042,
+      "followers": 166784,
+      "follower_delta": 10043,
       "follower_per_day": 204.8,
       "n_sessions": 66,
-      "n_live_points": 788,
+      "n_live_points": 789,
       "peak_ccu": 38402,
-      "avg_ccu": 2461,
+      "avg_ccu": 2460,
       "ccu_per_1k_followers": 230.25
     },
     {
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 264689,
-      "follower_delta": 9363,
+      "followers": 264688,
+      "follower_delta": 9362,
       "follower_per_day": 190.9,
       "n_sessions": 120,
       "n_live_points": 1391,
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217009,
-      "follower_delta": 7190,
+      "followers": 217008,
+      "follower_delta": 7189,
       "follower_per_day": 146.6,
       "n_sessions": 105,
       "n_live_points": 761,
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 217772,
-      "follower_delta": 10346,
+      "followers": 217773,
+      "follower_delta": 10347,
       "follower_per_day": 211.0,
       "n_sessions": 97,
       "n_live_points": 1201,
@@ -116,7 +116,7 @@
       "unit": "CLICHE",
       "followers": 219465,
       "follower_delta": 10130,
-      "follower_per_day": 206.6,
+      "follower_per_day": 206.5,
       "n_sessions": 127,
       "n_live_points": 1538,
       "peak_ccu": 10461,
@@ -128,9 +128,9 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241800,
-      "follower_delta": 4952,
-      "follower_per_day": 101.0,
+      "followers": 241799,
+      "follower_delta": 4951,
+      "follower_per_day": 100.9,
       "n_sessions": 131,
       "n_live_points": 1526,
       "peak_ccu": 9749,
@@ -142,8 +142,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 228423,
-      "follower_delta": 9323,
+      "followers": 228424,
+      "follower_delta": 9324,
       "follower_per_day": 190.1,
       "n_sessions": 103,
       "n_live_points": 1184,
@@ -12012,6 +12012,18 @@
       "category": "로블록스"
     },
     {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-09-30 15:33",
+      "observed_min": 30.7,
+      "n_points": 4,
+      "peak_ccu": 1869,
+      "avg_ccu": 1388,
+      "title": "뱅드림 아워노트 드디어 해본당!",
+      "category": "talk"
+    },
+    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -12204,18 +12216,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-08-14 20:08",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 1716,
-      "avg_ccu": 1716,
-      "title": "감기용가리의 늙크크 수리점...(´。＿。｀)",
-      "category": "리스토리: 칠 일렉트로닉스 리페어스"
-    },
-    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -12228,16 +12228,16 @@
       "category": "talk"
     },
     {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-13 21:31",
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-14 20:08",
       "observed_min": 0.0,
       "n_points": 1,
-      "peak_ccu": 1700,
-      "avg_ccu": 1700,
-      "title": "방제모",
-      "category": "talk"
+      "peak_ccu": 1716,
+      "avg_ccu": 1716,
+      "title": "감기용가리의 늙크크 수리점...(´。＿。｀)",
+      "category": "리스토리: 칠 일렉트로닉스 리페어스"
     },
     {
       "name_ko": "사키하네 후야",
@@ -12250,6 +12250,18 @@
       "avg_ccu": 1700,
       "title": "감기용가리의 늙크크 수리점...(´。＿。｀)",
       "category": "리스토리: 칠 일렉트로닉스 리페어스"
+    },
+    {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-13 21:31",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 1700,
+      "avg_ccu": 1700,
+      "title": "방제모",
+      "category": "talk"
     },
     {
       "name_ko": "사키하네 후야",
@@ -12345,18 +12357,6 @@
       "peak_ccu": 1627,
       "avg_ccu": 864,
       "title": "스텔데바데내전 으마무시한 살인마 등장",
-      "category": "talk"
-    },
-    {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-09-30 15:33",
-      "observed_min": 20.5,
-      "n_points": 3,
-      "peak_ccu": 1627,
-      "avg_ccu": 1228,
-      "title": "뱅드림 아워노트 드디어 해본당!",
       "category": "talk"
     },
     {
@@ -43989,6 +43989,10 @@
         [
           "2026-09-30 15:53",
           1627
+        ],
+        [
+          "2026-09-30 16:04",
+          1869
         ]
       ]
     },
