@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-09-30T06:33:31.670243+00:00",
-    "n_snapshots": 49505,
+    "fetched_at": "2026-09-30T06:43:45.473322+00:00",
+    "n_snapshots": 49516,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-09-30T06:33:31.670243+00:00"
+      "2026-09-30T06:43:45.473322+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 44965,
-    "n_timepoints": 4511,
-    "span_hours": 1176.63,
-    "observed_hours": 769.37,
+    "n_snapshots": 44975,
+    "n_timepoints": 4512,
+    "span_hours": 1176.8,
+    "observed_hours": 769.54,
     "coverage_ratio": 0.654,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 12258,
+    "n_live_rows": 12259,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-09-30T06:33:31.670243+00:00"
+    "last": "2026-09-30T06:43:45.473322+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,14 +30,14 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 166778,
-      "follower_delta": 10037,
-      "follower_per_day": 204.7,
+      "followers": 166781,
+      "follower_delta": 10040,
+      "follower_per_day": 204.8,
       "n_sessions": 66,
-      "n_live_points": 786,
+      "n_live_points": 787,
       "peak_ccu": 38402,
-      "avg_ccu": 2464,
-      "ccu_per_1k_followers": 230.26
+      "avg_ccu": 2462,
+      "ccu_per_1k_followers": 230.25
     },
     {
       "rank": 2,
@@ -46,7 +46,7 @@
       "unit": "UNIVERSE",
       "followers": 264688,
       "follower_delta": 9362,
-      "follower_per_day": 191.0,
+      "follower_per_day": 190.9,
       "n_sessions": 120,
       "n_live_points": 1391,
       "peak_ccu": 38237,
@@ -72,9 +72,9 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 217767,
-      "follower_delta": 10341,
-      "follower_per_day": 210.9,
+      "followers": 217770,
+      "follower_delta": 10344,
+      "follower_per_day": 211.0,
       "n_sessions": 97,
       "n_live_points": 1201,
       "peak_ccu": 24385,
@@ -102,7 +102,7 @@
       "unit": "EVERYS",
       "followers": 308855,
       "follower_delta": 6935,
-      "follower_per_day": 141.5,
+      "follower_per_day": 141.4,
       "n_sessions": 110,
       "n_live_points": 1436,
       "peak_ccu": 12362,
@@ -114,8 +114,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 219462,
-      "follower_delta": 10127,
+      "followers": 219463,
+      "follower_delta": 10128,
       "follower_per_day": 206.6,
       "n_sessions": 127,
       "n_live_points": 1538,
@@ -156,8 +156,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 262885,
-      "follower_delta": 9983,
+      "followers": 262886,
+      "follower_delta": 9984,
       "follower_per_day": 203.6,
       "n_sessions": 83,
       "n_live_points": 1045,
@@ -12567,6 +12567,18 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
+      "start_kst": "2026-09-30 15:33",
+      "observed_min": 10.2,
+      "n_points": 2,
+      "peak_ccu": 1247,
+      "avg_ccu": 1028,
+      "title": "뱅드림 아워노트 드디어 해본당!",
+      "category": "talk"
+    },
+    {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
       "start_kst": "2026-08-26 19:41",
       "observed_min": 0.0,
       "n_points": 1,
@@ -12621,18 +12633,6 @@
       "peak_ccu": 936,
       "avg_ccu": 936,
       "title": "스텔라가 ~~라면? 망상컨텐츠",
-      "category": "talk"
-    },
-    {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-09-30 15:33",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 810,
-      "avg_ccu": 810,
-      "title": "뱅드림 아워노트 드디어 해본당!",
       "category": "talk"
     },
     {
@@ -43981,6 +43981,10 @@
         [
           "2026-09-30 15:33",
           810
+        ],
+        [
+          "2026-09-30 15:43",
+          1247
         ]
       ]
     },
