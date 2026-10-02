@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-02T06:00:29.562075+00:00",
-    "n_snapshots": 52640,
+    "fetched_at": "2026-10-02T06:10:44.852217+00:00",
+    "n_snapshots": 52651,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-02T06:00:29.562075+00:00"
+      "2026-10-02T06:10:44.852217+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 47815,
-    "n_timepoints": 4796,
-    "span_hours": 1224.08,
-    "observed_hours": 818.08,
+    "n_snapshots": 47825,
+    "n_timepoints": 4797,
+    "span_hours": 1224.25,
+    "observed_hours": 818.25,
     "coverage_ratio": 0.668,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13005,
+    "n_live_rows": 13006,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-02T06:00:29.562075+00:00"
+    "last": "2026-10-02T06:10:44.852217+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -46,7 +46,7 @@
       "unit": "UNIVERSE",
       "followers": 264949,
       "follower_delta": 9623,
-      "follower_per_day": 188.7,
+      "follower_per_day": 188.6,
       "n_sessions": 122,
       "n_live_points": 1508,
       "peak_ccu": 38237,
@@ -72,11 +72,11 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 218036,
-      "follower_delta": 10610,
-      "follower_per_day": 208.0,
+      "followers": 218039,
+      "follower_delta": 10613,
+      "follower_per_day": 208.1,
       "n_sessions": 99,
-      "n_live_points": 1239,
+      "n_live_points": 1240,
       "peak_ccu": 24385,
       "avg_ccu": 3346,
       "ccu_per_1k_followers": 111.84
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 263456,
-      "follower_delta": 10554,
+      "followers": 263457,
+      "follower_delta": 10555,
       "follower_per_day": 206.9,
       "n_sessions": 86,
       "n_live_points": 1096,
@@ -6712,10 +6712,10 @@
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
       "start_kst": "2026-10-02 12:57",
-      "observed_min": 123.1,
-      "n_points": 13,
+      "observed_min": 133.4,
+      "n_points": 14,
       "peak_ccu": 3569,
-      "avg_ccu": 2888,
+      "avg_ccu": 2923,
       "title": "휴방인데 게임하고 싶어서",
       "category": "talk"
     },
@@ -39359,6 +39359,10 @@
         [
           "2026-10-02 15:00",
           3488
+        ],
+        [
+          "2026-10-02 15:10",
+          3374
         ]
       ]
     },
