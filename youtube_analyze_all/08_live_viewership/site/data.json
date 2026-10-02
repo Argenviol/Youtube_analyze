@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-02T16:08:49.907065+00:00",
-    "n_snapshots": 53300,
+    "fetched_at": "2026-10-02T16:19:03.918354+00:00",
+    "n_snapshots": 53311,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-02T16:08:49.907065+00:00"
+      "2026-10-02T16:19:03.918354+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 48415,
-    "n_timepoints": 4856,
-    "span_hours": 1234.22,
-    "observed_hours": 828.33,
+    "n_snapshots": 48425,
+    "n_timepoints": 4857,
+    "span_hours": 1234.39,
+    "observed_hours": 828.5,
     "coverage_ratio": 0.671,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13130,
+    "n_live_rows": 13131,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-02T16:08:49.907065+00:00"
+    "last": "2026-10-02T16:19:03.918354+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,14 +30,14 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 166966,
-      "follower_delta": 10225,
-      "follower_per_day": 198.8,
+      "followers": 166969,
+      "follower_delta": 10228,
+      "follower_per_day": 198.9,
       "n_sessions": 67,
       "n_live_points": 884,
       "peak_ccu": 38402,
       "avg_ccu": 2378,
-      "ccu_per_1k_followers": 230.0
+      "ccu_per_1k_followers": 229.99
     },
     {
       "rank": 2,
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217105,
-      "follower_delta": 7286,
+      "followers": 217106,
+      "follower_delta": 7287,
       "follower_per_day": 141.7,
       "n_sessions": 107,
       "n_live_points": 837,
@@ -72,22 +72,22 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 218161,
-      "follower_delta": 10735,
+      "followers": 218162,
+      "follower_delta": 10736,
       "follower_per_day": 208.7,
       "n_sessions": 99,
       "n_live_points": 1269,
       "peak_ccu": 24385,
       "avg_ccu": 3373,
-      "ccu_per_1k_followers": 111.78
+      "ccu_per_1k_followers": 111.77
     },
     {
       "rank": 5,
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 263546,
-      "follower_delta": 10644,
+      "followers": 263547,
+      "follower_delta": 10645,
       "follower_per_day": 207.0,
       "n_sessions": 87,
       "n_live_points": 1113,
@@ -114,13 +114,13 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 308972,
-      "follower_delta": 7052,
-      "follower_per_day": 137.1,
+      "followers": 308975,
+      "follower_delta": 7055,
+      "follower_per_day": 137.2,
       "n_sessions": 112,
-      "n_live_points": 1512,
+      "n_live_points": 1513,
       "peak_ccu": 12362,
-      "avg_ccu": 2841,
+      "avg_ccu": 2843,
       "ccu_per_1k_followers": 40.01
     },
     {
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241861,
-      "follower_delta": 5013,
+      "followers": 241862,
+      "follower_delta": 5014,
       "follower_per_day": 97.5,
       "n_sessions": 134,
       "n_live_points": 1618,
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 228609,
-      "follower_delta": 9509,
+      "followers": 228612,
+      "follower_delta": 9512,
       "follower_per_day": 184.9,
       "n_sessions": 105,
       "n_live_points": 1272,
@@ -2776,10 +2776,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-10-02 20:09",
-      "observed_min": 299.5,
-      "n_points": 30,
+      "observed_min": 309.8,
+      "n_points": 31,
       "peak_ccu": 5230,
-      "avg_ccu": 4431,
+      "avg_ccu": 4447,
       "title": "억까를 담아서 사는 유니콘 ",
       "category": "talk"
     },
@@ -34634,6 +34634,10 @@
         [
           "2026-10-03 01:08",
           5132
+        ],
+        [
+          "2026-10-03 01:19",
+          4945
         ]
       ]
     },
