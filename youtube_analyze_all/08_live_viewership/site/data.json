@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-02T09:26:42.408934+00:00",
-    "n_snapshots": 52871,
+    "fetched_at": "2026-10-02T09:36:58.387092+00:00",
+    "n_snapshots": 52882,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-02T09:26:42.408934+00:00"
+      "2026-10-02T09:36:58.387092+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 48025,
-    "n_timepoints": 4817,
-    "span_hours": 1227.52,
-    "observed_hours": 821.67,
+    "n_snapshots": 48035,
+    "n_timepoints": 4818,
+    "span_hours": 1227.69,
+    "observed_hours": 821.84,
     "coverage_ratio": 0.669,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13043,
+    "n_live_rows": 13045,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-02T09:26:42.408934+00:00"
+    "last": "2026-10-02T09:36:58.387092+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 166946,
-      "follower_delta": 10205,
+      "followers": 166945,
+      "follower_delta": 10204,
       "follower_per_day": 199.5,
       "n_sessions": 67,
       "n_live_points": 884,
@@ -58,11 +58,11 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217083,
-      "follower_delta": 7264,
+      "followers": 217082,
+      "follower_delta": 7263,
       "follower_per_day": 142.0,
       "n_sessions": 107,
-      "n_live_points": 818,
+      "n_live_points": 819,
       "peak_ccu": 28071,
       "avg_ccu": 3051,
       "ccu_per_1k_followers": 129.31
@@ -74,11 +74,11 @@
       "unit": "CLICHE",
       "followers": 218098,
       "follower_delta": 10672,
-      "follower_per_day": 208.7,
+      "follower_per_day": 208.6,
       "n_sessions": 99,
-      "n_live_points": 1260,
+      "n_live_points": 1261,
       "peak_ccu": 24385,
-      "avg_ccu": 3360,
+      "avg_ccu": 3362,
       "ccu_per_1k_followers": 111.81
     },
     {
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241856,
-      "follower_delta": 5008,
+      "followers": 241854,
+      "follower_delta": 5006,
       "follower_per_day": 97.9,
       "n_sessions": 133,
       "n_live_points": 1606,
@@ -3048,6 +3048,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "하나코 나나",
+      "name_en": "Hanako Nana",
+      "unit": "CLICHE",
+      "start_kst": "2026-10-02 12:57",
+      "observed_min": 339.6,
+      "n_points": 35,
+      "peak_ccu": 5025,
+      "avg_ccu": 3735,
+      "title": "휴방인데 게임하고 싶어서",
+      "category": "talk"
+    },
+    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -3334,18 +3346,6 @@
       "avg_ccu": 4551,
       "title": "면접 망한 것 같아요",
       "category": "음악/노래"
-    },
-    {
-      "name_ko": "하나코 나나",
-      "name_en": "Hanako Nana",
-      "unit": "CLICHE",
-      "start_kst": "2026-10-02 12:57",
-      "observed_min": 329.3,
-      "n_points": 34,
-      "peak_ccu": 4892,
-      "avg_ccu": 3697,
-      "title": "휴방인데 게임하고 싶어서",
-      "category": "talk"
     },
     {
       "name_ko": "시라유키 히나",
@@ -9664,10 +9664,10 @@
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-02 15:51",
-      "observed_min": 154.9,
-      "n_points": 17,
+      "observed_min": 165.2,
+      "n_points": 18,
       "peak_ccu": 2877,
-      "avg_ccu": 2420,
+      "avg_ccu": 2443,
       "title": "헤에에에ㅔㅇ?!",
       "category": "talk"
     },
@@ -39455,6 +39455,10 @@
         [
           "2026-10-02 18:26",
           4892
+        ],
+        [
+          "2026-10-02 18:36",
+          5025
         ]
       ]
     },
@@ -42732,6 +42736,10 @@
         [
           "2026-10-02 18:26",
           2720
+        ],
+        [
+          "2026-10-02 18:36",
+          2834
         ]
       ]
     },
