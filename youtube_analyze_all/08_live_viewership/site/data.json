@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-02T18:42:19.815576+00:00",
-    "n_snapshots": 53465,
+    "fetched_at": "2026-10-02T18:52:33.964836+00:00",
+    "n_snapshots": 53476,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-02T18:42:19.815576+00:00"
+      "2026-10-02T18:52:33.964836+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 48565,
-    "n_timepoints": 4871,
-    "span_hours": 1236.78,
-    "observed_hours": 830.89,
+    "n_snapshots": 48575,
+    "n_timepoints": 4872,
+    "span_hours": 1236.95,
+    "observed_hours": 831.06,
     "coverage_ratio": 0.672,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13145,
+    "n_live_rows": 13146,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-02T18:42:19.815576+00:00"
+    "last": "2026-10-02T18:52:33.964836+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -102,7 +102,7 @@
       "unit": "CLICHE",
       "followers": 249406,
       "follower_delta": 8289,
-      "follower_per_day": 160.9,
+      "follower_per_day": 160.8,
       "n_sessions": 107,
       "n_live_points": 1470,
       "peak_ccu": 15159,
@@ -116,9 +116,9 @@
       "unit": "EVERYS",
       "followers": 308983,
       "follower_delta": 7063,
-      "follower_per_day": 137.1,
+      "follower_per_day": 137.0,
       "n_sessions": 112,
-      "n_live_points": 1527,
+      "n_live_points": 1528,
       "peak_ccu": 12362,
       "avg_ccu": 2856,
       "ccu_per_1k_followers": 40.01
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241866,
-      "follower_delta": 5018,
+      "followers": 241867,
+      "follower_delta": 5019,
       "follower_per_day": 97.4,
       "n_sessions": 134,
       "n_live_points": 1618,
@@ -2776,10 +2776,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-10-02 20:09",
-      "observed_min": 453.0,
-      "n_points": 45,
+      "observed_min": 463.3,
+      "n_points": 46,
       "peak_ccu": 5230,
-      "avg_ccu": 4387,
+      "avg_ccu": 4371,
       "title": "억까를 담아서 사는 유니콘 ",
       "category": "talk"
     },
@@ -34694,6 +34694,10 @@
         [
           "2026-10-03 03:42",
           3716
+        ],
+        [
+          "2026-10-03 03:52",
+          3644
         ]
       ]
     },
