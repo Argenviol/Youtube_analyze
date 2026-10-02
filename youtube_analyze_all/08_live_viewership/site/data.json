@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-02T14:36:43.996035+00:00",
-    "n_snapshots": 53201,
+    "fetched_at": "2026-10-02T14:46:58.120192+00:00",
+    "n_snapshots": 53212,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-02T14:36:43.996035+00:00"
+      "2026-10-02T14:46:58.120192+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 48325,
-    "n_timepoints": 4847,
-    "span_hours": 1232.68,
-    "observed_hours": 826.8,
+    "n_snapshots": 48335,
+    "n_timepoints": 4848,
+    "span_hours": 1232.86,
+    "observed_hours": 826.97,
     "coverage_ratio": 0.671,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13116,
+    "n_live_rows": 13118,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-02T14:36:43.996035+00:00"
+    "last": "2026-10-02T14:46:58.120192+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 166965,
-      "follower_delta": 10224,
+      "followers": 166966,
+      "follower_delta": 10225,
       "follower_per_day": 199.1,
       "n_sessions": 67,
       "n_live_points": 884,
@@ -44,9 +44,9 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 264986,
-      "follower_delta": 9660,
-      "follower_per_day": 188.1,
+      "followers": 264985,
+      "follower_delta": 9659,
+      "follower_per_day": 188.0,
       "n_sessions": 122,
       "n_live_points": 1508,
       "peak_ccu": 38237,
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217108,
-      "follower_delta": 7289,
+      "followers": 217107,
+      "follower_delta": 7288,
       "follower_per_day": 141.9,
       "n_sessions": 107,
       "n_live_points": 837,
@@ -88,7 +88,7 @@
       "unit": "UNIVERSE",
       "followers": 263543,
       "follower_delta": 10641,
-      "follower_per_day": 207.2,
+      "follower_per_day": 207.1,
       "n_sessions": 87,
       "n_live_points": 1113,
       "peak_ccu": 18587,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 249407,
-      "follower_delta": 8290,
+      "followers": 249409,
+      "follower_delta": 8292,
       "follower_per_day": 161.4,
       "n_sessions": 107,
       "n_live_points": 1470,
@@ -114,13 +114,13 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 308955,
-      "follower_delta": 7035,
+      "followers": 308960,
+      "follower_delta": 7040,
       "follower_per_day": 137.0,
       "n_sessions": 112,
-      "n_live_points": 1503,
+      "n_live_points": 1504,
       "peak_ccu": 12362,
-      "avg_ccu": 2829,
+      "avg_ccu": 2830,
       "ccu_per_1k_followers": 40.01
     },
     {
@@ -130,7 +130,7 @@
       "unit": "CLICHE",
       "followers": 219723,
       "follower_delta": 10388,
-      "follower_per_day": 202.3,
+      "follower_per_day": 202.2,
       "n_sessions": 129,
       "n_live_points": 1647,
       "peak_ccu": 10461,
@@ -142,13 +142,13 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241867,
-      "follower_delta": 5019,
+      "followers": 241868,
+      "follower_delta": 5020,
       "follower_per_day": 97.7,
       "n_sessions": 134,
-      "n_live_points": 1613,
+      "n_live_points": 1614,
       "peak_ccu": 9749,
-      "avg_ccu": 3011,
+      "avg_ccu": 3012,
       "ccu_per_1k_followers": 40.31
     },
     {
@@ -2776,10 +2776,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-10-02 20:09",
-      "observed_min": 207.4,
-      "n_points": 21,
+      "observed_min": 217.7,
+      "n_points": 22,
       "peak_ccu": 5230,
-      "avg_ccu": 4216,
+      "avg_ccu": 4248,
       "title": "억까를 담아서 사는 유니콘 ",
       "category": "talk"
     },
@@ -3528,6 +3528,18 @@
       "category": "오버워치"
     },
     {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-10-02 22:35",
+      "observed_min": 71.7,
+      "n_points": 8,
+      "peak_ccu": 4822,
+      "avg_ccu": 3495,
+      "title": "테스트",
+      "category": "Grand Theft Auto V"
+    },
+    {
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
@@ -3946,18 +3958,6 @@
       "avg_ccu": 3258,
       "title": "안녕하시지 ",
       "category": "talk"
-    },
-    {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-02 22:35",
-      "observed_min": 61.4,
-      "n_points": 7,
-      "peak_ccu": 4651,
-      "avg_ccu": 3305,
-      "title": "테스트",
-      "category": "Grand Theft Auto V"
     },
     {
       "name_ko": "아야츠노 유니",
@@ -34598,6 +34598,10 @@
         [
           "2026-10-02 23:36",
           5099
+        ],
+        [
+          "2026-10-02 23:46",
+          4930
         ]
       ]
     },
@@ -53030,6 +53034,10 @@
         [
           "2026-10-02 23:36",
           4651
+        ],
+        [
+          "2026-10-02 23:46",
+          4822
         ]
       ]
     },
