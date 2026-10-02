@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-02T06:51:47.266788+00:00",
-    "n_snapshots": 52695,
+    "fetched_at": "2026-10-02T07:02:02.815676+00:00",
+    "n_snapshots": 52706,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-02T06:51:47.266788+00:00"
+      "2026-10-02T07:02:02.815676+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 47865,
-    "n_timepoints": 4801,
-    "span_hours": 1224.94,
-    "observed_hours": 818.93,
+    "n_snapshots": 47875,
+    "n_timepoints": 4802,
+    "span_hours": 1225.11,
+    "observed_hours": 819.11,
     "coverage_ratio": 0.669,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13011,
+    "n_live_rows": 13013,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-02T06:51:47.266788+00:00"
+    "last": "2026-10-02T07:02:02.815676+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 264951,
-      "follower_delta": 9625,
+      "followers": 264955,
+      "follower_delta": 9629,
       "follower_per_day": 188.6,
       "n_sessions": 122,
       "n_live_points": 1508,
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217062,
-      "follower_delta": 7243,
+      "followers": 217061,
+      "follower_delta": 7242,
       "follower_per_day": 141.9,
       "n_sessions": 107,
-      "n_live_points": 802,
+      "n_live_points": 803,
       "peak_ccu": 28071,
-      "avg_ccu": 3062,
+      "avg_ccu": 3060,
       "ccu_per_1k_followers": 129.32
     },
     {
@@ -72,11 +72,11 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 218050,
-      "follower_delta": 10624,
+      "followers": 218054,
+      "follower_delta": 10628,
       "follower_per_day": 208.2,
       "n_sessions": 99,
-      "n_live_points": 1244,
+      "n_live_points": 1245,
       "peak_ccu": 24385,
       "avg_ccu": 3348,
       "ccu_per_1k_followers": 111.83
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 249381,
-      "follower_delta": 8264,
+      "followers": 249380,
+      "follower_delta": 8263,
       "follower_per_day": 161.9,
       "n_sessions": 107,
       "n_live_points": 1470,
@@ -114,8 +114,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 308904,
-      "follower_delta": 6984,
+      "followers": 308905,
+      "follower_delta": 6985,
       "follower_per_day": 136.8,
       "n_sessions": 111,
       "n_live_points": 1482,
@@ -128,8 +128,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 219689,
-      "follower_delta": 10354,
+      "followers": 219690,
+      "follower_delta": 10355,
       "follower_per_day": 202.9,
       "n_sessions": 129,
       "n_live_points": 1647,
@@ -156,9 +156,9 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 228582,
-      "follower_delta": 9482,
-      "follower_per_day": 185.8,
+      "followers": 228581,
+      "follower_delta": 9481,
+      "follower_per_day": 185.7,
       "n_sessions": 105,
       "n_live_points": 1272,
       "peak_ccu": 9414,
@@ -5044,10 +5044,10 @@
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
       "start_kst": "2026-10-02 12:57",
-      "observed_min": 174.4,
-      "n_points": 18,
+      "observed_min": 184.7,
+      "n_points": 19,
       "peak_ccu": 4166,
-      "avg_ccu": 3131,
+      "avg_ccu": 3172,
       "title": "휴방인데 게임하고 싶어서",
       "category": "talk"
     },
@@ -12672,6 +12672,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-10-02 15:51",
+      "observed_min": 10.3,
+      "n_points": 2,
+      "peak_ccu": 1447,
+      "avg_ccu": 1138,
+      "title": "헤에에에ㅔㅇ?!",
+      "category": "talk"
+    },
+    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -12684,18 +12696,6 @@
       "category": "데드 바이 데이라이트"
     },
     {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-08-26 20:15",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 1433,
-      "avg_ccu": 1433,
-      "title": "8월이 끝나간다니~",
-      "category": "talk"
-    },
-    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -12705,6 +12705,18 @@
       "peak_ccu": 1433,
       "avg_ccu": 1433,
       "title": "여언습",
+      "category": "talk"
+    },
+    {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-26 20:15",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 1433,
+      "avg_ccu": 1433,
+      "title": "8월이 끝나간다니~",
       "category": "talk"
     },
     {
@@ -12849,18 +12861,6 @@
       "peak_ccu": 936,
       "avg_ccu": 936,
       "title": "스텔라가 ~~라면? 망상컨텐츠",
-      "category": "talk"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-02 15:51",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 829,
-      "avg_ccu": 829,
-      "title": "헤에에에ㅔㅇ?!",
       "category": "talk"
     },
     {
@@ -39391,6 +39391,10 @@
         [
           "2026-10-02 15:51",
           4166
+        ],
+        [
+          "2026-10-02 16:02",
+          3922
         ]
       ]
     },
@@ -42604,6 +42608,10 @@
         [
           "2026-10-02 15:51",
           829
+        ],
+        [
+          "2026-10-02 16:02",
+          1447
         ]
       ]
     },
