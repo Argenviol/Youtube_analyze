@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-02T04:48:40.839725+00:00",
-    "n_snapshots": 52563,
+    "fetched_at": "2026-10-02T04:58:56.267052+00:00",
+    "n_snapshots": 52574,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-02T04:48:40.839725+00:00"
+      "2026-10-02T04:58:56.267052+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 47745,
-    "n_timepoints": 4789,
-    "span_hours": 1222.88,
-    "observed_hours": 816.87,
+    "n_snapshots": 47755,
+    "n_timepoints": 4790,
+    "span_hours": 1223.05,
+    "observed_hours": 817.05,
     "coverage_ratio": 0.668,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 12998,
+    "n_live_rows": 12999,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-02T04:48:40.839725+00:00"
+    "last": "2026-10-02T04:58:56.267052+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 264945,
-      "follower_delta": 9619,
+      "followers": 264948,
+      "follower_delta": 9622,
       "follower_per_day": 188.8,
       "n_sessions": 122,
       "n_live_points": 1508,
@@ -76,7 +76,7 @@
       "follower_delta": 10598,
       "follower_per_day": 208.0,
       "n_sessions": 99,
-      "n_live_points": 1232,
+      "n_live_points": 1233,
       "peak_ccu": 24385,
       "avg_ccu": 3346,
       "ccu_per_1k_followers": 111.85
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 249380,
-      "follower_delta": 8263,
+      "followers": 249381,
+      "follower_delta": 8264,
       "follower_per_day": 162.2,
       "n_sessions": 107,
       "n_live_points": 1470,
@@ -158,7 +158,7 @@
       "unit": "CLICHE",
       "followers": 228581,
       "follower_delta": 9481,
-      "follower_per_day": 186.1,
+      "follower_per_day": 186.0,
       "n_sessions": 105,
       "n_live_points": 1272,
       "peak_ccu": 9414,
@@ -8088,6 +8088,18 @@
       "category": "Grand Theft Auto V"
     },
     {
+      "name_ko": "하나코 나나",
+      "name_en": "Hanako Nana",
+      "unit": "CLICHE",
+      "start_kst": "2026-10-02 12:57",
+      "observed_min": 61.6,
+      "n_points": 7,
+      "peak_ccu": 3237,
+      "avg_ccu": 2507,
+      "title": "휴방인데 게임하고 싶어서",
+      "category": "talk"
+    },
+    {
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
@@ -8136,18 +8148,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "아야츠노 유니",
-      "name_en": "Ayatsuno Yuni",
-      "unit": "EVERYS",
-      "start_kst": "2026-08-15 18:15",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3227,
-      "avg_ccu": 3227,
-      "title": "공식 스크림 하는날 ! ",
-      "category": "오버워치"
-    },
-    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -8170,6 +8170,18 @@
       "avg_ccu": 2436,
       "title": "도파민을 찾아 떠나는🌟야루링 등쟝 ( •̀ .̫ •́ )✧",
       "category": "Grand Theft Auto V"
+    },
+    {
+      "name_ko": "아야츠노 유니",
+      "name_en": "Ayatsuno Yuni",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-15 18:15",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3227,
+      "avg_ccu": 3227,
+      "title": "공식 스크림 하는날 ! ",
+      "category": "오버워치"
     },
     {
       "name_ko": "아오쿠모 린",
@@ -8242,18 +8254,6 @@
       "avg_ccu": 3217,
       "title": "유니버스 하빵날 저희 싸우는거 맞습니다 (w. 타비, 시로, 히나)",
       "category": "갬블 위드 유어 프렌즈"
-    },
-    {
-      "name_ko": "하나코 나나",
-      "name_en": "Hanako Nana",
-      "unit": "CLICHE",
-      "start_kst": "2026-10-02 12:57",
-      "observed_min": 51.3,
-      "n_points": 6,
-      "peak_ccu": 3216,
-      "avg_ccu": 2385,
-      "title": "휴방인데 게임하고 싶어서",
-      "category": "talk"
     },
     {
       "name_ko": "유즈하 리코",
@@ -39331,6 +39331,10 @@
         [
           "2026-10-02 13:48",
           3216
+        ],
+        [
+          "2026-10-02 13:58",
+          3237
         ]
       ]
     },
