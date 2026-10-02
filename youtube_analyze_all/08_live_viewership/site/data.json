@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-02T15:27:54.083113+00:00",
-    "n_snapshots": 53256,
+    "fetched_at": "2026-10-02T15:38:08.015805+00:00",
+    "n_snapshots": 53267,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-02T15:27:54.083113+00:00"
+      "2026-10-02T15:38:08.015805+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 48375,
-    "n_timepoints": 4852,
-    "span_hours": 1233.54,
-    "observed_hours": 827.65,
+    "n_snapshots": 48385,
+    "n_timepoints": 4853,
+    "span_hours": 1233.71,
+    "observed_hours": 827.82,
     "coverage_ratio": 0.671,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13126,
+    "n_live_rows": 13127,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-02T15:27:54.083113+00:00"
+    "last": "2026-10-02T15:38:08.015805+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 218158,
-      "follower_delta": 10732,
+      "followers": 218159,
+      "follower_delta": 10733,
       "follower_per_day": 208.8,
       "n_sessions": 99,
       "n_live_points": 1269,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 263541,
-      "follower_delta": 10639,
+      "followers": 263543,
+      "follower_delta": 10641,
       "follower_per_day": 207.0,
       "n_sessions": 87,
       "n_live_points": 1113,
@@ -114,13 +114,13 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 308965,
-      "follower_delta": 7045,
-      "follower_per_day": 137.1,
+      "followers": 308964,
+      "follower_delta": 7044,
+      "follower_per_day": 137.0,
       "n_sessions": 112,
-      "n_live_points": 1508,
+      "n_live_points": 1509,
       "peak_ccu": 12362,
-      "avg_ccu": 2835,
+      "avg_ccu": 2837,
       "ccu_per_1k_followers": 40.01
     },
     {
@@ -142,9 +142,9 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241863,
-      "follower_delta": 5015,
-      "follower_per_day": 97.6,
+      "followers": 241861,
+      "follower_delta": 5013,
+      "follower_per_day": 97.5,
       "n_sessions": 134,
       "n_live_points": 1618,
       "peak_ccu": 9749,
@@ -156,9 +156,9 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 228606,
-      "follower_delta": 9506,
-      "follower_per_day": 185.0,
+      "followers": 228607,
+      "follower_delta": 9507,
+      "follower_per_day": 184.9,
       "n_sessions": 105,
       "n_live_points": 1272,
       "peak_ccu": 9414,
@@ -2776,10 +2776,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-10-02 20:09",
-      "observed_min": 258.6,
-      "n_points": 26,
+      "observed_min": 268.8,
+      "n_points": 27,
       "peak_ccu": 5230,
-      "avg_ccu": 4323,
+      "avg_ccu": 4349,
       "title": "억까를 담아서 사는 유니콘 ",
       "category": "talk"
     },
@@ -34618,6 +34618,10 @@
         [
           "2026-10-03 00:27",
           4555
+        ],
+        [
+          "2026-10-03 00:38",
+          5031
         ]
       ]
     },
