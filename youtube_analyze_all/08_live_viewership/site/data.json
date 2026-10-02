@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-02T08:45:39.132739+00:00",
-    "n_snapshots": 52827,
+    "fetched_at": "2026-10-02T08:55:54.712505+00:00",
+    "n_snapshots": 52838,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-02T08:45:39.132739+00:00"
+      "2026-10-02T08:55:54.712505+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 47985,
-    "n_timepoints": 4813,
-    "span_hours": 1226.83,
-    "observed_hours": 820.99,
+    "n_snapshots": 47995,
+    "n_timepoints": 4814,
+    "span_hours": 1227.0,
+    "observed_hours": 821.16,
     "coverage_ratio": 0.669,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13035,
+    "n_live_rows": 13037,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-02T08:45:39.132739+00:00"
+    "last": "2026-10-02T08:55:54.712505+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 166942,
       "follower_delta": 10201,
-      "follower_per_day": 199.6,
+      "follower_per_day": 199.5,
       "n_sessions": 67,
       "n_live_points": 884,
       "peak_ccu": 38402,
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 264963,
-      "follower_delta": 9637,
+      "followers": 264964,
+      "follower_delta": 9638,
       "follower_per_day": 188.5,
       "n_sessions": 122,
       "n_live_points": 1508,
@@ -58,11 +58,11 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217077,
-      "follower_delta": 7258,
+      "followers": 217081,
+      "follower_delta": 7262,
       "follower_per_day": 142.0,
       "n_sessions": 107,
-      "n_live_points": 814,
+      "n_live_points": 815,
       "peak_ccu": 28071,
       "avg_ccu": 3052,
       "ccu_per_1k_followers": 129.31
@@ -72,13 +72,13 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 218093,
-      "follower_delta": 10667,
+      "followers": 218098,
+      "follower_delta": 10672,
       "follower_per_day": 208.7,
       "n_sessions": 99,
-      "n_live_points": 1256,
+      "n_live_points": 1257,
       "peak_ccu": 24385,
-      "avg_ccu": 3356,
+      "avg_ccu": 3357,
       "ccu_per_1k_followers": 111.81
     },
     {
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 263457,
-      "follower_delta": 10555,
+      "followers": 263458,
+      "follower_delta": 10556,
       "follower_per_day": 206.5,
       "n_sessions": 86,
       "n_live_points": 1096,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 249384,
-      "follower_delta": 8267,
+      "followers": 249386,
+      "follower_delta": 8269,
       "follower_per_day": 161.7,
       "n_sessions": 107,
       "n_live_points": 1470,
@@ -114,8 +114,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 308916,
-      "follower_delta": 6996,
+      "followers": 308917,
+      "follower_delta": 6997,
       "follower_per_day": 136.9,
       "n_sessions": 111,
       "n_live_points": 1482,
@@ -128,9 +128,9 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 219692,
-      "follower_delta": 10357,
-      "follower_per_day": 202.6,
+      "followers": 219696,
+      "follower_delta": 10361,
+      "follower_per_day": 202.7,
       "n_sessions": 129,
       "n_live_points": 1647,
       "peak_ccu": 10461,
@@ -3472,10 +3472,10 @@
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
       "start_kst": "2026-10-02 12:57",
-      "observed_min": 288.3,
-      "n_points": 30,
+      "observed_min": 298.5,
+      "n_points": 31,
       "peak_ccu": 4830,
-      "avg_ccu": 3547,
+      "avg_ccu": 3585,
       "title": "휴방인데 게임하고 싶어서",
       "category": "talk"
     },
@@ -9664,10 +9664,10 @@
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-02 15:51",
-      "observed_min": 113.9,
-      "n_points": 13,
+      "observed_min": 124.1,
+      "n_points": 14,
       "peak_ccu": 2877,
-      "avg_ccu": 2316,
+      "avg_ccu": 2351,
       "title": "헤에에에ㅔㅇ?!",
       "category": "talk"
     },
@@ -39439,6 +39439,10 @@
         [
           "2026-10-02 17:45",
           4830
+        ],
+        [
+          "2026-10-02 17:55",
+          4726
         ]
       ]
     },
@@ -42700,6 +42704,10 @@
         [
           "2026-10-02 17:45",
           2835
+        ],
+        [
+          "2026-10-02 17:55",
+          2815
         ]
       ]
     },
