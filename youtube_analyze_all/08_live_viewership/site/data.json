@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-02T18:11:37.323740+00:00",
-    "n_snapshots": 53432,
+    "fetched_at": "2026-10-02T18:21:51.137492+00:00",
+    "n_snapshots": 53443,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-02T18:11:37.323740+00:00"
+      "2026-10-02T18:21:51.137492+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 48535,
-    "n_timepoints": 4868,
-    "span_hours": 1236.27,
-    "observed_hours": 830.38,
+    "n_snapshots": 48545,
+    "n_timepoints": 4869,
+    "span_hours": 1236.44,
+    "observed_hours": 830.55,
     "coverage_ratio": 0.672,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13142,
+    "n_live_rows": 13143,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-02T18:11:37.323740+00:00"
+    "last": "2026-10-02T18:21:51.137492+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 166972,
-      "follower_delta": 10231,
+      "followers": 166973,
+      "follower_delta": 10232,
       "follower_per_day": 198.6,
       "n_sessions": 67,
       "n_live_points": 884,
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 264986,
-      "follower_delta": 9660,
+      "followers": 264987,
+      "follower_delta": 9661,
       "follower_per_day": 187.5,
       "n_sessions": 122,
       "n_live_points": 1508,
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217107,
-      "follower_delta": 7288,
+      "followers": 217108,
+      "follower_delta": 7289,
       "follower_per_day": 141.5,
       "n_sessions": 107,
       "n_live_points": 837,
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 218173,
-      "follower_delta": 10747,
+      "followers": 218174,
+      "follower_delta": 10748,
       "follower_per_day": 208.6,
       "n_sessions": 99,
       "n_live_points": 1269,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 249407,
-      "follower_delta": 8290,
+      "followers": 249408,
+      "follower_delta": 8291,
       "follower_per_day": 160.9,
       "n_sessions": 107,
       "n_live_points": 1470,
@@ -118,9 +118,9 @@
       "follower_delta": 7064,
       "follower_per_day": 137.1,
       "n_sessions": 112,
-      "n_live_points": 1524,
+      "n_live_points": 1525,
       "peak_ccu": 12362,
-      "avg_ccu": 2854,
+      "avg_ccu": 2855,
       "ccu_per_1k_followers": 40.01
     },
     {
@@ -128,8 +128,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 219726,
-      "follower_delta": 10391,
+      "followers": 219727,
+      "follower_delta": 10392,
       "follower_per_day": 201.7,
       "n_sessions": 129,
       "n_live_points": 1647,
@@ -156,9 +156,9 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 228614,
-      "follower_delta": 9514,
-      "follower_per_day": 184.7,
+      "followers": 228612,
+      "follower_delta": 9512,
+      "follower_per_day": 184.6,
       "n_sessions": 105,
       "n_live_points": 1272,
       "peak_ccu": 9414,
@@ -2776,10 +2776,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-10-02 20:09",
-      "observed_min": 422.3,
-      "n_points": 42,
+      "observed_min": 432.5,
+      "n_points": 43,
       "peak_ccu": 5230,
-      "avg_ccu": 4431,
+      "avg_ccu": 4418,
       "title": "억까를 담아서 사는 유니콘 ",
       "category": "talk"
     },
@@ -34682,6 +34682,10 @@
         [
           "2026-10-03 03:11",
           3904
+        ],
+        [
+          "2026-10-03 03:21",
+          3865
         ]
       ]
     },
