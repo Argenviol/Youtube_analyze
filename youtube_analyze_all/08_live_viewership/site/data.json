@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-02T15:38:08.015805+00:00",
-    "n_snapshots": 53267,
+    "fetched_at": "2026-10-02T15:48:22.057004+00:00",
+    "n_snapshots": 53278,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-02T15:38:08.015805+00:00"
+      "2026-10-02T15:48:22.057004+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 48385,
-    "n_timepoints": 4853,
-    "span_hours": 1233.71,
-    "observed_hours": 827.82,
+    "n_snapshots": 48395,
+    "n_timepoints": 4854,
+    "span_hours": 1233.88,
+    "observed_hours": 827.99,
     "coverage_ratio": 0.671,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13127,
+    "n_live_rows": 13128,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-02T15:38:08.015805+00:00"
+    "last": "2026-10-02T15:48:22.057004+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 166964,
-      "follower_delta": 10223,
+      "followers": 166965,
+      "follower_delta": 10224,
       "follower_per_day": 198.9,
       "n_sessions": 67,
       "n_live_points": 884,
@@ -58,9 +58,9 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217108,
-      "follower_delta": 7289,
-      "follower_per_day": 141.8,
+      "followers": 217106,
+      "follower_delta": 7287,
+      "follower_per_day": 141.7,
       "n_sessions": 107,
       "n_live_points": 837,
       "peak_ccu": 28071,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 263543,
-      "follower_delta": 10641,
+      "followers": 263544,
+      "follower_delta": 10642,
       "follower_per_day": 207.0,
       "n_sessions": 87,
       "n_live_points": 1113,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 249404,
-      "follower_delta": 8287,
+      "followers": 249403,
+      "follower_delta": 8286,
       "follower_per_day": 161.2,
       "n_sessions": 107,
       "n_live_points": 1470,
@@ -114,13 +114,13 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 308964,
-      "follower_delta": 7044,
-      "follower_per_day": 137.0,
+      "followers": 308966,
+      "follower_delta": 7046,
+      "follower_per_day": 137.1,
       "n_sessions": 112,
-      "n_live_points": 1509,
+      "n_live_points": 1510,
       "peak_ccu": 12362,
-      "avg_ccu": 2837,
+      "avg_ccu": 2838,
       "ccu_per_1k_followers": 40.01
     },
     {
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241861,
-      "follower_delta": 5013,
+      "followers": 241862,
+      "follower_delta": 5014,
       "follower_per_day": 97.5,
       "n_sessions": 134,
       "n_live_points": 1618,
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 228607,
-      "follower_delta": 9507,
+      "followers": 228608,
+      "follower_delta": 9508,
       "follower_per_day": 184.9,
       "n_sessions": 105,
       "n_live_points": 1272,
@@ -2776,10 +2776,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-10-02 20:09",
-      "observed_min": 268.8,
-      "n_points": 27,
+      "observed_min": 279.1,
+      "n_points": 28,
       "peak_ccu": 5230,
-      "avg_ccu": 4349,
+      "avg_ccu": 4380,
       "title": "억까를 담아서 사는 유니콘 ",
       "category": "talk"
     },
@@ -34622,6 +34622,10 @@
         [
           "2026-10-03 00:38",
           5031
+        ],
+        [
+          "2026-10-03 00:48",
+          5211
         ]
       ]
     },
