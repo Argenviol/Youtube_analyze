@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-03T20:07:02.782101+00:00",
-    "n_snapshots": 55134,
+    "fetched_at": "2026-10-03T20:17:18.409742+00:00",
+    "n_snapshots": 55145,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-03T20:07:02.782101+00:00"
+      "2026-10-03T20:17:18.409742+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 50081,
-    "n_timepoints": 5024,
-    "span_hours": 1262.19,
-    "observed_hours": 857.05,
+    "n_snapshots": 50091,
+    "n_timepoints": 5025,
+    "span_hours": 1262.36,
+    "observed_hours": 857.22,
     "coverage_ratio": 0.679,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13615,
+    "n_live_rows": 13616,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-03T20:07:02.782101+00:00"
+    "last": "2026-10-03T20:17:18.409742+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 167062,
       "follower_delta": 10321,
-      "follower_per_day": 196.3,
+      "follower_per_day": 196.2,
       "n_sessions": 68,
       "n_live_points": 931,
       "peak_ccu": 38402,
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 265071,
-      "follower_delta": 9745,
+      "followers": 265074,
+      "follower_delta": 9748,
       "follower_per_day": 185.3,
       "n_sessions": 123,
       "n_live_points": 1581,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 263662,
-      "follower_delta": 10760,
+      "followers": 263663,
+      "follower_delta": 10761,
       "follower_per_day": 204.6,
       "n_sessions": 88,
       "n_live_points": 1139,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 249543,
-      "follower_delta": 8426,
+      "followers": 249544,
+      "follower_delta": 8427,
       "follower_per_day": 160.2,
       "n_sessions": 108,
       "n_live_points": 1531,
@@ -128,13 +128,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 219848,
-      "follower_delta": 10513,
+      "followers": 219851,
+      "follower_delta": 10516,
       "follower_per_day": 199.9,
       "n_sessions": 130,
-      "n_live_points": 1716,
+      "n_live_points": 1717,
       "peak_ccu": 10461,
-      "avg_ccu": 3053,
+      "avg_ccu": 3052,
       "ccu_per_1k_followers": 47.58
     },
     {
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241870,
-      "follower_delta": 5022,
+      "followers": 241871,
+      "follower_delta": 5023,
       "follower_per_day": 95.5,
       "n_sessions": 135,
       "n_live_points": 1660,
@@ -156,9 +156,9 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 228737,
-      "follower_delta": 9637,
-      "follower_per_day": 183.2,
+      "followers": 228739,
+      "follower_delta": 9639,
+      "follower_per_day": 183.3,
       "n_sessions": 106,
       "n_live_points": 1338,
       "peak_ccu": 9414,
@@ -4708,10 +4708,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-10-03 17:45",
-      "observed_min": 681.3,
-      "n_points": 69,
+      "observed_min": 691.6,
+      "n_points": 70,
       "peak_ccu": 4316,
-      "avg_ccu": 2650,
+      "avg_ccu": 2640,
       "title": "눼 이제 얼마 안남았다.",
       "category": "Grand Theft Auto V"
     },
@@ -67612,6 +67612,10 @@
         [
           "2026-10-04 05:07",
           1843
+        ],
+        [
+          "2026-10-04 05:17",
+          1986
         ]
       ]
     }
