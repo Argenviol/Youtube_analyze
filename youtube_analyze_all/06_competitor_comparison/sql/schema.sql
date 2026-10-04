@@ -11,8 +11,8 @@ CREATE TABLE videos (
     title TEXT,
     published_at TEXT,
     views INTEGER,
-    likes INTEGER,
-    comments INTEGER,
+    likes REAL,
+    comments REAL,
     engagement_rate REAL
 );
 
