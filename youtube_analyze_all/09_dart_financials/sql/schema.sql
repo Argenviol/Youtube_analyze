@@ -31,11 +31,11 @@ DROP TABLE IF EXISTS financials_audit_status;
 CREATE TABLE financials_audit_status (
     corp_code TEXT,
     corp_name TEXT,
-    bsns_year REAL,
+    bsns_year INTEGER,
     fs_div TEXT,
-    rcept_no REAL,
+    rcept_no INTEGER,
     report_nm TEXT,
-    status TEXT,
+    status INTEGER,
     n_rows INTEGER
 );
 

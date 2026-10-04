@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-09-04T22:49:49.995404+00:00",
+    "fetched_at": "2026-10-04T23:52:55.949543+00:00",
     "source": "Open DART(전자공시시스템) Open API — corpCode.xml, company.json, list.json, fnlttSinglAcntAll.json, document.xml",
-    "corp_master_total": 118868,
+    "corp_master_total": 119546,
     "n_targets": 9,
     "n_matched": 6,
     "n_with_financials": 2,
-    "n_with_audit_report_financials": 3,
+    "n_with_audit_report_financials": 4,
     "years": [
       2016,
       2025
@@ -672,6 +672,42 @@
       "debt_to_equity": 1.0462815278,
       "revenue_yoy": 0.0418159047,
       "operating_income_yoy": -8.4904826555
+    },
+    {
+      "corp_name": "팬딩",
+      "bsns_year": 2024,
+      "fs_div": "OFS",
+      "assets": 19336072158.0,
+      "liabilities": 18093125311.0,
+      "equity": 1242946847.0,
+      "revenue": 5072685944.0,
+      "operating_income": 951473632.0,
+      "net_income": null,
+      "operating_margin": 0.1875680148,
+      "net_margin": null,
+      "asset_turnover": 0.262343143,
+      "equity_ratio": 0.0642812479,
+      "debt_to_equity": 14.5566363957,
+      "revenue_yoy": null,
+      "operating_income_yoy": null
+    },
+    {
+      "corp_name": "팬딩",
+      "bsns_year": 2025,
+      "fs_div": "OFS",
+      "assets": 43447845858.0,
+      "liabilities": 37880152883.0,
+      "equity": 5567692975.0,
+      "revenue": 12677229440.0,
+      "operating_income": 871503896.0,
+      "net_income": null,
+      "operating_margin": 0.068745612,
+      "net_margin": null,
+      "asset_turnover": 0.2917803907,
+      "equity_ratio": 0.1281465828,
+      "debt_to_equity": 6.8035635322,
+      "revenue_yoy": 1.4991157702,
+      "operating_income_yoy": -0.0840482945
     }
   ],
   "status_summary": {
@@ -696,42 +732,42 @@
   },
   "audit_status_summary": {
     "브레이브엔터테인먼트": {
-      "000": 2
+      "0": 2
     },
     "샌드박스네트워크": {
-      "000": 10
+      "0": 10
     },
     "패러블엔터테인먼트": {
-      "000": 1
+      "0": 1
     },
     "팬딩": {
-      "NO_FILINGS": 1
+      "0": 1
     }
   },
   "fandom_context": {
     "note": "프로젝트1·8은 2026-08 수집 시점의 단일 스냅샷이다. DART 재무제표는 회계연도(~FY2025, 2026년 3월 제출) 단위라 기간이 겹치지 않는다. 상관계수를 계산하지 않고 참고 수치로만 병기한다.",
     "project01": {
-      "fetched_at": "2026-09-04T22:16:52.929384+00:00",
+      "fetched_at": "2026-10-04T22:56:38.166904+00:00",
       "n_members": 10,
-      "total_subscribers": 2544000,
-      "total_recent_avg_views": 1954303
+      "total_subscribers": 2584000,
+      "total_recent_avg_views": 1969295
     },
     "project08": {
-      "fetched_at": "2026-09-04T17:26:24.618558+00:00",
+      "fetched_at": "2026-10-04T23:48:18.303088+00:00",
       "coverage": {
-        "n_snapshots": 10769,
-        "n_timepoints": 1077,
-        "span_hours": 563.51,
-        "observed_hours": 183.5,
-        "coverage_ratio": 0.326,
+        "n_snapshots": 51731,
+        "n_timepoints": 5189,
+        "span_hours": 1289.88,
+        "observed_hours": 885.28,
+        "coverage_ratio": 0.686,
         "largest_gap_hours": 11.3,
-        "n_live_rows": 2484,
+        "n_live_rows": 13940,
         "members": 10,
         "first": "2026-08-12T05:55:39.176000+00:00",
-        "last": "2026-09-04T17:26:24.618558+00:00"
+        "last": "2026-10-04T23:48:18.303088+00:00"
       },
       "enough_coverage": true,
-      "total_follower_delta": 48909
+      "total_follower_delta": 92068
     }
   }
 }
