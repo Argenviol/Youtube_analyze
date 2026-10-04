@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-04T12:14:42.600653+00:00",
-    "n_snapshots": 56201,
+    "fetched_at": "2026-10-04T12:24:57.824366+00:00",
+    "n_snapshots": 56212,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-04T12:14:42.600653+00:00"
+      "2026-10-04T12:24:57.824366+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 51051,
-    "n_timepoints": 5121,
-    "span_hours": 1278.32,
-    "observed_hours": 873.63,
+    "n_snapshots": 51061,
+    "n_timepoints": 5122,
+    "span_hours": 1278.49,
+    "observed_hours": 873.8,
     "coverage_ratio": 0.683,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13763,
+    "n_live_rows": 13771,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-04T12:14:42.600653+00:00"
+    "last": "2026-10-04T12:24:57.824366+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -34,7 +34,7 @@
       "follower_delta": 10386,
       "follower_per_day": 195.0,
       "n_sessions": 69,
-      "n_live_points": 946,
+      "n_live_points": 947,
       "peak_ccu": 38402,
       "avg_ccu": 2318,
       "ccu_per_1k_followers": 229.78
@@ -48,9 +48,9 @@
       "follower_delta": 9876,
       "follower_per_day": 185.4,
       "n_sessions": 124,
-      "n_live_points": 1608,
+      "n_live_points": 1609,
       "peak_ccu": 38237,
-      "avg_ccu": 5221,
+      "avg_ccu": 5223,
       "ccu_per_1k_followers": 144.18
     },
     {
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217167,
-      "follower_delta": 7348,
-      "follower_per_day": 138.0,
+      "followers": 217165,
+      "follower_delta": 7346,
+      "follower_per_day": 137.9,
       "n_sessions": 108,
-      "n_live_points": 859,
+      "n_live_points": 860,
       "peak_ccu": 28071,
-      "avg_ccu": 3013,
+      "avg_ccu": 3011,
       "ccu_per_1k_followers": 129.26
     },
     {
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 218368,
-      "follower_delta": 10942,
+      "followers": 218369,
+      "follower_delta": 10943,
       "follower_per_day": 205.4,
       "n_sessions": 100,
       "n_live_points": 1311,
@@ -86,13 +86,13 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 263765,
-      "follower_delta": 10863,
-      "follower_per_day": 203.9,
+      "followers": 263768,
+      "follower_delta": 10866,
+      "follower_per_day": 204.0,
       "n_sessions": 89,
-      "n_live_points": 1144,
+      "n_live_points": 1145,
       "peak_ccu": 18587,
-      "avg_ccu": 3522,
+      "avg_ccu": 3523,
       "ccu_per_1k_followers": 70.47
     },
     {
@@ -100,13 +100,13 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 249614,
-      "follower_delta": 8497,
+      "followers": 249612,
+      "follower_delta": 8495,
       "follower_per_day": 159.5,
       "n_sessions": 109,
-      "n_live_points": 1543,
+      "n_live_points": 1544,
       "peak_ccu": 15159,
-      "avg_ccu": 5410,
+      "avg_ccu": 5411,
       "ccu_per_1k_followers": 60.73
     },
     {
@@ -128,11 +128,11 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 219907,
-      "follower_delta": 10572,
-      "follower_per_day": 198.5,
+      "followers": 219905,
+      "follower_delta": 10570,
+      "follower_per_day": 198.4,
       "n_sessions": 131,
-      "n_live_points": 1740,
+      "n_live_points": 1741,
       "peak_ccu": 10461,
       "avg_ccu": 3051,
       "ccu_per_1k_followers": 47.57
@@ -146,7 +146,7 @@
       "follower_delta": 5049,
       "follower_per_day": 94.8,
       "n_sessions": 136,
-      "n_live_points": 1683,
+      "n_live_points": 1684,
       "peak_ccu": 9749,
       "avg_ccu": 2989,
       "ccu_per_1k_followers": 40.3
@@ -156,11 +156,11 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 228795,
-      "follower_delta": 9695,
+      "followers": 228793,
+      "follower_delta": 9693,
       "follower_per_day": 182.0,
       "n_sessions": 107,
-      "n_live_points": 1358,
+      "n_live_points": 1359,
       "peak_ccu": 9414,
       "avg_ccu": 2993,
       "ccu_per_1k_followers": 41.15
@@ -472,10 +472,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-04 16:57",
-      "observed_min": 257.4,
-      "n_points": 27,
+      "observed_min": 267.6,
+      "n_points": 28,
       "peak_ccu": 9283,
-      "avg_ccu": 6131,
+      "avg_ccu": 6226,
       "title": "[봉누도 2] 마지막 짠기리",
       "category": "Grand Theft Auto V"
     },
@@ -1872,6 +1872,18 @@
       "category": "마인크래프트"
     },
     {
+      "name_ko": "텐코 시부키",
+      "name_en": "Tenko Shibuki",
+      "unit": "CLICHE",
+      "start_kst": "2026-10-04 19:21",
+      "observed_min": 123.1,
+      "n_points": 13,
+      "peak_ccu": 6053,
+      "avg_ccu": 4301,
+      "title": "봉누도2 마지막날 정지해 ",
+      "category": "Grand Theft Auto V"
+    },
+    {
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
@@ -2350,18 +2362,6 @@
       "avg_ccu": 4575,
       "title": "4시 부키랑 쁘띠플래닛 힐링하기",
       "category": "talk"
-    },
-    {
-      "name_ko": "텐코 시부키",
-      "name_en": "Tenko Shibuki",
-      "unit": "CLICHE",
-      "start_kst": "2026-10-04 19:21",
-      "observed_min": 112.8,
-      "n_points": 12,
-      "peak_ccu": 5642,
-      "avg_ccu": 4155,
-      "title": "봉누도2 마지막날 정지해 ",
-      "category": "Grand Theft Auto V"
     },
     {
       "name_ko": "시라유키 히나",
@@ -4032,6 +4032,18 @@
       "category": "바이오하자드 RE:2"
     },
     {
+      "name_ko": "아카네 리제",
+      "name_en": "Akane Lize",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-10-04 20:33",
+      "observed_min": 51.3,
+      "n_points": 6,
+      "peak_ccu": 4645,
+      "avg_ccu": 3563,
+      "title": "봉누도 오부사전형 등쟝╰(*°▽°*)╯",
+      "category": "Grand Theft Auto V"
+    },
+    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -4104,18 +4116,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-26 18:10",
-      "observed_min": 532.5,
-      "n_points": 55,
-      "peak_ccu": 4587,
-      "avg_ccu": 2241,
-      "title": "뭐라도 하고 싶은 명총희의 삶 [봉누도2]",
-      "category": "Grand Theft Auto V"
-    },
-    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -4126,6 +4126,18 @@
       "avg_ccu": 4360,
       "title": "현관문 잘라내서 고양이 문 만들어 주는 게임 정출",
       "category": "로우-버짓 리페어스"
+    },
+    {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-26 18:10",
+      "observed_min": 532.5,
+      "n_points": 55,
+      "peak_ccu": 4587,
+      "avg_ccu": 2241,
+      "title": "뭐라도 하고 싶은 명총희의 삶 [봉누도2]",
+      "category": "Grand Theft Auto V"
     },
     {
       "name_ko": "텐코 시부키",
@@ -4140,18 +4152,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "하나코 나나",
-      "name_en": "Hanako Nana",
-      "unit": "CLICHE",
-      "start_kst": "2026-09-20 18:11",
-      "observed_min": 482.2,
-      "n_points": 50,
-      "peak_ccu": 4576,
-      "avg_ccu": 3688,
-      "title": "[봉누도2] 농부 엄마 한세월입니다.",
-      "category": "Grand Theft Auto V"
-    },
-    {
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
@@ -4162,6 +4162,18 @@
       "avg_ccu": 3891,
       "title": "[수동암즈] 이리 대회 첫째 날 2시!!!!!!",
       "category": "이터널 리턴"
+    },
+    {
+      "name_ko": "하나코 나나",
+      "name_en": "Hanako Nana",
+      "unit": "CLICHE",
+      "start_kst": "2026-09-20 18:11",
+      "observed_min": 482.2,
+      "n_points": 50,
+      "peak_ccu": 4576,
+      "avg_ccu": 3688,
+      "title": "[봉누도2] 농부 엄마 한세월입니다.",
+      "category": "Grand Theft Auto V"
     },
     {
       "name_ko": "아라하시 타비",
@@ -4212,18 +4224,6 @@
       "category": "Grand Theft Auto V"
     },
     {
-      "name_ko": "텐코 시부키",
-      "name_en": "Tenko Shibuki",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-17 21:59",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 4523,
-      "avg_ccu": 4523,
-      "title": "클리셰걷고걷고걷고걷고걷고걷고걷고걷고걷고걷는날",
-      "category": "빅 워크"
-    },
-    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -4234,6 +4234,18 @@
       "avg_ccu": 4405,
       "title": "초심 찾기 1.5일차 청초한사람의청초뽑기",
       "category": "명조:워더링 웨이브"
+    },
+    {
+      "name_ko": "텐코 시부키",
+      "name_en": "Tenko Shibuki",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-17 21:59",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 4523,
+      "avg_ccu": 4523,
+      "title": "클리셰걷고걷고걷고걷고걷고걷고걷고걷고걷고걷는날",
+      "category": "빅 워크"
     },
     {
       "name_ko": "아야츠노 유니",
@@ -4702,18 +4714,6 @@
       "avg_ccu": 4331,
       "title": "정나나가 돌아왔다요~!! [8시 이리 치지직컵 드래프트]",
       "category": "이터널 리턴"
-    },
-    {
-      "name_ko": "아카네 리제",
-      "name_en": "Akane Lize",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-04 20:33",
-      "observed_min": 41.0,
-      "n_points": 5,
-      "peak_ccu": 4326,
-      "avg_ccu": 3347,
-      "title": "봉누도 오부사전형 등쟝╰(*°▽°*)╯",
-      "category": "Grand Theft Auto V"
     },
     {
       "name_ko": "텐코 시부키",
@@ -6676,10 +6676,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-10-04 17:38",
-      "observed_min": 216.3,
-      "n_points": 23,
+      "observed_min": 226.5,
+      "n_points": 24,
       "peak_ccu": 3634,
-      "avg_ccu": 2974,
+      "avg_ccu": 2983,
       "title": "눼 [봉누도2] 진짜 안녕, 마지막 인사",
       "category": "Grand Theft Auto V"
     },
@@ -7084,10 +7084,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-04 17:38",
-      "observed_min": 216.3,
-      "n_points": 23,
+      "observed_min": 226.5,
+      "n_points": 24,
       "peak_ccu": 3525,
-      "avg_ccu": 2584,
+      "avg_ccu": 2612,
       "title": "나의 마지막 날 [봉누도2]",
       "category": "Grand Theft Auto V"
     },
@@ -7360,10 +7360,10 @@
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
       "start_kst": "2026-10-04 18:09",
-      "observed_min": 185.5,
-      "n_points": 20,
+      "observed_min": 195.8,
+      "n_points": 21,
       "peak_ccu": 3468,
-      "avg_ccu": 3000,
+      "avg_ccu": 3014,
       "title": "청운강, 내일도 박스박스",
       "category": "Grand Theft Auto V"
     },
@@ -12448,10 +12448,10 @@
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-04 17:48",
-      "observed_min": 206.0,
-      "n_points": 22,
+      "observed_min": 216.3,
+      "n_points": 23,
       "peak_ccu": 1887,
-      "avg_ccu": 1664,
+      "avg_ccu": 1663,
       "title": "시로",
       "category": "talk"
     },
@@ -12484,10 +12484,10 @@
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
       "start_kst": "2026-10-04 18:51",
-      "observed_min": 143.6,
-      "n_points": 15,
+      "observed_min": 153.8,
+      "n_points": 16,
       "peak_ccu": 1873,
-      "avg_ccu": 1542,
+      "avg_ccu": 1554,
       "title": "굿바이 구해영🚑",
       "category": "talk"
     },
@@ -17779,6 +17779,10 @@
         [
           "2026-10-04 21:14",
           4326
+        ],
+        [
+          "2026-10-04 21:24",
+          4645
         ]
       ]
     },
@@ -23216,6 +23220,10 @@
         [
           "2026-10-04 21:14",
           3349
+        ],
+        [
+          "2026-10-04 21:24",
+          3290
         ]
       ]
     },
@@ -29653,6 +29661,10 @@
         [
           "2026-10-04 21:14",
           9251
+        ],
+        [
+          "2026-10-04 21:24",
+          8794
         ]
       ]
     },
@@ -44632,6 +44644,10 @@
         [
           "2026-10-04 21:14",
           1615
+        ],
+        [
+          "2026-10-04 21:24",
+          1625
         ]
       ]
     },
@@ -48421,6 +48437,10 @@
         [
           "2026-10-04 21:14",
           1745
+        ],
+        [
+          "2026-10-04 21:24",
+          1746
         ]
       ]
     },
@@ -55158,6 +55178,10 @@
         [
           "2026-10-04 21:14",
           3525
+        ],
+        [
+          "2026-10-04 21:24",
+          3256
         ]
       ]
     },
@@ -61335,6 +61359,10 @@
         [
           "2026-10-04 21:14",
           5642
+        ],
+        [
+          "2026-10-04 21:24",
+          6053
         ]
       ]
     },
@@ -68300,6 +68328,10 @@
         [
           "2026-10-04 21:14",
           3299
+        ],
+        [
+          "2026-10-04 21:24",
+          3183
         ]
       ]
     }
