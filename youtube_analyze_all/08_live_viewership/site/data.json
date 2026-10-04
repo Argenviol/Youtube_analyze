@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-04T16:36:16.461288+00:00",
-    "n_snapshots": 56476,
+    "fetched_at": "2026-10-04T16:46:32.243727+00:00",
+    "n_snapshots": 56487,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-04T16:36:16.461288+00:00"
+      "2026-10-04T16:46:32.243727+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 51301,
-    "n_timepoints": 5146,
-    "span_hours": 1282.68,
-    "observed_hours": 877.91,
+    "n_snapshots": 51311,
+    "n_timepoints": 5147,
+    "span_hours": 1282.85,
+    "observed_hours": 878.08,
     "coverage_ratio": 0.684,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13932,
+    "n_live_rows": 13935,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-04T16:36:16.461288+00:00"
+    "last": "2026-10-04T16:46:32.243727+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 167192,
-      "follower_delta": 10451,
+      "followers": 167194,
+      "follower_delta": 10453,
       "follower_per_day": 195.6,
       "n_sessions": 69,
       "n_live_points": 967,
@@ -44,13 +44,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 265350,
-      "follower_delta": 10024,
+      "followers": 265356,
+      "follower_delta": 10030,
       "follower_per_day": 187.6,
       "n_sessions": 124,
-      "n_live_points": 1633,
+      "n_live_points": 1634,
       "peak_ccu": 38237,
-      "avg_ccu": 5284,
+      "avg_ccu": 5285,
       "ccu_per_1k_followers": 144.1
     },
     {
@@ -60,7 +60,7 @@
       "unit": "UNIVERSE",
       "followers": 217198,
       "follower_delta": 7379,
-      "follower_per_day": 138.1,
+      "follower_per_day": 138.0,
       "n_sessions": 108,
       "n_live_points": 863,
       "peak_ccu": 28071,
@@ -72,22 +72,22 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 218454,
-      "follower_delta": 11028,
-      "follower_per_day": 206.3,
+      "followers": 218456,
+      "follower_delta": 11030,
+      "follower_per_day": 206.4,
       "n_sessions": 100,
       "n_live_points": 1311,
       "peak_ccu": 24385,
       "avg_ccu": 3374,
-      "ccu_per_1k_followers": 111.63
+      "ccu_per_1k_followers": 111.62
     },
     {
       "rank": 5,
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264110,
-      "follower_delta": 11208,
+      "followers": 264113,
+      "follower_delta": 11211,
       "follower_per_day": 209.7,
       "n_sessions": 89,
       "n_live_points": 1166,
@@ -100,11 +100,11 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 249781,
-      "follower_delta": 8664,
-      "follower_per_day": 162.1,
+      "followers": 249791,
+      "follower_delta": 8674,
+      "follower_per_day": 162.3,
       "n_sessions": 109,
-      "n_live_points": 1568,
+      "n_live_points": 1569,
       "peak_ccu": 15159,
       "avg_ccu": 5440,
       "ccu_per_1k_followers": 60.69
@@ -114,9 +114,9 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309202,
-      "follower_delta": 7282,
-      "follower_per_day": 136.3,
+      "followers": 309201,
+      "follower_delta": 7281,
+      "follower_per_day": 136.2,
       "n_sessions": 113,
       "n_live_points": 1571,
       "peak_ccu": 12362,
@@ -128,8 +128,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 219994,
-      "follower_delta": 10659,
+      "followers": 219993,
+      "follower_delta": 10658,
       "follower_per_day": 199.4,
       "n_sessions": 131,
       "n_live_points": 1762,
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241938,
-      "follower_delta": 5090,
+      "followers": 241935,
+      "follower_delta": 5087,
       "follower_per_day": 95.2,
       "n_sessions": 136,
       "n_live_points": 1708,
@@ -156,14 +156,14 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 229012,
-      "follower_delta": 9912,
-      "follower_per_day": 185.5,
+      "followers": 229137,
+      "follower_delta": 10037,
+      "follower_per_day": 187.8,
       "n_sessions": 107,
-      "n_live_points": 1383,
+      "n_live_points": 1384,
       "peak_ccu": 9414,
-      "avg_ccu": 3015,
-      "ccu_per_1k_followers": 41.11
+      "avg_ccu": 3017,
+      "ccu_per_1k_followers": 41.08
     }
   ],
   "sessions": [
@@ -328,10 +328,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-04 16:57",
-      "observed_min": 518.9,
-      "n_points": 52,
+      "observed_min": 529.2,
+      "n_points": 53,
       "peak_ccu": 11482,
-      "avg_ccu": 7652,
+      "avg_ccu": 7648,
       "title": "[봉누도 2] 마지막 짠기리",
       "category": "Grand Theft Auto V"
     },
@@ -400,10 +400,10 @@
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
       "start_kst": "2026-10-04 19:21",
-      "observed_min": 374.4,
-      "n_points": 37,
+      "observed_min": 384.6,
+      "n_points": 38,
       "peak_ccu": 10006,
-      "avg_ccu": 6265,
+      "avg_ccu": 6248,
       "title": "봉누도2 마지막날 정지해 ",
       "category": "Grand Theft Auto V"
     },
@@ -1024,10 +1024,10 @@
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
       "start_kst": "2026-10-04 18:09",
-      "observed_min": 447.1,
-      "n_points": 45,
+      "observed_min": 457.3,
+      "n_points": 46,
       "peak_ccu": 7362,
-      "avg_ccu": 3684,
+      "avg_ccu": 3706,
       "title": "청운강, 내일도 박스박스",
       "category": "Grand Theft Auto V"
     },
@@ -23404,6 +23404,10 @@
         [
           "2026-10-05 01:36",
           3604
+        ],
+        [
+          "2026-10-05 01:46",
+          4684
         ]
       ]
     },
@@ -29941,6 +29945,10 @@
         [
           "2026-10-05 01:36",
           6882
+        ],
+        [
+          "2026-10-05 01:46",
+          7424
         ]
       ]
     },
@@ -61923,6 +61931,10 @@
         [
           "2026-10-05 01:36",
           6247
+        ],
+        [
+          "2026-10-05 01:46",
+          5615
         ]
       ]
     },
