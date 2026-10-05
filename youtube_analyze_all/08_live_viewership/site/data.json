@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-05T09:24:28.126817+00:00",
-    "n_snapshots": 57554,
+    "fetched_at": "2026-10-05T09:34:44.199848+00:00",
+    "n_snapshots": 57565,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-05T09:24:28.126817+00:00"
+      "2026-10-05T09:34:44.199848+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 52281,
-    "n_timepoints": 5244,
-    "span_hours": 1299.48,
-    "observed_hours": 894.69,
+    "n_snapshots": 52291,
+    "n_timepoints": 5245,
+    "span_hours": 1299.65,
+    "observed_hours": 894.86,
     "coverage_ratio": 0.689,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 13974,
+    "n_live_rows": 13976,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-05T09:24:28.126817+00:00"
+    "last": "2026-10-05T09:34:44.199848+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 167246,
-      "follower_delta": 10505,
+      "followers": 167248,
+      "follower_delta": 10507,
       "follower_per_day": 194.0,
       "n_sessions": 69,
       "n_live_points": 967,
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 265419,
-      "follower_delta": 10093,
+      "followers": 265420,
+      "follower_delta": 10094,
       "follower_per_day": 186.4,
       "n_sessions": 124,
       "n_live_points": 1638,
@@ -58,22 +58,22 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217275,
-      "follower_delta": 7456,
+      "followers": 217278,
+      "follower_delta": 7459,
       "follower_per_day": 137.7,
       "n_sessions": 110,
-      "n_live_points": 880,
+      "n_live_points": 881,
       "peak_ccu": 28071,
-      "avg_ccu": 3010,
-      "ccu_per_1k_followers": 129.2
+      "avg_ccu": 3011,
+      "ccu_per_1k_followers": 129.19
     },
     {
       "rank": 4,
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 218527,
-      "follower_delta": 11101,
+      "followers": 218528,
+      "follower_delta": 11102,
       "follower_per_day": 205.0,
       "n_sessions": 100,
       "n_live_points": 1311,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264128,
-      "follower_delta": 11226,
+      "followers": 264130,
+      "follower_delta": 11228,
       "follower_per_day": 207.3,
       "n_sessions": 89,
       "n_live_points": 1166,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 249843,
-      "follower_delta": 8726,
+      "followers": 249845,
+      "follower_delta": 8728,
       "follower_per_day": 161.2,
       "n_sessions": 109,
       "n_live_points": 1569,
@@ -114,8 +114,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309219,
-      "follower_delta": 7299,
+      "followers": 309220,
+      "follower_delta": 7300,
       "follower_per_day": 134.8,
       "n_sessions": 113,
       "n_live_points": 1571,
@@ -142,13 +142,13 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241948,
-      "follower_delta": 5100,
-      "follower_per_day": 94.2,
+      "followers": 241955,
+      "follower_delta": 5107,
+      "follower_per_day": 94.3,
       "n_sessions": 138,
-      "n_live_points": 1725,
+      "n_live_points": 1726,
       "peak_ccu": 9749,
-      "avg_ccu": 3020,
+      "avg_ccu": 3023,
       "ccu_per_1k_followers": 40.29
     },
     {
@@ -508,10 +508,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-05 17:02",
-      "observed_min": 82.0,
-      "n_points": 9,
+      "observed_min": 92.3,
+      "n_points": 10,
       "peak_ccu": 9251,
-      "avg_ccu": 7807,
+      "avg_ccu": 7932,
       "title": "ㄱ-",
       "category": "talk"
     },
@@ -5736,6 +5736,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-10-05 17:02",
+      "observed_min": 92.3,
+      "n_points": 10,
+      "peak_ccu": 3938,
+      "avg_ccu": 3714,
+      "title": "원킹데ㅔㅔㅔ드",
+      "category": "종합 게임"
+    },
+    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -5784,18 +5796,6 @@
       "category": "데드 바이 데이라이트"
     },
     {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-11 18:34",
-      "observed_min": 707.5,
-      "n_points": 72,
-      "peak_ccu": 3923,
-      "avg_ccu": 3123,
-      "title": "유니선배랑 치킨 ㄴ켠왕그",
-      "category": "talk"
-    },
-    {
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
@@ -5806,6 +5806,18 @@
       "avg_ccu": 3923,
       "title": "오늘운 옵치 대회 카봉컵 팀 뽑는 날 ~~ ",
       "category": "오버워치"
+    },
+    {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-11 18:34",
+      "observed_min": 707.5,
+      "n_points": 72,
+      "peak_ccu": 3923,
+      "avg_ccu": 3123,
+      "title": "유니선배랑 치킨 ㄴ켠왕그",
+      "category": "talk"
     },
     {
       "name_ko": "아야츠노 유니",
@@ -5844,18 +5856,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "아오쿠모 린",
-      "name_en": "Aokumo Rin",
-      "unit": "CLICHE",
-      "start_kst": "2026-09-07 02:01",
-      "observed_min": 20.8,
-      "n_points": 3,
-      "peak_ccu": 3901,
-      "avg_ccu": 3730,
-      "title": "수동암즈 낚시방법 후열! (w. 나나, 하루, 동글이)",
-      "category": "낚시 방법"
-    },
-    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -5868,6 +5868,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "아오쿠모 린",
+      "name_en": "Aokumo Rin",
+      "unit": "CLICHE",
+      "start_kst": "2026-09-07 02:01",
+      "observed_min": 20.8,
+      "n_points": 3,
+      "peak_ccu": 3901,
+      "avg_ccu": 3730,
+      "title": "수동암즈 낚시방법 후열! (w. 나나, 하루, 동글이)",
+      "category": "낚시 방법"
+    },
+    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -5878,18 +5890,6 @@
       "avg_ccu": 3900,
       "title": "드디어 빙하기 끝! [시키샤카샤카슈-와! 100만회 감사합니당]💚",
       "category": "talk"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-05 17:02",
-      "observed_min": 82.0,
-      "n_points": 9,
-      "peak_ccu": 3898,
-      "avg_ccu": 3690,
-      "title": "원킹데ㅔㅔㅔ드",
-      "category": "종합 게임"
     },
     {
       "name_ko": "네네코 마시로",
@@ -45080,6 +45080,10 @@
         [
           "2026-10-05 18:24",
           3898
+        ],
+        [
+          "2026-10-05 18:34",
+          3938
         ]
       ]
     },
@@ -55858,6 +55862,10 @@
         [
           "2026-10-05 18:24",
           9205
+        ],
+        [
+          "2026-10-05 18:34",
+          9059
         ]
       ]
     },
