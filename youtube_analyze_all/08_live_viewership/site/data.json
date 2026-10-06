@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-06T14:26:40.000336+00:00",
-    "n_snapshots": 58923,
+    "fetched_at": "2026-10-06T14:37:10.827364+00:00",
+    "n_snapshots": 58933,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-06T14:26:40.000336+00:00"
+      "2026-10-06T14:37:10.827364+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 53524,
-    "n_timepoints": 5370,
-    "span_hours": 1328.52,
-    "observed_hours": 916.26,
+    "n_snapshots": 53533,
+    "n_timepoints": 5371,
+    "span_hours": 1328.69,
+    "observed_hours": 916.43,
     "coverage_ratio": 0.69,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14145,
+    "n_live_rows": 14148,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-06T14:26:40.000336+00:00"
+    "last": "2026-10-06T14:37:10.827364+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,13 +44,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 265593,
-      "follower_delta": 10267,
+      "followers": 265598,
+      "follower_delta": 10272,
       "follower_per_day": 185.5,
       "n_sessions": 126,
-      "n_live_points": 1659,
+      "n_live_points": 1660,
       "peak_ccu": 38237,
-      "avg_ccu": 5285,
+      "avg_ccu": 5286,
       "ccu_per_1k_followers": 143.97
     },
     {
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217402,
-      "follower_delta": 7583,
+      "followers": 217404,
+      "follower_delta": 7585,
       "follower_per_day": 137.0,
       "n_sessions": 112,
       "n_live_points": 921,
@@ -72,13 +72,13 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 218814,
-      "follower_delta": 11388,
-      "follower_per_day": 205.7,
+      "followers": 218817,
+      "follower_delta": 11391,
+      "follower_per_day": 205.8,
       "n_sessions": 102,
-      "n_live_points": 1331,
+      "n_live_points": 1332,
       "peak_ccu": 24385,
-      "avg_ccu": 3404,
+      "avg_ccu": 3405,
       "ccu_per_1k_followers": 111.44
     },
     {
@@ -86,9 +86,9 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264261,
-      "follower_delta": 11359,
-      "follower_per_day": 205.2,
+      "followers": 264259,
+      "follower_delta": 11357,
+      "follower_per_day": 205.1,
       "n_sessions": 89,
       "n_live_points": 1166,
       "peak_ccu": 18587,
@@ -114,11 +114,11 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309401,
-      "follower_delta": 7481,
+      "followers": 309400,
+      "follower_delta": 7480,
       "follower_per_day": 135.1,
       "n_sessions": 115,
-      "n_live_points": 1606,
+      "n_live_points": 1607,
       "peak_ccu": 12362,
       "avg_ccu": 2894,
       "ccu_per_1k_followers": 39.95
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 241995,
-      "follower_delta": 5147,
+      "followers": 241998,
+      "follower_delta": 5150,
       "follower_per_day": 93.0,
       "n_sessions": 138,
       "n_live_points": 1749,
@@ -1215,6 +1215,18 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
+      "start_kst": "2026-10-06 20:38",
+      "observed_min": 178.6,
+      "n_points": 18,
+      "peak_ccu": 7078,
+      "avg_ccu": 5623,
+      "title": "타비임댜",
+      "category": "talk"
+    },
+    {
+      "name_ko": "아라하시 타비",
+      "name_en": "Arahashi Tabi",
+      "unit": "UNIVERSE",
       "start_kst": "2026-08-15 20:29",
       "observed_min": 21.0,
       "n_points": 2,
@@ -1344,18 +1356,6 @@
       "category": "더 게임 오브 시시포스"
     },
     {
-      "name_ko": "아라하시 타비",
-      "name_en": "Arahashi Tabi",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-06 20:38",
-      "observed_min": 168.1,
-      "n_points": 17,
-      "peak_ccu": 6923,
-      "avg_ccu": 5538,
-      "title": "타비임댜",
-      "category": "talk"
-    },
-    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -1456,10 +1456,10 @@
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
       "start_kst": "2026-10-06 20:38",
-      "observed_min": 168.1,
-      "n_points": 17,
+      "observed_min": 178.6,
+      "n_points": 18,
       "peak_ccu": 6792,
-      "avg_ccu": 5748,
+      "avg_ccu": 5662,
       "title": "걱정마세요 유니나나가 비행기 어쩌고",
       "category": "걱정 마세요, 난기류입니다"
     },
@@ -2884,10 +2884,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-10-06 20:38",
-      "observed_min": 168.1,
-      "n_points": 17,
+      "observed_min": 178.6,
+      "n_points": 18,
       "peak_ccu": 5265,
-      "avg_ccu": 4488,
+      "avg_ccu": 4437,
       "title": "나나랑 같이 놀기 ",
       "category": "talk"
     },
@@ -30273,6 +30273,10 @@
         [
           "2026-10-06 23:26",
           6923
+        ],
+        [
+          "2026-10-06 23:37",
+          7078
         ]
       ]
     },
@@ -36702,6 +36706,10 @@
         [
           "2026-10-06 23:26",
           3475
+        ],
+        [
+          "2026-10-06 23:37",
+          3564
         ]
       ]
     },
@@ -42031,6 +42039,10 @@
         [
           "2026-10-06 23:26",
           4103
+        ],
+        [
+          "2026-10-06 23:37",
+          4202
         ]
       ]
     },
