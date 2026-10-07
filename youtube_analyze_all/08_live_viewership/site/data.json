@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-07T16:11:23.678622+00:00",
-    "n_snapshots": 60407,
+    "fetched_at": "2026-10-07T16:21:53.489378+00:00",
+    "n_snapshots": 60417,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-07T16:11:23.678622+00:00"
+      "2026-10-07T16:21:53.489378+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 54860,
-    "n_timepoints": 5518,
-    "span_hours": 1354.26,
-    "observed_hours": 941.58,
+    "n_snapshots": 54869,
+    "n_timepoints": 5519,
+    "span_hours": 1354.44,
+    "observed_hours": 941.76,
     "coverage_ratio": 0.695,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14466,
+    "n_live_rows": 14468,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-07T16:11:23.678622+00:00"
+    "last": "2026-10-07T16:21:53.489378+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 265856,
-      "follower_delta": 10530,
+      "followers": 265854,
+      "follower_delta": 10528,
       "follower_per_day": 186.6,
       "n_sessions": 127,
       "n_live_points": 1709,
@@ -86,13 +86,13 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264328,
-      "follower_delta": 11426,
-      "follower_per_day": 202.5,
+      "followers": 264327,
+      "follower_delta": 11425,
+      "follower_per_day": 202.4,
       "n_sessions": 90,
-      "n_live_points": 1192,
+      "n_live_points": 1193,
       "peak_ccu": 18587,
-      "avg_ccu": 3549,
+      "avg_ccu": 3548,
       "ccu_per_1k_followers": 70.32
     },
     {
@@ -100,13 +100,13 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 250037,
-      "follower_delta": 8920,
-      "follower_per_day": 158.1,
+      "followers": 250036,
+      "follower_delta": 8919,
+      "follower_per_day": 158.0,
       "n_sessions": 110,
-      "n_live_points": 1611,
+      "n_live_points": 1612,
       "peak_ccu": 15159,
-      "avg_ccu": 5416,
+      "avg_ccu": 5415,
       "ccu_per_1k_followers": 60.63
     },
     {
@@ -114,8 +114,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309530,
-      "follower_delta": 7610,
+      "followers": 309531,
+      "follower_delta": 7611,
       "follower_per_day": 134.9,
       "n_sessions": 116,
       "n_live_points": 1684,
@@ -128,8 +128,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 220187,
-      "follower_delta": 10852,
+      "followers": 220188,
+      "follower_delta": 10853,
       "follower_per_day": 192.3,
       "n_sessions": 132,
       "n_live_points": 1779,
@@ -2500,10 +2500,10 @@
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
       "start_kst": "2026-10-07 18:08",
-      "observed_min": 422.6,
-      "n_points": 42,
+      "observed_min": 433.1,
+      "n_points": 43,
       "peak_ccu": 5624,
-      "avg_ccu": 4507,
+      "avg_ccu": 4501,
       "title": "부키왔다!!!!!!!!!!!!!!!!",
       "category": "talk"
     },
@@ -9292,10 +9292,10 @@
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-07 20:46",
-      "observed_min": 264.4,
-      "n_points": 26,
+      "observed_min": 274.9,
+      "n_points": 27,
       "peak_ccu": 3056,
-      "avg_ccu": 2622,
+      "avg_ccu": 2637,
       "title": "야루링의 경찰인원 후기?",
       "category": "talk"
     },
@@ -18283,6 +18283,10 @@
         [
           "2026-10-08 01:11",
           2975
+        ],
+        [
+          "2026-10-08 01:21",
+          3036
         ]
       ]
     },
@@ -64303,6 +64307,10 @@
         [
           "2026-10-08 01:11",
           4266
+        ],
+        [
+          "2026-10-08 01:21",
+          4248
         ]
       ]
     },
