@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-07T02:48:44.721646+00:00",
-    "n_snapshots": 59623,
+    "fetched_at": "2026-10-07T02:59:16.825485+00:00",
+    "n_snapshots": 59633,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-07T02:48:44.721646+00:00"
+      "2026-10-07T02:59:16.825485+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 54154,
-    "n_timepoints": 5440,
-    "span_hours": 1340.88,
-    "observed_hours": 928.24,
+    "n_snapshots": 54163,
+    "n_timepoints": 5441,
+    "span_hours": 1341.06,
+    "observed_hours": 928.41,
     "coverage_ratio": 0.692,
     "largest_gap_hours": 11.3,
     "n_live_rows": 14182,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-07T02:48:44.721646+00:00"
+    "last": "2026-10-07T02:59:16.825485+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -72,14 +72,14 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 218924,
-      "follower_delta": 11498,
+      "followers": 218928,
+      "follower_delta": 11502,
       "follower_per_day": 205.8,
       "n_sessions": 103,
       "n_live_points": 1351,
       "peak_ccu": 24385,
       "avg_ccu": 3421,
-      "ccu_per_1k_followers": 111.39
+      "ccu_per_1k_followers": 111.38
     },
     {
       "rank": 5,
@@ -158,7 +158,7 @@
       "unit": "CLICHE",
       "followers": 229562,
       "follower_delta": 10462,
-      "follower_per_day": 187.3,
+      "follower_per_day": 187.2,
       "n_sessions": 108,
       "n_live_points": 1395,
       "peak_ccu": 9414,
