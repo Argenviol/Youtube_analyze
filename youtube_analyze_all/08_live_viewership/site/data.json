@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-08T09:03:17.918959+00:00",
-    "n_snapshots": 61377,
+    "fetched_at": "2026-10-08T09:04:23.115181+00:00",
+    "n_snapshots": 61387,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-08T09:03:17.918959+00:00"
+      "2026-10-08T09:04:23.115181+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 55733,
-    "n_timepoints": 5615,
-    "span_hours": 1371.13,
-    "observed_hours": 958.21,
+    "n_snapshots": 55742,
+    "n_timepoints": 5616,
+    "span_hours": 1371.15,
+    "observed_hours": 958.38,
     "coverage_ratio": 0.699,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14493,
+    "n_live_rows": 14495,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-08T09:03:17.918959+00:00"
+    "last": "2026-10-08T09:04:23.115181+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,13 +44,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 265885,
-      "follower_delta": 10559,
+      "followers": 265886,
+      "follower_delta": 10560,
       "follower_per_day": 184.8,
       "n_sessions": 128,
-      "n_live_points": 1711,
+      "n_live_points": 1712,
       "peak_ccu": 38237,
-      "avg_ccu": 5367,
+      "avg_ccu": 5365,
       "ccu_per_1k_followers": 143.81
     },
     {
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217463,
-      "follower_delta": 7644,
+      "followers": 217465,
+      "follower_delta": 7646,
       "follower_per_day": 133.8,
       "n_sessions": 114,
-      "n_live_points": 969,
+      "n_live_points": 970,
       "peak_ccu": 28071,
-      "avg_ccu": 3006,
+      "avg_ccu": 3007,
       "ccu_per_1k_followers": 129.08
     },
     {
@@ -5368,10 +5368,10 @@
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-08 14:54",
-      "observed_min": 189.1,
-      "n_points": 19,
+      "observed_min": 190.2,
+      "n_points": 20,
       "peak_ccu": 4136,
-      "avg_ccu": 3222,
+      "avg_ccu": 3254,
       "title": "일찍왔야하",
       "category": "talk"
     },
@@ -9768,6 +9768,18 @@
       "category": "이터널 리턴"
     },
     {
+      "name_ko": "아라하시 타비",
+      "name_en": "Arahashi Tabi",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-10-08 17:52",
+      "observed_min": 11.6,
+      "n_points": 3,
+      "peak_ccu": 2969,
+      "avg_ccu": 2549,
+      "title": "너 바보야?",
+      "category": "talk"
+    },
+    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -10102,18 +10114,6 @@
       "avg_ccu": 2891,
       "title": "클리셰랑 비꾸워꾸",
       "category": "빅 워크"
-    },
-    {
-      "name_ko": "아라하시 타비",
-      "name_en": "Arahashi Tabi",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-08 17:52",
-      "observed_min": 10.5,
-      "n_points": 2,
-      "peak_ccu": 2889,
-      "avg_ccu": 2340,
-      "title": "너 바보야?",
-      "category": "talk"
     },
     {
       "name_ko": "아오쿠모 린",
@@ -30757,6 +30757,10 @@
         [
           "2026-10-08 18:03",
           2889
+        ],
+        [
+          "2026-10-08 18:04",
+          2969
         ]
       ]
     },
@@ -46924,6 +46928,10 @@
         [
           "2026-10-08 18:03",
           3903
+        ],
+        [
+          "2026-10-08 18:04",
+          3861
         ]
       ]
     },
