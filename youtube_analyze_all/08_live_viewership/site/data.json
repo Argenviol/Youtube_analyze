@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-08T06:15:10.667437+00:00",
-    "n_snapshots": 61217,
+    "fetched_at": "2026-10-08T06:25:41.495146+00:00",
+    "n_snapshots": 61227,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-08T06:15:10.667437+00:00"
+      "2026-10-08T06:25:41.495146+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 55589,
-    "n_timepoints": 5599,
-    "span_hours": 1368.33,
-    "observed_hours": 955.47,
+    "n_snapshots": 55598,
+    "n_timepoints": 5600,
+    "span_hours": 1368.5,
+    "observed_hours": 955.64,
     "coverage_ratio": 0.698,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14475,
+    "n_live_rows": 14476,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-08T06:15:10.667437+00:00"
+    "last": "2026-10-08T06:25:41.495146+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217435,
-      "follower_delta": 7616,
-      "follower_per_day": 133.6,
+      "followers": 217434,
+      "follower_delta": 7615,
+      "follower_per_day": 133.5,
       "n_sessions": 114,
-      "n_live_points": 953,
+      "n_live_points": 954,
       "peak_ccu": 28071,
-      "avg_ccu": 2997,
+      "avg_ccu": 2996,
       "ccu_per_1k_followers": 129.1
     },
     {
@@ -114,8 +114,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309538,
-      "follower_delta": 7618,
+      "followers": 309539,
+      "follower_delta": 7619,
       "follower_per_day": 133.6,
       "n_sessions": 116,
       "n_live_points": 1684,
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 242004,
-      "follower_delta": 5156,
+      "followers": 242003,
+      "follower_delta": 5155,
       "follower_per_day": 90.4,
       "n_sessions": 141,
       "n_live_points": 1787,
@@ -11667,6 +11667,18 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
+      "start_kst": "2026-10-08 14:54",
+      "observed_min": 31.5,
+      "n_points": 4,
+      "peak_ccu": 2430,
+      "avg_ccu": 1757,
+      "title": "일찍왔야하",
+      "category": "talk"
+    },
+    {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
       "start_kst": "2026-08-16 19:31",
       "observed_min": 0.0,
       "n_points": 1,
@@ -12024,18 +12036,6 @@
       "category": "이터널 리턴"
     },
     {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-08-17 22:48",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 2267,
-      "avg_ccu": 2267,
-      "title": "자연산 용가리가 왔어",
-      "category": "talk"
-    },
-    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -12046,6 +12046,18 @@
       "avg_ccu": 2267,
       "title": "스텔데바데내전 으마무시한 살인마 등장",
       "category": "데드 바이 데이라이트"
+    },
+    {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-17 22:48",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 2267,
+      "avg_ccu": 2267,
+      "title": "자연산 용가리가 왔어",
+      "category": "talk"
     },
     {
       "name_ko": "아야츠노 유니",
@@ -12336,18 +12348,6 @@
       "category": "머신 파티"
     },
     {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-08-23 22:36",
-      "observed_min": 22.7,
-      "n_points": 2,
-      "peak_ccu": 2092,
-      "avg_ccu": 2015,
-      "title": "일어나라...",
-      "category": "로블록스"
-    },
-    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -12358,6 +12358,18 @@
       "avg_ccu": 2092,
       "title": "스텔라이브 데바데 내전 (w.삐부님)",
       "category": "데드 바이 데이라이트"
+    },
+    {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-23 22:36",
+      "observed_min": 22.7,
+      "n_points": 2,
+      "peak_ccu": 2092,
+      "avg_ccu": 2015,
+      "title": "일어나라...",
+      "category": "로블록스"
     },
     {
       "name_ko": "아야츠노 유니",
@@ -12432,18 +12444,6 @@
       "category": "Grand Theft Auto V"
     },
     {
-      "name_ko": "아오쿠모 린",
-      "name_en": "Aokumo Rin",
-      "unit": "CLICHE",
-      "start_kst": "2026-09-20 15:58",
-      "observed_min": 30.7,
-      "n_points": 4,
-      "peak_ccu": 2064,
-      "avg_ccu": 1550,
-      "title": "[광고] 쁘띠플래닛에서 같이 힐링해요! (CBT)",
-      "category": "종합 게임"
-    },
-    {
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
@@ -12454,6 +12454,18 @@
       "avg_ccu": 1765,
       "title": "오늘 나온나 15일차 인가 ,,,,??",
       "category": "Grand Theft Auto V"
+    },
+    {
+      "name_ko": "아오쿠모 린",
+      "name_en": "Aokumo Rin",
+      "unit": "CLICHE",
+      "start_kst": "2026-09-20 15:58",
+      "observed_min": 30.7,
+      "n_points": 4,
+      "peak_ccu": 2064,
+      "avg_ccu": 1550,
+      "title": "[광고] 쁘띠플래닛에서 같이 힐링해요! (CBT)",
+      "category": "종합 게임"
     },
     {
       "name_ko": "하나코 나나",
@@ -12477,18 +12489,6 @@
       "peak_ccu": 2055,
       "avg_ccu": 1772,
       "title": "헤에?",
-      "category": "talk"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-08 14:54",
-      "observed_min": 21.0,
-      "n_points": 3,
-      "peak_ccu": 2052,
-      "avg_ccu": 1533,
-      "title": "일찍왔야하",
       "category": "talk"
     },
     {
@@ -46840,6 +46840,10 @@
         [
           "2026-10-08 15:15",
           2052
+        ],
+        [
+          "2026-10-08 15:25",
+          2430
         ]
       ]
     },
