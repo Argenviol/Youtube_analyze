@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-08T18:43:35.846638+00:00",
-    "n_snapshots": 61947,
+    "fetched_at": "2026-10-08T18:54:04.317796+00:00",
+    "n_snapshots": 61957,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-08T18:43:35.846638+00:00"
+      "2026-10-08T18:54:04.317796+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 56246,
-    "n_timepoints": 5672,
-    "span_hours": 1380.8,
-    "observed_hours": 967.97,
+    "n_snapshots": 56255,
+    "n_timepoints": 5673,
+    "span_hours": 1380.97,
+    "observed_hours": 968.14,
     "coverage_ratio": 0.701,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14684,
+    "n_live_rows": 14686,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-08T18:43:35.846638+00:00"
+    "last": "2026-10-08T18:54:04.317796+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,9 +44,9 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 265946,
-      "follower_delta": 10620,
-      "follower_per_day": 184.6,
+      "followers": 265945,
+      "follower_delta": 10619,
+      "follower_per_day": 184.5,
       "n_sessions": 128,
       "n_live_points": 1757,
       "peak_ccu": 38237,
@@ -58,9 +58,9 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217498,
-      "follower_delta": 7679,
-      "follower_per_day": 133.5,
+      "followers": 217497,
+      "follower_delta": 7678,
+      "follower_per_day": 133.4,
       "n_sessions": 114,
       "n_live_points": 989,
       "peak_ccu": 28071,
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 219309,
-      "follower_delta": 11883,
+      "followers": 219311,
+      "follower_delta": 11885,
       "follower_per_day": 206.5,
       "n_sessions": 104,
       "n_live_points": 1385,
@@ -86,13 +86,13 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264490,
-      "follower_delta": 11588,
+      "followers": 264492,
+      "follower_delta": 11590,
       "follower_per_day": 201.4,
       "n_sessions": 91,
-      "n_live_points": 1241,
+      "n_live_points": 1242,
       "peak_ccu": 18587,
-      "avg_ccu": 3551,
+      "avg_ccu": 3550,
       "ccu_per_1k_followers": 70.27
     },
     {
@@ -104,7 +104,7 @@
       "follower_delta": 9147,
       "follower_per_day": 159.0,
       "n_sessions": 111,
-      "n_live_points": 1664,
+      "n_live_points": 1665,
       "peak_ccu": 15159,
       "avg_ccu": 5488,
       "ccu_per_1k_followers": 60.57
@@ -114,8 +114,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309577,
-      "follower_delta": 7657,
+      "followers": 309578,
+      "follower_delta": 7658,
       "follower_per_day": 133.1,
       "n_sessions": 116,
       "n_live_points": 1684,
@@ -128,8 +128,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 220220,
-      "follower_delta": 10885,
+      "followers": 220221,
+      "follower_delta": 10886,
       "follower_per_day": 189.2,
       "n_sessions": 132,
       "n_live_points": 1779,
@@ -448,10 +448,10 @@
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
       "start_kst": "2026-10-08 19:07",
-      "observed_min": 516.3,
-      "n_points": 51,
+      "observed_min": 526.7,
+      "n_points": 52,
       "peak_ccu": 9791,
-      "avg_ccu": 7811,
+      "avg_ccu": 7788,
       "title": "8시 경찰?상식방범대? 합방!",
       "category": "talk"
     },
@@ -4408,10 +4408,10 @@
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-08 20:10",
-      "observed_min": 453.4,
-      "n_points": 45,
+      "observed_min": 463.9,
+      "n_points": 46,
       "peak_ccu": 4540,
-      "avg_ccu": 3655,
+      "avg_ccu": 3638,
       "title": "경찰후열 합방 마크하코런 (참고로 나는 좀 고수임)",
       "category": "talk"
     },
@@ -18539,6 +18539,10 @@
         [
           "2026-10-09 03:43",
           2934
+        ],
+        [
+          "2026-10-09 03:54",
+          2862
         ]
       ]
     },
@@ -65235,6 +65239,10 @@
         [
           "2026-10-09 03:43",
           6712
+        ],
+        [
+          "2026-10-09 03:54",
+          6618
         ]
       ]
     },
