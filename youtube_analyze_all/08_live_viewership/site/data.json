@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-08T05:22:40.112439+00:00",
-    "n_snapshots": 61167,
+    "fetched_at": "2026-10-08T05:33:10.371128+00:00",
+    "n_snapshots": 61177,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-08T05:22:40.112439+00:00"
+      "2026-10-08T05:33:10.371128+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 55544,
-    "n_timepoints": 5594,
-    "span_hours": 1367.45,
-    "observed_hours": 954.61,
+    "n_snapshots": 55553,
+    "n_timepoints": 5595,
+    "span_hours": 1367.63,
+    "observed_hours": 954.78,
     "coverage_ratio": 0.698,
     "largest_gap_hours": 11.3,
     "n_live_rows": 14472,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-08T05:22:40.112439+00:00"
+    "last": "2026-10-08T05:33:10.371128+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,14 +44,14 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 265876,
-      "follower_delta": 10550,
+      "followers": 265877,
+      "follower_delta": 10551,
       "follower_per_day": 185.2,
       "n_sessions": 127,
       "n_live_points": 1709,
       "peak_ccu": 38237,
       "avg_ccu": 5370,
-      "ccu_per_1k_followers": 143.82
+      "ccu_per_1k_followers": 143.81
     },
     {
       "rank": 3,
@@ -102,7 +102,7 @@
       "unit": "CLICHE",
       "followers": 250055,
       "follower_delta": 8938,
-      "follower_per_day": 156.9,
+      "follower_per_day": 156.8,
       "n_sessions": 110,
       "n_live_points": 1613,
       "peak_ccu": 15159,
