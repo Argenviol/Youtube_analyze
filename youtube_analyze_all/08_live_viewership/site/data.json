@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-08T07:39:15.057646+00:00",
-    "n_snapshots": 61297,
+    "fetched_at": "2026-10-08T07:49:45.637724+00:00",
+    "n_snapshots": 61307,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-08T07:39:15.057646+00:00"
+      "2026-10-08T07:49:45.637724+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 55661,
-    "n_timepoints": 5607,
-    "span_hours": 1369.73,
-    "observed_hours": 956.84,
+    "n_snapshots": 55670,
+    "n_timepoints": 5608,
+    "span_hours": 1369.9,
+    "observed_hours": 957.01,
     "coverage_ratio": 0.699,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14483,
+    "n_live_rows": 14484,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-08T07:39:15.057646+00:00"
+    "last": "2026-10-08T07:49:45.637724+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217450,
-      "follower_delta": 7631,
+      "followers": 217452,
+      "follower_delta": 7633,
       "follower_per_day": 133.7,
       "n_sessions": 114,
-      "n_live_points": 961,
+      "n_live_points": 962,
       "peak_ccu": 28071,
-      "avg_ccu": 2998,
+      "avg_ccu": 2999,
       "ccu_per_1k_followers": 129.09
     },
     {
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 219237,
-      "follower_delta": 11811,
+      "followers": 219238,
+      "follower_delta": 11812,
       "follower_per_day": 206.9,
       "n_sessions": 104,
       "n_live_points": 1385,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264344,
-      "follower_delta": 11442,
+      "followers": 264345,
+      "follower_delta": 11443,
       "follower_per_day": 200.5,
       "n_sessions": 90,
       "n_live_points": 1196,
@@ -114,8 +114,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309543,
-      "follower_delta": 7623,
+      "followers": 309544,
+      "follower_delta": 7624,
       "follower_per_day": 133.6,
       "n_sessions": 116,
       "n_live_points": 1684,
@@ -128,8 +128,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 220190,
-      "follower_delta": 10855,
+      "followers": 220191,
+      "follower_delta": 10856,
       "follower_per_day": 190.2,
       "n_sessions": 132,
       "n_live_points": 1779,
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 242008,
-      "follower_delta": 5160,
+      "followers": 242006,
+      "follower_delta": 5158,
       "follower_per_day": 90.4,
       "n_sessions": 141,
       "n_live_points": 1787,
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 229626,
-      "follower_delta": 10526,
+      "followers": 229627,
+      "follower_delta": 10527,
       "follower_per_day": 184.4,
       "n_sessions": 108,
       "n_live_points": 1395,
@@ -6988,10 +6988,10 @@
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-08 14:54",
-      "observed_min": 105.1,
-      "n_points": 11,
+      "observed_min": 115.6,
+      "n_points": 12,
       "peak_ccu": 3613,
-      "avg_ccu": 2722,
+      "avg_ccu": 2796,
       "title": "일찍왔야하",
       "category": "talk"
     },
@@ -46872,6 +46872,10 @@
         [
           "2026-10-08 16:39",
           3613
+        ],
+        [
+          "2026-10-08 16:49",
+          3610
         ]
       ]
     },
