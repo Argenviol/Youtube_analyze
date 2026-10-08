@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-08T08:21:16.555862+00:00",
-    "n_snapshots": 61337,
+    "fetched_at": "2026-10-08T08:31:47.026064+00:00",
+    "n_snapshots": 61347,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-08T08:21:16.555862+00:00"
+      "2026-10-08T08:31:47.026064+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 55697,
-    "n_timepoints": 5611,
-    "span_hours": 1370.43,
-    "observed_hours": 957.52,
+    "n_snapshots": 55706,
+    "n_timepoints": 5612,
+    "span_hours": 1370.6,
+    "observed_hours": 957.69,
     "coverage_ratio": 0.699,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14487,
+    "n_live_rows": 14488,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-08T08:21:16.555862+00:00"
+    "last": "2026-10-08T08:31:47.026064+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 265882,
-      "follower_delta": 10556,
+      "followers": 265885,
+      "follower_delta": 10559,
       "follower_per_day": 184.9,
       "n_sessions": 127,
       "n_live_points": 1709,
@@ -62,9 +62,9 @@
       "follower_delta": 7637,
       "follower_per_day": 133.7,
       "n_sessions": 114,
-      "n_live_points": 965,
+      "n_live_points": 966,
       "peak_ccu": 28071,
-      "avg_ccu": 3002,
+      "avg_ccu": 3003,
       "ccu_per_1k_followers": 129.09
     },
     {
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 219241,
-      "follower_delta": 11815,
+      "followers": 219242,
+      "follower_delta": 11816,
       "follower_per_day": 206.9,
       "n_sessions": 104,
       "n_live_points": 1385,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264345,
-      "follower_delta": 11443,
+      "followers": 264347,
+      "follower_delta": 11445,
       "follower_per_day": 200.4,
       "n_sessions": 90,
       "n_live_points": 1196,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 250063,
-      "follower_delta": 8946,
+      "followers": 250065,
+      "follower_delta": 8948,
       "follower_per_day": 156.7,
       "n_sessions": 110,
       "n_live_points": 1613,
@@ -114,8 +114,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309543,
-      "follower_delta": 7623,
+      "followers": 309544,
+      "follower_delta": 7624,
       "follower_per_day": 133.5,
       "n_sessions": 116,
       "n_live_points": 1684,
@@ -128,8 +128,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 220189,
-      "follower_delta": 10854,
+      "followers": 220191,
+      "follower_delta": 10856,
       "follower_per_day": 190.1,
       "n_sessions": 132,
       "n_live_points": 1779,
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 229627,
-      "follower_delta": 10527,
+      "followers": 229629,
+      "follower_delta": 10529,
       "follower_per_day": 184.4,
       "n_sessions": 108,
       "n_live_points": 1395,
@@ -5688,6 +5688,18 @@
       "category": "종합 게임"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-10-08 14:54",
+      "observed_min": 157.6,
+      "n_points": 16,
+      "peak_ccu": 3995,
+      "avg_ccu": 3073,
+      "title": "일찍왔야하",
+      "category": "talk"
+    },
+    {
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
@@ -5938,18 +5950,6 @@
       "avg_ccu": 2735,
       "title": "55분 커버곡 공개하고 한 탕 하러 온 명총희 [봉누도2]",
       "category": "Grand Theft Auto V"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-08 14:54",
-      "observed_min": 147.1,
-      "n_points": 15,
-      "peak_ccu": 3931,
-      "avg_ccu": 3012,
-      "title": "일찍왔야하",
-      "category": "talk"
     },
     {
       "name_ko": "유즈하 리코",
@@ -46888,6 +46888,10 @@
         [
           "2026-10-08 17:21",
           3931
+        ],
+        [
+          "2026-10-08 17:31",
+          3995
         ]
       ]
     },
