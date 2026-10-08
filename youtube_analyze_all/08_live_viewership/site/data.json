@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-08T07:18:13.405602+00:00",
-    "n_snapshots": 61277,
+    "fetched_at": "2026-10-08T07:28:44.089693+00:00",
+    "n_snapshots": 61287,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-08T07:18:13.405602+00:00"
+      "2026-10-08T07:28:44.089693+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 55643,
-    "n_timepoints": 5605,
-    "span_hours": 1369.38,
-    "observed_hours": 956.5,
-    "coverage_ratio": 0.698,
+    "n_snapshots": 55652,
+    "n_timepoints": 5606,
+    "span_hours": 1369.55,
+    "observed_hours": 956.67,
+    "coverage_ratio": 0.699,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14481,
+    "n_live_rows": 14482,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-08T07:18:13.405602+00:00"
+    "last": "2026-10-08T07:28:44.089693+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 265879,
-      "follower_delta": 10553,
+      "followers": 265881,
+      "follower_delta": 10555,
       "follower_per_day": 185.0,
       "n_sessions": 127,
       "n_live_points": 1709,
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217445,
-      "follower_delta": 7626,
+      "followers": 217450,
+      "follower_delta": 7631,
       "follower_per_day": 133.7,
       "n_sessions": 114,
-      "n_live_points": 959,
+      "n_live_points": 960,
       "peak_ccu": 28071,
-      "avg_ccu": 2997,
+      "avg_ccu": 2998,
       "ccu_per_1k_followers": 129.09
     },
     {
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 219239,
-      "follower_delta": 11813,
+      "followers": 219237,
+      "follower_delta": 11811,
       "follower_per_day": 207.0,
       "n_sessions": 104,
       "n_live_points": 1385,
@@ -88,7 +88,7 @@
       "unit": "UNIVERSE",
       "followers": 264345,
       "follower_delta": 11443,
-      "follower_per_day": 200.6,
+      "follower_per_day": 200.5,
       "n_sessions": 90,
       "n_live_points": 1196,
       "peak_ccu": 18587,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 250061,
-      "follower_delta": 8944,
+      "followers": 250062,
+      "follower_delta": 8945,
       "follower_per_day": 156.8,
       "n_sessions": 110,
       "n_live_points": 1613,
@@ -114,8 +114,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309541,
-      "follower_delta": 7621,
+      "followers": 309542,
+      "follower_delta": 7622,
       "follower_per_day": 133.6,
       "n_sessions": 116,
       "n_live_points": 1684,
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 242005,
-      "follower_delta": 5157,
+      "followers": 242007,
+      "follower_delta": 5159,
       "follower_per_day": 90.4,
       "n_sessions": 141,
       "n_live_points": 1787,
@@ -7500,6 +7500,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-10-08 14:54",
+      "observed_min": 94.6,
+      "n_points": 10,
+      "peak_ccu": 3482,
+      "avg_ccu": 2633,
+      "title": "일찍왔야하",
+      "category": "talk"
+    },
+    {
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
@@ -7521,18 +7533,6 @@
       "peak_ccu": 3481,
       "avg_ccu": 2502,
       "title": "8시에 커버곡 나와~!!",
-      "category": "talk"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-08 14:54",
-      "observed_min": 84.1,
-      "n_points": 9,
-      "peak_ccu": 3480,
-      "avg_ccu": 2538,
-      "title": "일찍왔야하",
       "category": "talk"
     },
     {
@@ -46864,6 +46864,10 @@
         [
           "2026-10-08 16:18",
           3480
+        ],
+        [
+          "2026-10-08 16:28",
+          3482
         ]
       ]
     },
