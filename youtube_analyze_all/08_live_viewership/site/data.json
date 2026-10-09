@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-09T08:20:34.853208+00:00",
-    "n_snapshots": 62750,
+    "fetched_at": "2026-10-09T08:30:49.583234+00:00",
+    "n_snapshots": 62761,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-09T08:20:34.853208+00:00"
+      "2026-10-09T08:30:49.583234+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 56969,
-    "n_timepoints": 5752,
-    "span_hours": 1394.42,
-    "observed_hours": 981.66,
+    "n_snapshots": 56979,
+    "n_timepoints": 5753,
+    "span_hours": 1394.59,
+    "observed_hours": 981.83,
     "coverage_ratio": 0.704,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14702,
+    "n_live_rows": 14704,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-09T08:20:34.853208+00:00"
+    "last": "2026-10-09T08:30:49.583234+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,11 +30,11 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 167599,
-      "follower_delta": 10858,
+      "followers": 167600,
+      "follower_delta": 10859,
       "follower_per_day": 186.9,
       "n_sessions": 72,
-      "n_live_points": 977,
+      "n_live_points": 978,
       "peak_ccu": 38402,
       "avg_ccu": 2298,
       "ccu_per_1k_followers": 229.13
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 265994,
-      "follower_delta": 10668,
+      "followers": 265996,
+      "follower_delta": 10670,
       "follower_per_day": 183.6,
       "n_sessions": 128,
       "n_live_points": 1757,
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217513,
-      "follower_delta": 7694,
+      "followers": 217512,
+      "follower_delta": 7693,
       "follower_per_day": 132.4,
       "n_sessions": 114,
       "n_live_points": 989,
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 219361,
-      "follower_delta": 11935,
+      "followers": 219362,
+      "follower_delta": 11936,
       "follower_per_day": 205.4,
       "n_sessions": 104,
       "n_live_points": 1385,
@@ -86,9 +86,9 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264531,
-      "follower_delta": 11629,
-      "follower_per_day": 200.2,
+      "followers": 264532,
+      "follower_delta": 11630,
+      "follower_per_day": 200.1,
       "n_sessions": 91,
       "n_live_points": 1244,
       "peak_ccu": 18587,
@@ -114,8 +114,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309601,
-      "follower_delta": 7681,
+      "followers": 309602,
+      "follower_delta": 7682,
       "follower_per_day": 132.2,
       "n_sessions": 116,
       "n_live_points": 1684,
@@ -128,13 +128,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 220280,
-      "follower_delta": 10945,
+      "followers": 220285,
+      "follower_delta": 10950,
       "follower_per_day": 188.4,
       "n_sessions": 133,
-      "n_live_points": 1788,
+      "n_live_points": 1789,
       "peak_ccu": 10461,
-      "avg_ccu": 3067,
+      "avg_ccu": 3068,
       "ccu_per_1k_followers": 47.49
     },
     {
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 242058,
-      "follower_delta": 5210,
+      "followers": 242059,
+      "follower_delta": 5211,
       "follower_per_day": 89.7,
       "n_sessions": 142,
       "n_live_points": 1816,
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 229704,
-      "follower_delta": 10604,
+      "followers": 229705,
+      "follower_delta": 10605,
       "follower_per_day": 182.5,
       "n_sessions": 108,
       "n_live_points": 1395,
@@ -2740,10 +2740,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-10-09 16:06",
-      "observed_min": 74.1,
-      "n_points": 9,
+      "observed_min": 84.4,
+      "n_points": 10,
       "peak_ccu": 5434,
-      "avg_ccu": 4320,
+      "avg_ccu": 4389,
       "title": "와아~! 오랜만에 4시 리코다!",
       "category": "talk"
     },
@@ -12576,6 +12576,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-10-09 17:00",
+      "observed_min": 30.7,
+      "n_points": 4,
+      "peak_ccu": 2040,
+      "avg_ccu": 1344,
+      "title": "5후의 후야가 왔어용",
+      "category": "이환"
+    },
+    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -12771,24 +12783,24 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "start_kst": "2026-08-12 15:57",
-      "observed_min": 50.4,
-      "n_points": 7,
-      "peak_ccu": 1891,
-      "avg_ccu": 1503,
-      "title": "오 케 마 루",
-      "category": "talk"
-    },
-    {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
       "start_kst": "2026-08-23 23:33",
       "observed_min": 0.0,
       "n_points": 1,
       "peak_ccu": 1891,
       "avg_ccu": 1891,
       "title": "일어나라...",
+      "category": "talk"
+    },
+    {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-12 15:57",
+      "observed_min": 50.4,
+      "n_points": 7,
+      "peak_ccu": 1891,
+      "avg_ccu": 1503,
+      "title": "오 케 마 루",
       "category": "talk"
     },
     {
@@ -13006,18 +13018,6 @@
       "avg_ccu": 1729,
       "title": "나우울해서빵먹고곤약냉면먹고닭가슴살먹고닭가슴살깐풍기먹고비타민은안먹고일하다가소처럼뒤집어잔다음방송켰어",
       "category": "talk"
-    },
-    {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-10-09 17:00",
-      "observed_min": 20.5,
-      "n_points": 3,
-      "peak_ccu": 1729,
-      "avg_ccu": 1112,
-      "title": "5후의 후야가 왔어용",
-      "category": null
     },
     {
       "name_ko": "사키하네 후야",
@@ -51353,6 +51353,10 @@
         [
           "2026-10-09 17:20",
           1729
+        ],
+        [
+          "2026-10-09 17:30",
+          2040
         ]
       ]
     },
@@ -72452,6 +72456,10 @@
         [
           "2026-10-09 17:20",
           5173
+        ],
+        [
+          "2026-10-09 17:30",
+          5008
         ]
       ]
     }
