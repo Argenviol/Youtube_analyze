@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-09T17:25:01.277575+00:00",
-    "n_snapshots": 63234,
+    "fetched_at": "2026-10-09T17:35:15.622331+00:00",
+    "n_snapshots": 63245,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-09T17:25:01.277575+00:00"
+      "2026-10-09T17:35:15.622331+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 57409,
-    "n_timepoints": 5796,
-    "span_hours": 1403.49,
-    "observed_hours": 989.18,
+    "n_snapshots": 57419,
+    "n_timepoints": 5797,
+    "span_hours": 1403.66,
+    "observed_hours": 989.35,
     "coverage_ratio": 0.705,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14949,
+    "n_live_rows": 14951,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-09T17:25:01.277575+00:00"
+    "last": "2026-10-09T17:35:15.622331+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 167648,
-      "follower_delta": 10907,
+      "followers": 167650,
+      "follower_delta": 10909,
       "follower_per_day": 186.5,
       "n_sessions": 72,
       "n_live_points": 1005,
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217539,
-      "follower_delta": 7720,
+      "followers": 217538,
+      "follower_delta": 7719,
       "follower_per_day": 132.0,
       "n_sessions": 114,
       "n_live_points": 989,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264573,
-      "follower_delta": 11671,
+      "followers": 264574,
+      "follower_delta": 11672,
       "follower_per_day": 199.6,
       "n_sessions": 93,
       "n_live_points": 1273,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 250357,
-      "follower_delta": 9240,
+      "followers": 250359,
+      "follower_delta": 9242,
       "follower_per_day": 158.0,
       "n_sessions": 113,
       "n_live_points": 1688,
@@ -128,13 +128,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 220438,
-      "follower_delta": 11103,
+      "followers": 220440,
+      "follower_delta": 11105,
       "follower_per_day": 189.9,
       "n_sessions": 134,
-      "n_live_points": 1832,
+      "n_live_points": 1833,
       "peak_ccu": 10461,
-      "avg_ccu": 3100,
+      "avg_ccu": 3103,
       "ccu_per_1k_followers": 47.46
     },
     {
@@ -156,11 +156,11 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 229854,
-      "follower_delta": 10754,
+      "followers": 229855,
+      "follower_delta": 10755,
       "follower_per_day": 183.9,
       "n_sessions": 110,
-      "n_live_points": 1430,
+      "n_live_points": 1431,
       "peak_ccu": 9414,
       "avg_ccu": 3072,
       "ccu_per_1k_followers": 40.96
@@ -868,10 +868,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-10-09 23:51",
-      "observed_min": 153.6,
-      "n_points": 16,
+      "observed_min": 163.9,
+      "n_points": 17,
       "peak_ccu": 7683,
-      "avg_ccu": 6633,
+      "avg_ccu": 6684,
       "title": "로맨스 드라마 아줌마의 봉누도2 과몰입 클립보기",
       "category": "talk"
     },
@@ -5128,10 +5128,10 @@
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
       "start_kst": "2026-10-09 23:51",
-      "observed_min": 153.6,
-      "n_points": 16,
+      "observed_min": 163.9,
+      "n_points": 17,
       "peak_ccu": 4268,
-      "avg_ccu": 3652,
+      "avg_ccu": 3668,
       "title": "피트스탑 합방 7시!",
       "category": "워독스"
     },
@@ -24572,6 +24572,10 @@
         [
           "2026-10-10 02:25",
           3955
+        ],
+        [
+          "2026-10-10 02:35",
+          3921
         ]
       ]
     },
@@ -73596,6 +73600,10 @@
         [
           "2026-10-10 02:25",
           7683
+        ],
+        [
+          "2026-10-10 02:35",
+          7497
         ]
       ]
     }
