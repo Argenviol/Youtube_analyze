@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-09T17:35:15.622331+00:00",
-    "n_snapshots": 63245,
+    "fetched_at": "2026-10-09T17:45:29.325180+00:00",
+    "n_snapshots": 63256,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-09T17:35:15.622331+00:00"
+      "2026-10-09T17:45:29.325180+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 57419,
-    "n_timepoints": 5797,
-    "span_hours": 1403.66,
-    "observed_hours": 989.35,
+    "n_snapshots": 57429,
+    "n_timepoints": 5798,
+    "span_hours": 1403.83,
+    "observed_hours": 989.52,
     "coverage_ratio": 0.705,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14951,
+    "n_live_rows": 14953,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-09T17:35:15.622331+00:00"
+    "last": "2026-10-09T17:45:29.325180+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 266017,
-      "follower_delta": 10691,
+      "followers": 266016,
+      "follower_delta": 10690,
       "follower_per_day": 182.8,
       "n_sessions": 128,
       "n_live_points": 1757,
@@ -72,23 +72,23 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 219498,
-      "follower_delta": 12072,
-      "follower_per_day": 206.4,
+      "followers": 219496,
+      "follower_delta": 12070,
+      "follower_per_day": 206.3,
       "n_sessions": 106,
       "n_live_points": 1410,
       "peak_ccu": 24385,
       "avg_ccu": 3478,
-      "ccu_per_1k_followers": 111.09
+      "ccu_per_1k_followers": 111.1
     },
     {
       "rank": 5,
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264574,
-      "follower_delta": 11672,
-      "follower_per_day": 199.6,
+      "followers": 264573,
+      "follower_delta": 11671,
+      "follower_per_day": 199.5,
       "n_sessions": 93,
       "n_live_points": 1273,
       "peak_ccu": 18587,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 250359,
-      "follower_delta": 9242,
+      "followers": 250360,
+      "follower_delta": 9243,
       "follower_per_day": 158.0,
       "n_sessions": 113,
       "n_live_points": 1688,
@@ -128,22 +128,22 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 220440,
-      "follower_delta": 11105,
+      "followers": 220443,
+      "follower_delta": 11108,
       "follower_per_day": 189.9,
       "n_sessions": 134,
-      "n_live_points": 1833,
+      "n_live_points": 1834,
       "peak_ccu": 10461,
-      "avg_ccu": 3103,
-      "ccu_per_1k_followers": 47.46
+      "avg_ccu": 3105,
+      "ccu_per_1k_followers": 47.45
     },
     {
       "rank": 9,
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 242064,
-      "follower_delta": 5216,
+      "followers": 242065,
+      "follower_delta": 5217,
       "follower_per_day": 89.2,
       "n_sessions": 144,
       "n_live_points": 1847,
@@ -156,13 +156,13 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 229855,
-      "follower_delta": 10755,
-      "follower_per_day": 183.9,
+      "followers": 229860,
+      "follower_delta": 10760,
+      "follower_per_day": 184.0,
       "n_sessions": 110,
-      "n_live_points": 1431,
+      "n_live_points": 1432,
       "peak_ccu": 9414,
-      "avg_ccu": 3072,
+      "avg_ccu": 3073,
       "ccu_per_1k_followers": 40.96
     }
   ],
@@ -868,10 +868,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-10-09 23:51",
-      "observed_min": 163.9,
-      "n_points": 17,
+      "observed_min": 174.1,
+      "n_points": 18,
       "peak_ccu": 7683,
-      "avg_ccu": 6684,
+      "avg_ccu": 6733,
       "title": "로맨스 드라마 아줌마의 봉누도2 과몰입 클립보기",
       "category": "talk"
     },
@@ -5128,10 +5128,10 @@
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
       "start_kst": "2026-10-09 23:51",
-      "observed_min": 163.9,
-      "n_points": 17,
+      "observed_min": 174.1,
+      "n_points": 18,
       "peak_ccu": 4268,
-      "avg_ccu": 3668,
+      "avg_ccu": 3659,
       "title": "피트스탑 합방 7시!",
       "category": "워독스"
     },
@@ -24576,6 +24576,10 @@
         [
           "2026-10-10 02:35",
           3921
+        ],
+        [
+          "2026-10-10 02:45",
+          3512
         ]
       ]
     },
@@ -73604,6 +73608,10 @@
         [
           "2026-10-10 02:35",
           7497
+        ],
+        [
+          "2026-10-10 02:45",
+          7567
         ]
       ]
     }
