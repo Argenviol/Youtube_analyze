@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-09T18:05:57.477580+00:00",
-    "n_snapshots": 63278,
+    "fetched_at": "2026-10-09T18:16:11.592720+00:00",
+    "n_snapshots": 63289,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-09T18:05:57.477580+00:00"
+      "2026-10-09T18:16:11.592720+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 57449,
-    "n_timepoints": 5800,
-    "span_hours": 1404.17,
-    "observed_hours": 989.86,
+    "n_snapshots": 57459,
+    "n_timepoints": 5801,
+    "span_hours": 1404.34,
+    "observed_hours": 990.03,
     "coverage_ratio": 0.705,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14955,
+    "n_live_rows": 14956,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-09T18:05:57.477580+00:00"
+    "last": "2026-10-09T18:16:11.592720+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 266018,
-      "follower_delta": 10692,
+      "followers": 266019,
+      "follower_delta": 10693,
       "follower_per_day": 182.7,
       "n_sessions": 128,
       "n_live_points": 1757,
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217536,
-      "follower_delta": 7717,
+      "followers": 217535,
+      "follower_delta": 7716,
       "follower_per_day": 131.9,
       "n_sessions": 114,
       "n_live_points": 989,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264577,
-      "follower_delta": 11675,
+      "followers": 264576,
+      "follower_delta": 11674,
       "follower_per_day": 199.5,
       "n_sessions": 93,
       "n_live_points": 1273,
@@ -100,9 +100,9 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 250360,
-      "follower_delta": 9243,
-      "follower_per_day": 158.0,
+      "followers": 250358,
+      "follower_delta": 9241,
+      "follower_per_day": 157.9,
       "n_sessions": 113,
       "n_live_points": 1688,
       "peak_ccu": 15159,
@@ -116,7 +116,7 @@
       "unit": "EVERYS",
       "followers": 309664,
       "follower_delta": 7744,
-      "follower_per_day": 132.4,
+      "follower_per_day": 132.3,
       "n_sessions": 118,
       "n_live_points": 1718,
       "peak_ccu": 12362,
@@ -128,13 +128,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 220449,
-      "follower_delta": 11114,
-      "follower_per_day": 190.0,
+      "followers": 220457,
+      "follower_delta": 11122,
+      "follower_per_day": 190.1,
       "n_sessions": 134,
-      "n_live_points": 1836,
+      "n_live_points": 1837,
       "peak_ccu": 10461,
-      "avg_ccu": 3110,
+      "avg_ccu": 3112,
       "ccu_per_1k_followers": 47.45
     },
     {
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 242064,
-      "follower_delta": 5216,
+      "followers": 242065,
+      "follower_delta": 5217,
       "follower_per_day": 89.2,
       "n_sessions": 144,
       "n_live_points": 1847,
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 229864,
-      "follower_delta": 10764,
+      "followers": 229865,
+      "follower_delta": 10765,
       "follower_per_day": 184.0,
       "n_sessions": 110,
       "n_live_points": 1432,
@@ -844,10 +844,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-10-09 23:51",
-      "observed_min": 194.6,
-      "n_points": 20,
+      "observed_min": 204.8,
+      "n_points": 21,
       "peak_ccu": 7746,
-      "avg_ccu": 6827,
+      "avg_ccu": 6800,
       "title": "로맨스 드라마 아줌마의 봉누도2 과몰입 클립보기",
       "category": "talk"
     },
@@ -73620,6 +73620,10 @@
         [
           "2026-10-10 03:05",
           7598
+        ],
+        [
+          "2026-10-10 03:16",
+          6258
         ]
       ]
     }
