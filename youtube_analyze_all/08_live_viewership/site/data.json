@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-09T07:39:04.716400+00:00",
-    "n_snapshots": 62707,
+    "fetched_at": "2026-10-09T07:49:35.131371+00:00",
+    "n_snapshots": 62717,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-09T07:39:04.716400+00:00"
+      "2026-10-09T07:49:35.131371+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 56930,
-    "n_timepoints": 5748,
-    "span_hours": 1393.72,
-    "observed_hours": 980.97,
+    "n_snapshots": 56939,
+    "n_timepoints": 5749,
+    "span_hours": 1393.9,
+    "observed_hours": 981.14,
     "coverage_ratio": 0.704,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 14695,
+    "n_live_rows": 14696,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-09T07:39:04.716400+00:00"
+    "last": "2026-10-09T07:49:35.131371+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -58,14 +58,14 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217512,
-      "follower_delta": 7693,
-      "follower_per_day": 132.5,
+      "followers": 217510,
+      "follower_delta": 7691,
+      "follower_per_day": 132.4,
       "n_sessions": 114,
       "n_live_points": 989,
       "peak_ccu": 28071,
       "avg_ccu": 3006,
-      "ccu_per_1k_followers": 129.05
+      "ccu_per_1k_followers": 129.06
     },
     {
       "rank": 4,
@@ -74,7 +74,7 @@
       "unit": "CLICHE",
       "followers": 219358,
       "follower_delta": 11932,
-      "follower_per_day": 205.5,
+      "follower_per_day": 205.4,
       "n_sessions": 104,
       "n_live_points": 1385,
       "peak_ccu": 24385,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264528,
-      "follower_delta": 11626,
+      "followers": 264530,
+      "follower_delta": 11628,
       "follower_per_day": 200.2,
       "n_sessions": 91,
       "n_live_points": 1244,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 250287,
-      "follower_delta": 9170,
+      "followers": 250288,
+      "follower_delta": 9171,
       "follower_per_day": 157.9,
       "n_sessions": 111,
       "n_live_points": 1667,
@@ -128,13 +128,13 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 220260,
-      "follower_delta": 10925,
+      "followers": 220261,
+      "follower_delta": 10926,
       "follower_per_day": 188.1,
       "n_sessions": 133,
-      "n_live_points": 1784,
+      "n_live_points": 1785,
       "peak_ccu": 10461,
-      "avg_ccu": 3062,
+      "avg_ccu": 3063,
       "ccu_per_1k_followers": 47.49
     },
     {
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 242058,
-      "follower_delta": 5210,
+      "followers": 242056,
+      "follower_delta": 5208,
       "follower_per_day": 89.7,
       "n_sessions": 142,
       "n_live_points": 1816,
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 229699,
-      "follower_delta": 10599,
+      "followers": 229700,
+      "follower_delta": 10600,
       "follower_per_day": 182.5,
       "n_sessions": 108,
       "n_live_points": 1395,
@@ -3684,6 +3684,18 @@
       "category": "구스 구스 덕"
     },
     {
+      "name_ko": "유즈하 리코",
+      "name_en": "Yuzuha Riko",
+      "unit": "CLICHE",
+      "start_kst": "2026-10-09 16:06",
+      "observed_min": 43.1,
+      "n_points": 6,
+      "peak_ccu": 4839,
+      "avg_ccu": 3862,
+      "title": "와아~! 오랜만에 4시 리코다!",
+      "category": "talk"
+    },
+    {
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
@@ -4020,18 +4032,6 @@
       "category": "마인크래프트"
     },
     {
-      "name_ko": "텐코 시부키",
-      "name_en": "Tenko Shibuki",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-17 20:57",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 4731,
-      "avg_ccu": 4731,
-      "title": "클리셰걷고걷고걷고걷고걷고걷고걷고걷고걷고걷는날",
-      "category": "빅 워크"
-    },
-    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -4042,6 +4042,18 @@
       "avg_ccu": 4731,
       "title": "로또에당첨된다면",
       "category": "음악/노래"
+    },
+    {
+      "name_ko": "텐코 시부키",
+      "name_en": "Tenko Shibuki",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-17 20:57",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 4731,
+      "avg_ccu": 4731,
+      "title": "클리셰걷고걷고걷고걷고걷고걷고걷고걷고걷고걷는날",
+      "category": "빅 워크"
     },
     {
       "name_ko": "텐코 시부키",
@@ -4308,18 +4320,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-26 18:10",
-      "observed_min": 532.5,
-      "n_points": 55,
-      "peak_ccu": 4587,
-      "avg_ccu": 2241,
-      "title": "뭐라도 하고 싶은 명총희의 삶 [봉누도2]",
-      "category": "Grand Theft Auto V"
-    },
-    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -4330,6 +4330,18 @@
       "avg_ccu": 4360,
       "title": "현관문 잘라내서 고양이 문 만들어 주는 게임 정출",
       "category": "로우-버짓 리페어스"
+    },
+    {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-26 18:10",
+      "observed_min": 532.5,
+      "n_points": 55,
+      "peak_ccu": 4587,
+      "avg_ccu": 2241,
+      "title": "뭐라도 하고 싶은 명총희의 삶 [봉누도2]",
+      "category": "Grand Theft Auto V"
     },
     {
       "name_ko": "텐코 시부키",
@@ -4450,18 +4462,6 @@
       "avg_ccu": 4405,
       "title": "초심 찾기 1.5일차 청초한사람의청초뽑기",
       "category": "명조:워더링 웨이브"
-    },
-    {
-      "name_ko": "유즈하 리코",
-      "name_en": "Yuzuha Riko",
-      "unit": "CLICHE",
-      "start_kst": "2026-10-09 16:06",
-      "observed_min": 32.6,
-      "n_points": 5,
-      "peak_ccu": 4521,
-      "avg_ccu": 3667,
-      "title": "와아~! 오랜만에 4시 리코다!",
-      "category": "talk"
     },
     {
       "name_ko": "아야츠노 유니",
@@ -72412,6 +72412,10 @@
         [
           "2026-10-09 16:39",
           4521
+        ],
+        [
+          "2026-10-09 16:49",
+          4839
         ]
       ]
     }
