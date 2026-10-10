@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-10T18:55:51.176050+00:00",
-    "n_snapshots": 64928,
+    "fetched_at": "2026-10-10T19:06:06.099354+00:00",
+    "n_snapshots": 64939,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-10T18:55:51.176050+00:00"
+      "2026-10-10T19:06:06.099354+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 58949,
-    "n_timepoints": 5950,
-    "span_hours": 1429.0,
-    "observed_hours": 1015.45,
+    "n_snapshots": 58959,
+    "n_timepoints": 5951,
+    "span_hours": 1429.17,
+    "observed_hours": 1015.63,
     "coverage_ratio": 0.711,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 15260,
+    "n_live_rows": 15261,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-10T18:55:51.176050+00:00"
+    "last": "2026-10-10T19:06:06.099354+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 167860,
       "follower_delta": 11119,
-      "follower_per_day": 186.8,
+      "follower_per_day": 186.7,
       "n_sessions": 73,
       "n_live_points": 1019,
       "peak_ccu": 38402,
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 266263,
-      "follower_delta": 10937,
+      "followers": 266264,
+      "follower_delta": 10938,
       "follower_per_day": 183.7,
       "n_sessions": 129,
       "n_live_points": 1808,
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 219752,
-      "follower_delta": 12326,
+      "followers": 219753,
+      "follower_delta": 12327,
       "follower_per_day": 207.0,
       "n_sessions": 107,
       "n_live_points": 1452,
@@ -114,11 +114,11 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309902,
-      "follower_delta": 7982,
+      "followers": 309904,
+      "follower_delta": 7984,
       "follower_per_day": 134.1,
       "n_sessions": 119,
-      "n_live_points": 1781,
+      "n_live_points": 1782,
       "peak_ccu": 12362,
       "avg_ccu": 3041,
       "ccu_per_1k_followers": 39.89
@@ -448,10 +448,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-10-10 17:39",
-      "observed_min": 616.6,
-      "n_points": 63,
+      "observed_min": 626.8,
+      "n_points": 64,
       "peak_ccu": 9883,
-      "avg_ccu": 5093,
+      "avg_ccu": 5073,
       "title": "4기생 ?????",
       "category": "talk"
     },
@@ -39174,6 +39174,10 @@
         [
           "2026-10-11 03:55",
           3870
+        ],
+        [
+          "2026-10-11 04:06",
+          3779
         ]
       ]
     },
