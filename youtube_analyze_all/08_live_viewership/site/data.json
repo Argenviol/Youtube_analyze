@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-10T18:13:47.350479+00:00",
-    "n_snapshots": 64873,
+    "fetched_at": "2026-10-10T18:14:49.560004+00:00",
+    "n_snapshots": 64884,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-10T18:13:47.350479+00:00"
+      "2026-10-10T18:14:49.560004+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 58899,
-    "n_timepoints": 5945,
-    "span_hours": 1428.3,
-    "observed_hours": 1014.6,
+    "n_snapshots": 58909,
+    "n_timepoints": 5946,
+    "span_hours": 1428.32,
+    "observed_hours": 1014.77,
     "coverage_ratio": 0.71,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 15255,
+    "n_live_rows": 15256,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-10T18:13:47.350479+00:00"
+    "last": "2026-10-10T18:14:49.560004+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -32,7 +32,7 @@
       "unit": "EVERYS",
       "followers": 167860,
       "follower_delta": 11119,
-      "follower_per_day": 186.9,
+      "follower_per_day": 186.8,
       "n_sessions": 73,
       "n_live_points": 1019,
       "peak_ccu": 38402,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 250549,
-      "follower_delta": 9432,
+      "followers": 250548,
+      "follower_delta": 9431,
       "follower_per_day": 158.5,
       "n_sessions": 114,
       "n_live_points": 1727,
@@ -118,9 +118,9 @@
       "follower_delta": 7979,
       "follower_per_day": 134.1,
       "n_sessions": 119,
-      "n_live_points": 1776,
+      "n_live_points": 1777,
       "peak_ccu": 12362,
-      "avg_ccu": 3038,
+      "avg_ccu": 3039,
       "ccu_per_1k_followers": 39.89
     },
     {
@@ -128,9 +128,9 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 220687,
-      "follower_delta": 11352,
-      "follower_per_day": 190.7,
+      "followers": 220688,
+      "follower_delta": 11353,
+      "follower_per_day": 190.8,
       "n_sessions": 135,
       "n_live_points": 1879,
       "peak_ccu": 10461,
@@ -448,10 +448,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-10-10 17:39",
-      "observed_min": 574.5,
-      "n_points": 58,
+      "observed_min": 575.6,
+      "n_points": 59,
       "peak_ccu": 9883,
-      "avg_ccu": 5192,
+      "avg_ccu": 5173,
       "title": "4기생 ?????",
       "category": "talk"
     },
@@ -39154,6 +39154,10 @@
         [
           "2026-10-11 03:13",
           4024
+        ],
+        [
+          "2026-10-11 03:14",
+          4049
         ]
       ]
     },
