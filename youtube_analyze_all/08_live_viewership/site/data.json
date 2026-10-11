@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-11T00:35:06.768861+00:00",
-    "n_snapshots": 65302,
+    "fetched_at": "2026-10-11T00:45:21.814959+00:00",
+    "n_snapshots": 65313,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-11T00:35:06.768861+00:00"
+      "2026-10-11T00:45:21.814959+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 59289,
-    "n_timepoints": 5984,
-    "span_hours": 1434.66,
-    "observed_hours": 1021.28,
+    "n_snapshots": 59299,
+    "n_timepoints": 5985,
+    "span_hours": 1434.83,
+    "observed_hours": 1021.45,
     "coverage_ratio": 0.712,
     "largest_gap_hours": 11.3,
     "n_live_rows": 15274,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-11T00:35:06.768861+00:00"
+    "last": "2026-10-11T00:45:21.814959+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -130,7 +130,7 @@
       "unit": "CLICHE",
       "followers": 220690,
       "follower_delta": 11355,
-      "follower_per_day": 190.0,
+      "follower_per_day": 189.9,
       "n_sessions": 135,
       "n_live_points": 1879,
       "peak_ccu": 10461,
