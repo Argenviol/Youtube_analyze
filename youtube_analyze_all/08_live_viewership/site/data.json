@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-11T05:01:37.500012+00:00",
-    "n_snapshots": 65588,
+    "fetched_at": "2026-10-11T05:11:52.389158+00:00",
+    "n_snapshots": 65599,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-11T05:01:37.500012+00:00"
+      "2026-10-11T05:11:52.389158+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 59549,
-    "n_timepoints": 6010,
-    "span_hours": 1439.1,
-    "observed_hours": 1025.74,
+    "n_snapshots": 59559,
+    "n_timepoints": 6011,
+    "span_hours": 1439.27,
+    "observed_hours": 1025.91,
     "coverage_ratio": 0.713,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 15277,
+    "n_live_rows": 15278,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-11T05:01:37.500012+00:00"
+    "last": "2026-10-11T05:11:52.389158+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,14 +30,14 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 167865,
-      "follower_delta": 11124,
-      "follower_per_day": 185.5,
+      "followers": 167868,
+      "follower_delta": 11127,
+      "follower_per_day": 185.6,
       "n_sessions": 73,
       "n_live_points": 1019,
       "peak_ccu": 38402,
       "avg_ccu": 2283,
-      "ccu_per_1k_followers": 228.77
+      "ccu_per_1k_followers": 228.76
     },
     {
       "rank": 2,
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217708,
-      "follower_delta": 7889,
+      "followers": 217710,
+      "follower_delta": 7891,
       "follower_per_day": 131.6,
       "n_sessions": 115,
       "n_live_points": 1009,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264723,
-      "follower_delta": 11821,
+      "followers": 264725,
+      "follower_delta": 11823,
       "follower_per_day": 197.1,
       "n_sessions": 93,
       "n_live_points": 1273,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 250566,
-      "follower_delta": 9449,
+      "followers": 250568,
+      "follower_delta": 9451,
       "follower_per_day": 157.6,
       "n_sessions": 114,
       "n_live_points": 1727,
@@ -114,8 +114,8 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309928,
-      "follower_delta": 8008,
+      "followers": 309929,
+      "follower_delta": 8009,
       "follower_per_day": 133.6,
       "n_sessions": 119,
       "n_live_points": 1795,
@@ -128,8 +128,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 220710,
-      "follower_delta": 11375,
+      "followers": 220712,
+      "follower_delta": 11377,
       "follower_per_day": 189.7,
       "n_sessions": 135,
       "n_live_points": 1879,
@@ -142,13 +142,13 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 242185,
-      "follower_delta": 5337,
-      "follower_per_day": 89.0,
+      "followers": 242191,
+      "follower_delta": 5343,
+      "follower_per_day": 89.1,
       "n_sessions": 145,
-      "n_live_points": 1850,
+      "n_live_points": 1851,
       "peak_ccu": 9749,
-      "avg_ccu": 3046,
+      "avg_ccu": 3048,
       "ccu_per_1k_followers": 40.25
     },
     {
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 230134,
-      "follower_delta": 11034,
+      "followers": 230135,
+      "follower_delta": 11035,
       "follower_per_day": 184.0,
       "n_sessions": 111,
       "n_live_points": 1465,
@@ -1788,6 +1788,18 @@
       "category": "Grand Theft Auto V"
     },
     {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-10-11 13:41",
+      "observed_min": 30.7,
+      "n_points": 4,
+      "peak_ccu": 6416,
+      "avg_ccu": 4836,
+      "title": "저 두 시애 명조 노래 나와요 그리고 또 선배가 된대요",
+      "category": "talk"
+    },
+    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -2494,18 +2506,6 @@
       "avg_ccu": 4157,
       "title": "[봉누도2] 인생의 2챕터에 접어드는 한세월 아줌마",
       "category": "Grand Theft Auto V"
-    },
-    {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-11 13:41",
-      "observed_min": 20.5,
-      "n_points": 3,
-      "peak_ccu": 5689,
-      "avg_ccu": 4309,
-      "title": "저 두 시애 명조 노래 나와요 그리고 또 선배가 된대요",
-      "category": "talk"
     },
     {
       "name_ko": "시라유키 히나",
@@ -60582,6 +60582,10 @@
         [
           "2026-10-11 14:01",
           5689
+        ],
+        [
+          "2026-10-11 14:11",
+          6416
         ]
       ]
     },
