@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-11T06:45:01.680988+00:00",
-    "n_snapshots": 65709,
+    "fetched_at": "2026-10-11T06:55:15.778879+00:00",
+    "n_snapshots": 65720,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-11T06:45:01.680988+00:00"
+      "2026-10-11T06:55:15.778879+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 59659,
-    "n_timepoints": 6021,
-    "span_hours": 1440.82,
-    "observed_hours": 1027.61,
+    "n_snapshots": 59669,
+    "n_timepoints": 6022,
+    "span_hours": 1440.99,
+    "observed_hours": 1027.78,
     "coverage_ratio": 0.713,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 15291,
+    "n_live_rows": 15293,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-11T06:45:01.680988+00:00"
+    "last": "2026-10-11T06:55:15.778879+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 167872,
-      "follower_delta": 11131,
+      "followers": 167873,
+      "follower_delta": 11132,
       "follower_per_day": 185.4,
       "n_sessions": 73,
       "n_live_points": 1019,
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 266278,
-      "follower_delta": 10952,
+      "followers": 266280,
+      "follower_delta": 10954,
       "follower_per_day": 182.4,
       "n_sessions": 129,
       "n_live_points": 1808,
@@ -58,13 +58,13 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217719,
-      "follower_delta": 7900,
+      "followers": 217722,
+      "follower_delta": 7903,
       "follower_per_day": 131.6,
       "n_sessions": 116,
-      "n_live_points": 1012,
+      "n_live_points": 1013,
       "peak_ccu": 28071,
-      "avg_ccu": 2985,
+      "avg_ccu": 2984,
       "ccu_per_1k_followers": 128.93
     },
     {
@@ -72,9 +72,9 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 219801,
-      "follower_delta": 12375,
-      "follower_per_day": 206.1,
+      "followers": 219804,
+      "follower_delta": 12378,
+      "follower_per_day": 206.2,
       "n_sessions": 107,
       "n_live_points": 1452,
       "peak_ccu": 24385,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 250579,
-      "follower_delta": 9462,
+      "followers": 250578,
+      "follower_delta": 9461,
       "follower_per_day": 157.6,
       "n_sessions": 114,
       "n_live_points": 1727,
@@ -116,7 +116,7 @@
       "unit": "EVERYS",
       "followers": 309938,
       "follower_delta": 8018,
-      "follower_per_day": 133.6,
+      "follower_per_day": 133.5,
       "n_sessions": 119,
       "n_live_points": 1795,
       "peak_ccu": 12362,
@@ -146,9 +146,9 @@
       "follower_delta": 5381,
       "follower_per_day": 89.6,
       "n_sessions": 145,
-      "n_live_points": 1861,
+      "n_live_points": 1862,
       "peak_ccu": 9749,
-      "avg_ccu": 3072,
+      "avg_ccu": 3073,
       "ccu_per_1k_followers": 40.25
     },
     {
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 230147,
-      "follower_delta": 11047,
+      "followers": 230149,
+      "follower_delta": 11049,
       "follower_per_day": 184.0,
       "n_sessions": 111,
       "n_live_points": 1465,
@@ -592,10 +592,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-11 13:41",
-      "observed_min": 123.9,
-      "n_points": 14,
+      "observed_min": 134.1,
+      "n_points": 15,
       "peak_ccu": 8757,
-      "avg_ccu": 6703,
+      "avg_ccu": 6646,
       "title": "저 두 시애 명조 노래 나와요 그리고 또 선배가 된대요",
       "category": "talk"
     },
@@ -11388,6 +11388,18 @@
       "category": "빅 워크"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-10-11 15:24",
+      "observed_min": 30.7,
+      "n_points": 4,
+      "peak_ccu": 2605,
+      "avg_ccu": 1920,
+      "title": "우나",
+      "category": "talk"
+    },
+    {
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
@@ -11472,18 +11484,6 @@
       "category": "로블록스"
     },
     {
-      "name_ko": "사키하네 후야",
-      "name_en": "Sakihane Huya",
-      "unit": "EVERYS",
-      "start_kst": "2026-08-19 16:58",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 2568,
-      "avg_ccu": 2568,
-      "title": "바쿠쿠 바쿠바쿠 바쿠쿠",
-      "category": "talk"
-    },
-    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -11493,6 +11493,18 @@
       "peak_ccu": 2568,
       "avg_ccu": 2568,
       "title": "안녕하새요...",
+      "category": "talk"
+    },
+    {
+      "name_ko": "사키하네 후야",
+      "name_en": "Sakihane Huya",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-19 16:58",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 2568,
+      "avg_ccu": 2568,
+      "title": "바쿠쿠 바쿠바쿠 바쿠쿠",
       "category": "talk"
     },
     {
@@ -11640,18 +11652,6 @@
       "category": "이터널 리턴"
     },
     {
-      "name_ko": "유즈하 리코",
-      "name_en": "Yuzuha Riko",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-23 17:41",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 2529,
-      "avg_ccu": 2529,
-      "title": "용 사",
-      "category": "talk"
-    },
-    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -11661,6 +11661,18 @@
       "peak_ccu": 2529,
       "avg_ccu": 2524,
       "title": "김상덕 감독의 야구단 한일전 제 2회차",
+      "category": "talk"
+    },
+    {
+      "name_ko": "유즈하 리코",
+      "name_en": "Yuzuha Riko",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-23 17:41",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 2529,
+      "avg_ccu": 2529,
+      "title": "용 사",
       "category": "talk"
     },
     {
@@ -11700,18 +11712,6 @@
       "category": "이터널 리턴"
     },
     {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-09-11 18:44",
-      "observed_min": 71.6,
-      "n_points": 8,
-      "peak_ccu": 2497,
-      "avg_ccu": 1896,
-      "title": "오옹",
-      "category": "talk"
-    },
-    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -11721,6 +11721,18 @@
       "peak_ccu": 2497,
       "avg_ccu": 2497,
       "title": "헤헿 하합빵해요합방 헤헿 (w.사쬬, 린, 리코)",
+      "category": "talk"
+    },
+    {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-09-11 18:44",
+      "observed_min": 71.6,
+      "n_points": 8,
+      "peak_ccu": 2497,
+      "avg_ccu": 1896,
+      "title": "오옹",
       "category": "talk"
     },
     {
@@ -11787,18 +11799,6 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "start_kst": "2026-08-26 18:56",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 2479,
-      "avg_ccu": 2479,
-      "title": "세월을 낚다 밍태공",
-      "category": "종합 게임"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
       "start_kst": "2026-08-24 16:40",
       "observed_min": 0.0,
       "n_points": 1,
@@ -11806,6 +11806,18 @@
       "avg_ccu": 2479,
       "title": "답답해서 내가 뛴다 김상덕 MLB 더쇼 26 ",
       "category": "MLB 더 쇼 26"
+    },
+    {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-26 18:56",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 2479,
+      "avg_ccu": 2479,
+      "title": "세월을 낚다 밍태공",
+      "category": "종합 게임"
     },
     {
       "name_ko": "유즈하 리코",
@@ -11868,18 +11880,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "아카네 리제",
-      "name_en": "Akane Lize",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-16 22:10",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 2465,
-      "avg_ccu": 2465,
-      "title": "스텔데바데내전 으마무시한 살인마 등장",
-      "category": "데드 바이 데이라이트"
-    },
-    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -11890,6 +11890,18 @@
       "avg_ccu": 2465,
       "title": "김상덕 감독의 야구단 한일전 제 2회차",
       "category": "종합 게임"
+    },
+    {
+      "name_ko": "아카네 리제",
+      "name_en": "Akane Lize",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-16 22:10",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 2465,
+      "avg_ccu": 2465,
+      "title": "스텔데바데내전 으마무시한 살인마 등장",
+      "category": "데드 바이 데이라이트"
     },
     {
       "name_ko": "아오쿠모 린",
@@ -12010,18 +12022,6 @@
       "avg_ccu": 2407,
       "title": "깨야만 해",
       "category": "피크"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-11 15:24",
-      "observed_min": 20.5,
-      "n_points": 3,
-      "peak_ccu": 2406,
-      "avg_ccu": 1692,
-      "title": "우나",
-      "category": "talk"
     },
     {
       "name_ko": "사키하네 후야",
@@ -49120,6 +49120,10 @@
         [
           "2026-10-11 15:45",
           2406
+        ],
+        [
+          "2026-10-11 15:55",
+          2605
         ]
       ]
     },
@@ -60650,6 +60654,10 @@
         [
           "2026-10-11 15:45",
           6151
+        ],
+        [
+          "2026-10-11 15:55",
+          5855
         ]
       ]
     },
