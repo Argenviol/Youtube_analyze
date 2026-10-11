@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-11T07:56:40.910237+00:00",
-    "n_snapshots": 65786,
+    "fetched_at": "2026-10-11T08:06:55.027619+00:00",
+    "n_snapshots": 65797,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-11T07:56:40.910237+00:00"
+      "2026-10-11T08:06:55.027619+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 59729,
-    "n_timepoints": 6028,
-    "span_hours": 1442.02,
-    "observed_hours": 1028.8,
+    "n_snapshots": 59739,
+    "n_timepoints": 6029,
+    "span_hours": 1442.19,
+    "observed_hours": 1028.98,
     "coverage_ratio": 0.713,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 15305,
+    "n_live_rows": 15307,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-11T07:56:40.910237+00:00"
+    "last": "2026-10-11T08:06:55.027619+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 167879,
-      "follower_delta": 11138,
+      "followers": 167881,
+      "follower_delta": 11140,
       "follower_per_day": 185.4,
       "n_sessions": 73,
       "n_live_points": 1019,
@@ -44,8 +44,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 266289,
-      "follower_delta": 10963,
+      "followers": 266290,
+      "follower_delta": 10964,
       "follower_per_day": 182.5,
       "n_sessions": 129,
       "n_live_points": 1808,
@@ -58,23 +58,23 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 217731,
-      "follower_delta": 7912,
+      "followers": 217733,
+      "follower_delta": 7914,
       "follower_per_day": 131.7,
       "n_sessions": 116,
-      "n_live_points": 1019,
+      "n_live_points": 1020,
       "peak_ccu": 28071,
-      "avg_ccu": 2983,
-      "ccu_per_1k_followers": 128.93
+      "avg_ccu": 2984,
+      "ccu_per_1k_followers": 128.92
     },
     {
       "rank": 4,
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 219806,
-      "follower_delta": 12380,
-      "follower_per_day": 206.0,
+      "followers": 219808,
+      "follower_delta": 12382,
+      "follower_per_day": 206.1,
       "n_sessions": 107,
       "n_live_points": 1452,
       "peak_ccu": 24385,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 264743,
-      "follower_delta": 11841,
+      "followers": 264746,
+      "follower_delta": 11844,
       "follower_per_day": 197.1,
       "n_sessions": 93,
       "n_live_points": 1273,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 250590,
-      "follower_delta": 9473,
+      "followers": 250591,
+      "follower_delta": 9474,
       "follower_per_day": 157.7,
       "n_sessions": 114,
       "n_live_points": 1727,
@@ -114,9 +114,9 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 309943,
-      "follower_delta": 8023,
-      "follower_per_day": 133.5,
+      "followers": 309949,
+      "follower_delta": 8029,
+      "follower_per_day": 133.6,
       "n_sessions": 119,
       "n_live_points": 1795,
       "peak_ccu": 12362,
@@ -128,8 +128,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 220728,
-      "follower_delta": 11393,
+      "followers": 220731,
+      "follower_delta": 11396,
       "follower_per_day": 189.6,
       "n_sessions": 135,
       "n_live_points": 1879,
@@ -142,13 +142,13 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 242233,
-      "follower_delta": 5385,
-      "follower_per_day": 89.6,
+      "followers": 242237,
+      "follower_delta": 5389,
+      "follower_per_day": 89.7,
       "n_sessions": 145,
-      "n_live_points": 1868,
+      "n_live_points": 1869,
       "peak_ccu": 9749,
-      "avg_ccu": 3079,
+      "avg_ccu": 3080,
       "ccu_per_1k_followers": 40.25
     },
     {
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 230154,
-      "follower_delta": 11054,
+      "followers": 230157,
+      "follower_delta": 11057,
       "follower_per_day": 184.0,
       "n_sessions": 111,
       "n_live_points": 1465,
@@ -592,10 +592,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-11 13:41",
-      "observed_min": 195.6,
-      "n_points": 21,
+      "observed_min": 205.8,
+      "n_points": 22,
       "peak_ccu": 8757,
-      "avg_ccu": 6167,
+      "avg_ccu": 6114,
       "title": "저 두 시애 명조 노래 나와요 그리고 또 선배가 된대요",
       "category": "talk"
     },
@@ -9408,6 +9408,18 @@
       "category": "바이오하자드 RE:2"
     },
     {
+      "name_ko": "네네코 마시로",
+      "name_en": "Neneko Mashiro",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-10-11 15:24",
+      "observed_min": 102.4,
+      "n_points": 11,
+      "peak_ccu": 3101,
+      "avg_ccu": 2515,
+      "title": "우나",
+      "category": "talk"
+    },
+    {
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
@@ -9504,18 +9516,6 @@
       "category": "머신 파티"
     },
     {
-      "name_ko": "아오쿠모 린",
-      "name_en": "Aokumo Rin",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-17 19:18",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3062,
-      "avg_ccu": 3062,
-      "title": "클리셰와 함께 조깅해",
-      "category": "빅 워크"
-    },
-    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -9526,6 +9526,18 @@
       "avg_ccu": 2567,
       "title": "[떠비큐어] 헨리 배우기",
       "category": "이터널 리턴"
+    },
+    {
+      "name_ko": "아오쿠모 린",
+      "name_en": "Aokumo Rin",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-17 19:18",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3062,
+      "avg_ccu": 3062,
+      "title": "클리셰와 함께 조깅해",
+      "category": "빅 워크"
     },
     {
       "name_ko": "아오쿠모 린",
@@ -10138,18 +10150,6 @@
       "avg_ccu": 2915,
       "title": "[광고]  부키랑 무협!!!! 연운!!!!",
       "category": "연운"
-    },
-    {
-      "name_ko": "네네코 마시로",
-      "name_en": "Neneko Mashiro",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-11 15:24",
-      "observed_min": 92.1,
-      "n_points": 10,
-      "peak_ccu": 2937,
-      "avg_ccu": 2457,
-      "title": "우나",
-      "category": "talk"
     },
     {
       "name_ko": "하나코 나나",
@@ -49148,6 +49148,10 @@
         [
           "2026-10-11 16:56",
           2937
+        ],
+        [
+          "2026-10-11 17:06",
+          3101
         ]
       ]
     },
@@ -60706,6 +60710,10 @@
         [
           "2026-10-11 16:56",
           4690
+        ],
+        [
+          "2026-10-11 17:06",
+          5014
         ]
       ]
     },
