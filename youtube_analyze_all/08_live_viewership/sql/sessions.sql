@@ -177,7 +177,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-10-03 17:04', 722.3, 73, 5973, 4309, '[봉누도 2] 무서울 정도로 겁나 잘 잔 황짠기리', 'Grand Theft Auto V');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-08-20 23:56', 0.0, 1, 5971, 5971, 'i''m back', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-09-03 00:15', 143.0, 15, 5957, 4669, '스텔마크 드디어 입장', '마인크래프트');
-INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-10-11 19:09', 473.8, 49, 5932, 4182, '하하하 맞팔 안해준선배 어떤데 
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-10-11 19:09', 484.1, 50, 5932, 4152, '하하하 맞팔 안해준선배 어떤데 
 ', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-23 21:54', 0.0, 1, 5930, 5930, '어사기 간파해보겠습니다 w.리코, 리제', '낚시 방법');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-16 00:33', 21.4, 2, 5913, 5901, '추억의 애니(추억별로없음) 더빙 월드컵', 'talk');
