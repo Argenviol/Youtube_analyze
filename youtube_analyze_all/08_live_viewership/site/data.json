@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-12T18:47:17.284479+00:00",
-    "n_snapshots": 67888,
+    "fetched_at": "2026-10-12T18:57:33.902110+00:00",
+    "n_snapshots": 67900,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-12T18:47:17.284479+00:00"
+      "2026-10-12T18:57:33.902110+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 61569,
-    "n_timepoints": 6212,
-    "span_hours": 1476.86,
-    "observed_hours": 1060.25,
+    "n_snapshots": 61579,
+    "n_timepoints": 6213,
+    "span_hours": 1477.03,
+    "observed_hours": 1060.42,
     "coverage_ratio": 0.718,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 15769,
+    "n_live_rows": 15771,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-12T18:47:17.284479+00:00"
+    "last": "2026-10-12T18:57:33.902110+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -44,11 +44,11 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 267565,
-      "follower_delta": 12239,
+      "followers": 267569,
+      "follower_delta": 12243,
       "follower_per_day": 198.9,
       "n_sessions": 132,
-      "n_live_points": 1883,
+      "n_live_points": 1884,
       "peak_ccu": 38237,
       "avg_ccu": 5395,
       "ccu_per_1k_followers": 142.91
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 218591,
-      "follower_delta": 8772,
+      "followers": 218592,
+      "follower_delta": 8773,
       "follower_per_day": 142.6,
       "n_sessions": 116,
       "n_live_points": 1048,
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 220900,
-      "follower_delta": 13474,
+      "followers": 220901,
+      "follower_delta": 13475,
       "follower_per_day": 219.0,
       "n_sessions": 108,
       "n_live_points": 1505,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 265565,
-      "follower_delta": 12663,
+      "followers": 265566,
+      "follower_delta": 12664,
       "follower_per_day": 205.8,
       "n_sessions": 94,
       "n_live_points": 1295,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 251395,
-      "follower_delta": 10278,
+      "followers": 251396,
+      "follower_delta": 10279,
       "follower_per_day": 167.0,
       "n_sessions": 115,
       "n_live_points": 1775,
@@ -114,11 +114,11 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 310877,
-      "follower_delta": 8957,
+      "followers": 310880,
+      "follower_delta": 8960,
       "follower_per_day": 145.6,
       "n_sessions": 122,
-      "n_live_points": 1873,
+      "n_live_points": 1874,
       "peak_ccu": 12362,
       "avg_ccu": 3079,
       "ccu_per_1k_followers": 39.76
@@ -3640,10 +3640,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-13 03:26",
-      "observed_min": 20.6,
-      "n_points": 3,
+      "observed_min": 30.8,
+      "n_points": 4,
       "peak_ccu": 4976,
-      "avg_ccu": 4907,
+      "avg_ccu": 4906,
       "title": "영장류 JAOT들과의 합방 5부 휴먼 폴 플랫",
       "category": "휴먼: 폴 플랫"
     },
@@ -10624,10 +10624,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-10-13 03:26",
-      "observed_min": 20.6,
-      "n_points": 3,
+      "observed_min": 30.8,
+      "n_points": 4,
       "peak_ccu": 2864,
-      "avg_ccu": 2829,
+      "avg_ccu": 2801,
       "title": "미니 러너리그 \n",
       "category": "오버워치"
     },
@@ -32681,6 +32681,10 @@
         [
           "2026-10-13 03:47",
           4848
+        ],
+        [
+          "2026-10-13 03:57",
+          4903
         ]
       ]
     },
@@ -40178,6 +40182,10 @@
         [
           "2026-10-13 03:47",
           2778
+        ],
+        [
+          "2026-10-13 03:57",
+          2718
         ]
       ]
     },
