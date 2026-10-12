@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-12T09:33:00.601464+00:00",
-    "n_snapshots": 67531,
+    "fetched_at": "2026-10-12T09:43:17.032277+00:00",
+    "n_snapshots": 67542,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-12T09:33:00.601464+00:00"
+      "2026-10-12T09:43:17.032277+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 61269,
-    "n_timepoints": 6182,
-    "span_hours": 1467.62,
-    "observed_hours": 1055.11,
+    "n_snapshots": 61279,
+    "n_timepoints": 6183,
+    "span_hours": 1467.79,
+    "observed_hours": 1055.28,
     "coverage_ratio": 0.719,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 15628,
+    "n_live_rows": 15630,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-12T09:33:00.601464+00:00"
+    "last": "2026-10-12T09:43:17.032277+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,27 +30,27 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 168505,
-      "follower_delta": 11764,
-      "follower_per_day": 192.4,
+      "followers": 168512,
+      "follower_delta": 11771,
+      "follower_per_day": 192.5,
       "n_sessions": 74,
-      "n_live_points": 1026,
+      "n_live_points": 1027,
       "peak_ccu": 38402,
-      "avg_ccu": 2295,
-      "ccu_per_1k_followers": 227.9
+      "avg_ccu": 2297,
+      "ccu_per_1k_followers": 227.89
     },
     {
       "rank": 2,
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 267031,
-      "follower_delta": 11705,
-      "follower_per_day": 191.4,
+      "followers": 267037,
+      "follower_delta": 11711,
+      "follower_per_day": 191.5,
       "n_sessions": 131,
-      "n_live_points": 1853,
+      "n_live_points": 1854,
       "peak_ccu": 38237,
-      "avg_ccu": 5300,
+      "avg_ccu": 5302,
       "ccu_per_1k_followers": 143.19
     },
     {
@@ -58,22 +58,22 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 218424,
-      "follower_delta": 8605,
-      "follower_per_day": 140.7,
+      "followers": 218427,
+      "follower_delta": 8608,
+      "follower_per_day": 140.8,
       "n_sessions": 116,
       "n_live_points": 1048,
       "peak_ccu": 28071,
       "avg_ccu": 2991,
-      "ccu_per_1k_followers": 128.52
+      "ccu_per_1k_followers": 128.51
     },
     {
       "rank": 4,
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 220696,
-      "follower_delta": 13270,
+      "followers": 220697,
+      "follower_delta": 13271,
       "follower_per_day": 217.0,
       "n_sessions": 108,
       "n_live_points": 1505,
@@ -86,8 +86,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 265323,
-      "follower_delta": 12421,
+      "followers": 265326,
+      "follower_delta": 12424,
       "follower_per_day": 203.1,
       "n_sessions": 93,
       "n_live_points": 1273,
@@ -100,9 +100,9 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 251228,
-      "follower_delta": 10111,
-      "follower_per_day": 165.3,
+      "followers": 251234,
+      "follower_delta": 10117,
+      "follower_per_day": 165.4,
       "n_sessions": 115,
       "n_live_points": 1775,
       "peak_ccu": 15159,
@@ -114,9 +114,9 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 310645,
-      "follower_delta": 8725,
-      "follower_per_day": 142.7,
+      "followers": 310651,
+      "follower_delta": 8731,
+      "follower_per_day": 142.8,
       "n_sessions": 120,
       "n_live_points": 1846,
       "peak_ccu": 12362,
@@ -128,9 +128,9 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 221395,
-      "follower_delta": 12060,
-      "follower_per_day": 197.2,
+      "followers": 221402,
+      "follower_delta": 12067,
+      "follower_per_day": 197.3,
       "n_sessions": 136,
       "n_live_points": 1918,
       "peak_ccu": 10461,
@@ -142,8 +142,8 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 242846,
-      "follower_delta": 5998,
+      "followers": 242848,
+      "follower_delta": 6000,
       "follower_per_day": 98.1,
       "n_sessions": 145,
       "n_live_points": 1919,
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 230787,
-      "follower_delta": 11687,
+      "followers": 230788,
+      "follower_delta": 11688,
       "follower_per_day": 191.1,
       "n_sessions": 111,
       "n_live_points": 1465,
@@ -588,6 +588,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "아라하시 타비",
+      "name_en": "Arahashi Tabi",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-10-12 17:05",
+      "observed_min": 98.2,
+      "n_points": 11,
+      "peak_ccu": 9178,
+      "avg_ccu": 7016,
+      "title": "나다",
+      "category": "talk"
+    },
+    {
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
@@ -610,18 +622,6 @@
       "avg_ccu": 4945,
       "title": "[봉누도2] 씨드머니 진짜 엄마가 된 한세월",
       "category": "Grand Theft Auto V"
-    },
-    {
-      "name_ko": "아라하시 타비",
-      "name_en": "Arahashi Tabi",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-12 17:05",
-      "observed_min": 87.9,
-      "n_points": 10,
-      "peak_ccu": 8916,
-      "avg_ccu": 6800,
-      "title": "나다",
-      "category": "talk"
     },
     {
       "name_ko": "시라유키 히나",
@@ -3412,10 +3412,10 @@
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
       "start_kst": "2026-10-12 17:35",
-      "observed_min": 57.2,
-      "n_points": 7,
+      "observed_min": 67.5,
+      "n_points": 8,
       "peak_ccu": 5062,
-      "avg_ccu": 3920,
+      "avg_ccu": 4047,
       "title": "자유를 향해 날개를 펼쳐라🪽",
       "category": "talk"
     },
@@ -32333,6 +32333,10 @@
         [
           "2026-10-12 18:33",
           8916
+        ],
+        [
+          "2026-10-12 18:43",
+          9178
         ]
       ]
     },
@@ -54053,6 +54057,10 @@
         [
           "2026-10-12 18:33",
           5062
+        ],
+        [
+          "2026-10-12 18:43",
+          4933
         ]
       ]
     },
