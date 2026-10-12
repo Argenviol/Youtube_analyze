@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-12T19:18:07.191898+00:00",
-    "n_snapshots": 67924,
+    "fetched_at": "2026-10-12T19:28:23.827591+00:00",
+    "n_snapshots": 67936,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-12T19:18:07.191898+00:00"
+      "2026-10-12T19:28:23.827591+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 61599,
-    "n_timepoints": 6215,
-    "span_hours": 1477.37,
-    "observed_hours": 1060.76,
+    "n_snapshots": 61609,
+    "n_timepoints": 6216,
+    "span_hours": 1477.55,
+    "observed_hours": 1060.93,
     "coverage_ratio": 0.718,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 15775,
+    "n_live_rows": 15777,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-12T19:18:07.191898+00:00"
+    "last": "2026-10-12T19:28:23.827591+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,25 +30,25 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 168752,
-      "follower_delta": 12011,
+      "followers": 168751,
+      "follower_delta": 12010,
       "follower_per_day": 195.1,
       "n_sessions": 74,
       "n_live_points": 1052,
       "peak_ccu": 38402,
       "avg_ccu": 2325,
-      "ccu_per_1k_followers": 227.56
+      "ccu_per_1k_followers": 227.57
     },
     {
       "rank": 2,
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 267578,
-      "follower_delta": 12252,
-      "follower_per_day": 199.0,
+      "followers": 267583,
+      "follower_delta": 12257,
+      "follower_per_day": 199.1,
       "n_sessions": 132,
-      "n_live_points": 1886,
+      "n_live_points": 1887,
       "peak_ccu": 38237,
       "avg_ccu": 5395,
       "ccu_per_1k_followers": 142.9
@@ -88,7 +88,7 @@
       "unit": "UNIVERSE",
       "followers": 265568,
       "follower_delta": 12666,
-      "follower_per_day": 205.8,
+      "follower_per_day": 205.7,
       "n_sessions": 94,
       "n_live_points": 1295,
       "peak_ccu": 18587,
@@ -114,13 +114,13 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 310883,
-      "follower_delta": 8963,
+      "followers": 310885,
+      "follower_delta": 8965,
       "follower_per_day": 145.6,
       "n_sessions": 122,
-      "n_live_points": 1876,
+      "n_live_points": 1877,
       "peak_ccu": 12362,
-      "avg_ccu": 3079,
+      "avg_ccu": 3078,
       "ccu_per_1k_followers": 39.76
     },
     {
@@ -2824,10 +2824,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-13 03:26",
-      "observed_min": 51.4,
-      "n_points": 6,
+      "observed_min": 61.7,
+      "n_points": 7,
       "peak_ccu": 5521,
-      "avg_ccu": 5078,
+      "avg_ccu": 5100,
       "title": "영장류 JAOT들과의 합방 5부 휴먼 폴 플랫",
       "category": "휴먼: 폴 플랫"
     },
@@ -10624,10 +10624,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-10-13 03:26",
-      "observed_min": 51.4,
-      "n_points": 6,
+      "observed_min": 61.7,
+      "n_points": 7,
       "peak_ccu": 2864,
-      "avg_ccu": 2713,
+      "avg_ccu": 2670,
       "title": "미니 러너리그 \n",
       "category": "오버워치"
     },
@@ -32693,6 +32693,10 @@
         [
           "2026-10-13 04:18",
           5521
+        ],
+        [
+          "2026-10-13 04:28",
+          5232
         ]
       ]
     },
@@ -40202,6 +40206,10 @@
         [
           "2026-10-13 04:18",
           2532
+        ],
+        [
+          "2026-10-13 04:28",
+          2413
         ]
       ]
     },
