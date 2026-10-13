@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-13T17:50:29.802771+00:00",
-    "n_snapshots": 69042,
+    "fetched_at": "2026-10-13T18:00:44.357874+00:00",
+    "n_snapshots": 69053,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-13T17:50:29.802771+00:00"
+      "2026-10-13T18:00:44.357874+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 62609,
-    "n_timepoints": 6316,
-    "span_hours": 1499.91,
-    "observed_hours": 1078.03,
+    "n_snapshots": 62619,
+    "n_timepoints": 6317,
+    "span_hours": 1500.08,
+    "observed_hours": 1078.2,
     "coverage_ratio": 0.719,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 15952,
+    "n_live_rows": 15953,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-13T17:50:29.802771+00:00"
+    "last": "2026-10-13T18:00:44.357874+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,8 +30,8 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 168993,
-      "follower_delta": 12252,
+      "followers": 168995,
+      "follower_delta": 12254,
       "follower_per_day": 196.1,
       "n_sessions": 75,
       "n_live_points": 1080,
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 221237,
-      "follower_delta": 13811,
+      "followers": 221238,
+      "follower_delta": 13812,
       "follower_per_day": 221.0,
       "n_sessions": 109,
       "n_live_points": 1538,
@@ -88,7 +88,7 @@
       "unit": "UNIVERSE",
       "followers": 265812,
       "follower_delta": 12910,
-      "follower_per_day": 206.6,
+      "follower_per_day": 206.5,
       "n_sessions": 96,
       "n_live_points": 1316,
       "peak_ccu": 18587,
@@ -128,8 +128,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 221762,
-      "follower_delta": 12427,
+      "followers": 221763,
+      "follower_delta": 12428,
       "follower_per_day": 198.8,
       "n_sessions": 136,
       "n_live_points": 1918,
@@ -146,9 +146,9 @@
       "follower_delta": 6324,
       "follower_per_day": 101.2,
       "n_sessions": 148,
-      "n_live_points": 1977,
+      "n_live_points": 1978,
       "peak_ccu": 9749,
-      "avg_ccu": 3096,
+      "avg_ccu": 3095,
       "ccu_per_1k_followers": 40.09
     },
     {
@@ -156,9 +156,9 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 231265,
-      "follower_delta": 12165,
-      "follower_per_day": 194.7,
+      "followers": 231266,
+      "follower_delta": 12166,
+      "follower_per_day": 194.6,
       "n_sessions": 112,
       "n_live_points": 1482,
       "peak_ccu": 9414,
@@ -9544,10 +9544,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-14 01:38",
-      "observed_min": 71.8,
-      "n_points": 8,
+      "observed_min": 82.0,
+      "n_points": 9,
       "peak_ccu": 3126,
-      "avg_ccu": 2607,
+      "avg_ccu": 2562,
       "title": "동물애호가의 명조 여별 스토리 4장 4막 밀기",
       "category": "명조:워더링 웨이브"
     },
@@ -63162,6 +63162,10 @@
         [
           "2026-10-14 02:50",
           2174
+        ],
+        [
+          "2026-10-14 03:00",
+          2202
         ]
       ]
     },
