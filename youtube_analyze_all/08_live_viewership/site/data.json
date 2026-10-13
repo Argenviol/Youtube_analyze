@@ -1,27 +1,27 @@
 {
   "meta": {
-    "fetched_at": "2026-10-13T16:59:14.940940+00:00",
-    "n_snapshots": 68987,
+    "fetched_at": "2026-10-13T17:09:29.893645+00:00",
+    "n_snapshots": 68998,
     "n_members": 11,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-13T16:59:14.940940+00:00"
+      "2026-10-13T17:09:29.893645+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 62559,
-    "n_timepoints": 6311,
-    "span_hours": 1499.06,
-    "observed_hours": 1077.17,
+    "n_snapshots": 62569,
+    "n_timepoints": 6312,
+    "span_hours": 1499.23,
+    "observed_hours": 1077.34,
     "coverage_ratio": 0.719,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 15947,
+    "n_live_rows": 15948,
     "members": 10,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-13T16:59:14.940940+00:00"
+    "last": "2026-10-13T17:09:29.893645+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -30,14 +30,14 @@
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 168995,
-      "follower_delta": 12254,
+      "followers": 168997,
+      "follower_delta": 12256,
       "follower_per_day": 196.2,
       "n_sessions": 75,
       "n_live_points": 1080,
       "peak_ccu": 38402,
       "avg_ccu": 2331,
-      "ccu_per_1k_followers": 227.24
+      "ccu_per_1k_followers": 227.23
     },
     {
       "rank": 2,
@@ -58,8 +58,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 218941,
-      "follower_delta": 9122,
+      "followers": 218942,
+      "follower_delta": 9123,
       "follower_per_day": 146.0,
       "n_sessions": 117,
       "n_live_points": 1081,
@@ -72,8 +72,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 221234,
-      "follower_delta": 13808,
+      "followers": 221238,
+      "follower_delta": 13812,
       "follower_per_day": 221.1,
       "n_sessions": 109,
       "n_live_points": 1538,
@@ -100,8 +100,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 251637,
-      "follower_delta": 10520,
+      "followers": 251636,
+      "follower_delta": 10519,
       "follower_per_day": 168.4,
       "n_sessions": 116,
       "n_live_points": 1784,
@@ -114,9 +114,9 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 311075,
-      "follower_delta": 9155,
-      "follower_per_day": 146.6,
+      "followers": 311074,
+      "follower_delta": 9154,
+      "follower_per_day": 146.5,
       "n_sessions": 122,
       "n_live_points": 1883,
       "peak_ccu": 12362,
@@ -142,11 +142,11 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 243173,
-      "follower_delta": 6325,
+      "followers": 243174,
+      "follower_delta": 6326,
       "follower_per_day": 101.3,
       "n_sessions": 148,
-      "n_live_points": 1972,
+      "n_live_points": 1973,
       "peak_ccu": 9749,
       "avg_ccu": 3097,
       "ccu_per_1k_followers": 40.09
@@ -156,8 +156,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 231267,
-      "follower_delta": 12167,
+      "followers": 231268,
+      "follower_delta": 12168,
       "follower_per_day": 194.8,
       "n_sessions": 112,
       "n_live_points": 1482,
@@ -9544,10 +9544,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-14 01:38",
-      "observed_min": 20.5,
-      "n_points": 3,
+      "observed_min": 30.8,
+      "n_points": 4,
       "peak_ccu": 3126,
-      "avg_ccu": 2912,
+      "avg_ccu": 2858,
       "title": "동물애호가의 명조 여별 스토리 4장 4막 밀기",
       "category": "명조:워더링 웨이브"
     },
@@ -63142,6 +63142,10 @@
         [
           "2026-10-14 01:59",
           3122
+        ],
+        [
+          "2026-10-14 02:09",
+          2697
         ]
       ]
     },
