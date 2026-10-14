@@ -26,7 +26,7 @@ export const REFRESH_INTERVAL_MIN: Record<ExtendedProjectId, number> = {
   "01": 24 * 60, // daily
   "02": 24 * 60, // daily (전량 열거로 전환 후 비용이 낮아짐)
   "03": 24 * 60, // daily
-  "04": 7 * 24 * 60, // weekly — search.list 의존, 33회 × 100 units
+  "04": 7 * 24 * 60, // weekly — search.list 의존, 45회 × 100 units
   "05": 7 * 24 * 60, // weekly
   "06": 24 * 60, // daily
   "08": 10, // live

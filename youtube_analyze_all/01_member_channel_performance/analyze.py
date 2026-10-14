@@ -44,6 +44,11 @@ def dur_seconds(s: str) -> int:
 def build_metrics():
     ch = config.drop_founder(pd.read_csv(DATA / "channels.csv"))
     vids = config.drop_founder(pd.read_csv(DATA / "videos.csv"))
+    # 지표는 "최근 영상 평균 ÷ 구독자"처럼 영상과 구독자 수가 있어야 성립한다. 영상이 아직 없거나 구독자 수를
+    # 숨긴 채널(데뷔 전, 4기 ABYSS)은 0 으로 채우지 않고 분석에서 뺀다 — 0 으로 채우면 순위·상관이 왜곡된다.
+    analyzable = ch["subscribers"].notna() & ch["channel_id"].isin(vids["channel_id"].unique())
+    excluded = ch.loc[~analyzable, "name_ko"].tolist()
+    ch = ch[analyzable].reset_index(drop=True)
 
     vids["published_at"] = pd.to_datetime(vids["published_at"], utc=True)
     vids["published_kst"] = vids["published_at"].dt.tz_convert("Asia/Seoul")
@@ -91,6 +96,7 @@ def build_metrics():
         ))
     metrics = pd.DataFrame(rows).sort_values("subscribers", ascending=False).reset_index(drop=True)
     metrics.insert(0, "rank_subs", metrics.index + 1)
+    metrics.attrs["excluded"] = excluded
     return ch, vids, metrics
 
 
@@ -256,6 +262,9 @@ def build_outputs(ch, vids, metrics):
     (SITE / "data.json").write_text(json.dumps(site_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # 요약 리포트
+    excluded = metrics.attrs.get("excluded", [])
+    excl_note = (f"(영상이 없거나 구독자 수를 숨긴 채널 {len(excluded)}개는 제외 — {', '.join(excluded)})"
+                 if excluded else "")
     lead = t.iloc[t["subscribers"].argmax()]
     eff = t.iloc[t["reach_ratio"].argmax()]
     busy = t.iloc[t["uploads_per_week"].argmax()]
@@ -263,7 +272,7 @@ def build_outputs(ch, vids, metrics):
     md = f"""# 프로젝트 1 · StelLive 멤버별 유튜브 채널 성과 분석
 
 - 데이터 소스: YouTube Data API v3 (수집 {meta['fetched_at'][:10]})
-- 대상: StelLive 탤런트 {len(metrics)}명, 채널당 최근 {meta['recent_per_channel']}개 영상
+- 대상: StelLive 탤런트 {len(metrics)}명{excl_note}, 채널당 최근 {meta['recent_per_channel']}개 영상
 - 총 {meta['n_videos']}개 영상 지표 집계
 
 ## 핵심 요약

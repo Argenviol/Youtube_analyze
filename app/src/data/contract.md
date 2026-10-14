@@ -4,7 +4,7 @@ PRD 섹션 7(데이터 계약) 검증 결과. Next.js 구현자는 이 문서를
 소스는 `youtube_analyze_all/<project>/site/data.json` (Python `analyze.py`가 생성, Next.js는 읽기 전용).
 
 공통 규칙: `name_en`이 조인 키. 정본 로스터는 `youtube_analyze_all/common/config.py`의 `MEMBERS`
-(11명: 창립자 강지 STELLIVE + 탤런트 10명 — EVERYS 2 / UNIVERSE 4 / CLICHE 4).
+(15명: 창립자 강지 STELLIVE + 탤런트 14명 — EVERYS 2 / UNIVERSE 4 / CLICHE 4 / ABYSS 4).
 
 검증 방법: 각 프로젝트 `site/data.json`을 로드해 top-level 키, `meta` 필드, 배열형 필드의 레코드
 스키마(샘플 3건 기준 키 목록)를 덤프. 06·07은 갭 발견 후 `analyze.py`를 수정, 재실행하여

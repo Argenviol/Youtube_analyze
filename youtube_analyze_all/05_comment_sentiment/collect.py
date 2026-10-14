@@ -38,7 +38,11 @@ def collect(videos_per_member: int = 4, comments_per_video: int = 40) -> None:
 
     video_rows, comment_rows = [], []
     for m in roster:
-        uploads = yt.channels([m["channel_id"]])[0]["contentDetails"]["relatedPlaylists"]["uploads"]
+        ch = yt.channels([m["channel_id"]])
+        if not ch:
+            print(f"  ! {m['name_ko']} 채널 응답 없음")
+            continue
+        uploads = ch[0]["contentDetails"]["relatedPlaylists"]["uploads"]
         vids = yt.playlist_video_ids(uploads, limit=30)
         details = yt.videos(vids)
         details.sort(key=lambda v: to_int(v.get("statistics", {}).get("viewCount")) or 0, reverse=True)

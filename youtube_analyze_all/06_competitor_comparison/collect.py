@@ -42,11 +42,15 @@ def to_int(x):
 
 
 def roster():
-    """비교 대상 전원. StelLive 는 탤런트 전원(창립자 제외)."""
+    """비교 대상 전원. StelLive 는 탤런트 전원(창립자 제외).
+
+    데뷔 코호트가 없는 멤버는 뺀다 — 이 비교는 같은 시기에 데뷔한 그룹끼리 맞추는 것이라 짝지을 코호트가
+    없으면 비교할 수 없다(4기 ABYSS, 2026-10 데뷔). config.COHORT_BINS 에 그 시기 구간과 짝지을 경쟁
+    그룹을 넣으면 저절로 들어온다."""
     rows = [dict(group="StelLive", name_ko=m["name_ko"], name_en=m["name_en"],
                  channel_id=m["channel_id"], debut_date=m["debut_date"],
                  generation=m["generation"], cohort=m["cohort"])
-            for m in config.member_rows() if m["role"] == "talent"]
+            for m in config.member_rows() if m["role"] == "talent" and m["cohort"]]
     rows += config.competitor_rows()
     return rows
 

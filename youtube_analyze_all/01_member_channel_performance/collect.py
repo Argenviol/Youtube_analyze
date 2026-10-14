@@ -66,7 +66,8 @@ def collect(recent: int = 50) -> None:
         # 최근 영상
         vids = yt.playlist_video_ids(uploads, limit=recent)
         details = yt.videos(vids)
-        print(f"  {r['name_ko']:12} 구독 {stats.get('subscriberCount'):>9} · 최근영상 {len(details)}개")
+        # 구독자 수를 숨긴 채널은 subscriberCount 가 응답에 없다(None 에 서식을 쓰면 죽는다).
+        print(f"  {r['name_ko']:12} 구독 {str(stats.get('subscriberCount')):>9} · 최근영상 {len(details)}개")
         for v in details:
             vs = v.get("statistics", {})
             vsnip = v.get("snippet", {})

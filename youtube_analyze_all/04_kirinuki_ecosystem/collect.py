@@ -23,7 +23,7 @@ from common.youtube import QuotaExceeded, YouTube
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
-# search.list 는 하루 100회 한도가 따로 있고 이 수집이 한 번에 33회를 쓴다. 직전 수집이 이만큼
+# search.list 는 하루 100회 한도가 따로 있고 이 수집이 한 번에 멤버 수 × 3쿼리(15명 45회)를 쓴다. 직전 수집이 이만큼
 # 안쪽이면 이번 주 몫은 이미 있는 것이므로 검색하지 않는다(주 1회 정기 실행 간격은 7일).
 # --force 로 돌렸다가 한도에 걸려도 같은 기준으로 기존 데이터를 두고, 그보다 오래됐으면
 # 진짜 결측이라 실패로 낸다.

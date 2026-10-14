@@ -140,6 +140,19 @@ class YouTube:
             out.extend(data.get("items", []))
         return out
 
+    def _playlist_items(self, params: dict) -> dict:
+        """playlistItems 한 페이지. 영상이 한 번도 올라온 적 없는 채널(데뷔 전)의 업로드 재생목록은
+        404 playlistNotFound 를 돌려준다 — 빈 결과로 바꿔 돌려준다. 그 한 채널 때문에 로스터 전체의
+        수집이 멈추면 안 된다. 한도 소진(QuotaExceeded)은 그대로 올린다."""
+        try:
+            return self._get("playlistItems", params)
+        except QuotaExceeded:
+            raise
+        except RuntimeError as e:
+            if "playlistNotFound" in str(e):
+                return {"items": []}
+            raise
+
     # -- 업로드 재생목록의 영상 ID (최신순) --------------------------------
     def playlist_video_ids(self, playlist_id: str, limit: int = 50) -> list[str]:
         ids: list[str] = []
@@ -148,7 +161,7 @@ class YouTube:
             params = {"part": "contentDetails", "playlistId": playlist_id, "maxResults": 50}
             if token:
                 params["pageToken"] = token
-            data = self._get("playlistItems", params)
+            data = self._playlist_items(params)
             for it in data.get("items", []):
                 ids.append(it["contentDetails"]["videoId"])
             token = data.get("nextPageToken")
@@ -176,7 +189,7 @@ class YouTube:
             params = {"part": "snippet", "playlistId": playlist_id, "maxResults": 50}
             if token:
                 params["pageToken"] = token
-            data = self._get("playlistItems", params)
+            data = self._playlist_items(params)
             for it in data.get("items", []):
                 sn = it.get("snippet", {})
                 vid = sn.get("resourceId", {}).get("videoId")

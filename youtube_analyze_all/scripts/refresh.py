@@ -12,14 +12,14 @@
 ## YouTube 쿼터 메모
 한도: 10,000 units/일 + search.list 별도 100회/일(태평양 자정에 풀림). 실측은 _state/youtube_quota.json.
 
-  04 키리누키  search 33회 = 3,300 units   ← 유일하게 비싼 프로젝트(weekly)
+  04 키리누키  search 45회 = 4,500 units   ← 유일하게 비싼 프로젝트(weekly). 멤버 15명 × 3쿼리
   10 호요버스  search  0회 =   ~300 units   (최근 21일 영상 + 처음 보는 영상만. 전량이면 ~3,000)
-  02 커버곡    search  0회 =   ~210 units   (Topic 채널 없는 멤버 재확인은 7일에 한 번 search 8회)
+  02 커버곡    search  0회 =   ~210 units   (Topic 채널 없는 멤버 8명 재확인은 7일에 한 번 search 16회 = +1,600)
   06 경쟁사    search  0회 =    ~85 units
   05 댓글      search  0회 =    ~50 units
   01 멤버      search  0회 =    ~25 units
   --------------------------------------------
-  daily 전체   ~320 units(재확인 날 +800)   weekly 전체 search 33회 ~3,650 units
+  daily 전체   ~320 units(재확인 날 +1,600)   weekly 전체 search 45회 ~4,850 units
 
 common/youtube.py 가 모든 호출을 장부에 적고, 자체 예산 8,000 units·search 90회를 넘길 호출은
 보내기 전에 QuotaExceeded 로 멈춘다. Google 이 한도 소진을 알려 오면 그날을 exhausted 로 표시해
@@ -29,7 +29,7 @@ common/youtube.py 가 모든 호출을 장부에 적고, 자체 예산 8,000 uni
 바꾸면 04도 daily 로 내릴 수 있지만, 04는 **남의 채널**에서 키리누키를 찾는 것이라
 채널 목록을 미리 알 수 없어 검색이 불가피하다. 성격이 다른 문제다.
 
-search.list 100회/일 은 04 한 번(33회)으로 3번이면 찬다. 같은 태평양 날짜(UTC 07~08시 경계)에
+search.list 100회/일 은 04 한 번(45회)으로 세 번째부터 넘는다(두 번 90회). 같은 태평양 날짜(UTC 07~08시 경계)에
 weekly 를 손으로 여러 번 돌리면 세 번째부터 429 가 났다(2026-09-20 #56·#57). 이제 04 는 직전
 수집이 6일 안쪽이면 **검색 전에** 건너뛴다(04_kirinuki_ecosystem/collect.py FRESH_DAYS, 강제는 --force).
 """

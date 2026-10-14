@@ -26,7 +26,7 @@ def collect(max_items: int = 300) -> None:
     DATA.mkdir(parents=True, exist_ok=True)
     cz = Chzzk()
     ch_rows, vod_rows = [], []
-    for m in config.chzzk_rows():
+    for m in config.member_rows():
         cid = config.CHZZK_IDS.get(m["name_en"])
         if not cid:
             continue

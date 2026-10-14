@@ -20,13 +20,12 @@
 | # | 할 일 | 방법 · 완료 기준 |
 |---|---|---|
 | 1 | 리포트 PDF 4종 다시 만들기 — 지금 파일은 9/20 기준 | `결과물/리포트/README.md` 의 명령. 휴대폰 화면에서 읽히는지 확인 후 커밋 |
-| 2 | 저장소 전체 "최적화" 점검 — 지금까지는 최근 변경분만 했다 | 12개 프로젝트 + `app/` 에 `CLAUDE.md` 7개 기준. `app/` 은 느린 CPU 설정으로 전환·스크롤을 재고 PC·폰 화면을 확인 |
+| 2 | 저장소 전체 "최적화" 점검 — 지금까지는 최근 변경분만 했다. pyflakes 가 이미 찾은 것: 09 collect(`sys` 미사용·자리표시자 없는 f-string), 05·04 analyze(`np` 미사용), 07 analyze(`e` 미사용), scripts/coverage·build_unified(미사용 import), build_deliverables·06 analyze(자리표시자 없는 f-string) | 12개 프로젝트 + `app/` 에 `CLAUDE.md` 7개 기준. `app/` 은 느린 CPU 설정으로 전환·스크롤을 재고 PC·폰 화면을 확인 |
 | 3 | 유즈하 리코 Topic 채널 확인 — 주석엔 있다는데 검색 결과는 없음 | 실제 채널이 있으면 `02_cover_song_ranking/collect.py` 의 `TOPIC_SEED` 에 채널 ID 추가 |
-| 4 | **ABYSS 4명 데뷔 방송(10/17 토아·랑, 10/18 히요리·메리) 수집 확인** — 08 은 소급 불가라 데뷔 방송을 놓치면 영구 공백. 지금은 치지직 채널만 수집 중 | 10/18 이후 `08_live_viewership/data/sessions.csv` 에 4명의 세션이 있고 피크가 찍혔는지. 확인되면 `config.DEBUTS` 의 `approx` 를 실제 방송일 `exact` 로 |
-| 5 | **ABYSS 유튜브 채널 ID 검증 후 `MEMBERS` 로 이동** — 지금은 `CHZZK_ONLY`(03·08 만 수집). 유튜브 쓰는 01·02·04·05·06 에는 아직 없다 | 유튜브 API 로 채널 ID 확인(환경변수 키 필요) → `common/config.py` `MEMBERS` 에 추가하고 `CHZZK_ONLY` 에서 삭제. 그때 `name_en` 도 공식 표기로 정하고 `snapshots.csv`·`streams.csv` 의 옛 이름(`Toa` 등)을 같이 바꾼다 |
-| 6 | ABYSS 생일 — 프로필 페이지(stellive.me/<slug>)가 아직 없어 `BIRTHDAYS` 에 없다. 강지(창립자)도 없음 | 프로필이 생기면 `common/config.py` `BIRTHDAYS` 에 `MM-DD` 추가. 값이 없으면 생일 이벤트로 안 잡힌다 |
-| 7 | 3D 데뷔 수동 등록 보강 — 지금은 사키하네 후야(2026-09-18) 1건 | 클리셰 3D 데뷔(2025-09, 린 9/17·나나 9/19 방송 제목만 확인)와 유니 새 3D(2025-11-12) 는 날짜·참여 멤버 확인 후 `12_event_impact/data/events_manual.csv` 에 `3D 데뷔` 로 추가 |
-| 8 | Actions Node.js 20 경고 정리 | `actions/checkout`·`actions/setup-python` 을 Node 24 지원 버전으로. 지금은 강제 실행돼 동작엔 문제없음 |
+| 4 | **ABYSS 4명 데뷔 수집 확인(10/17 토아·랑, 10/18 히요리·메리)** — 08 은 소급 불가라 데뷔 방송을 놓치면 영구 공백. 치지직은 10/14 부터 수집 중, 유튜브(01·02·04·05)는 다음 daily 부터 | ① 10/18 이후 `08_live_viewership/data/sessions.csv` 에 4명의 세션과 피크가 있는지. ② 10/15 daily 이후 `01_member_channel_performance/data/channels.csv` 에 ABYSS 4행이 들어왔는지, 영상이 생기면 01 리포트 "제외" 문구에서 빠지는지. ③ 10/17 weekly(토요일 PT) 장부가 ~5,200 units·검색 45회 안팎이고 `exhausted` 가 없는지. ④ 확인되면 `config.DEBUTS` 의 `approx` 를 실제 방송일 `exact` 로 |
+| 5 | 06 경쟁사 비교에 ABYSS 코호트 추가 — 지금은 데뷔 코호트가 없어 06 에서 빠져 있다(2026-10 데뷔) | 짝지을 경쟁 그룹(같은 시기 데뷔)을 `config.COMPETITOR_ROSTER`·`COHORT_BINS` 에 넣으면 저절로 들어온다. 데뷔 후 구독자가 쌓인 뒤에 |
+| 6 | 3D 데뷔 수동 등록 보강 — 지금은 사키하네 후야(2026-09-18) 1건 | 클리셰 3D 데뷔(2025-09, 린 9/17·나나 9/19 방송 제목만 확인)와 유니 새 3D(2025-11-12) 는 날짜·참여 멤버 확인 후 `12_event_impact/data/events_manual.csv` 에 `3D 데뷔` 로 추가 |
+| 7 | Actions Node.js 20 경고 정리 | `actions/checkout`·`actions/setup-python` 을 Node 24 지원 버전으로. 지금은 강제 실행돼 동작엔 문제없음 |
 
 ### 지금 상태
 
@@ -51,9 +50,9 @@
 
 | 구간 | 예상 사용량 | 비고 |
 |---|---|---|
-| daily | ~320 units(실측 318) | 02 Topic 채널 재확인 날(7일에 한 번)만 검색 8회 +800 — 9/29 실행에서 검색 0회로 확인. **다음 재확인은 10/6 daily — 그날 02 검색 8회·+800 units 는 정상** |
-| weekly | ~3,650 units, 검색 33회 | 04가 3,300. 10 은 최근 21일 영상·새 영상만 받아 ~300 — 10/3 실행 실측 3,618 (04 3,307 · 10 234 · 05 77) |
-| 토요일(태평양 날짜) | ~4,000 units | daily·weekly 가 같은 날 돈다 — 10/3 실측 3,936 units · 검색 33회 |
+| daily | ~320 units(실측 318) | 02 Topic 채널 재확인 날(7일에 한 번)만 검색 16회 +1,600(Topic 채널 없는 멤버 8명 × 영문·한글) — 9/29 실행에서 검색 0회로 확인. **다음 재확인은 10/6 daily — 그날 02 검색 8회·+800 units 는 정상** |
+| weekly | ~4,850 units, 검색 45회 | 04가 4,500(멤버 15명 × 3쿼리). 10 은 최근 21일 영상·새 영상만 받아 ~300 — ABYSS 편입 전 10/3 실측 3,618 (04 3,307 · 10 234 · 05 77) |
+| 토요일(태평양 날짜) | ~5,200 units | daily·weekly 가 같은 날 돈다 — 편입 전 10/3 실측 3,936 units · 검색 33회. 02 재확인 날과 겹치면 검색 61회·~6,800 units |
 
 - 04 는 직전 수집이 6일 안쪽이면 검색하지 않는다. 같은 주에 weekly 를 손으로 다시 돌려도 안전하다.
   꼭 다시 받아야 하면 `python 04_kirinuki_ecosystem/collect.py --force`.
@@ -89,7 +88,7 @@
 | 그룹 구성·실행 순서, 수집 생략 프로젝트 | `youtube_analyze_all/scripts/refresh.py` (`GROUPS`, `NO_COLLECT`) |
 | 실행 주기 | `.github/workflows/collect-scheduled.yml`, `collect-live.yml` |
 | YouTube 호출·재시도·쿼터 예산 | `youtube_analyze_all/common/youtube.py` (`DAILY_UNIT_BUDGET`, `DAILY_SEARCH_BUDGET`) |
-| 멤버 로스터·채널 ID·생일 | `youtube_analyze_all/common/config.py` (`MEMBERS` 유튜브, `CHZZK_ONLY` 치지직만 확인된 멤버, `CHZZK_IDS`, `DEBUTS`, `BIRTHDAYS`) |
+| 멤버 로스터·채널 ID·생일 | `youtube_analyze_all/common/config.py` (`MEMBERS`, `CHZZK_IDS`, `DEBUTS`, `BIRTHDAYS`). 웹 대시보드는 `app/src/data/roster.ts` 에 같은 로스터를 따로 둔다 — 멤버를 바꾸면 같이 고친다 |
 | 이벤트 종류(합방·신의상·생일·3D 데뷔 등) 감지·측정 | `12_event_impact/collect.py`(`detect_*`), `analyze.py`(`STREAM_EVENT_TYPES`, `CCU_EVENT_TYPES`), 수동 등록 `data/events_manual.csv` |
 | 커버곡 MV↔Topic 음원 짝짓기 | `youtube_analyze_all/common/songs.py`, Topic 채널 탐색은 `02_cover_song_ranking/collect.py` |
 | 10 수집(기간·소스·댓글 증분) | `10_hoyoverse/collect.py` (`REVIEW_WINDOW_DAYS`, `COMMENT_REFRESH_DAYS`), 애플·HoYoLAB·누적은 `reactions.py` |
@@ -104,6 +103,7 @@
 - API 키는 환경변수로만(`YOUTUBE_API_KEY`, `DART_API_KEY`). 코드·커밋에 넣지 않는다.
 - `robots.txt`·Cloudflare 로 막힌 곳은 우회하지 않고, 막혔다고 기록한다.
 - 비교는 같은 표본·같은 기간끼리만. 수집 방식이 바뀌면 `_meta.json` 에 `method_changed_at`.
+- 멤버 정보(유튜브 핸들·치지직 ID·생일)는 웹앱 저장소 `Argenviol/stel-database`(`server.py` `TRENDING_HANDLES`·`MEMBERS`, `HANDOFF.md` §10)에도 있다 — 새 멤버를 넣을 때 먼저 참고하되 채널 ID 는 `youtube.com/channel/<id>` 의 og:title 로 확인한다.
 - `_meta.json` 의 한 dict 안에 성격이 다른 값(게임별 dict 와 합계 정수 등)을 섞지 않는다 — #65 의 원인.
 - 작업은 `main` 에 바로 올린다. 마무리는 `CLAUDE.md` 의 "최적화" 7개 기준으로 확인하고 보고한다.
 
@@ -111,7 +111,7 @@
 
 | 날짜 | 달라진 것 |
 |---|---|
-| 2026-10-14 | **4기 ABYSS 4명을 치지직 수집(03·08)에 추가** — 공식 공지(stellive.me/news/14262)의 치지직 ID. 유튜브 ID 미검증이라 `CHZZK_ONLY` 로 분리하고 01·02·04·05·06 은 그대로. 데뷔 전 채널은 리포트 멤버 수에서 제외. **생일 이벤트 신설**(12) — 공식 프로필 생일을 날짜로 잡아 12건, VOD 1.1~4.5배·동시시청자 2.6~5.2배. **3D 데뷔** 종류 추가(수동 1건). 12 의 동시시청자 상위 표에 이벤트 열 추가. 인수인계서 "다른 세션 변경" 항목 해소 |
+| 2026-10-14 | **4기 ABYSS 4명 편입** — 치지직(03·08)·유튜브(01·02·04·05). 공식 공지의 치지직 ID, 채널 페이지(`og:title`)로 확인한 유튜브 채널 ID, 영문명은 채널 표시 이름(Shizuki Toa 등), 생일은 stel-database 에 기록된 공식 프로필 값. 데뷔 전 채널은 01 분석에서 제외(영상·구독자 없음), 03·08 리포트 멤버 수에서 제외, 06 은 코호트가 없어 제외. 수집기: 구독자 숨김 채널·영상 0개 채널(업로드 재생목록 404)에서 죽지 않게 고침. 웹 대시보드 로스터에 ABYSS 추가. 08 스냅샷의 ABYSS 영문명 24행을 새 표기로 정정. **생일 이벤트 신설**(12) — 공식 프로필 생일을 날짜로 잡아 12건, VOD 1.1~4.5배·동시시청자 2.6~5.2배. **3D 데뷔** 종류 추가(수동 1건). 12 의 동시시청자 상위 표에 이벤트 열 추가 |
 | 2026-10-04 | 첫 weekly 실측 확인(10/3 PT, #73 초록) — 장부 3,936 units·검색 33회·한도 초과 없음. 04 는 7일 만에 검색해 갱신, 10 은 공식 채널 영상 1,462개 중 86개만 댓글 수집(window_complete 5/5), 분석 오류 없이 끝나 리포트 총 건수 171,994건. 인수인계서 "다음 할 일"에서 항목 제거 |
 | 2026-09-30 | 02 쿼터 절감 확인됨 — 9/29 daily 실행(#68)에서 `02_cover_song_ranking` 검색 0회·210 units(전날까지 8회·1,009 units). 인수인계서 "다음 할 일"에서 항목 제거 |
 | 2026-09-29 | 인수인계서를 README.md 에서 별도 `HANDOVER.md` 로 분리 — README 는 GitHub 방문자가 보는 포트폴리오 소개로 깔끔하게, 운영 내용은 여기로. 9/28(PT) daily 가 02 캐시 형식을 첫 마이그레이션하며 예정대로 한 번 더 검색한 것 확인(버그 아님) |

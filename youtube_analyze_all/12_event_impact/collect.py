@@ -48,8 +48,8 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 DATA = HERE / "data"
 
-# 합방으로 인정할 최소 동시 참여 인원. 스텔라이브는 11명이라 4명이면 로스터의
-# 3분의 1이 넘는다 — "대규모"의 하한으로 쓴다. 2~3명 콜라보는 훨씬 흔해서
+# 합방으로 인정할 최소 동시 참여 인원. 방송하는 스텔라이브는 11명(2026-10 기준, 4기 ABYSS 데뷔 전)이라
+# 4명이면 로스터의 3분의 1이 넘는다 — "대규모"의 하한으로 쓴다. 2~3명 콜라보는 훨씬 흔해서
 # 이 기준을 내리면 이벤트가 아니라 일상이 잡힌다.
 MIN_MEMBERS = 4
 
@@ -279,7 +279,7 @@ def _series_tokens(title: str, exclude: set[str]) -> set[str]:
 
 def detect_series_candidates(streams: pd.DataFrame) -> list[dict]:
     """며칠에 걸친 기획 후보를 뽑는다. events.csv 가 아니라 검토 대기열로 나간다."""
-    base = {r["name_ko"] for r in config.chzzk_rows(include_founder=True)}
+    base = {r["name_ko"] for r in config.member_rows(include_founder=True)}
     exclude = base | {"스텔", "스텔라이브", "클리셰", "유니버스", "에브리스", "어비스"}
     exclude |= {n.split()[0] for n in base} | {n.split()[-1] for n in base}
 
@@ -445,7 +445,7 @@ def detect_birthdays(streams: pd.DataFrame) -> list[dict]:
         return []
     df = streams.copy()
     df["date"] = pd.to_datetime(df["publish_date"]).dt.date
-    name_by_en = {r["name_en"]: r["name_ko"] for r in config.chzzk_rows(include_founder=True)}
+    name_by_en = {r["name_en"]: r["name_ko"] for r in config.member_rows(include_founder=True)}
     out = []
     for en, md in config.BIRTHDAYS.items():
         name = name_by_en[en]

@@ -20,7 +20,7 @@
 // ---------------------------------------------------------------------------
 
 /** 로스터 정본(`youtube_analyze_all/common/config.py`의 `MEMBERS`) 기준 유닛. */
-export type Unit = "STELLIVE" | "EVERYS" | "UNIVERSE" | "CLICHE";
+export type Unit = "STELLIVE" | "EVERYS" | "UNIVERSE" | "CLICHE" | "ABYSS";
 
 export type Role = "founder" | "talent";
 

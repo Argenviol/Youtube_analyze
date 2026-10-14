@@ -8,6 +8,9 @@
  *
  * 페이지마다 멤버/유닛 목록을 따로 하드코딩하지 말 것. 필터 UI, 드릴다운,
  * accent 색 배정은 전부 이 모듈을 거친다.
+ *
+ * accent 색은 11색이라 12번째 이후 멤버(4기 ABYSS)는 `accentVar` 가 앞 색을 다시 쓴다(index % 11).
+ * 직접 라벨을 함께 붙이는 전제다(montage.ts 의 ⚠ 참고).
  */
 import type { Role, Unit } from "./types";
 
@@ -31,15 +34,20 @@ export const ROSTER: readonly RosterMember[] = [
   { name_ko: "아오쿠모 린", name_en: "Aokumo Rin", unit: "CLICHE", role: "talent" },
   { name_ko: "하나코 나나", name_en: "Hanako Nana", unit: "CLICHE", role: "talent" },
   { name_ko: "유즈하 리코", name_en: "Yuzuha Riko", unit: "CLICHE", role: "talent" },
+  { name_ko: "시즈키 토아", name_en: "Shizuki Toa", unit: "ABYSS", role: "talent" },
+  { name_ko: "코가네 랑", name_en: "Cogane Rang", unit: "ABYSS", role: "talent" },
+  { name_ko: "하나요 히요리", name_en: "Hanayo Hiyori", unit: "ABYSS", role: "talent" },
+  { name_ko: "토키노 메리", name_en: "Tokino Mary", unit: "ABYSS", role: "talent" },
 ] as const;
 
-export const UNITS: readonly Unit[] = ["STELLIVE", "EVERYS", "UNIVERSE", "CLICHE"] as const;
+export const UNITS: readonly Unit[] = ["STELLIVE", "EVERYS", "UNIVERSE", "CLICHE", "ABYSS"] as const;
 
 export const UNIT_LABEL_KO: Record<Unit, string> = {
   STELLIVE: "창립자",
   EVERYS: "EVERYS",
   UNIVERSE: "UNIVERSE",
   CLICHE: "CLICHE",
+  ABYSS: "ABYSS",
 };
 
 const NAME_EN_TO_INDEX = new Map(ROSTER.map((m, i) => [m.name_en, i]));
