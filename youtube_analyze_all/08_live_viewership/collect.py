@@ -52,7 +52,7 @@ def snapshot(quiet: bool = False) -> list[dict]:
     collected_at = datetime.now(timezone.utc).isoformat()
     rows, failed = [], 0
 
-    for m in config.member_rows():
+    for m in config.chzzk_rows():
         cid = config.CHZZK_IDS.get(m["name_en"])
         if not cid:
             continue
@@ -99,7 +99,7 @@ def _write_meta(last_at: str) -> None:
         if rd:
             span = [rd[0]["collected_at"], rd[-1]["collected_at"]]
     (DATA / "_meta.json").write_text(json.dumps(dict(
-        fetched_at=last_at, n_snapshots=n, n_members=len(config.member_rows()),
+        fetched_at=last_at, n_snapshots=n, n_members=len(config.chzzk_rows()),
         span=span, interval_min=10,
         source="Chzzk 비공식 API (channels + polling live-status)",
         note="동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다.",

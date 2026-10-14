@@ -89,7 +89,9 @@ def coverage(df: pd.DataFrame, interval_min: float) -> dict:
         coverage_ratio=round(ratio, 3),
         largest_gap_hours=round(largest_gap_h, 2),
         n_live_rows=int(df["is_live"].sum()),
-        members=df["name_ko"].nunique(),
+        # 방송이 관측된 멤버만 센다. 데뷔 전 채널(4기 ABYSS 등)은 팔로워만 기록하고 세션이 없다.
+        members=df.loc[df["is_live"], "name_ko"].nunique(),
+        members_tracked=df["name_ko"].nunique(),
         first=df["collected_at"].min().isoformat(),
         last=df["collected_at"].max().isoformat(),
     )
@@ -300,7 +302,9 @@ def build_outputs(df, sess, metrics, cov, charts, enough):
         "- 데이터 소스: 치지직 비공식 API (polling live-status) — 10분 간격 자체 수집",
         f"- 관측 구간: {cov['first'][:16]} ~ {cov['last'][:16]} (UTC), "
         f"약 {cov['span_hours']:.1f}시간 / 스냅샷 {cov['n_timepoints']}시점 · {cov['n_snapshots']}건",
-        f"- 멤버 {cov['members']}명\n",
+        f"- 멤버 {cov['members']}명" + (
+            f"(방송이 관측되지 않은 채널 {cov['members_tracked'] - cov['members']}개는 팔로워만 기록 — 데뷔 전)\n"
+            if cov["members_tracked"] > cov["members"] else "\n"),
         "## 이 프로젝트가 따로 있는 이유\n",
         "프로젝트3(방송 패턴)은 VOD 다시보기 목록으로 과거 방송 이력을 **소급 수집**할 수 있다.",
         "하지만 동시시청자는 소급이 불가능하다. VOD는 누적 조회수(readCount)만 주고, 치지직에는",
@@ -397,7 +401,7 @@ def main():
     charts = build_charts(df, sess, metrics, cov)
     build_outputs(df, sess, metrics, cov, charts, enough)
 
-    print(f"\n=== 커버리지 ===")
+    print("\n=== 커버리지 ===")
     print(f"실관측 {cov['observed_hours']:.2f}시간 (달력 구간 {cov['span_hours']:.2f}시간, "
           f"커버리지 {cov['coverage_ratio']*100:.0f}%, 최대 단절 {cov['largest_gap_hours']:.1f}시간)")
     print(f"시점 {cov['n_timepoints']}개 / "

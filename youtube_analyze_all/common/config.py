@@ -94,6 +94,30 @@ DEBUTS = {
     "Hanako Nana":    ("2024-05-19", "3기 CLICHE",      "exact"),
     "Yuzuha Riko":    ("2024-05-19", "3기 CLICHE",      "exact"),
     "Sakihane Huya":  ("2025-09-20", "1기 EVERYS(신규)", "exact"),
+    # 4기 ABYSS — 공식 공지(stellive.me/news/14262, 2026-10-11)의 첫 방송 일정. 방송 확인 전 값이다.
+    "Toa":            ("2026-10-17", "4기 ABYSS",       "approx"),
+    "Rang":           ("2026-10-17", "4기 ABYSS",       "approx"),
+    "Hiyori":         ("2026-10-18", "4기 ABYSS",       "approx"),
+    "Mary":           ("2026-10-18", "4기 ABYSS",       "approx"),
+}
+
+# ---------------------------------------------------------------------------
+# 생일 — 출처: stellive.me 각 탤런트 프로필 페이지의 "생일" 항목(2026-10-14 확인). (MM-DD)
+#   강지는 탤런트 페이지에 프로필이 없고, ABYSS 4명은 프로필 페이지가 아직 없어 비워 둔다.
+#   값이 없는 멤버는 생일 이벤트로 잡히지 않는다(제목에서 "생일"을 찾아 추측하지 않는다 —
+#   남의 생일 축하나 "생일 굿즈" 소개 방송이 섞여 들어온다).
+# ---------------------------------------------------------------------------
+BIRTHDAYS = {
+    "Ayatsuno Yuni":  "05-21",
+    "Sakihane Huya":  "07-07",
+    "Shirayuki Hina": "01-05",
+    "Neneko Mashiro": "02-22",
+    "Akane Lize":     "10-01",
+    "Arahashi Tabi":  "09-07",
+    "Tenko Shibuki":  "03-21",
+    "Aokumo Rin":     "05-03",
+    "Hanako Nana":    "08-07",
+    "Yuzuha Riko":    "04-13",
 }
 
 
@@ -206,7 +230,27 @@ CHZZK_IDS = {
     "Aokumo Rin":     "516937b5f85cbf2249ce31b0ad046b0f",
     "Hanako Nana":    "4d812b586ff63f8a2946e64fa860bbf5",
     "Yuzuha Riko":    "8fd39bb8de623317de90654718638b10",
+    # 4기 ABYSS — 공식 공지(stellive.me/news/14262)에 적힌 치지직 링크의 ID. 치지직 검색 API 의
+    # 채널명·인증 마크와도 일치한다(2026-10-14).
+    "Toa":            "2299fad4bebb504b0978e1ec08b2f7d3",
+    "Rang":           "c657aa3592260a2b59669a72ec151936",
+    "Hiyori":         "49d2c3cf8f0b2843d934ec15e82bb54c",
+    "Mary":           "792acf9ca28b42918710327e14b06b68",
 }
+
+# 치지직 채널만 확인된 멤버 — 유튜브 채널 ID 를 아직 검증하지 못했다.
+#   MEMBERS 에 넣으면 유튜브를 쓰는 01·02·04·05·06 이 빈 채널 ID 로 호출한다. 그래서 여기 따로 두고
+#   치지직을 쓰는 03·08 만 chzzk_rows() 로 읽는다. 유튜브 채널 ID 를 API 로 확인하면 MEMBERS 로
+#   옮기고 이 목록에서 지운다.
+#   name_en 은 공식 사이트의 주소(stellive.me/<slug>)에서 확인된 이름만 쓴다. 성(姓)의 로마자 표기는
+#   공식 표기를 확인하지 못해 붙이지 않았다 — 08 스냅샷은 추가만 하는 파일이라 잘못 적으면 되돌리기 어렵다.
+CHZZK_ONLY = [
+    # name_ko, name_en, unit, role
+    ("시즈키 토아",   "Toa",    "ABYSS", "talent"),
+    ("코가네 랑",     "Rang",   "ABYSS", "talent"),
+    ("하나요 히요리", "Hiyori", "ABYSS", "talent"),
+    ("토키노 메리",   "Mary",   "ABYSS", "talent"),
+]
 
 
 def member_rows(include_founder: bool = INCLUDE_FOUNDER):
@@ -218,6 +262,20 @@ def member_rows(include_founder: bool = INCLUDE_FOUNDER):
         rows.append(
             dict(name_ko=name_ko, name_en=name_en, unit=unit, role=role,
                  channel_id=cid, handle=handle,
+                 debut_date=debut, generation=gen, debut_precision=prec,
+                 cohort=cohort_of(debut))
+        )
+    return rows
+
+
+def chzzk_rows(include_founder: bool = INCLUDE_FOUNDER):
+    """치지직 수집·분석 대상 = 유튜브 로스터 + 치지직 채널만 확인된 멤버(CHZZK_ONLY)."""
+    rows = member_rows(include_founder)
+    for name_ko, name_en, unit, role in CHZZK_ONLY:
+        debut, gen, prec = DEBUTS.get(name_en, (None, None, None))
+        rows.append(
+            dict(name_ko=name_ko, name_en=name_en, unit=unit, role=role,
+                 channel_id=None, handle=None,
                  debut_date=debut, generation=gen, debut_precision=prec,
                  cohort=cohort_of(debut))
         )
@@ -249,14 +307,20 @@ UNIT_COLORS = {
     "EVERYS":   montage.BLUE[45],
     "UNIVERSE": montage.RED_ORANGE[48],
     "CLICHE":   montage.GREEN[40],
+    "ABYSS":    montage.VIOLET[60],
 }
 
 
 # 멤버(영문)별 고정 색 — 어느 차트에서도 같은 멤버는 같은 색 (dataviz 원칙)
 def member_colors(include_founder: bool = INCLUDE_FOUNDER):
-    rows = member_rows(include_founder)
+    """멤버 고정 색. 유튜브 로스터가 앞 11색을 그대로 쓰고(기존 차트 색이 바뀌지 않는다),
+    치지직 전용 멤버는 같은 계열의 밝은 단계를 이어 쓴다 — 직접 라벨과 함께 읽는 전제다."""
     pal = PALETTE["series"]
-    return {r["name_en"]: pal[i % len(pal)] for i, r in enumerate(rows)}
+    cmap = {r["name_en"]: pal[i % len(pal)] for i, r in enumerate(member_rows(include_founder))}
+    extra = PALETTE["series_dark"]
+    for i, (_, name_en, _, _) in enumerate(CHZZK_ONLY):
+        cmap[name_en] = extra[i % len(extra)]
+    return cmap
 
 
 INK = {

@@ -26,7 +26,7 @@ def collect(max_items: int = 300) -> None:
     DATA.mkdir(parents=True, exist_ok=True)
     cz = Chzzk()
     ch_rows, vod_rows = [], []
-    for m in config.member_rows():
+    for m in config.chzzk_rows():
         cid = config.CHZZK_IDS.get(m["name_en"])
         if not cid:
             continue
@@ -57,10 +57,12 @@ def collect(max_items: int = 300) -> None:
     ch_df.to_csv(DATA / "chzzk_channels.csv", index=False)
     vod_df.to_csv(DATA / "streams.csv", index=False)
     meta = dict(fetched_at=datetime.now(timezone.utc).isoformat(),
-                n_members=len(ch_df), n_streams=len(vod_df), max_items=max_items,
+                # 방송이 있는 멤버만 센다. 데뷔 전 채널(4기 ABYSS 등)은 팔로워만 기록하고 방송이 0개다.
+                n_members=int(vod_df["name_en"].nunique()), n_no_broadcast=int(len(ch_df) - vod_df["name_en"].nunique()),
+                n_streams=len(vod_df), max_items=max_items,
                 source="Chzzk 비공식 API (channels/videos)", tz="Asia/Seoul")
     (DATA / "_meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\n완료: 멤버 {len(ch_df)}명 / 방송 {len(vod_df)}개 -> {DATA}")
+    print(f"\n완료: 멤버 {meta['n_members']}명(방송 없는 채널 {meta['n_no_broadcast']}개 별도) / 방송 {len(vod_df)}개 -> {DATA}")
 
 
 if __name__ == "__main__":

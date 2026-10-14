@@ -176,6 +176,8 @@ def build_outputs(df, metrics):
     SITE.mkdir(parents=True, exist_ok=True)
     (SITE / "data.json").write_text(json.dumps(site_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    n_nb = int(meta.get("n_no_broadcast", 0))
+    no_bc = f"(방송이 아직 없는 채널 {n_nb}개는 제외 — 데뷔 전)" if n_nb else ""
     grind = metrics.iloc[0]
     longest = metrics.iloc[metrics["avg_duration_h"].argmax()]
     freq = metrics.iloc[metrics["streams_per_week"].argmax()]
@@ -184,7 +186,7 @@ def build_outputs(df, metrics):
     md = f"""# 프로젝트 3 · StelLive 치지직 방송 패턴 분석
 
 - 데이터 소스: 치지직(Chzzk) 비공식 API — 다시보기(VOD replay) {meta['n_streams']}건, 수집 {meta['fetched_at'][:10]}
-- 멤버 {meta['n_members']}명, 멤버당 최근 최대 {meta['max_items']}개 방송
+- 멤버 {meta['n_members']}명{no_bc}, 멤버당 최근 최대 {meta['max_items']}개 방송
 
 ## 핵심 요약
 - **주간 방송 시간 1위**: {grind['name_ko']} — 주 {grind['hours_per_week']:.0f}시간
