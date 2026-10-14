@@ -279,8 +279,8 @@ def _series_tokens(title: str, exclude: set[str]) -> set[str]:
 
 def detect_series_candidates(streams: pd.DataFrame) -> list[dict]:
     """며칠에 걸친 기획 후보를 뽑는다. events.csv 가 아니라 검토 대기열로 나간다."""
-    base = {m[0] for m in config.MEMBERS}
-    exclude = base | {"스텔", "스텔라이브", "클리셰", "유니버스", "에브리스"}
+    base = {r["name_ko"] for r in config.chzzk_rows(include_founder=True)}
+    exclude = base | {"스텔", "스텔라이브", "클리셰", "유니버스", "에브리스", "어비스"}
     exclude |= {n.split()[0] for n in base} | {n.split()[-1] for n in base}
 
     df = streams.copy()
@@ -430,6 +430,42 @@ def _costume_name(group: list[dict], members: list[str]) -> str:
     return f"{base} ({len(members)}명)"
 
 
+BIRTHDAY_DAYS = 2   # 생일 당일 + 다음 날(후열). VOD 는 자정을 넘겨 올라오는 일이 많다.
+
+
+def detect_birthdays(streams: pd.DataFrame) -> list[dict]:
+    """멤버 생일을 **날짜**로 잡는다(config.BIRTHDAYS = 공식 프로필의 생일).
+
+    제목에서 '생일'을 찾지 않는다. 남의 생일을 축하하는 방송("네네코 마시로 생일 축하해")과
+    '생일 굿즈' 소개 방송이 제목에 '생일'을 달고 올라오고, 정작 생일 방송은 제목에 그 말이 없기도 하다
+    ('내일 생일이라 바빴던 청년'). 그 멤버가 생일 당일~다음 날에 방송한 해만 이벤트로 본다 —
+    방송이 없으면 잴 것이 없다. (VOD 는 멤버당 최근 300개라 그보다 오래된 생일은 방송이 안 보인다.)
+    """
+    if streams.empty:
+        return []
+    df = streams.copy()
+    df["date"] = pd.to_datetime(df["publish_date"]).dt.date
+    name_by_en = {r["name_en"]: r["name_ko"] for r in config.chzzk_rows(include_founder=True)}
+    out = []
+    for en, md in config.BIRTHDAYS.items():
+        name = name_by_en[en]
+        mon, day = (int(x) for x in md.split("-"))
+        mine = df[df["name_ko"] == name]
+        for year in range(df["date"].min().year, df["date"].max().year + 1):
+            d0 = date(year, mon, day)
+            d1 = d0 + timedelta(days=BIRTHDAY_DAYS - 1)
+            hit = mine[(mine["date"] >= d0) & (mine["date"] <= d1)]
+            if hit.empty:
+                continue
+            out.append({
+                "date": d0, "end_date": d1, "type": "생일",
+                "title": f"{name} 생일 ({year})", "members": name, "n_members": 1,
+                "n_days": int(hit["date"].nunique()), "signal": "생일(날짜표)+방송",
+                "match_keys": "", "source": "자동(공식 프로필 생일)",
+            })
+    return out
+
+
 RELEASE_MERGE_DAYS = 7   # 같은 멤버·같은 곡의 여러 판(MV·4K·3D·쇼츠·티저)이 이 안에 있으면 한 발매다
 
 
@@ -523,8 +559,9 @@ def main() -> int:
     pd.DataFrame(candidates).to_csv(DATA / "event_candidates.csv",
                                     index=False, encoding="utf-8-sig")
     releases = detect_releases(pd.read_csv(covers_p))
+    birthdays = detect_birthdays(streams)
 
-    auto = collabs + costumes + releases
+    auto = collabs + costumes + releases + birthdays
     for e in auto:
         e["event_id"] = event_id(e)
     for e in manual:
@@ -556,7 +593,7 @@ def main() -> int:
     by_type = events["type"].value_counts().to_dict()
     print(f"  이벤트 {len(events)}건 · {by_type}")
     print(f"  합방 {len(collabs)}건 (연속 {MIN_CONSECUTIVE_DAYS}일 이상) · "
-          f"신의상 {len(costumes)}건 · 커버곡 {len(releases)}건 · 수동 {len(manual)}건")
+          f"신의상 {len(costumes)}건 · 생일 {len(birthdays)}건 · 커버곡 {len(releases)}건 · 수동 {len(manual)}건")
     print(f"  새로 감지 {len(new)}건 (누적 기억 {len(seen)}건)")
     print(f"  시리즈 후보 {len(candidates)}건 → event_candidates.csv (검토 후 수동 등록)")
     return 0

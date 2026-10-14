@@ -81,11 +81,15 @@ def _read(p: Path, **kw) -> pd.DataFrame:
 
 # 방송으로 효과를 잴 수 있는 이벤트 종류. 곡 발매는 여기 없다 — 유튜브 업로드지
 # 방송이 아니라서, 발매일에 마침 큰 합방이 돌면 그 성과가 곡에 붙는다.
-STREAM_EVENT_TYPES = {"합방", "신의상", "콘서트"}
+STREAM_EVENT_TYPES = {"합방", "신의상", "콘서트", "생일", "3D 데뷔"}
 
 
 def _event_keys(e) -> list[str]:
-    """이 이벤트의 방송을 알아보는 말. 표시 제목이 아니라 감지·수동 지정된 매칭어다."""
+    """이 이벤트의 방송을 알아보는 말. 표시 제목이 아니라 감지·수동 지정된 매칭어다.
+
+    생일은 날짜로 잡은 이벤트라 방송 제목에 알아볼 말이 없다(빈 목록)."""
+    if e["type"] == "생일":
+        return []
     raw = str(e.get("match_keys") or "") or str(e["title"])
     return [k.strip() for k in raw.replace("·", "|").split("|") if k.strip()]
 
@@ -102,6 +106,26 @@ def _belongs(rows: pd.DataFrame, keys: list[str], title_col: str,
     return rows[hit]
 
 
+def _event_streams(rows: pd.DataFrame, e, name: str, events: pd.DataFrame,
+                   title_col: str, cat_col: str | None) -> pd.DataFrame:
+    """이 이벤트의 방송만 추린다.
+
+    제목·카테고리에 이벤트 이름이 나온 방송이 이 이벤트 것이다(`_belongs`). 생일은 알아볼 말이
+    없어 날짜로 고르는데, 같은 날 그 멤버가 다른 이벤트(합방·신의상·콘서트)의 방송을 했다면 그
+    방송은 뺀다 — 안 그러면 합방의 피크가 생일의 효과로 잡힌다.
+    """
+    if e["type"] != "생일":
+        return _belongs(rows, _event_keys(e), title_col, cat_col)
+    others = events[(events["event_id"] != e["event_id"])
+                    & events["type"].isin(STREAM_EVENT_TYPES - {"생일"})
+                    & (events["date"] <= e["end_date"]) & (events["end_date"] >= e["date"])
+                    & events["members"].fillna("").astype(str).apply(lambda m: name in m.split("|"))]
+    drop = [k for _, o in others.iterrows() for k in _event_keys(o)]
+    if rows.empty or not drop:
+        return rows
+    return rows.drop(_belongs(rows, drop, title_col, cat_col).index)
+
+
 def vod_multiple(events: pd.DataFrame, streams: pd.DataFrame) -> pd.DataFrame:
     """이벤트 날 방송이 그 멤버의 평소 방송보다 몇 배 봤나 (소급 가능).
 
@@ -115,11 +139,10 @@ def vod_multiple(events: pd.DataFrame, streams: pd.DataFrame) -> pd.DataFrame:
         if e["type"] not in STREAM_EVENT_TYPES:
             continue
         d0, d1 = e["date"], e["end_date"]
-        keys = _event_keys(e)
         for name in str(e["members"]).split("|"):
             mine = s[s["name_ko"] == name]
             in_span = mine[(mine["date"] >= d0) & (mine["date"] <= d1)]
-            during = _belongs(in_span, keys, "title", "category")
+            during = _event_streams(in_span, e, name, events, "title", "category")
             if during.empty:
                 continue
             lo, hi = d0 - timedelta(days=BASELINE_DAYS), d1 + timedelta(days=BASELINE_DAYS)
@@ -338,6 +361,26 @@ def original_effect(events: pd.DataFrame, videos: pd.DataFrame,
     return pd.DataFrame(rows)
 
 
+def session_event(row: dict, events: pd.DataFrame) -> str:
+    """방송 세션이 속한 이벤트 종류. 어느 이벤트에도 안 속하면 '평소'.
+
+    제목·카테고리로 알아보는 이벤트(합방·신의상·콘서트)를 먼저 보고, 날짜로 잡는 생일은 그 방송이
+    다른 이벤트의 것이 아닐 때만 생일로 친다(`_event_streams`).
+    """
+    d = pd.Timestamp(row["start"]).date()
+    name = row["name_ko"]
+    one = pd.DataFrame([{"title": row["title"], "category": row.get("category"), "date": d}])
+    cand = events[events["type"].isin(CCU_EVENT_TYPES) & (events["date"] <= d) & (events["end_date"] >= d)]
+    for _, e in cand.sort_values("type", key=lambda t: t == "생일").iterrows():
+        # 신의상은 제목에 '신의상'이 있으면 그 기간의 신의상 방송이다 — 이벤트의 멤버 목록은 VOD 조회수 배수로
+        # 걸러 만든 것이라, 배수가 낮았던 멤버(8/31 타비: 피크 38,237)가 빠져 있어도 제목은 신의상이다.
+        if e["type"] != "신의상" and name not in str(e["members"]).split("|"):
+            continue
+        if not _event_streams(one, e, name, events, "title", "category").empty:
+            return e["type"]
+    return "평소"
+
+
 def ccu_drivers(sessions: pd.DataFrame) -> dict:
     """동시시청자를 움직이는 게 무엇인지 — 이벤트와 평소 요인을 나란히 놓는다.
 
@@ -377,7 +420,7 @@ def ccu_drivers(sessions: pd.DataFrame) -> dict:
         "cat_lo": _spread(cat)[0], "cat_hi": _spread(cat)[1],
         "hour_lo": _spread(hour)[0], "hour_hi": _spread(hour)[1],
         "dow_lo": _spread(dow)[0], "dow_hi": _spread(dow)[1],
-        "top": top[["start", "name_ko", "peak_ccu", "title"]].to_dict("records"),
+        "top": top[["start", "name_ko", "peak_ccu", "title", "category"]].to_dict("records"),
         "cat_top": cat[cat["n"] >= 5].nlargest(5, "med").to_dict("records"),
     }
 
@@ -842,7 +885,7 @@ def before_after(events: pd.DataFrame, hist: pd.DataFrame, col: str,
 # 그 방송의 피크가 곡의 효과로 잡힌다. 실제로 8/31 사키하네 후야 커버가 '평소 대비
 # 18.4배'로 나왔는데, 그 피크(38,402)는 같은 날 돌던 10인 마인크래프트 합방의 것이었다.
 # 곡의 효과는 조회수·구독자로 재고, 동시시청자는 방송형 이벤트에만 붙인다.
-CCU_EVENT_TYPES = {"합방", "콘서트", "신의상"}
+CCU_EVENT_TYPES = {"합방", "콘서트", "신의상", "생일", "3D 데뷔"}
 
 
 def ccu_impact(events: pd.DataFrame, sessions: pd.DataFrame) -> pd.DataFrame:
@@ -859,11 +902,10 @@ def ccu_impact(events: pd.DataFrame, sessions: pd.DataFrame) -> pd.DataFrame:
         # 8/29~9/3 마인크래프트 합방과 8/30~9/2 신의상 릴레이가 겹쳐서, 기간만으로
         # 고르면 신의상 공개의 38,237명이 마인크래프트 합방의 성과로 잡혔다.
         # 이벤트 이름이 방송 제목이나 카테고리에 실제로 나타난 세션만 센다.
-        keys = _event_keys(e)
         for name in str(e["members"]).split("|"):
             mine = s[s["name_ko"] == name]
             in_span = mine[(mine["date"] >= d0) & (mine["date"] <= d1)]
-            during = _belongs(in_span, keys, "title", "category")
+            during = _event_streams(in_span, e, name, events, "title", "category")
             other = mine[~((mine["date"] >= d0) & (mine["date"] <= d1))]
             if during.empty or other.empty:
                 continue
@@ -1421,10 +1463,10 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
             f"중앙값 **{d['median']:,.0f}명**, 상위 5% {d['p95']:,.0f}명, "
             f"상위 1% {d['p99']:,.0f}명, 최대 **{d['max']:,.0f}명**. "
             f"평균 근처에 몰려 있는 게 아니라 꼬리가 길다.")
-        drv_tbl = ("| 순위 | 날짜 | 멤버 | 피크 | 방송 |\n|---|---|---|---|---|\n"
+        drv_tbl = ("| 순위 | 날짜 | 멤버 | 피크 | 이벤트 | 방송 |\n|---|---|---|---|---|---|\n"
                    + "\n".join(
                        f"| {i} | {pd.Timestamp(r['start']):%m-%d} | {r['name_ko']} | "
-                       f"**{r['peak_ccu']:,.0f}** | {str(r['title'])[:30]} |"
+                       f"**{r['peak_ccu']:,.0f}** | {session_event(r, events)} | {str(r['title'])[:30]} |"
                        for i, r in enumerate(d["top"], 1)))
 
     # ── 오리지널곡 ──
@@ -1494,6 +1536,38 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
                            f"| {r.name_ko} | {r.event_peak_ccu:,} | "
                            f"{r.usual_peak_ccu:,} | **{r.ccu_multiple:.2f}배** |"
                            for r in c.itertuples()))
+    bday_sec = ""
+    bv = vod[vod["type"] == "생일"] if not vod.empty and "type" in vod.columns else pd.DataFrame()
+    if not bv.empty:
+        bc = ct[ct["type"] == "생일"] if not ct.empty else ct
+        rows = []
+        for r in bv.sort_values("date", ascending=False).itertuples():
+            m = bc[(bc["event_id"] == r.event_id) & (bc["name_ko"] == r.name_ko)] if len(bc) else bc
+            ccu_txt = (f"{int(m.iloc[0]['event_peak_ccu']):,} / {int(m.iloc[0]['usual_peak_ccu']):,} = "
+                       f"**{m.iloc[0]['ccu_multiple']:.2f}배**" if len(m) else "수집 이전")
+            rows.append(f"| {r.date} | {r.name_ko} | {r.views_multiple:.2f}배 | {ccu_txt} |")
+        bd_lo, bd_hi = _rng(bv, "views_multiple")
+        bdc_lo, bdc_hi = _rng(bc, "ccu_multiple")
+        bday_sec = f"""## 생일 — 신의상과 따로 센다
+
+멤버 생일은 공식 프로필의 날짜(`config.BIRTHDAYS`)로 잡는다. 방송 제목에서 '생일'을 찾지 않는다 —
+남의 생일을 축하하는 방송이나 '생일 굿즈' 소개 방송이 섞이고, 정작 생일 방송이 그 말 없이
+올라오기도 한다. 그 멤버가 생일 당일~다음 날에 방송한 해만 이벤트로 보고(VOD 가 멤버당 최근
+300개라 더 오래된 생일은 방송이 남아 있지 않다), 같은 날 다른 이벤트(합방·신의상·콘서트)의
+방송은 빼고 잰다.
+
+{bv['event_id'].nunique()}건에서 VOD 조회수는 그 멤버 평소 방송의 **{bd_lo:.1f}~{bd_hi:.1f}배**였다.
+동시시청자는 수집을 시작한 2026-08-12 이후의 생일 {bc['event_id'].nunique() if len(bc) else 0}건만 잴 수 있었고
+**{bdc_lo:.1f}~{bdc_hi:.1f}배**다.
+
+| 날짜 | 멤버 | VOD 조회수 배수 | 동시시청자 피크 / 평소 피크 |
+|---|---|---|---|
+""" + "\n".join(rows) + """
+
+⚠ 생일 방송은 라이브·후열·굿즈 공개를 겸하는 멤버별 사건이라, 기획해서 여는 신의상 공개와 성격이
+다르다. 멤버당 건수가 적어 멤버끼리 순위를 매기지 않는다.
+
+"""
     now = pd.Timestamp.now().date()
     pending = int(sum(1 for _, e in events.iterrows()
                       if (now - e["end_date"]).days < MIN_POST_DAYS))
@@ -1613,7 +1687,7 @@ append-only 로 남긴다.
 끌어올리는 반면, 신의상은 하루 몇 시간에 평소의 몇 배가 몰린다. 성격이 다른 두
 레버로 봐야 한다 — 합방은 **분량**, 신의상은 **순간 최대치**다.
 
-## 오리지널곡 효과 — 가장 높은 천장
+{bday_sec}## 오리지널곡 효과 — 가장 높은 천장
 
 {orig_tbl}
 
