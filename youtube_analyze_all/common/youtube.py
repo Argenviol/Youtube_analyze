@@ -26,6 +26,11 @@ LEDGER = Path(__file__).resolve().parents[1] / "_state" / "youtube_quota.json"
 LEDGER_KEEP_DAYS = 14
 
 
+class PlaylistNotFound(RuntimeError):
+    """재생목록이 없다(404 playlistNotFound). 영상이 한 번도 올라온 적 없는 채널(데뷔 전)의 업로드
+    재생목록이 이렇게 온다."""
+
+
 class QuotaExceeded(RuntimeError):
     """일일 한도 소진. 재시도해도 한도가 풀리는 태평양 자정(UTC 07/08시)까지는 안 된다."""
 
@@ -123,6 +128,10 @@ class YouTube:
                 if attempt < TRIES - 1:
                     time.sleep(2 ** attempt)
                 continue
+            # 사유는 응답 **원문 전체**에서 찾는다. 오류 JSON 은 같은 설명 문장을 두 번 적은 뒤에야
+            # "reason" 이 나와서, 300자로 자른 메시지에서 찾으면 놓친다(2026-10-14 daily #86).
+            if r.status_code == 404 and "playlistNotFound" in r.text:
+                raise PlaylistNotFound(f"{endpoint} 재생목록 없음 404: {r.text[:300]}")
             raise RuntimeError(f"{endpoint} 실패 {r.status_code}: {r.text[:300]}")
         # 429 가 TRIES 번 연속이면 일시적 혼잡이 아니라 한도다(2026-09-20: search.list 일일 100회를
         # weekly 세 번이 같은 날 나눠 쓰다 세 번째에서 막혔다). search 면 검색만 막고 나머지는 둔다.
@@ -146,12 +155,8 @@ class YouTube:
         수집이 멈추면 안 된다. 한도 소진(QuotaExceeded)은 그대로 올린다."""
         try:
             return self._get("playlistItems", params)
-        except QuotaExceeded:
-            raise
-        except RuntimeError as e:
-            if "playlistNotFound" in str(e):
-                return {"items": []}
-            raise
+        except PlaylistNotFound:
+            return {"items": []}
 
     # -- 업로드 재생목록의 영상 ID (최신순) --------------------------------
     def playlist_video_ids(self, playlist_id: str, limit: int = 50) -> list[str]:
