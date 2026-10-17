@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-10-10T23:52:08.746466+00:00",
+  "fetched_at": "2026-10-17T22:38:08.655863+00:00",
   "source": "yatta.moe(Project Amber 후신, 캐릭터 마스터) + google-play-scraper(앱스토어 리뷰) + pytrends(Google Trends, 실패)",
-  "n_characters": 596,
+  "n_characters": 600,
   "n_playable_avatars_excluded": 26,
-  "n_reviews": 3918,
+  "n_reviews": 3897,
   "games": [
     "genshin",
     "starrail",
@@ -52,7 +52,7 @@
       "release": "fandom(Global Banner)",
       "ok": true,
       "error": null,
-      "n": 263,
+      "n": 267,
       "n_release": 188,
       "n_banner_names": 204
     }
@@ -67,34 +67,34 @@
   "google_trends_ok": true,
   "google_trends_error": null,
   "review_window_days": 365,
-  "review_since": "2025-10-10T23:43:26.297977+00:00",
+  "review_since": "2025-10-17T22:30:57.021719+00:00",
   "reviews_by_game": {
     "genshin": {
-      "n": 1298,
+      "n": 1289,
       "pages": 7,
       "complete": true,
       "note": ""
     },
     "starrail": {
-      "n": 974,
+      "n": 970,
       "pages": 5,
       "complete": true,
       "note": ""
     },
     "zzz": {
-      "n": 1148,
+      "n": 1137,
       "pages": 6,
       "complete": true,
       "note": ""
     },
     "hi3": {
-      "n": 67,
+      "n": 68,
       "pages": 1,
       "complete": true,
       "note": ""
     },
     "ba": {
-      "n": 431,
+      "n": 433,
       "pages": 3,
       "complete": true,
       "note": ""
@@ -106,37 +106,37 @@
     "by_game": {
       "genshin": {
         "channel": "@GenshinImpact_KR",
-        "videos": 601,
-        "fetched_videos": 39,
-        "comments": 3494,
+        "videos": 584,
+        "fetched_videos": 21,
+        "comments": 2529,
         "window_complete": true
       },
       "starrail": {
         "channel": "@HonkaiStarRail_KR",
-        "videos": 233,
-        "fetched_videos": 19,
-        "comments": 1867,
+        "videos": 231,
+        "fetched_videos": 10,
+        "comments": 537,
         "window_complete": true
       },
       "zzz": {
         "channel": "@ZZZ_KO",
-        "videos": 260,
-        "fetched_videos": 8,
-        "comments": 494,
+        "videos": 252,
+        "fetched_videos": 7,
+        "comments": 689,
         "window_complete": true
       },
       "hi3": {
         "channel": "@HonkaiImpact3rd_KR",
-        "videos": 55,
-        "fetched_videos": 3,
-        "comments": 134,
+        "videos": 56,
+        "fetched_videos": 5,
+        "comments": 233,
         "window_complete": true
       },
       "ba": {
         "channel": "@bluearchive_kr",
-        "videos": 305,
-        "fetched_videos": 7,
-        "comments": 550,
+        "videos": 312,
+        "fetched_videos": 12,
+        "comments": 1007,
         "window_complete": true
       }
     }
@@ -144,20 +144,20 @@
   "apple_reviews": {
     "genshin": {
       "app_id": 1517783697,
-      "n": 418,
+      "n": 415,
       "pages": 9,
       "window_complete": true
     },
     "starrail": {
       "app_id": 1599719154,
-      "n": 188,
+      "n": 186,
       "pages": 4,
       "window_complete": true
     },
     "zzz": {
       "app_id": 1606356401,
-      "n": 152,
-      "pages": 4,
+      "n": 149,
+      "pages": 3,
       "window_complete": true
     },
     "hi3": {
@@ -168,37 +168,37 @@
     },
     "ba": {
       "app_id": 1571873795,
-      "n": 79,
+      "n": 78,
       "pages": 2,
       "window_complete": true
     },
-    "merged_total": 1696
+    "merged_total": 1687
   },
   "hoyolab": {
     "genshin": {
       "gid": 2,
       "posts": 35,
-      "replies": 5564
+      "replies": 5567
     },
     "starrail": {
       "gid": 6,
       "posts": 60,
-      "replies": 4301
+      "replies": 4243
     },
     "zzz": {
       "gid": 8,
       "posts": 60,
-      "replies": 2079
+      "replies": 2075
     },
     "hi3": {
       "gid": 1,
-      "posts": 11,
-      "replies": 114
+      "posts": 10,
+      "replies": 100
     },
     "ba": {
       "note": "HoYoLAB 에 없는 게임"
     },
-    "merged_total": 25904
+    "merged_total": 25844
   },
   "review_sampling": "공통 기간 — 수집 시점부터 review_window_days 일 안의 리뷰 전부(게임마다 건수는 다르고 기간은 같다)",
   "method_changed_at": "2026-09-18",

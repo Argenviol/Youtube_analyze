@@ -1,6 +1,6 @@
 -- monthly_sentiment 데이터 (65 rows)
 
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2025-10', 4.125, 32);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2025-10', 4.067, 30);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2025-11', 4.314, 35);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2025-12', 3.431, 51);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2026-01', 3.743, 35);
@@ -9,11 +9,11 @@ INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', 
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2026-04', 4.045, 22);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2026-05', 3.657, 35);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2026-06', 3.477, 44);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2026-07', 2.483, 58);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2026-07', 2.536, 56);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2026-08', 3.971, 35);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2026-09', 3.28, 25);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2026-10', 5.0, 4);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2025-10', 3.118, 102);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('ba', '2026-10', 4.6, 10);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2025-10', 3.175, 80);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2025-11', 3.529, 70);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2025-12', 3.709, 103);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2026-01', 3.861, 173);
@@ -22,12 +22,12 @@ INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('gensh
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2026-04', 3.75, 68);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2026-05', 3.261, 111);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2026-06', 3.6, 65);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2026-07', 3.613, 119);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2026-07', 3.61, 118);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2026-08', 3.681, 144);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2026-09', 3.942, 120);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2026-10', 3.594, 32);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2026-09', 3.958, 119);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('genshin', '2026-10', 3.872, 47);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('hi3', '2025-10', 4.333, 3);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('hi3', '2025-11', 3.818, 11);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('hi3', '2025-11', 3.7, 10);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('hi3', '2025-12', 3.2, 5);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('hi3', '2026-01', 4.5, 8);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('hi3', '2026-02', 5.0, 4);
@@ -38,8 +38,8 @@ INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('hi3',
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('hi3', '2026-07', 4.0, 3);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('hi3', '2026-08', 3.667, 3);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('hi3', '2026-09', 4.429, 7);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('hi3', '2026-10', 5.0, 1);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starrail', '2025-10', 4.098, 41);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('hi3', '2026-10', 5.0, 3);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starrail', '2025-10', 4.061, 33);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starrail', '2025-11', 2.52, 204);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starrail', '2025-12', 2.349, 86);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starrail', '2026-01', 3.019, 54);
@@ -50,9 +50,9 @@ INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starr
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starrail', '2026-06', 3.521, 48);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starrail', '2026-07', 3.59, 78);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starrail', '2026-08', 2.983, 59);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starrail', '2026-09', 3.271, 59);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starrail', '2026-10', 2.667, 15);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2025-10', 2.655, 58);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starrail', '2026-09', 3.276, 58);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('starrail', '2026-10', 3.15, 20);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2025-10', 2.469, 32);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2025-11', 2.783, 60);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2025-12', 3.073, 123);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2026-01', 2.819, 149);
@@ -61,7 +61,7 @@ INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz',
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2026-04', 3.074, 27);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2026-05', 2.762, 42);
 INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2026-06', 3.211, 90);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2026-07', 2.806, 165);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2026-08', 2.565, 184);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2026-09', 2.727, 88);
-INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2026-10', 2.9, 10);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2026-07', 2.817, 164);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2026-08', 2.574, 183);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2026-09', 2.747, 87);
+INSERT INTO monthly_sentiment (game, month, avg_score, n_reviews) VALUES ('zzz', '2026-10', 2.393, 28);
