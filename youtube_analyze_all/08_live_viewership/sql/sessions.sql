@@ -262,7 +262,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-23 23:33', 25.3, 2, 5389, 5280, '어사기 간파해보겠습니다 w.리코, 리제', '낚시 방법');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-25 01:25', 0.0, 1, 5378, 5378, '고독방송..', '고독방송:심');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시라유키 히나', 'Shirayuki Hina', 'UNIVERSE', '2026-08-23 01:41', 23.6, 2, 5367, 5062, '초심 찾기 1.5일차 청초한사람의청초뽑기', '명조:워더링 웨이브');
-INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-10-17 19:17', 536.8, 54, 5359, 4361, '러너리그 공식 스크림 
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-10-17 19:17', 547.1, 55, 5359, 4343, '러너리그 공식 스크림 
 ', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아오쿠모 린', 'Aokumo Rin', 'CLICHE', '2026-09-03 22:37', 71.8, 8, 5350, 4875, '사진 찍으러 와써요', '마인크래프트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-08-13 19:48', 0.0, 1, 5346, 5346, '그놈의 대두 스페이스 ', '데드 스페이스');
