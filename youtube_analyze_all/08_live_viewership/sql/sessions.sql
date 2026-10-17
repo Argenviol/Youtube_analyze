@@ -1,6 +1,6 @@
 -- sessions 데이터 (1191 rows)
 
-INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시즈키 토아', 'Shizuki Toa', 'ABYSS', '2026-10-17 17:02', 20.6, 3, 60957, 54927, '스텔라이브 4기생 어비스 시즈키 토아 데뷔 야호 ~🩷', 'talk');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시즈키 토아', 'Shizuki Toa', 'ABYSS', '2026-10-17 17:02', 30.9, 4, 61808, 56647, '스텔라이브 4기생 어비스 시즈키 토아 데뷔 야호 ~🩷', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('사키하네 후야', 'Sakihane Huya', 'EVERYS', '2026-08-31 19:03', 51.1, 6, 38402, 29560, '첫 신의상 공개해요... 구경 오실래요...?😳', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아라하시 타비', 'Arahashi Tabi', 'UNIVERSE', '2026-08-31 20:05', 102.1, 11, 38237, 23186, '[🏖️스텔 여름 휴가 신의상🏖️] 알아하시는 타비 현재 매우 긴장 중 ㄷㄷㄷஇ௰இ', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('네네코 마시로', 'Neneko Mashiro', 'UNIVERSE', '2026-09-01 19:07', 51.0, 6, 28071, 24115, '☀️🏖️수영복 신의상 공개🏖️☀️', 'talk');
