@@ -81,7 +81,7 @@ def _read(p: Path, **kw) -> pd.DataFrame:
 
 # 방송으로 효과를 잴 수 있는 이벤트 종류. 곡 발매는 여기 없다 — 유튜브 업로드지
 # 방송이 아니라서, 발매일에 마침 큰 합방이 돌면 그 성과가 곡에 붙는다.
-STREAM_EVENT_TYPES = {"합방", "신의상", "콘서트", "생일", "3D 데뷔"}
+STREAM_EVENT_TYPES = {"합방", "신의상", "콘서트", "생일", "3D 데뷔", "데뷔"}
 
 
 def _event_keys(e) -> list[str]:
@@ -885,7 +885,7 @@ def before_after(events: pd.DataFrame, hist: pd.DataFrame, col: str,
 # 그 방송의 피크가 곡의 효과로 잡힌다. 실제로 8/31 사키하네 후야 커버가 '평소 대비
 # 18.4배'로 나왔는데, 그 피크(38,402)는 같은 날 돌던 10인 마인크래프트 합방의 것이었다.
 # 곡의 효과는 조회수·구독자로 재고, 동시시청자는 방송형 이벤트에만 붙인다.
-CCU_EVENT_TYPES = {"합방", "콘서트", "신의상", "생일", "3D 데뷔"}
+CCU_EVENT_TYPES = {"합방", "콘서트", "신의상", "생일", "3D 데뷔", "데뷔"}
 
 
 def ccu_impact(events: pd.DataFrame, sessions: pd.DataFrame) -> pd.DataFrame:
