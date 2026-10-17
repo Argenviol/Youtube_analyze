@@ -38,15 +38,22 @@ def dur_seconds(s: str) -> int:
     return h * 3600 + mi * 60 + se
 
 
+# 비율 지표(평균 조회수, 참여율, 도달 효율)를 내려면 최근 영상이 최소 이만큼 있어야 한다. 채널당 보통 50개를
+# 받으므로 5개는 낮은 하한이다 — 영상이 이보다 적은 채널은 평균이 아니라 영상 한두 개의 값이다.
+MIN_RECENT_VIDEOS = 5
+
+
 # ---------------------------------------------------------------------------
 # 1) 로드 & 파생지표
 # ---------------------------------------------------------------------------
 def build_metrics():
     ch = config.drop_founder(pd.read_csv(DATA / "channels.csv"))
     vids = config.drop_founder(pd.read_csv(DATA / "videos.csv"))
-    # 지표는 "최근 영상 평균 ÷ 구독자"처럼 영상과 구독자 수가 있어야 성립한다. 영상이 아직 없거나 구독자 수를
-    # 숨긴 채널(데뷔 전, 4기 ABYSS)은 0 으로 채우지 않고 분석에서 뺀다 — 0 으로 채우면 순위·상관이 왜곡된다.
-    analyzable = ch["subscribers"].notna() & ch["channel_id"].isin(vids["channel_id"].unique())
+    # 지표는 "최근 영상 평균 ÷ 구독자"처럼 영상 여러 개와 구독자 수가 있어야 성립한다. 구독자 수를 숨겼거나 영상이
+    # MIN_RECENT_VIDEOS 개 미만인 채널(데뷔 직후, 4기 ABYSS)은 0 으로 채우지 않고 분석에서 뺀다. 0 으로 채우면
+    # 순위·상관이 왜곡되고, 영상 1개(데뷔 예고)의 "평균"이 도달 효율·참여율 1위로 올라온다(2026-10-16 실제로 그랬다).
+    n_videos = vids.groupby("channel_id").size()
+    analyzable = ch["subscribers"].notna() & (ch["channel_id"].map(n_videos).fillna(0) >= MIN_RECENT_VIDEOS)
     excluded = ch.loc[~analyzable, "name_ko"].tolist()
     ch = ch[analyzable].reset_index(drop=True)
 
@@ -263,7 +270,7 @@ def build_outputs(ch, vids, metrics):
 
     # 요약 리포트
     excluded = metrics.attrs.get("excluded", [])
-    excl_note = (f"(영상이 없거나 구독자 수를 숨긴 채널 {len(excluded)}개는 제외 — {', '.join(excluded)})"
+    excl_note = (f"(최근 영상이 {MIN_RECENT_VIDEOS}개 미만이거나 구독자 수를 숨긴 채널 {len(excluded)}개는 제외 — {', '.join(excluded)})"
                  if excluded else "")
     lead = t.iloc[t["subscribers"].argmax()]
     eff = t.iloc[t["reach_ratio"].argmax()]
