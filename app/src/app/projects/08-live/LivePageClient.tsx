@@ -233,7 +233,7 @@ export default function LivePageClient() {
         <>
           <Section
             eyebrow="Charts"
-            title="최고 동시시청자 순위"
+            title="멤버별 최고 동시시청자"
             description="커버리지가 충분해 결론성 지표로 참고할 수 있다."
           />
           {peakCcuBarData.length > 0 ? (

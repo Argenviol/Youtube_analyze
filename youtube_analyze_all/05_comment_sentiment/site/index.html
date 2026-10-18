@@ -115,12 +115,12 @@ document.getElementById('tags').innerHTML =
   `<span class="tag">분류: Claude</span>`;
 
 const os=DATA.overall_sentiment, totS=os.positive+os.neutral+os.negative;
-const best=[...DATA.members].sort((a,b)=>b.sentiment_score-a.sentiment_score)[0];
+const med=a=>{const s=[...a].filter(v=>v!=null).sort((x,y)=>x-y),n=s.length;return n?(n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2):0;};
 document.getElementById('kpis').innerHTML=[
   ['긍정 비율',(os.positive/totS*100).toFixed(0)+'%',os.positive+'개 / '+totS+'개'],
   ['중립 비율',(os.neutral/totS*100).toFixed(0)+'%',os.neutral+'개'],
   ['부정 비율',(os.negative/totS*100).toFixed(0)+'%',os.negative+'개'],
-  ['감성 점수 1위',best.name_ko,'+'+ (best.sentiment_score*100).toFixed(0)+'점'],
+  ['감성 점수 중앙값','+'+(med(DATA.members.map(m=>m.sentiment_score))*100).toFixed(0)+'점','긍정−부정 · 멤버 '+DATA.members.length+'명'],
 ].map(k=>`<div class="kpi"><div class="v">${k[1]}</div><div class="l">${k[0]}</div><div class="s">${k[2]}</div></div>`).join('');
 
 const byScore=[...DATA.members].sort((a,b)=>b.sentiment_score-a.sentiment_score);

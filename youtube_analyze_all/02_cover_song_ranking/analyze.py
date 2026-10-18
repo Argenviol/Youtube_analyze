@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import config
 from common import db, viz
 from common.songs import add_song_key, pair_topic_tracks, summable
+from common.summary import overlap_line, spread
 import matplotlib.pyplot as plt
 
 HERE = Path(__file__).resolve().parent
@@ -222,9 +223,6 @@ def build_outputs(df, metrics):
     SITE.mkdir(parents=True, exist_ok=True)
     (SITE / "data.json").write_text(json.dumps(site_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    king = metrics.iloc[0]
-    most = metrics.iloc[metrics["song_count"].argmax()]
-    besteff = metrics.iloc[metrics["avg_views"].argmax()]
     topcover = df.sort_values("views", ascending=False).iloc[0]
     md = f"""# 프로젝트 2 · StelLive 커버곡 성과 랭킹 분석
 
@@ -247,12 +245,13 @@ Mashiro - Topic 'Springdream'). 그래서:
 - **곡 수(song_count)** 는 판을 한 곡으로 묶은 수, **영상 수(cover_count)** 는 그대로 센 수.
 
 ## 핵심 요약
-- **커버 총 조회수 1위**: {king['name_ko']} — {king['total_views']/1e6:.1f}M (영상 {king['cover_count']}개 · {king['song_count']}곡
-  · 음원 포함 {king['total_views_incl_topic']/1e6:.1f}M)
-- **최다 커버**: {most['name_ko']} — {most['song_count']}곡 (영상 {most['cover_count']}개)
-- **영상당 평균 조회수 1위**: {besteff['name_ko']} — {besteff['avg_views']/1e6:.2f}M
-- **역대 최고 조회 커버**: {topcover['name_ko']} — {topcover['views']/1e6:.1f}M
-  - 「{topcover['title']}」
+- **곡 수와 총 조회수**: {overlap_line(metrics, "song_count", "total_views", "곡 수", "총 조회수")}.
+- **곡 수와 영상당 평균 조회수**: {overlap_line(metrics, "song_count", "avg_views", "곡 수", "영상당 평균 조회수")}.
+- 멤버별 곡 수: {spread(metrics["song_count"], lambda v: f"{v:.0f}곡")}
+- 멤버별 총 조회수: {spread(metrics["total_views"], lambda v: f"{v/1e6:.1f}M")}
+- 멤버별 영상당 평균 조회수: {spread(metrics["avg_views"], lambda v: f"{v/1e6:.2f}M")}
+- 역대 최고 조회 커버: 「{topcover['title']}」 — {topcover['views']/1e6:.1f}M
+- 멤버별 수치는 아래 표·차트에 있다. 요약에는 멤버 이름을 붙인 순위를 쓰지 않는다.
 
 ## 산출물
 - `data/covers.csv` 커버곡 원천 지표, `data/cover_metrics.csv` 멤버 집계

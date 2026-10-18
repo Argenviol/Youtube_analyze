@@ -110,13 +110,12 @@ document.getElementById('tags').innerHTML =
 
 const totClips=DATA.members.reduce((a,m)=>a+m.clip_count,0);
 const totViews=DATA.members.reduce((a,m)=>a+m.total_clip_views,0);
-const hot=[...DATA.members].sort((a,b)=>b.total_clip_views-a.total_clip_views)[0];
-const mostCh=[...DATA.members].sort((a,b)=>b.fan_channels-a.fan_channels)[0];
+const med=a=>{const s=[...a].filter(v=>v!=null).sort((x,y)=>x-y),n=s.length;return n?(n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2):0;};
 document.getElementById('kpis').innerHTML=[
   ['총 클립(표본)',fmtN(totClips)+'개','공식 제외 팬 제작'],
   ['합산 조회수',fmt(totViews),'표본 클립 총합'],
-  ['클립 조회 1위',hot.name_ko,fmt(hot.total_clip_views)],
-  ['최다 창작 관심',mostCh.name_ko,mostCh.fan_channels+'개 팬채널'],
+  ['멤버별 클립 조회수 중앙값',fmt(med(DATA.members.map(m=>m.total_clip_views))),'멤버 '+DATA.members.length+'명'],
+  ['멤버당 팬채널 중앙값',med(DATA.members.map(m=>m.fan_channels)).toFixed(0)+'개','그 멤버를 다룬 채널'],
 ].map(k=>`<div class="kpi"><div class="v">${k[1]}</div><div class="l">${k[0]}</div><div class="s">${k[2]}</div></div>`).join('');
 
 const MCOLS=[

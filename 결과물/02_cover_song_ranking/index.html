@@ -109,13 +109,13 @@ document.getElementById('tags').innerHTML =
 
 const totCovers=DATA.members.reduce((a,m)=>a+m.cover_count,0);
 const totViews=DATA.members.reduce((a,m)=>a+m.total_views,0);
-const king=[...DATA.members].sort((a,b)=>b.total_views-a.total_views)[0];
+const med=a=>{const s=[...a].filter(v=>v!=null).sort((x,y)=>x-y),n=s.length;return n?(n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2):0;};
 const topCover=DATA.top_covers[0];
 document.getElementById('kpis').innerHTML=[
   ['총 커버곡',fmtN(totCovers)+'곡','탤런트 채널 합산'],
   ['합산 조회수',fmt(totViews),'모든 커버곡 조회수 합'],
-  ['총 조회수 1위',king.name_ko,fmt(king.total_views)+' · '+king.cover_count+'곡'],
-  ['최고 조회 커버',topCover.name_ko,fmt(topCover.views)+' 조회'],
+  ['멤버별 총 조회수 중앙값',fmt(med(DATA.members.map(m=>m.total_views))),'멤버 '+DATA.members.length+'명'],
+  ['최고 조회 커버',fmt(topCover.views),'커버 영상 하나 기준'],
 ].map(k=>`<div class="kpi"><div class="v">${k[1]}</div><div class="l">${k[0]}</div><div class="s">${k[2]}</div></div>`).join('');
 
 const COLS=[

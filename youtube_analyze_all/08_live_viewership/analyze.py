@@ -18,6 +18,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import config, db, viz
+from common.summary import spread
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
@@ -296,7 +297,6 @@ def build_outputs(df, sess, metrics, cov, charts, enough):
         ccu_series=series,
     ), ensure_ascii=False, indent=2), encoding="utf-8")
 
-    top_grow = metrics.iloc[metrics["follower_delta"].argmax()]
     lines = [
         "# 프로젝트 8 · StelLive 동시시청자 시계열 분석\n",
         "- 데이터 소스: 치지직 비공식 API (polling live-status) — 10분 간격 자체 수집",
@@ -310,23 +310,19 @@ def build_outputs(df, sess, metrics, cov, charts, enough):
         "하지만 동시시청자는 소급이 불가능하다. VOD는 누적 조회수(readCount)만 주고, 치지직에는",
         "동시시청자 히스토리 API가 없다. 이 시계열은 직접 찍어 쌓은 것만이 유일한 출처다.\n",
         "## 핵심 요약\n",
-        f"- **관측 구간 팔로워 증가 1위**: {top_grow['name_ko']} — "
-        f"{int(top_grow['follower_delta']):+,}명"
-        + (f" (일 환산 {top_grow['follower_per_day']:+,.0f}명)" if pd.notna(top_grow["follower_per_day"]) else ""),
+        f"- 관측 구간 멤버별 팔로워 증가: {spread(metrics['follower_delta'], lambda v: f'{v:+,.0f}명')}",
     ]
 
     if enough:
-        top_peak = metrics.dropna(subset=["peak_ccu"]).iloc[0]
         dens = metrics.dropna(subset=["ccu_per_1k_followers"])
         lines += [
-            f"- **피크 동시시청자 1위**: {top_peak['name_ko']} — {int(top_peak['peak_ccu']):,}명",
+            f"- 멤버별 피크 동시시청자: {spread(metrics['peak_ccu'], lambda v: f'{v:,.0f}명')}",
             f"- 관측된 방송 세션: {len(sess)}건",
         ]
         if len(dens):
-            top_d = dens.sort_values("ccu_per_1k_followers", ascending=False).iloc[0]
             lines.append(
-                f"- **팬덤 밀도 1위**: {top_d['name_ko']} — 팔로워 1,000명당 "
-                f"{top_d['ccu_per_1k_followers']:.1f}명 동시 시청"
+                f"- 팬덤 밀도(팔로워 1,000명당 평균 동시시청자): "
+                f"{spread(dens['ccu_per_1k_followers'], lambda v: f'{v:.1f}명')}"
             )
     else:
         lines += [

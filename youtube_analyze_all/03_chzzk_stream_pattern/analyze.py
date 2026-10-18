@@ -14,6 +14,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import config, db, viz
+from common.summary import overlap_line, spread
 import matplotlib.pyplot as plt
 
 HERE = Path(__file__).resolve().parent
@@ -178,10 +179,6 @@ def build_outputs(df, metrics):
 
     n_nb = int(meta.get("n_no_broadcast", 0))
     no_bc = f"(방송이 아직 없는 채널 {n_nb}개는 제외 — 데뷔 전)" if n_nb else ""
-    grind = metrics.iloc[0]
-    longest = metrics.iloc[metrics["avg_duration_h"].argmax()]
-    freq = metrics.iloc[metrics["streams_per_week"].argmax()]
-    night = metrics.iloc[metrics["night_share"].argmax()]
     peak_hour = int(np.argmax(site_data["hour_dist"]))
     md = f"""# 프로젝트 3 · StelLive 치지직 방송 패턴 분석
 
@@ -189,10 +186,11 @@ def build_outputs(df, metrics):
 - 멤버 {meta['n_members']}명{no_bc}, 멤버당 최근 최대 {meta['max_items']}개 방송
 
 ## 핵심 요약
-- **주간 방송 시간 1위**: {grind['name_ko']} — 주 {grind['hours_per_week']:.0f}시간
-- **최장 평균 방송**: {longest['name_ko']} — 회당 평균 {longest['avg_duration_h']:.1f}시간
-- **최다 방송 빈도**: {freq['name_ko']} — 주 {freq['streams_per_week']:.1f}회
-- **최고 심야형(0~5시 시작)**: {night['name_ko']} — {night['night_share']*100:.0f}%
+- **방송 시간과 방송 빈도**: {overlap_line(metrics, "hours_per_week", "streams_per_week", "주간 방송 시간", "방송 빈도")}.
+- 주간 방송 시간: {spread(metrics["hours_per_week"], lambda v: f"주 {v:.0f}시간")}
+- 회당 평균 방송: {spread(metrics["avg_duration_h"], lambda v: f"{v:.1f}시간")}
+- 방송 빈도: {spread(metrics["streams_per_week"], lambda v: f"주 {v:.1f}회")}
+- 심야(0~5시) 시작 비율: {spread(metrics["night_share"], lambda v: f"{v*100:.0f}%")}
 - 전체 방송이 가장 많이 시작되는 시간대: **{peak_hour}시** (KST)
 
 ## 산출물

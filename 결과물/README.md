@@ -5,7 +5,10 @@
 파일 하나만 열면 됩니다.
 
 수집할 때마다 숫자가 바뀌는 프로젝트는 `REPORT1 - 20260818.md` 처럼 날짜를 붙여
-날짜별로 쌓습니다. 잘 안 바뀌는 프로젝트는 `REPORT.md` 하나입니다.
+최신본만 프로젝트 폴더에 두고, 지난 날짜는 `_이전/<프로젝트>/` 에 그날 기록 그대로 묶어 둡니다.
+잘 안 바뀌는 프로젝트는 `REPORT.md` 하나입니다.
+
+결론 문장에는 멤버 이름을 붙인 순위를 쓰지 않습니다. 멤버별 수치는 각 리포트의 표·차트에 있습니다.
 
 | # | 프로젝트 | 최신 리포트 | 기준일 | 축적 | 차트 | 대시보드 |
 |---|---|---|---|---|---|---|
@@ -16,11 +19,11 @@
 | 5 | 댓글 여론/감성 | [REPORT.md](05_comment_sentiment/REPORT.md) | 2026-10-17 | — | [4종](05_comment_sentiment/charts/) | [index.html](05_comment_sentiment/index.html) |
 | 6 | 경쟁사 비교 | [REPORT6 - 20261017.md](06_competitor_comparison/REPORT6%20-%2020261017.md) | 2026-10-17 | 57개 | [6종](06_competitor_comparison/charts/) | [index.html](06_competitor_comparison/index.html) |
 | 7 | 버추얼 크리에이터 시장 | [REPORT.md](07_market_analysis/REPORT.md) | 2026-10-17 | — | [5종](07_market_analysis/charts/) | [index.html](07_market_analysis/index.html) |
-| 8 | 동시시청자 시계열 | [REPORT8 - 20261017.md](08_live_viewership/REPORT8%20-%2020261017.md) | 2026-10-17 | 28개 | [4종](08_live_viewership/charts/) | [index.html](08_live_viewership/index.html) |
+| 8 | 동시시청자 시계열 | [REPORT8 - 20261018.md](08_live_viewership/REPORT8%20-%2020261018.md) | 2026-10-18 | 29개 | [4종](08_live_viewership/charts/) | [index.html](08_live_viewership/index.html) |
 | 9 | DART 재무 분석 | [REPORT.md](09_dart_financials/REPORT.md) | 2026-10-04 | — | [5종](09_dart_financials/charts/) | [index.html](09_dart_financials/index.html) |
 | 10 | 게임 캐릭터 인기도 | [REPORT.md](10_hoyoverse/REPORT.md) | 2026-10-17 | — | [8종](10_hoyoverse/charts/) | [index.html](10_hoyoverse/index.html) |
 | 11 | 팬 커머스 | [REPORT.md](11_fan_commerce/REPORT.md) | 2026-10-17 | — | [5종](11_fan_commerce/charts/) | [index.html](11_fan_commerce/index.html) |
-| 12 | 이벤트 임팩트 | [REPORT12 - 20261017.md](12_event_impact/REPORT12%20-%2020261017.md) | 2026-10-17 | 46개 | [4종](12_event_impact/charts/) | [index.html](12_event_impact/index.html) |
+| 12 | 이벤트 임팩트 | [REPORT12 - 20261018.md](12_event_impact/REPORT12%20-%2020261018.md) | 2026-10-18 | 47개 | [4종](12_event_impact/charts/) | [index.html](12_event_impact/index.html) |
 
 프로젝트 12개 · 차트 70종 · 대시보드 12건.
 

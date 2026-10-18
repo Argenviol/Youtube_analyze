@@ -113,14 +113,12 @@ document.getElementById('tags').innerHTML =
   `<span class="tag">치지직 API</span>`;
 
 // KPIs
-const byHours=[...DATA.members].sort((a,b)=>b.hours_per_week-a.hours_per_week);
-const byNight=[...DATA.members].sort((a,b)=>b.night_share-a.night_share)[0];
-const byGame=[...DATA.members].sort((a,b)=>b.game_share-a.game_share)[0];
+const med=a=>{const s=[...a].filter(v=>v!=null).sort((x,y)=>x-y),n=s.length;return n?(n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2):0;};
 let peakH=0,peakV=-1; DATA.hour_dist.forEach((v,h)=>{if(v>peakV){peakV=v;peakH=h;}});
 document.getElementById('kpis').innerHTML=[
-  ['방송 시간 1위',byHours[0].name_ko,'주 '+byHours[0].hours_per_week+'시간'],
-  ['최다 심야형',byNight.name_ko,(byNight.night_share*100).toFixed(0)+'% · 0~5시 시작'],
-  ['최고 게임형',byGame.name_ko,(byGame.game_share*100).toFixed(0)+'% 게임 방송'],
+  ['주간 방송 시간 중앙값','주 '+med(DATA.members.map(m=>m.hours_per_week)).toFixed(0)+'시간','멤버 '+DATA.members.length+'명'],
+  ['심야 시작 비율 중앙값',(med(DATA.members.map(m=>m.night_share))*100).toFixed(0)+'%','0~5시 시작'],
+  ['게임 방송 비율 중앙값',(med(DATA.members.map(m=>m.game_share))*100).toFixed(0)+'%','게임 카테고리'],
   ['피크 시작 시간',peakH+'시',fmtN(peakV)+'회 (KST)'],
 ].map(k=>`<div class="kpi"><div class="v">${k[1]}</div><div class="l">${k[0]}</div><div class="s">${k[2]}</div></div>`).join('');
 

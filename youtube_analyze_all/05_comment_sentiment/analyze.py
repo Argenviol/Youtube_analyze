@@ -13,6 +13,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import config, db, viz
+from common.summary import spread
 import matplotlib.pyplot as plt
 
 HERE = Path(__file__).resolve().parent
@@ -184,7 +185,6 @@ def build_outputs(df, members, topic_matrix, ref, df_all):
 |---|---|---|---|---|---|
 {rows}
 """
-    best = members.iloc[0]
     toptopic = df["topic_ko"].value_counts().idxmax()
     n = len(df)
     pos_pct = site_data["overall_sentiment"]["positive"] / n * 100
@@ -197,7 +197,8 @@ def build_outputs(df, members, topic_matrix, ref, df_all):
 
 ## 핵심 요약
 - 표본 전체 긍정 비율 **{pos_pct:.0f}%** — 상위 댓글은 대부분 팬 애정 표현.
-- **감성 점수 1위**: {best['name_ko']} (점수 {best['sentiment_score']:+.2f})
+- 멤버별 감성 점수(긍정 비율−부정 비율): {spread(members["sentiment_score"], lambda v: f"{v:+.2f}")}.
+  긍정이 부정보다 많은 멤버는 {int((members["positive_share"] > members["negative_share"]).sum())}/{len(members)}명 — 멤버별 수치는 아래 표에 있다.
 - 가장 많이 언급되는 토픽: **{toptopic}**
 - 멤버×토픽 히트맵에서 목소리·노래, 성격·개그가 대다수 멤버의 상위 토픽으로 나타남.
 

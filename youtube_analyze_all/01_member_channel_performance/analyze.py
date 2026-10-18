@@ -17,6 +17,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import config, db, viz
+from common.summary import overlap_line, spread
 import matplotlib.pyplot as plt
 
 HERE = Path(__file__).resolve().parent
@@ -272,10 +273,6 @@ def build_outputs(ch, vids, metrics):
     excluded = metrics.attrs.get("excluded", [])
     excl_note = (f"(최근 영상이 {MIN_RECENT_VIDEOS}개 미만이거나 구독자 수를 숨긴 채널 {len(excluded)}개는 제외 — {', '.join(excluded)})"
                  if excluded else "")
-    lead = t.iloc[t["subscribers"].argmax()]
-    eff = t.iloc[t["reach_ratio"].argmax()]
-    busy = t.iloc[t["uploads_per_week"].argmax()]
-    eng = t.iloc[t["recent_avg_engagement_rate"].argmax()]
     md = f"""# 프로젝트 1 · StelLive 멤버별 유튜브 채널 성과 분석
 
 - 데이터 소스: YouTube Data API v3 (수집 {meta['fetched_at'][:10]})
@@ -283,10 +280,13 @@ def build_outputs(ch, vids, metrics):
 - 총 {meta['n_videos']}개 영상 지표 집계
 
 ## 핵심 요약
-- **최다 구독자(탤런트)**: {lead['name_ko']} — {lead['subscribers']:,}명
-- **도달 효율 1위**(평균조회수/구독자): {eff['name_ko']} — {eff['reach_ratio']*100:.0f}%
-- **가장 부지런한 업로더**: {busy['name_ko']} — 주 {busy['uploads_per_week']:.1f}회
-- **참여율 1위**(좋아요+댓글/조회수): {eng['name_ko']} — {eng['recent_avg_engagement_rate']*100:.1f}%
+- **구독자와 참여율**: {overlap_line(t, "subscribers", "recent_avg_engagement_rate", "구독자", "참여율")}.
+- **구독자와 도달 효율**: {overlap_line(t, "subscribers", "reach_ratio", "구독자", "도달 효율")}.
+- 구독자: {spread(t["subscribers"], lambda v: f"{v:,.0f}명")}
+- 도달 효율(평균조회수/구독자): {spread(t["reach_ratio"], lambda v: f"{v*100:.0f}%")}
+- 업로드: {spread(t["uploads_per_week"], lambda v: f"주 {v:.1f}회")}
+- 참여율(좋아요+댓글/조회수): {spread(t["recent_avg_engagement_rate"], lambda v: f"{v*100:.1f}%")}
+- 멤버별 수치는 아래 표·차트에 있다. 요약에는 멤버 이름을 붙인 순위를 쓰지 않는다.
 
 ## 상관관계 (탤런트 {len(t)}명)
 | 관계 | 상관계수 r |

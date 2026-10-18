@@ -14,6 +14,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import config, db, viz
+from common.summary import overlap_line, spread
 import matplotlib.pyplot as plt
 
 HERE = Path(__file__).resolve().parent
@@ -154,8 +155,6 @@ def build_outputs(df, members, channels):
     SITE.mkdir(parents=True, exist_ok=True)
     (SITE / "data.json").write_text(json.dumps(site_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    hot = members.iloc[0]
-    mostch = members.iloc[members["fan_channels"].argmax()]
     bigch = channels.iloc[0]
     total_views = int(members["total_clip_views"].sum())
     md = f"""# 프로젝트 4 · StelLive 키리누키(2차창작) 생태계 분석
@@ -165,8 +164,9 @@ def build_outputs(df, members, channels):
 - 필터: {meta.get('filter','제목/채널명 키리누키·클립 토큰')}
 
 ## 핵심 요약
-- **팬 클립 총 조회수 1위**: {hot['name_ko']} — {hot['total_clip_views']/1e6:.1f}M ({hot['clip_count']}개 클립)
-- **가장 많은 팬채널이 다루는 멤버**: {mostch['name_ko']} — {mostch['fan_channels']}개 채널
+- **클립 수와 클립 조회수**: {overlap_line(members, "clip_count", "total_clip_views", "클립 수", "클립 총 조회수")}.
+- 멤버별 팬 클립 총 조회수: {spread(members["total_clip_views"], lambda v: f"{v/1e6:.1f}M")}
+- 멤버를 다루는 팬채널 수: {spread(members["fan_channels"], lambda v: f"{v:.0f}개")}
 - **최대 키리누키 채널**: {bigch['clip_channel_title']} — 총 {bigch['total_views']/1e6:.1f}M ({bigch['clip_count']}개)
 - 생태계 표본 합계 조회수: {total_views/1e6:.1f}M
 

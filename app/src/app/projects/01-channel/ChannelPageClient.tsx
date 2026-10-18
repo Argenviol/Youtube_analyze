@@ -15,6 +15,7 @@ import data01 from "@/data/01.json";
 import { REFRESH_INTERVAL_MIN, REFRESH_LABEL } from "@/data/refresh";
 import { UNIT_LABEL_KO } from "@/data/roster";
 import type { Data01, Member01 } from "@/data/types";
+import { overlapLine } from "@/lib/overlap";
 import { useFilters } from "@/lib/useFilters";
 import styles from "./page.module.css";
 
@@ -29,11 +30,10 @@ export default function ChannelPageClient() {
 
   const filteredMembers = useMemo(() => data.members.filter((m) => matchesFilters(m)), [matchesFilters]);
 
-  const { topSubscriber, topEngagement } = useMemo(() => {
-    const bySubs = [...data.members].sort((a, b) => b.subscribers - a.subscribers)[0];
-    const byEng = [...data.members].sort((a, b) => b.recent_avg_engagement_rate - a.recent_avg_engagement_rate)[0];
-    return { topSubscriber: bySubs, topEngagement: byEng };
-  }, []);
+  const overlap = useMemo(
+    () => overlapLine(data.members, (m) => m.subscribers, (m) => m.recent_avg_engagement_rate, "구독자", "최근 참여율"),
+    [],
+  );
 
   const barData: BarDatum[] = useMemo(
     () =>
@@ -109,26 +109,20 @@ export default function ChannelPageClient() {
           <Freshness fetchedAt={data.meta.fetched_at} intervalMinutes={REFRESH_INTERVAL_MIN["01"]} cadenceLabel={REFRESH_LABEL["01"]} />
         </div>
         <p className={styles.subhead}>
-          유튜브 채널 {data.meta.n_channels}개 · 최근 영상 {data.meta.n_videos}건 기준. 구독자 규모와 참여율은
-          서로 다른 사람이 1위를 차지한다 — 아래 산점도에서 바로 확인할 수 있다.
+          유튜브 채널 {data.meta.n_channels}개 · 최근 영상 {data.meta.n_videos}건 기준. 구독자 규모와 참여율이
+          따로 움직이는지 아래 산점도에서 바로 확인할 수 있다.
         </p>
       </header>
 
-      {topSubscriber.name_en !== topEngagement.name_en ? (
-        <Card padding="lg" className={styles.insightCard}>
-          <Badge tone="primary">핵심 발견</Badge>
-          <p className={styles.insightText}>
-            구독자 1위는 <strong>{topSubscriber.name_ko}</strong>({topSubscriber.subscribers.toLocaleString("ko-KR")}명)지만,
-            최근 참여율 1위는 <strong>{topEngagement.name_ko}</strong>({pct(topEngagement.recent_avg_engagement_rate)})다.
-            팔로워 규모와 팬덤 밀도는 다른 지표다.
-          </p>
-        </Card>
-      ) : null}
+      <Card padding="lg" className={styles.insightCard}>
+        <Badge tone="primary">핵심 발견</Badge>
+        <p className={styles.insightText}>{overlap}. 팔로워 규모와 팬덤 밀도는 다른 지표다.</p>
+      </Card>
 
       <Section eyebrow="Filters" title="필터" description="멤버·유닛으로 아래 차트와 표를 함께 좁힌다." />
       <FilterBar />
 
-      <Section eyebrow="Charts" title="구독자 순위" description="멤버별 구독자 수. 막대나 이름을 클릭하면 상세 패널이 열린다." />
+      <Section eyebrow="Charts" title="멤버별 구독자" description="멤버별 구독자 수. 막대나 이름을 클릭하면 상세 패널이 열린다." />
       {barData.length > 0 ? (
         <Card padding="md">
           <BarChart data={barData} title="멤버별 구독자 수" onSelect={openDetail} selected={detail} />

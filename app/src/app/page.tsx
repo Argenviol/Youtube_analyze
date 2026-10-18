@@ -14,6 +14,7 @@ import data10 from "@/data/10.json";
 import data11 from "@/data/11.json";
 import type { Data01, Data02, Data03, Data04, Data05, Data06, Data08, Data09, Data10, Data11 } from "@/data/types";
 import { isData11Ready } from "@/data/types";
+import { overlapLine } from "@/lib/overlap";
 import styles from "./page.module.css";
 
 // M3 파트 2 — 01뿐이던 레퍼런스 연결을 나머지 6개(02~06, 08)까지 넓혔다. 07은
@@ -67,16 +68,17 @@ type Insight = {
 // 02는 조회수 기반 시계열 데이터가 없고, 08은 아직 세션 자체가 FR-5 기준 미만이라
 // 그런 행태 패턴을 결론 낼 수 없다 — 채용 심사자에게 보여줄 첫 화면에서부터
 // 검증 안 된 주장을 하지 않는다는 원칙을 지킨다.
-const top02ByViews = [...project02.members].sort((a, b) => b.total_views - a.total_views)[0];
-const top02ByEngagement = [...project02.members].sort((a, b) => b.avg_engagement_rate - a.avg_engagement_rate)[0];
+// 멤버 이름을 붙인 "1위" 대신 상위 3명이 겹치는지로 쓴다(공개 화면이라 멤버 비교 문구를 만들지 않는다).
+const insight01 = overlapLine(project01.members, (m) => m.subscribers, (m) => m.recent_avg_engagement_rate, "구독자", "참여율");
+const insight02 = overlapLine(project02.members, (m) => m.total_views, (m) => m.avg_engagement_rate, "커버곡 조회수", "참여율");
 
 const INSIGHTS: Insight[] = [
   {
-    headline: "팔로워 규모 1위와 팬덤 밀도 1위는 다른 사람이다",
-    detail: "구독자 수 상위 멤버와 영상당 참여율 상위 멤버가 겹치지 않는다 — 01 채널 성과",
+    headline: "팔로워 규모와 팬덤 밀도는 다른 지표다",
+    detail: `${insight01} — 01 채널 성과`,
   },
   {
-    headline: `커버곡 조회수 1위(${top02ByViews.name_ko})와 참여율 1위(${top02ByEngagement.name_ko})는 다른 사람이다`,
+    headline: insight02,
     detail: `커버곡 수(cover_count)는 ${project02.meta.method_changed_at}부터 업로드 재생목록 전량 열거로 수집한다 — 그 이전 스냅샷과는 비교할 수 없다 — 02 커버곡 랭킹`,
   },
   {
