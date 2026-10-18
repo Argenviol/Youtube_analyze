@@ -44,7 +44,7 @@ CREATE TABLE member_metrics (
     follower_per_day REAL,
     n_sessions INTEGER,
     n_live_points INTEGER,
-    peak_ccu REAL,
-    avg_ccu REAL,
+    peak_ccu INTEGER,
+    avg_ccu INTEGER,
     ccu_per_1k_followers REAL
 );
