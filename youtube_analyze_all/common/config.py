@@ -100,11 +100,12 @@ DEBUTS = {
     "Hanako Nana":    ("2024-05-19", "3기 CLICHE",      "exact"),
     "Yuzuha Riko":    ("2024-05-19", "3기 CLICHE",      "exact"),
     "Sakihane Huya":  ("2025-09-20", "1기 EVERYS(신규)", "exact"),
-    # 4기 ABYSS — 공식 공지(stellive.me/news/14262, 2026-10-11)의 첫 방송 일정. 방송 확인 전 값이다.
-    "Shizuki Toa":     ("2026-10-17", "4기 ABYSS",       "approx"),
-    "Cogane Rang":     ("2026-10-17", "4기 ABYSS",       "approx"),
-    "Hanayo Hiyori":   ("2026-10-18", "4기 ABYSS",       "approx"),
-    "Tokino Mary":     ("2026-10-18", "4기 ABYSS",       "approx"),
+    # 4기 ABYSS — 공식 공지(stellive.me/news/14262, 2026-10-11)의 일정이고, 08 수집으로 데뷔 방송을 확인했다
+    # (토아 10-17 17:02·랑 18:05, 히요리 10-18 17:00·메리 18:02 KST).
+    "Shizuki Toa":     ("2026-10-17", "4기 ABYSS",       "exact"),
+    "Cogane Rang":     ("2026-10-17", "4기 ABYSS",       "exact"),
+    "Hanayo Hiyori":   ("2026-10-18", "4기 ABYSS",       "exact"),
+    "Tokino Mary":     ("2026-10-18", "4기 ABYSS",       "exact"),
 }
 
 # ---------------------------------------------------------------------------

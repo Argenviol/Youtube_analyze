@@ -1229,8 +1229,13 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         mk_growth = mk["growth"]
         mk_days = (pd.Timestamp(today) - pd.Timestamp(mk_from)).days or 1
         mk_annual = (1 + mk_growth) ** (365 / mk_days) - 1
-    if mk_mau:
-        mk_peak_share = 38402 / mk_mau
+    # 관측 최고 피크는 고정값이 아니라 세션에서 고른다 — 38,402(후야 신의상)로 박혀 있던 동안 4기 데뷔
+    # 방송(79,149)이 기록을 넘었는데도 문장은 옛 기록을 최고처럼 썼다.
+    mk_rec = ((drivers or {}).get("top") or [None])[0]
+    mk_peak = float(mk_rec["peak_ccu"]) if mk_rec else 0.0
+    mk_peak_who = f"{mk_rec['name_ko']}의 {session_event(mk_rec, events)} 방송" if mk_rec else ""
+    if mk_mau and mk_peak:
+        mk_peak_share = mk_peak / mk_mau
     if mk.get("facts"):
         mk_facts_tbl = ("| 시장 지표 | 값 | 연도 | 출처 |\n|---|---|---|---|\n" + "\n".join(
             f"| {f['metric']} | {f['value']:,.0f}{'%' if f['unit']=='pct' else ''} | {int(f['year'])} | {f['source_name']} |"
@@ -1528,6 +1533,11 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         if len(grp):
             grp_lo, grp_hi = float(grp["arc_multiple"].min()), float(grp["arc_multiple"].max())
 
+    cos_top_txt = ""
+    if not ct.empty and (ct["type"] == "신의상").any():
+        r = ct[ct["type"] == "신의상"].nlargest(1, "ccu_multiple").iloc[0]
+        cos_top_txt = (f" 가장 크게 터진 {r['name_ko']}의 신의상 공개는 {int(r['event_peak_ccu']):,}명 — "
+                       f"평소 피크의 {r['ccu_multiple']:.1f}배다.")
     costume_tbl = ""
     if not ct.empty and (ct["type"] == "신의상").any():
         c = ct[ct["type"] == "신의상"].nlargest(8, "ccu_multiple")
@@ -1600,7 +1610,7 @@ append-only 로 남긴다.
 - **가장 크게 터지는 이벤트는 합방이 아니라 신의상 공개다.** 조회수는 평소의
   **{cos_lo:.1f}~{cos_hi:.1f}배**(합방은 {col_lo:.1f}~{col_hi:.1f}배), 동시시청자 피크는
   **{ccu_lo:.1f}~{ccu_hi:.1f}배**(같은 기간 나란히 돌던 10인 마인크래프트 합방은
-  {mc_lo:.1f}~{mc_hi:.1f}배)였다. 사키하네 후야의 첫 신의상은 38,402명 — 평소 피크의 19배다.
+  {mc_lo:.1f}~{mc_hi:.1f}배)였다.{cos_top_txt}
 - **천장이 가장 높은 건 오리지널곡이다.** MV 가 일반 영상의 {o_lo:.1f}~{o_hi:.1f}배,
   같은 멤버의 커버곡과 비교해도 {oc_lo:.1f}~{oc_hi:.1f}배다. 다만 잴 수 있는 곡이
   한 앨범(4곡)뿐이라 **경향이 아니라 사례**로 읽어야 한다.
@@ -1796,7 +1806,7 @@ append-only 로 남긴다.
 
 시장 매출의 절반은 구독·후원(치지직 쪽), 절반은 유튜브다. 앞 절들이 찾은 "신의상은
 치지직을, 곡은 유튜브를 움직인다"는 분리가 시장 매출 구조와 같은 모양이다. 치지직
-MAU {mk_mau:,.0f}명 기준으로 사키하네 후야의 신의상 피크 38,402명은 플랫폼 전체 월간
+MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,.0f}명)는 플랫폼 전체 월간
 이용자의 {mk_peak_share:.1%}가 한 방송에 모인 순간이다.
 
 {mk_ms_tbl}
