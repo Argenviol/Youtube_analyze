@@ -374,6 +374,15 @@ def _ba_banner_dates(years=range(2021, 2027)) -> dict[str, str]:
     return first
 
 
+def _global(v):
+    """SchaleDB 의 서버별 값([일본, 글로벌, 중국])에서 글로벌(한국 서버) 값을 고른다. 배열이 아니면 그대로.
+
+    IsLimited 를 배열째 저장해 CSV 에 "[4, 4, 0]" 같은 문자열로 남았고, 대시보드 타입(number)과 어긋났다.
+    한국 서버를 글로벌 일정으로 보는 것은 위 IsReleased[1] 과 같은 기준이다.
+    """
+    return v[1] if isinstance(v, list) and len(v) > 1 else v
+
+
 def ba_master() -> tuple[list[dict], dict]:
     status = dict(names="schaledb", release="fandom(Global Banner)", ok=False, error=None, n=0, n_release=0)
     kr = _get(SCHALE + "kr/students.min.json").json()
@@ -392,7 +401,7 @@ def ba_master() -> tuple[list[dict], dict]:
             rank={3: 5, 2: 4, 1: 3}.get(grade), rarity_label=f"{grade}★",
             element=st.get("BulletType"), weapon_or_path=st.get("WeaponType") or st.get("SquadType"),
             is_playable_avatar=False, release_unix=None, release_date=None,
-            default_order=st.get("DefaultOrder"), is_limited=st.get("IsLimited"),
+            default_order=st.get("DefaultOrder"), is_limited=_global(st.get("IsLimited")),
         ))
     status["n"] = len(rows)
     try:

@@ -637,8 +637,9 @@ export type Character10 = {
   element: string | null;
   weapon_or_path: string | null;
   is_playable_avatar: boolean;
-  release_unix: number;
-  release_date: string;
+  /** 출시일을 확인하지 못한 캐릭터(블루 아카이브·붕괴3rd 일부)는 null. */
+  release_unix: number | null;
+  release_date: string | null;
   name_len: number;
   name_ambiguous: boolean;
   matchable: boolean;

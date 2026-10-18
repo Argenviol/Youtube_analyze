@@ -24,17 +24,18 @@ python build_site.py  # site/index.html
 
 1. 멤버별 조회수 상위 영상 4개 선정 → 각 영상 추천순(relevance) 상위 댓글 최대 40개 수집(1,753개).
 2. 4자 미만 초단문(이모지 등) 제외.
-3. **좋아요 수 상위 30개/멤버(총 330개)** 를 표본으로 Claude가 직접 읽고 라벨링:
+3. **좋아요 수 상위 30개/멤버** 를 표본으로 Claude가 직접 읽고 라벨링(기존 11명 330개 + 4기 ABYSS 4명 120개, 2026-10-18):
    - `sentiment`: positive / neutral / negative
    - `topic`: 목소리·노래 / 성격·개그 / 비주얼·디자인 / 방송내용·게임 / 멤버 케미 / 성장·추억 / 기타
-4. 표본 기준 집계로 멤버별 감성 점수(긍정비율−부정비율) 산출.
+4. 표본 기준 집계로 멤버별 감성 점수(긍정비율−부정비율) 산출. 표본 영상이 3개 미만인 멤버(데뷔 커버곡 하나뿐인
+   4기 ABYSS)는 표본 구성이 달라 순위·전체 비율에서 빼고 리포트에 따로 적는다(`MIN_SAMPLE_VIDEOS`).
 
 ## 산출물
 
 | 경로 | 내용 |
 |------|------|
 | `data/comments_raw.csv` | 원천 댓글 1,753개 |
-| `data/comments_sample.csv` | 좋아요 상위 330개 표본(라벨링 전) |
+| `data/comments_sample.csv` | 좋아요 상위 30개/멤버 표본(라벨링 전) |
 | `data/comments_labeled.csv` | Claude 라벨링 결과(sentiment·topic 포함) |
 | `data/sentiment_metrics.csv` | 멤버별 감성 집계 |
 | `sql/` | `comments`/`sentiment_metrics` 스키마·INSERT·분석쿼리·SQLite·실행결과 |

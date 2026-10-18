@@ -24,6 +24,7 @@ CREATE TABLE sentiment_metrics (
     name_en TEXT,
     unit TEXT,
     n_comments INTEGER,
+    n_videos INTEGER,
     positive_share REAL,
     negative_share REAL,
     neutral_share REAL,

@@ -19,7 +19,7 @@ CREATE TABLE characters (
     best_rank TEXT,
     latest_s_battlesuit TEXT,
     default_order REAL,
-    is_limited TEXT,
+    is_limited REAL,
     match_name TEXT,
     name_len INTEGER,
     name_ambiguous INTEGER,

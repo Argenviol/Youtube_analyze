@@ -9,7 +9,6 @@ import json
 import sys
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -29,6 +28,11 @@ TOPIC_KO = {
 }
 SENTI_KO = {"positive": "긍정", "negative": "부정", "neutral": "중립"}
 
+# 순위·전체 비율·히트맵에 넣는 최소 표본 영상 수. 기존 멤버의 표본은 인기 영상 4개에서 뽑은 30개인데,
+# 4기 ABYSS 처럼 영상이 데뷔 커버곡 하나뿐인 멤버의 30개는 그 한 곡에 대한 반응이라 토픽이 노래로
+# 쏠리고 긍정이 높게 나온다. 표본 구성이 다른 값을 한 순위에 놓지 않고 따로 적는다.
+MIN_SAMPLE_VIDEOS = 3
+
 
 def build_metrics():
     df = config.drop_founder(pd.read_csv(DATA / "comments_labeled.csv"))
@@ -43,19 +47,23 @@ def build_metrics():
         neu = (g["sentiment"] == "neutral").sum()
         top_topic = g["topic_ko"].value_counts().idxmax()
         rows.append(dict(
-            name_ko=ko, name_en=en, unit=unit, n_comments=n,
+            name_ko=ko, name_en=en, unit=unit, n_comments=n, n_videos=int(g["video_id"].nunique()),
             positive_share=round(pos / n, 3), negative_share=round(neg / n, 3),
             neutral_share=round(neu / n, 3),
             sentiment_score=round((pos - neg) / n, 3),   # -1..1
             top_topic=top_topic,
             avg_likes=round(g["like_count"].mean(), 1),
         ))
-    members = pd.DataFrame(rows).sort_values("sentiment_score", ascending=False).reset_index(drop=True)
+    allm = pd.DataFrame(rows)
+    comparable = allm["n_videos"] >= MIN_SAMPLE_VIDEOS
+    ref = allm[~comparable].sort_values("name_ko").reset_index(drop=True)
+    members = allm[comparable].sort_values("sentiment_score", ascending=False).reset_index(drop=True)
     members.insert(0, "rank", members.index + 1)
 
-    topic_matrix = (df.groupby(["name_ko", "topic_ko"]).size()
+    df_cmp = df[df["name_ko"].isin(members["name_ko"])]
+    topic_matrix = (df_cmp.groupby(["name_ko", "topic_ko"]).size()
                     .unstack(fill_value=0))
-    return df, members, topic_matrix
+    return df, df_cmp, members, ref, topic_matrix
 
 
 def build_sql(df, members):
@@ -133,7 +141,8 @@ def build_charts(df, members, topic_matrix):
     print(f"차트 4종 -> {CHARTS}")
 
 
-def build_outputs(df, members, topic_matrix):
+def build_outputs(df, members, topic_matrix, ref, df_all):
+    """df 는 순위에 들어가는 멤버의 표본만, df_all 은 따로 적는 멤버(ref)까지 포함한 전체 라벨."""
     members.to_csv(DATA / "sentiment_metrics.csv", index=False)
     meta = json.loads((DATA / "_meta.json").read_text(encoding="utf-8"))
     top_liked = df.sort_values("like_count", ascending=False).head(15)[
@@ -145,6 +154,7 @@ def build_outputs(df, members, topic_matrix):
         heatmap=dict(members=topic_matrix.index.tolist(), topics=topic_matrix.columns.tolist(),
                      values=topic_matrix.values.tolist()),
         top_liked=json.loads(top_liked.to_json(orient="records", force_ascii=False)),
+        reference_members=json.loads(ref.to_json(orient="records", force_ascii=False)),
         overall_sentiment=dict(
             positive=int((df["sentiment"] == "positive").sum()),
             neutral=int((df["sentiment"] == "neutral").sum()),
@@ -154,14 +164,35 @@ def build_outputs(df, members, topic_matrix):
     SITE.mkdir(parents=True, exist_ok=True)
     (SITE / "data.json").write_text(json.dumps(site_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    ref_note = (f", 표본 구성이 다른 {len(ref)}명({', '.join(ref['name_ko'])})은 아래 '따로 보는 멤버'에 적고 순위에 넣지 않음"
+                if len(ref) else "")
+    ref_sec = ""
+    if len(ref):
+        tk = df_all.assign(n=1).pivot_table(index="name_ko", columns="topic_ko", values="n", aggfunc="sum", fill_value=0)
+        rows = "\n".join(
+            f"| {r.name_ko} | {r.n_videos}개 | {r.n_comments} | {r.positive_share:.0%} | {r.negative_share:.0%} | "
+            f"{r.top_topic} ({int(tk.loc[r.name_ko, r.top_topic])}/{r.n_comments}) |" for r in ref.itertuples())
+        ref_sec = f"""
+## 따로 보는 멤버 — 표본 구성이 달라 순위에 넣지 않음
+
+표본 영상이 {MIN_SAMPLE_VIDEOS}개 미만인 멤버는 순위·전체 비율·히트맵에서 뺀다. 4기 ABYSS 는 아직 영상이 데뷔
+커버곡 하나뿐이라 30개 댓글이 모두 그 노래에 대한 반응이다 — 토픽이 노래로 쏠리고 긍정이 높게 나오는 게
+당연해서, 인기 영상 4개에서 뽑은 다른 멤버와 나란히 놓으면 멤버 차이가 아니라 표본 차이를 재게 된다.
+영상이 쌓이면 같은 기준으로 다시 뽑아 라벨링해야 순위에 들어간다.
+
+| 멤버 | 표본 영상 | 댓글 | 긍정 | 부정 | 주요 토픽 |
+|---|---|---|---|---|---|
+{rows}
+"""
     best = members.iloc[0]
     toptopic = df["topic_ko"].value_counts().idxmax()
     n = len(df)
     pos_pct = site_data["overall_sentiment"]["positive"] / n * 100
     md = f"""# 프로젝트 5 · StelLive 댓글 여론/감성 분석
 
-- 데이터: 멤버별 인기 영상 {meta['n_videos']}개의 상위(추천순) 댓글 {meta['n_comments']}개 중,
-  좋아요 상위 330개 표본을 **Claude(본 세션)** 가 직접 읽고 감성(긍정/중립/부정)·토픽 7종으로 분류.
+- 데이터: 멤버별 인기 영상의 상위(추천순) 댓글에서 멤버당 좋아요 상위 30개를 뽑아
+  **Claude(본 세션)** 가 직접 읽고 감성(긍정/중립/부정)·토픽 7종으로 분류. 순위·비율은 멤버 {len(members)}명의
+  표본 {n}개 기준{ref_note}.
 - 수집 {meta['fetched_at'][:10]}
 
 ## 핵심 요약
@@ -174,7 +205,9 @@ def build_outputs(df, members, topic_matrix):
 - 댓글은 유튜브 `order=relevance`(추천순) 상위 표본 — 실제 시청자에게 가장 잘 보이는 댓글이며,
   전체 댓글의 무작위 표본은 아님(추천 알고리즘이 긍정/재치있는 댓글을 우선 노출하는 경향 있음).
 - 라벨링은 규칙 기반이 아닌 Claude의 문맥 판단(반어법·팬덤 용어 고려)으로 수행.
-
+- 라벨링한 표본은 라벨링 당시의 수집분이다. 원천 댓글(`comments_raw.csv`)은 주마다 새로 받지만 표본과 라벨은
+  다시 뽑을 때까지 그대로다.
+{ref_sec}
 ## 산출물
 - `data/comments_raw.csv` 원천 댓글, `comments_sample.csv` 표본, `comments_labeled.csv` 라벨링 결과
 - `sql/` 스키마·INSERT·분석쿼리·SQLite·실행결과
@@ -209,14 +242,17 @@ ANALYSIS_QUERIES = "-- StelLive 댓글 감성 분석 쿼리 (SQLite: sql/sentime
 
 
 def main():
-    df, members, topic_matrix = build_metrics()
-    build_sql(df, members)
+    df_all, df, members, ref, topic_matrix = build_metrics()
+    build_sql(df_all, members)
     build_charts(df, members, topic_matrix)
-    build_outputs(df, members, topic_matrix)
+    build_outputs(df, members, topic_matrix, ref, df_all)
     print("\n=== 멤버별 감성 요약 ===")
     with pd.option_context("display.width", 200):
         print(members[["rank", "name_ko", "n_comments", "positive_share", "negative_share",
                        "sentiment_score", "top_topic"]].to_string(index=False))
+        if len(ref):
+            print("\n=== 따로 보는 멤버(순위 제외) ===")
+            print(ref[["name_ko", "n_videos", "n_comments", "positive_share", "sentiment_score", "top_topic"]].to_string(index=False))
 
 
 if __name__ == "__main__":

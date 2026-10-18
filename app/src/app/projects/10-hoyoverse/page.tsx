@@ -37,8 +37,8 @@ function rarity(r: Character10): string {
   return r.rarity_label ?? stars(r.rank);
 }
 
-function dateOnly(iso: string): string {
-  return iso.slice(0, 10);
+function dateOnly(iso: string | null): string {
+  return iso ? iso.slice(0, 10) : "—";
 }
 
 function signedFixed(v: number | null | undefined, digits = 2): string {
@@ -120,7 +120,7 @@ function rankedColumns(rankKey: "push_rank" | "audience_rank", rankLabel: string
     { key: "game", header: "게임", accessor: (r) => gameLabel(r.game) },
     { key: "name_ko", header: "캐릭터", accessor: (r) => r.name_ko ?? "" },
     { key: "rank", header: "희귀도", accessor: (r) => r.rank, align: "right", render: (r) => rarity(r) },
-    { key: "release_date", header: "출시일", accessor: (r) => r.release_date, render: (r) => dateOnly(r.release_date) },
+    { key: "release_date", header: "출시일", accessor: (r) => r.release_date ?? "", render: (r) => dateOnly(r.release_date) },
     {
       key: "mention_count",
       header: "리뷰 언급수",
