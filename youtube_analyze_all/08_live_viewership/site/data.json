@@ -1,28 +1,28 @@
 {
   "meta": {
-    "fetched_at": "2026-10-18T06:57:34.417124+00:00",
-    "n_snapshots": 78835,
+    "fetched_at": "2026-10-18T06:58:33.896752+00:00",
+    "n_snapshots": 78850,
     "n_members": 15,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-18T06:57:34.417124+00:00"
+      "2026-10-18T06:58:33.896752+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 71511,
-    "n_timepoints": 6967,
-    "span_hours": 1609.03,
-    "observed_hours": 1189.52,
+    "n_snapshots": 71525,
+    "n_timepoints": 6968,
+    "span_hours": 1609.05,
+    "observed_hours": 1189.69,
     "coverage_ratio": 0.739,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 17349,
+    "n_live_rows": 17350,
     "members": 12,
     "members_tracked": 14,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-18T06:57:34.417124+00:00"
+    "last": "2026-10-18T06:58:33.896752+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -31,28 +31,28 @@
       "name_ko": "코가네 랑",
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
-      "followers": 93604,
-      "follower_delta": 53436,
-      "follower_per_day": 12818.0,
+      "followers": 93614,
+      "follower_delta": 53446,
+      "follower_per_day": 12818.3,
       "n_sessions": 1,
       "n_live_points": 5,
       "peak_ccu": 67950.0,
       "avg_ccu": 64510.0,
-      "ccu_per_1k_followers": 725.93
+      "ccu_per_1k_followers": 725.85
     },
     {
       "rank": 2,
       "name_ko": "시즈키 토아",
       "name_en": "Shizuki Toa",
       "unit": "ABYSS",
-      "followers": 92170,
-      "follower_delta": 52053,
-      "follower_per_day": 12486.3,
+      "followers": 92177,
+      "follower_delta": 52060,
+      "follower_per_day": 12485.9,
       "n_sessions": 1,
       "n_live_points": 5,
       "peak_ccu": 62637.0,
       "avg_ccu": 57845.0,
-      "ccu_per_1k_followers": 679.58
+      "ccu_per_1k_followers": 679.53
     },
     {
       "rank": 3,
@@ -73,8 +73,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 270850,
-      "follower_delta": 15524,
+      "followers": 270852,
+      "follower_delta": 15526,
       "follower_per_day": 231.6,
       "n_sessions": 136,
       "n_live_points": 2056,
@@ -157,8 +157,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 224810,
-      "follower_delta": 15475,
+      "followers": 224812,
+      "follower_delta": 15477,
       "follower_per_day": 230.8,
       "n_sessions": 140,
       "n_live_points": 2137,
@@ -171,13 +171,13 @@
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
-      "followers": 245594,
-      "follower_delta": 8746,
+      "followers": 245595,
+      "follower_delta": 8747,
       "follower_per_day": 130.5,
       "n_sessions": 152,
-      "n_live_points": 2075,
+      "n_live_points": 2076,
       "peak_ccu": 10316.0,
-      "avg_ccu": 3116.0,
+      "avg_ccu": 3119.0,
       "ccu_per_1k_followers": 42.0
     },
     {
@@ -185,8 +185,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 234144,
-      "follower_delta": 15044,
+      "followers": 234145,
+      "follower_delta": 15045,
       "follower_per_day": 224.4,
       "n_sessions": 115,
       "n_live_points": 1588,
@@ -199,9 +199,9 @@
       "name_ko": "토키노 메리",
       "name_en": "Tokino Mary",
       "unit": "ABYSS",
-      "followers": 77301,
-      "follower_delta": 36093,
-      "follower_per_day": 8657.8,
+      "followers": 77314,
+      "follower_delta": 36106,
+      "follower_per_day": 8659.5,
       "n_sessions": 0,
       "n_live_points": 0,
       "peak_ccu": null,
@@ -213,9 +213,9 @@
       "name_ko": "하나요 히요리",
       "name_en": "Hanayo Hiyori",
       "unit": "ABYSS",
-      "followers": 69987,
-      "follower_delta": 30829,
-      "follower_per_day": 7395.1,
+      "followers": 70000,
+      "follower_delta": 30842,
+      "follower_per_day": 7397.0,
       "n_sessions": 0,
       "n_live_points": 0,
       "peak_ccu": null,
@@ -529,10 +529,10 @@
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-18 14:14",
-      "observed_min": 103.4,
-      "n_points": 11,
+      "observed_min": 104.4,
+      "n_points": 12,
       "peak_ccu": 10316,
-      "avg_ccu": 6925,
+      "avg_ccu": 7199,
       "title": "재규어는남미습지와열대우림그리고아마존의먹이사슬가장꼭대기에서잇는고양이과포식ㄷ동물이다무는힘은고양이과동물중에서도가장강하다어느정도냐면평버ㅏㅁ한재규어한마리가360kg황소시체를물고이동할수있으며",
       "category": "talk"
     },
@@ -67756,6 +67756,10 @@
         [
           "2026-10-18 15:57",
           10316
+        ],
+        [
+          "2026-10-18 15:58",
+          10211
         ]
       ]
     },
