@@ -14,6 +14,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import config, db, viz
+from common.chzzk import vod_start
 from common.summary import overlap_line, spread
 import matplotlib.pyplot as plt
 
@@ -24,11 +25,16 @@ CHARTS = HERE / "charts"
 SITE = HERE / "site"
 WD = ["월", "화", "수", "목", "금", "토", "일"]
 
+# 주당 방송 횟수·시간 같은 비율 지표를 내려면 방송이 최소 이만큼(약 2주치) 있어야 한다. 데뷔 직후 멤버
+# (4기 ABYSS)는 방송 1~2회·기간 1일이라 "주 14회"처럼 환산돼 순위와 범위를 왜곡했다. 이보다 적은 멤버는
+# 집계·차트에서 빼고 리포트에 적는다. 방송이 쌓이면 저절로 들어온다.
+MIN_STREAMS = 10
+
 
 def build_metrics():
     df = config.drop_founder(pd.read_csv(DATA / "streams.csv"))
     ch = config.drop_founder(pd.read_csv(DATA / "chzzk_channels.csv"))
-    df["dt"] = pd.to_datetime(df["publish_date"])          # KST naive
+    df["dt"] = vod_start(df)          # 방송 시작(KST naive). publish_date 는 종료 시각이다
     df["hour"] = df["dt"].dt.hour
     df["dow"] = df["dt"].dt.dayofweek
     df["dur_h"] = df["duration_sec"] / 3600
@@ -58,14 +64,20 @@ def build_metrics():
             top_category=top_cat,
             avg_vod_views=int(g["read_count"].mean()),
         ))
-    metrics = pd.DataFrame(rows).sort_values("hours_per_week", ascending=False).reset_index(drop=True)
+    allm = pd.DataFrame(rows)
+    enough = allm["stream_count"] >= MIN_STREAMS
+    excluded = allm.loc[~enough, "name_ko"].tolist()
+    metrics = allm[enough].sort_values("hours_per_week", ascending=False).reset_index(drop=True)
     metrics.insert(0, "rank", metrics.index + 1)
+    metrics.attrs["excluded"] = excluded
+    df = df[df["name_ko"].isin(metrics["name_ko"])].reset_index(drop=True)
     return df, metrics
 
 
 def build_sql(df, metrics):
     SQL.mkdir(parents=True, exist_ok=True)
     streams = df.drop(columns=["dt", "hour", "dow", "dur_h", "is_game", "is_talk", "is_night"]).copy()
+    streams.insert(streams.columns.get_loc("publish_date"), "start_kst", df["dt"].dt.strftime("%Y-%m-%d %H:%M:%S"))
     tables = {"streams": streams, "stream_metrics": metrics}
     db.write_sqlite(SQL / "chzzk.db", tables)
     db.dump_schema_sql(SQL / "schema.sql", tables, primary_keys={"streams": "video_no"})
@@ -168,7 +180,7 @@ def build_outputs(df, metrics):
     heat = heat.reindex(index=range(7), columns=range(24), fill_value=0)
     topcat = df["category"].value_counts().head(12)
     site_data = dict(
-        meta=meta,
+        meta={**meta, "n_members": int(len(metrics)), "n_streams": int(len(df))},
         members=json.loads(metrics.to_json(orient="records", force_ascii=False)),
         heatmap=heat.values.tolist(),
         top_categories=[{"name": k, "count": int(v)} for k, v in topcat.items()],
@@ -178,12 +190,17 @@ def build_outputs(df, metrics):
     (SITE / "data.json").write_text(json.dumps(site_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
     n_nb = int(meta.get("n_no_broadcast", 0))
-    no_bc = f"(방송이 아직 없는 채널 {n_nb}개는 제외 — 데뷔 전)" if n_nb else ""
+    excluded = metrics.attrs.get("excluded", [])
+    notes = ([f"방송이 {MIN_STREAMS}회 미만인 {len(excluded)}명({', '.join(excluded)})은 집계에서 제외"] if excluded else []) \
+        + ([f"방송이 아직 없는 채널 {n_nb}개 제외"] if n_nb else [])
+    no_bc = f"({' · '.join(notes)})" if notes else ""
     peak_hour = int(np.argmax(site_data["hour_dist"]))
     md = f"""# 프로젝트 3 · StelLive 치지직 방송 패턴 분석
 
-- 데이터 소스: 치지직(Chzzk) 비공식 API — 다시보기(VOD replay) {meta['n_streams']}건, 수집 {meta['fetched_at'][:10]}
-- 멤버 {meta['n_members']}명{no_bc}, 멤버당 최근 최대 {meta['max_items']}개 방송
+- 데이터 소스: 치지직(Chzzk) 비공식 API — 다시보기(VOD replay) {len(df)}건, 수집 {meta['fetched_at'][:10]}
+- 멤버 {len(metrics)}명{no_bc}, 멤버당 최근 최대 {meta['max_items']}개 방송
+- 방송 시각은 **시작 시각**(다시보기 게시 시각 − 방송 길이)이다. 2026-10-19 전까지는 게시 시각(=방송 종료)을
+  시작으로 써서 시작 시각·심야 비율이 방송 길이만큼 늦게 잡혀 있었다 — 그 전 `history.csv` 의 `night_share` 와 비교하지 말 것.
 
 ## 핵심 요약
 - **방송 시간과 방송 빈도**: {overlap_line(metrics, "hours_per_week", "streams_per_week", "주간 방송 시간", "방송 빈도")}.
@@ -220,7 +237,7 @@ FROM stream_metrics ORDER BY game_share DESC;"""),
 SELECT category AS 카테고리, COUNT(*) AS 방송수
 FROM streams GROUP BY category ORDER BY 방송수 DESC LIMIT 10;"""),
     ("시작 시간대별 방송 수", """
-SELECT CAST(substr(publish_date,12,2) AS INT) AS 시작시,
+SELECT CAST(substr(start_kst,12,2) AS INT) AS 시작시,
        COUNT(*) AS 방송수
 FROM streams GROUP BY 시작시 ORDER BY 방송수 DESC LIMIT 8;"""),
 ]

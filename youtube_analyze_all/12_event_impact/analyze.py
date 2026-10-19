@@ -36,6 +36,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import config
+from common.chzzk import vod_start  # noqa: E402
 from common import db, viz  # noqa: E402
 from common.songs import is_instrumental  # noqa: E402
 # 연속일 기준은 collect.py 가 정의한다. 여기서 다시 적으면 한쪽만 고쳤을 때
@@ -133,7 +134,7 @@ def vod_multiple(events: pd.DataFrame, streams: pd.DataFrame) -> pd.DataFrame:
     이벤트도 이걸로는 크기를 잴 수 있다. 2025년 신의상 릴레이가 그 경우다.
     """
     s = streams.copy()
-    s["date"] = pd.to_datetime(s["publish_date"]).dt.date
+    s["date"] = vod_start(s).dt.date
     rows = []
     for _, e in events.iterrows():
         if e["type"] not in STREAM_EVENT_TYPES:
@@ -176,7 +177,7 @@ def concert_arc(events: pd.DataFrame, streams: pd.DataFrame,
     if streams.empty:
         return pd.DataFrame()
     s = streams.copy()
-    s["date"] = pd.to_datetime(s["publish_date"]).dt.date
+    s["date"] = vod_start(s).dt.date
     v = videos.copy()
     if not v.empty:
         v["date"] = pd.to_datetime(v["published_at"], format="mixed",
@@ -569,7 +570,7 @@ def commerce_effect(cf: pd.DataFrame, tiers: pd.DataFrame, fin: pd.DataFrame,
                              "operating_income", "operating_margin"]].to_dict("records")
     # 매진 인증 — 방송 제목에 남는 유일한 판매 신호
     if not streams.empty:
-        st = streams.copy(); st["date"] = pd.to_datetime(st["publish_date"]).dt.date
+        st = streams.copy(); st["date"] = vod_start(st).dt.date
         so = st[st["title"].astype(str).str.contains("매진", na=False)]
         stats["soldout"] = so[["date", "name_ko", "title"]].sort_values("date") \
             .drop_duplicates(["date", "name_ko"]).to_dict("records")
@@ -732,7 +733,7 @@ def hoyo_effect(chars: pd.DataFrame, streams: pd.DataFrame) -> tuple:
     # ── (2) 스텔라이브 접점 ──
     rows = []
     if not streams.empty:
-        st = streams.copy(); st["date"] = pd.to_datetime(st["publish_date"]).dt.date
+        st = streams.copy(); st["date"] = vod_start(st).dt.date
         is_h = (st["category"].astype(str).str.contains(HOYO_RE, case=False, na=False)
                 | st["title"].astype(str).str.contains(HOYO_RE, case=False, na=False))
         st["is_hoyo"] = is_h
@@ -1033,7 +1034,7 @@ def main() -> int:
 
     # 관측 마지막 날까지 이어지는 이벤트는 아직 진행 중이다. VOD 조회수가 계속
     # 쌓이는 중이라 배수가 과소평가된다 — 숫자를 빼진 않되 표시는 해 둔다.
-    last_stream = pd.to_datetime(streams["publish_date"]).dt.date.max() if not streams.empty else None
+    last_stream = vod_start(streams).dt.date.max() if not streams.empty else None
     events["ongoing"] = (events["end_date"] >= last_stream) if last_stream else False
 
     vod = vod_multiple(events, streams)

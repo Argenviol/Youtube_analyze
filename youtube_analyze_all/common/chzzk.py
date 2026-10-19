@@ -83,3 +83,15 @@ def normalize_live_status(raw: dict) -> dict:
         last_concurrent_users=None if is_live else raw.get("concurrentUserCount"),
         last_live_title=None if is_live else raw.get("liveTitle"),
     )
+
+
+def vod_start(df):
+    """다시보기(REPLAY)의 방송 시작 시각(KST, tz 없음).
+
+    치지직 VOD 의 publishDate 는 방송이 **끝나** 다시보기가 올라온 시각이다 — 08 로 직접 관측한 방송
+    460회와 대조하면 80% 가 관측 종료 ±20분 안이고 시작과 맞는 건 1% 였다(2026-10-19). 그래서 시작은
+    게시 시각에서 방송 길이를 뺀다. 이 값을 시작으로 쓰던 동안 03 의 시작 시각·심야 비율이 방송 길이만큼
+    늦게 잡혔고, 12 는 자정을 넘긴 방송을 다음 날 방송으로 셌다.
+    """
+    import pandas as pd
+    return pd.to_datetime(df["publish_date"]) - pd.to_timedelta(df["duration_sec"].fillna(0), unit="s")

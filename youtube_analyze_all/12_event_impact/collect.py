@@ -43,6 +43,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import config  # noqa: E402
+from common.chzzk import vod_start  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -120,7 +121,7 @@ def _tokens(title: str) -> set[str]:
 def detect_collabs(streams: pd.DataFrame) -> list[dict]:
     """치지직 VOD에서 대규모 합방 후보를 뽑는다."""
     df = streams.copy()
-    df["date"] = pd.to_datetime(df["publish_date"]).dt.date
+    df["date"] = vod_start(df).dt.date
 
     # ── 신호 2를 위한 토큰 문서빈도 ──
     per_day: dict[date, dict[str, set]] = {}
@@ -284,7 +285,7 @@ def detect_series_candidates(streams: pd.DataFrame) -> list[dict]:
     exclude |= {n.split()[0] for n in base} | {n.split()[-1] for n in base}
 
     df = streams.copy()
-    df["date"] = pd.to_datetime(df["publish_date"]).dt.date
+    df["date"] = vod_start(df).dt.date
     per_day: dict = {}
     dfreq: collections.Counter = collections.Counter()
     for d, g in df.groupby("date"):
@@ -353,7 +354,7 @@ def name_from_candidates(events: list[dict], candidates: list[dict],
 def detect_costume_reveals(streams: pd.DataFrame) -> list[dict]:
     """신의상 공개를 찾는다. 예고·대기방은 조회수 배수로 걸러낸다."""
     df = streams.copy()
-    df["date"] = pd.to_datetime(df["publish_date"]).dt.date
+    df["date"] = vod_start(df).dt.date
     hits = df[df["title"].astype(str).str.contains(COSTUME_TOKEN, na=False)]
 
     reveals = []
@@ -444,7 +445,7 @@ def detect_birthdays(streams: pd.DataFrame) -> list[dict]:
     if streams.empty:
         return []
     df = streams.copy()
-    df["date"] = pd.to_datetime(df["publish_date"]).dt.date
+    df["date"] = vod_start(df).dt.date
     name_by_en = {r["name_en"]: r["name_ko"] for r in config.member_rows(include_founder=True)}
     out = []
     for en, md in config.BIRTHDAYS.items():

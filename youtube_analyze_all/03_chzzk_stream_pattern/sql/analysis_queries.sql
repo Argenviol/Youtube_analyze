@@ -20,6 +20,6 @@ SELECT category AS 카테고리, COUNT(*) AS 방송수
 FROM streams GROUP BY category ORDER BY 방송수 DESC LIMIT 10;
 
 -- 시작 시간대별 방송 수
-SELECT CAST(substr(publish_date,12,2) AS INT) AS 시작시,
+SELECT CAST(substr(start_kst,12,2) AS INT) AS 시작시,
        COUNT(*) AS 방송수
 FROM streams GROUP BY 시작시 ORDER BY 방송수 DESC LIMIT 8;

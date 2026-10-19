@@ -8,6 +8,7 @@ CREATE TABLE streams (
     name_en TEXT,
     unit TEXT,
     title TEXT,
+    start_kst TEXT,
     publish_date TEXT,
     duration_sec INTEGER,
     category TEXT,
