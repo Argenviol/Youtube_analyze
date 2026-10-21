@@ -285,14 +285,6 @@ PALETTE = {
     "series_dark": list(montage.ACCENT_DARK),
 }
 
-# 유닛별 대표색 (Montage accent에서 선택)
-UNIT_COLORS = {
-    "STELLIVE": montage.COOL_NEUTRAL[50],   # 창립자/그룹 — 중립
-    "EVERYS":   montage.BLUE[45],
-    "UNIVERSE": montage.RED_ORANGE[48],
-    "CLICHE":   montage.GREEN[40],
-    "ABYSS":    montage.VIOLET[60],
-}
 
 
 # 멤버(영문)별 고정 색 — 어느 차트에서도 같은 멤버는 같은 색 (dataviz 원칙)

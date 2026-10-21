@@ -27,6 +27,7 @@ API 가 1,000 단위로 반올림해 준다. 13만 채널은 하루에 0 아니�
 from __future__ import annotations
 
 import json
+import re
 import sys
 from datetime import timedelta
 from pathlib import Path
@@ -470,8 +471,12 @@ def kirinuki_effect(clips: pd.DataFrame, videos: pd.DataFrame) -> tuple:
             topics[name] = {"n": int(hit.sum()), "share": float(hit.mean()),
                             "median_views": float(c.loc[hit, "views"].median())}
     ch = c.groupby("clip_channel_title")["views"].sum().sort_values(ascending=False)
+    top3 = c.nlargest(3, "views")
+    top1_topic = next((n for n, pat in CLIP_TOPICS.items()
+                       if re.search(pat, str(top3.iloc[0]["title"]), re.I)), "어느 것도 아님")
     stats = {
         "n_clips": int(len(c)), "n_channels": int(c["clip_channel_id"].nunique()),
+        "top_titles": [str(t)[:18] for t in top3["title"]], "top1_topic": top1_topic,
         "topics": topics, "unmatched_share": float((~matched).mean()),
         "top3_share": float(ch.head(3).sum() / ch.sum()) if ch.sum() else 0.0,
         "top10_share": float(ch.head(10).sum() / ch.sum()) if ch.sum() else 0.0,
@@ -484,6 +489,10 @@ TOPIC_KO = {"personality": "성격·개그", "content_gameplay": "방송내용·
             "visual_design": "외형·디자인", "voice_singing": "목소리·노래",
             "growth_nostalgia": "성장·추억", "member_interaction": "멤버 간 케미",
             "other": "기타"}
+
+
+# 부정 댓글 중 멤버가 아니라 영상 소재(응원 야구팀)를 향한 것을 가려내는 말.
+NEG_OFFTOPIC_RE = r"야구|롯데|두산|팀"
 
 
 def comment_effect(labeled: pd.DataFrame, metrics: pd.DataFrame,
@@ -506,9 +515,12 @@ def comment_effect(labeled: pd.DataFrame, metrics: pd.DataFrame,
     by["topic_ko"] = by["topic"].map(TOPIC_KO).fillna(by["topic"])
 
     neg = L[L["sentiment"] == "negative"]
+    per = L.groupby("name_ko").size()
     stats = {
         "n": int(len(L)), "n_videos": int(L["video_id"].nunique()),
         "n_members": int(L["name_ko"].nunique()),
+        "per_lo": int(per.min()), "per_hi": int(per.max()),
+        "neg_offtopic": int(neg["text"].astype(str).str.contains(NEG_OFFTOPIC_RE, na=False).sum()),
         "pos": float((L["sentiment"] == "positive").mean()),
         "neu": float((L["sentiment"] == "neutral").mean()),
         "neg": float((L["sentiment"] == "negative").mean()),
@@ -553,6 +565,10 @@ def commerce_effect(cf: pd.DataFrame, tiers: pd.DataFrame, fin: pd.DataFrame,
         stats.update({
             "fan_n": int(len(fan)), "fan_raised": int(fan["raised_krw"].sum()),
             "fan_backers": int(fan["backers"].sum()),
+            "fan_backers_lo": int(fan["backers"].min()) if len(fan) else 0,
+            "fan_backers_hi": int(fan["backers"].max()) if len(fan) else 0,
+            "fan_raised_hi": int(fan["raised_krw"].max()) if len(fan) else 0,
+            "off_n": int(len(off)),
             "fan_pb_lo": int(fan["per_backer_krw"].min()) if len(fan) else 0,
             "fan_pb_hi": int(fan["per_backer_krw"].max()) if len(fan) else 0,
             "fan_ach_lo": float(fan["achievement_pct"].min()) if len(fan) else 0,
@@ -562,6 +578,7 @@ def commerce_effect(cf: pd.DataFrame, tiers: pd.DataFrame, fin: pd.DataFrame,
             "off_raised_hi": int(off["raised_krw"].max()) if len(off) else 0,
         })
     if not tiers.empty:
+        stats["tier_n"] = int(len(tiers))
         stats["tier_med"] = float(tiers["price_krw"].median())
         stats["tier_p75"] = float(tiers["price_krw"].quantile(.75))
     if not fin.empty:
@@ -636,14 +653,19 @@ def competitor_effect(hist: pd.DataFrame, videos: pd.DataFrame,
     """같은 기간에 세 그룹이 어떻게 움직였나, 그리고 이벤트 밀도가 다른가.
 
     경쟁사는 치지직 데이터가 없어 합방·신의상은 못 본다. 볼 수 있는 건 유튜브다 —
-    같은 21일의 구독자 성장, 최근 업로드 중 커버 비중, 커버가 일반 영상 대비 몇 배인지.
+    같은 기간의 구독자 성장, 최근 업로드 중 커버 비중, 커버가 일반 영상 대비 몇 배인지.
     앞 절들이 스텔라이브에서 찾은 '이벤트 중심 구조'가 경쟁사에도 있는지를 묻는다.
     """
     if hist.empty or metrics.empty:
         return pd.DataFrame(), {}
     h = hist[hist["name_ko"] != "강지"].copy()
     h["date"] = pd.to_datetime(h["date"])
-    f, l = h["date"].min(), h["date"].max()
+    l = h["date"].max()
+    # 창은 지금 로스터 전원이 있는 첫날부터. 멤버가 늘어난 그룹을 수집 첫날 기준으로 재면
+    # 새 멤버의 구독자 전부가 '성장'으로 잡힌다.
+    roster = set(h.loc[h["date"] == l, "name_ko"])
+    present = h.groupby("date")["name_ko"].apply(set)
+    f = min(d for d, sset in present.items() if roster <= sset)
     a = h[h["date"] == f].set_index("name_ko")
     b = h[h["date"] == l].set_index("name_ko")
     j = a[["group", "subscribers"]].join(b[["subscribers"]], rsuffix="_last").dropna()
@@ -827,7 +849,7 @@ def market_effect(facts: pd.DataFrame, milestones: pd.DataFrame,
         a = archive_metrics[archive_metrics["role"] == "talent"]["subscribers"].sum()
         b = metrics["subscribers"].sum()
         st.update({"subs_from": int(a), "subs_to": int(b), "growth": float(b / a - 1),
-                   "archive_label": archive_label})
+                   "n_talent": int(len(metrics)), "archive_label": archive_label})
     if not milestones.empty:
         st["milestones"] = milestones.to_dict("records")
     return st
@@ -938,8 +960,7 @@ def charts(events: pd.DataFrame, vod: pd.DataFrame, drivers: dict | None = None)
                        color=config.PALETTE["series"][0])
         ax.grid(axis="x", zorder=0); ax.grid(axis="y", visible=False)
         ax.spines["left"].set_visible(False)
-        # viz.barlabels 는 세로 막대용이다(값을 get_height 로 읽는다). 가로 막대에
-        # 쓰면 막대 두께 0.8 을 값으로 찍어 전부 "0.8배"가 된다 — 실제로 그랬다.
+        # 가로 막대라 값은 get_width 로 읽는다(get_height 로 읽으면 막대 두께 0.8 이 값으로 찍힌다 — 실제로 그랬다).
         for b, v in zip(bars, top["views_multiple"]):
             ax.annotate(f"{v:.2f}배", (b.get_width(), b.get_y() + b.get_height() / 2),
                         va="center", ha="left", fontsize=9,
@@ -990,13 +1011,17 @@ def charts(events: pd.DataFrame, vod: pd.DataFrame, drivers: dict | None = None)
         fig, ax = plt.subplots(figsize=(10, 5))
         ax.plot(range(1, len(vals) + 1), vals, lw=2, zorder=3,
                 color=config.PALETTE["series"][0])
-        ax.scatter(range(1, 5), vals[:4], s=60, zorder=4,
-                   color=config.PALETTE["series"][3], label="신의상 공개 (1~4위)")
+        ev_rank = [i + 1 for i, r in enumerate(drivers["top"])
+                   if session_event(r, events) != "평소"]
+        if ev_rank:
+            ax.scatter(ev_rank, [vals[i - 1] for i in ev_rank], s=60, zorder=4,
+                       color=config.PALETTE["series"][3],
+                       label=f"이벤트 방송 (상위 {len(drivers['top'])}개 중 {len(ev_rank)}개)")
         ax.axhline(vals.median(), ls="--", lw=1, color="#999", zorder=2)
         ax.annotate(f"중앙값 {vals.median():,.0f}", (len(vals) * .55, vals.median()),
                     xytext=(0, 6), textcoords="offset points",
                     fontsize=9, color=config.INK["muted"])
-        ax.set_title("방송 세션 피크 동시시청자 — 순위별 (상위 4개가 전부 신의상 공개)")
+        ax.set_title("방송 세션 피크 동시시청자 — 순위별")
         ax.set_xlabel("세션 순위"); ax.set_ylabel("피크 동시시청자")
         ax.legend(frameon=False)
         fig.tight_layout()
@@ -1055,6 +1080,9 @@ def main() -> int:
         _read(ROOT / "05_comment_sentiment" / "data" / "comments_labeled.csv"))
     sent_m = config.drop_founder(
         _read(ROOT / "05_comment_sentiment" / "data" / "sentiment_metrics.csv"))
+    # 05 의 비교 표본(같은 기준으로 고른 멤버·영상)만 쓴다 — ABYSS 는 05 에서도 따로 본다.
+    if not sent_m.empty:
+        labeled = labeled[labeled["name_ko"].isin(sent_m["name_ko"])]
     cmt, cmt_stats = comment_effect(labeled, sent_m, h03)
     m01 = config.drop_founder(_read(ROOT / "01_member_channel_performance" / "data" / "channel_metrics.csv"))
     chan, chan_stats = channel_effect(m01, config.drop_founder(h01))
@@ -1178,7 +1206,6 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
             f"{r.before_per_day:+,.0f} | {r.after_per_day:+,.0f} | {r.change_pct:+.1f}% |"
             for r in i.itertuples())
 
-    big = (vod.groupby("event_id")["views_multiple"].mean() >= BIG_MULTIPLE).sum() if not vod.empty else 0
 
     # ── 신의상 vs 합방 요약 ──
     def _rng(df, col, default=(0.0, 0.0)):
@@ -1192,10 +1219,34 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         if not ccu.empty else pd.DataFrame(columns=["type", "ccu_multiple"])
     ccu_lo, ccu_hi = _rng(ct[ct["type"] == "신의상"], "ccu_multiple")
     mc_lo, mc_hi = _rng(ct[ct["type"] == "합방"], "ccu_multiple")
+    big = int((vt.loc[vt["type"] == "합방", "views_multiple"] >= BIG_MULTIPLE).sum())
+    n_collab_meas = int((vt["type"] == "합방").sum())
+    collab_meas_txt = (f"그 {len(collabs)}건 중" if n_collab_meas == len(collabs)
+                       else f"그 {len(collabs)}건 중 소급 측정이 되는 {n_collab_meas}건에서")
+    # 이벤트 유형별 배수 표 — 어느 유형이 가장 크게 터지는지는 매번 데이터에서 고른다.
+    type_rows = []
+    for t in sorted(set(vt["type"]) | set(ct["type"].dropna())):
+        tv, tc = vt[vt["type"] == t], ct[ct["type"] == t]
+        v_lo, v_hi = _rng(tv, "views_multiple"); c_lo, c_hi = _rng(tc, "ccu_multiple")
+        type_rows.append({"type": t, "n_vod": int(len(tv)), "v_lo": v_lo, "v_hi": v_hi,
+                          "n_ccu": int(len(tc)), "c_lo": c_lo, "c_hi": c_hi})
+    def _span(lo, hi):
+        return f"{lo:.1f}배" if lo == hi else f"{lo:.1f}~{hi:.1f}배"
+    type_tbl = ("| 이벤트 유형 | VOD 조회수 배수 (건) | 동시시청자 피크 배수 (명·건) |\n|---|---|---|\n"
+                + "\n".join(
+                    f"| {r['type']} | "
+                    + (f"{_span(r['v_lo'], r['v_hi'])} ({r['n_vod']}건)" if r["n_vod"] else "—")
+                    + " | "
+                    + (f"**{_span(r['c_lo'], r['c_hi'])}** ({r['n_ccu']}건)" if r["n_ccu"] else "수집 이전")
+                    + " |" for r in type_rows))
+    top_ccu = max((r for r in type_rows if r["n_ccu"]), key=lambda r: r["c_hi"], default=None)
+    top_ccu_type = top_ccu["type"] if top_ccu else "—"
+    top_ccu_hi = top_ccu["c_hi"] if top_ccu else 0.0
 
     # ── 채널 성과 ──
     cst2 = chan_stats or {}
     ch_tbl = ch_corr_tbl = ""; ch_days = cst2.get("days", 0); ch_up_v = ch_sub_g = 0.0
+    ch_n = ch_top3_orig = 0; ch_top3 = "—"
     if chan is not None and not chan.empty:
         ch_tbl = ("| 멤버 | 구독자 | 평균 조회수 | 주당 업로드 | 쇼츠 | 참여율 | 성장 |\n|---|---|---|---|---|---|---|\n"
                   + "\n".join(f"| {r.name_ko} | {r.subscribers:,} | {r.recent_avg_views:,.0f} | {r.uploads_per_week:.1f} | "
@@ -1204,9 +1255,19 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         cc = cst2.get("corr", {})
         ch_corr_tbl = "\n".join(f"| {k} | {v['views']:+.2f} | {v['growth']:+.2f} |" for k, v in cc.items())
         ch_up_v = cc.get("주당 업로드", {}).get("views", 0.0); ch_sub_g = cc.get("구독자 규모", {}).get("growth", 0.0)
+        ch_n = cst2.get("n", 0)
+        top3_names = chan["name_ko"].head(3).tolist()
+        ch_top3 = "·".join(top3_names)
+        # 성장 상위 멤버 중 같은 창에 오리지널곡을 낸 멤버 — 업로드 효과와 발매 효과가 섞인다.
+        ch_top3_orig = 0
+        if orig_eff is not None and not orig_eff.empty:
+            od = pd.to_datetime(orig_eff["date"])
+            inwin = orig_eff[(od >= pd.Timestamp(cst2["from"])) & (od <= pd.Timestamp(cst2["to"]))]
+            ch_top3_orig = int(inwin["name_ko"].isin(top3_names).sum())
     # ── 방송 패턴 ──
     sst = spat_stats or {}
     sp_tbl = sp_corr_tbl = ""; sp_days = sst.get("days", 0); sp_fol_g = 0.0
+    sp_n = 0; sp_hours_vod = sp_len_vod = sp_night_vod = sp_hours_g = sp_game_vod = sp_game_g = 0.0
     if spat is not None and not spat.empty:
         sp_tbl = ("| 멤버 | 팔로워 | 주당 시간 | 평균 길이 | 심야 | 게임 | VOD 조회수 | 성장 |\n|---|---|---|---|---|---|---|---|\n"
                   + "\n".join(f"| {r.name_ko} | {r.followers:,} | {r.hours_per_week:.0f}h | {r.avg_duration_h:.1f}h | "
@@ -1215,12 +1276,20 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         sc = sst.get("corr", {})
         sp_corr_tbl = "\n".join(f"| {k} | {v['vod']:+.2f} | {v['growth']:+.2f} |" for k, v in sc.items())
         sp_fol_g = sc.get("팔로워 규모", {}).get("growth", 0.0)
+        sp_n = sst.get("n", 0)
+        sp_hours_vod = sc.get("주당 방송 시간", {}).get("vod", 0.0)
+        sp_len_vod = sc.get("평균 방송 길이", {}).get("vod", 0.0)
+        sp_night_vod = sc.get("심야 비중", {}).get("vod", 0.0)
+        sp_hours_g = sc.get("주당 방송 시간", {}).get("growth", 0.0)
+        sp_game_vod = sc.get("게임 비중", {}).get("vod", 0.0)
+        sp_game_g = sc.get("게임 비중", {}).get("growth", 0.0)
     # ── 시장 ──
     mk = mkt_stats or {}
     mk_cagr_tbl = mk_facts_tbl = mk_ms_tbl = ""
     mk_cagr_lo = mk_cagr_hi = mk_growth = mk_annual = mk_peak_share = 0.0
     mk_from = mk.get("archive_label", "—"); mk_to = today; mk_days = 0
     mk_subs_from = mk.get("subs_from", 0); mk_subs_to = mk.get("subs_to", 0); mk_mau = mk.get("chzzk_mau") or 0
+    mk_n = mk.get("n_talent", 0)
     if mk.get("cagr"):
         cg = [c["cagr"] for c in mk["cagr"]]; mk_cagr_lo, mk_cagr_hi = min(cg), max(cg)
         mk_cagr_tbl = ("| 출처 | 기간 | 시장 규모 | 연평균 성장률 |\n|---|---|---|---|\n" + "\n".join(
@@ -1297,7 +1366,9 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
     cp_from = cs2.get("from", "—"); cp_to = cs2.get("to", "—"); cp_days = cs2.get("days", 0)
     cp_growth_tbl = cp_growth_line = cp_mix_tbl = cp_reach_tbl = cp_cover_line = ""
     cp_top_groups = cp_bot_groups = "—"
-    cp_stel_gain = cp_holo_gain = 0
+    cp_stel_gain = cp_holo_gain = cp_scale = 0
+    cp_headline = "세 그룹의 구독자 증감을 같은 기간에 놓는다"; cp_members = "—"
+    cp_mix_line = cp_reach_line = cp_reach_read = ""
     if comp is not None and not comp.empty:
         order = {"StelLive": 0, "홀로라이브": 1, "이세계아이돌": 2}
         c = comp.assign(_o=comp["group"].map(order).fillna(9)).sort_values("_o")
@@ -1308,11 +1379,31 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
                              f"{r.members_up}/{r.n_members} | {r.members_down}/{r.n_members} |"
                              for r in c.itertuples()))
         st = c[c["group"] == "StelLive"]; ho = c[c["group"] == "홀로라이브"]; ise = c[c["group"] == "이세계아이돌"]
+        cp_members = "·".join(f"{r.group} {r.n_members}명" for r in c.itertuples())
         if len(st) and len(ho) and len(ise):
             cp_stel_gain, cp_holo_gain = int(st["gain_total"].iloc[0]), int(ho["gain_total"].iloc[0])
-            cp_growth_line = (
-                f"스텔라이브는 {int(st['members_up'].iloc[0])}명 전원이 올랐고, 이세계아이돌은 "
-                f"{int(ise['members_down'].iloc[0])}명이 내렸으며, 홀로라이브는 사실상 제자리다.")
+            cp_scale = round(float(ho["subs_last"].iloc[0]) / float(st["subs_last"].iloc[0]))
+            def _updown(r):
+                return (f"{r.group}는 {r.n_members}명 중 {r.members_up}명이 오르고 "
+                        f"{r.members_down}명이 내렸다")
+            cp_growth_line = ". ".join(_updown(r) for r in c.itertuples()) + "."
+            all_up = [r.group for r in c.itertuples() if r.members_up == r.n_members]
+            cp_headline = ("전원이 오른 그룹은 " + "·".join(all_up) + "뿐이다"
+                           if len(all_up) == 1 else
+                           "전원이 오른 그룹은 " + "·".join(all_up) + "이다" if all_up else
+                           "전원이 오른 그룹은 없다")
+            def _pos(col, high_is_first=True):
+                order_ = c.sort_values(col, ascending=not high_is_first)["group"].tolist()
+                i = order_.index("StelLive")
+                return ["최고", "중간", "최저"][i] if high_is_first else ["최소", "중간", "최다"][i]
+            s0 = st.iloc[0]
+            cp_mix_line = (f"스텔라이브는 주당 업로드 {s0['uploads_per_week']:.1f}편(셋 중 {_pos('uploads_per_week', False)}), "
+                           f"커버 비중 {s0['cover_share']:.1%}(셋 중 {_pos('cover_share')})이다.")
+            cp_reach_line = (f"스텔라이브의 도달 효율(평균 조회수/구독자)은 {s0['reach_ratio']:.2f}로 셋 중 "
+                             f"{_pos('reach_ratio')}, 참여율은 {s0['engagement']:.1%}로 셋 중 {_pos('engagement')}다.")
+            cp_reach_read = ("조회수가 깊은 팬의 반복 시청이 아니라 넓은 도달에서 온다는 뜻이다."
+                             if _pos("reach_ratio") == "최고" and _pos("engagement") == "최저"
+                             else "도달과 참여가 같은 방향이라 '넓고 얕다'고 말할 수 없다.")
         cp_mix_tbl = ("| 그룹 | 주당 업로드 | 최근 업로드 중 커버 | 커버 ÷ 일반 영상 |\n|---|---|---|---|\n"
                       + "\n".join(
                           f"| {r.group} | {r.uploads_per_week:.1f}편 | "
@@ -1333,6 +1424,7 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
     dart_missing = "스텔라이브"
     dart_plat_tbl = dart_ip_tbl = ""
     dart_plat_margin = dart_ip_streak = dart_soop_x = dart_naver_rev = "—"
+    dart_plat_streak = 0; dart_soop_margin = dart_sand_line = dart_par_line = ""
     if dart is not None and not dart.empty:
         ds = dart_stats or {}
         if ds.get("missing"):
@@ -1350,12 +1442,20 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         dart_plat_tbl, dart_ip_tbl = _tbl(plat), _tbl(ip)
         if len(plat):
             dart_plat_margin = f"{plat['op_margin_last'].min():.0%}~{plat['op_margin_last'].max():.0%}"
+            dart_plat_streak = int(plat["streak"].min())
         if len(ip):
             worst = ip.loc[ip["streak"].idxmin()]
             dart_ip_streak = f"{worst['corp_name']} {abs(int(worst['streak']))}년 연속 적자"
         soop = dart[dart["corp_name"] == "SOOP"]
         if len(soop) and soop["revenue_x"].iloc[0]:
             dart_soop_x = f"{soop['revenue_x'].iloc[0]:.1f}"
+            dart_soop_margin = f"{soop['op_margin_min'].iloc[0]:.0%}~{soop['op_margin_max'].iloc[0]:.0%}"
+        sand = dart[dart["corp_name"] == "샌드박스네트워크"]
+        if len(sand):
+            dart_sand_line = f"샌드박스는 {abs(int(sand['streak'].iloc[0]))}년 연속 적자다"
+        par = dart[dart["corp_name"] == "패러블엔터테인먼트"]
+        if len(par):
+            dart_par_line = f"패러블은 공시가 {int(par['n_years'].iloc[0])}년치뿐이라 추세를 말할 수 없다"
         nav = dart[dart["corp_name"] == "NAVER"]
         if len(nav):
             dart_naver_rev = f"{nav['revenue_last_b'].iloc[0]:,.0f}"
@@ -1365,7 +1465,8 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
     com_tbl = com_soldout = com_fin_tbl = ""
     com_fan_n = com_fan_raised = com_fan_backers = com_fan_pb_lo = com_fan_pb_hi = 0
     com_fan_ach_lo = com_fan_ach_hi = com_tier_med = com_tier_p75 = 0.0
-    com_off_pb_lo = com_off_pb_hi = com_off_raised_hi = com_tier_n = 0
+    com_off_pb_lo = com_off_pb_hi = com_off_raised_hi = com_tier_n = com_off_n = 0
+    com_fan_bk_lo = com_fan_bk_hi = com_fan_raised_hi = 0; com_gap_lo = com_gap_hi = 0.0
     if cst:
         com_fan_n, com_fan_raised = cst.get("fan_n", 0), cst.get("fan_raised", 0)
         com_fan_backers = cst.get("fan_backers", 0)
@@ -1374,7 +1475,12 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         com_off_pb_lo, com_off_pb_hi = cst.get("off_pb_lo", 0), cst.get("off_pb_hi", 0)
         com_off_raised_hi = cst.get("off_raised_hi", 0)
         com_tier_med, com_tier_p75 = cst.get("tier_med", 0), cst.get("tier_p75", 0)
-        com_tier_n = 67
+        com_tier_n = cst.get("tier_n", 0); com_off_n = cst.get("off_n", 0)
+        com_fan_bk_lo, com_fan_bk_hi = cst.get("fan_backers_lo", 0), cst.get("fan_backers_hi", 0)
+        com_fan_raised_hi = cst.get("fan_raised_hi", 0)
+        # 정기 구독(월) 중앙값 대비 한정 굿즈 1인당 — 정기 지출과 이벤트성 지출의 간격
+        com_gap_lo = com_off_pb_lo / com_tier_med if com_tier_med else 0.0
+        com_gap_hi = com_off_pb_hi / com_tier_med if com_tier_med else 0.0
         if com is not None and not com.empty:
             com_tbl = ("| 프로젝트 | 시작 | 모금액 | 후원자 | 1인당 | 달성률 |\n|---|---|---|---|---|---|\n"
                        + "\n".join(
@@ -1397,7 +1503,7 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
     cs = cmt_stats or {}
     c_n = c_videos = c_members = c_nneg = c_neg_videos = 0
     c_pos = c_neu = c_neg = 0.0
-    c_neg_members = "—"
+    c_neg_members = "—"; c_per = "—"; c_neg_off = c_neg_on = 0
     c_topic_tbl = c_corr_line = ""
     c_top_name = "성격·개그"; c_top_n = 0; c_top_pos = c_top_likes = c_game_likes = 0.0
     c_like_ratio = 0.0
@@ -1406,6 +1512,8 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         c_pos, c_neu, c_neg, c_nneg = cs["pos"], cs["neu"], cs["neg"], cs["n_neg"]
         c_neg_videos = cs["neg_videos"]
         c_neg_members = "·".join(cs["neg_members"]) or "—"
+        c_per = (f"{cs['per_lo']}건" if cs["per_lo"] == cs["per_hi"] else f"{cs['per_lo']}~{cs['per_hi']}건")
+        c_neg_off = cs["neg_offtopic"]; c_neg_on = c_nneg - c_neg_off
         by = cmt.sort_values("n", ascending=False)
         c_topic_tbl = ("| 주제 | 댓글 수 | 긍정 | 부정 | 좋아요 중앙값 |\n|---|---|---|---|---|\n"
                        + "\n".join(
@@ -1432,6 +1540,7 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
     kiri_tbl = topic_tbl = ""
     kiri_ratio = kiri_unmatched = cover_clip_share = top3 = top10 = 0.0
     kiri_n = kiri_ch = kiri_lo = kiri_hi = 0
+    kiri_min_txt = kiri_max_txt = kiri_top_titles = kiri_top1_topic = "—"
     if ks and kiri is not None and not kiri.empty:
         k = kiri.sort_values("clip_views_sum", ascending=False)
         kiri_n, kiri_ch = ks["n_clips"], ks["n_channels"]
@@ -1439,6 +1548,11 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         kiri_ratio, kiri_unmatched = ks["median_ratio"], ks["unmatched_share"]
         top3, top10 = ks["top3_share"], ks["top10_share"]
         cover_clip_share = ks["topics"].get("커버·노래", {}).get("share", 0.0)
+        kmin, kmax = k.loc[k["clip_vs_own"].idxmin()], k.loc[k["clip_vs_own"].idxmax()]
+        kiri_min_txt = f"{kmin['name_ko']} {kmin['clip_vs_own']:.2f}배"
+        kiri_max_txt = f"{kmax['name_ko']} {kmax['clip_vs_own']:.2f}배"
+        kiri_top_titles = "·".join(f"「{t}」" for t in ks.get("top_titles", []))
+        kiri_top1_topic = ks.get("top1_topic", "—")
         kiri_tbl = ("| 멤버 | 클립 | 클립 총조회 | 클립 중앙 | 본인 영상 중앙 | 비율 | 채널 |\n"
                     "|---|---|---|---|---|---|---|\n" + "\n".join(
                         f"| {r.name_ko} | {r.n_clips}편 | {r.clip_views_sum:,} | "
@@ -1456,14 +1570,32 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
     d = drivers or {}
     drv_intro = drv_tbl = ""
     cat_lo = cat_hi = hour_lo = hour_hi = dow_lo = dow_hi = 0.0
-    cat_ratio = hour_ratio = dow_ratio = 0.0
+    cat_ratio = hour_ratio = dow_ratio = usual_ratio = 0.0
+    drv_ev_n = drv_top_n = 0; drv_ev_line = ""; cat_top_name = "—"
     if d:
+        # 상위 세션 중 이벤트 방송이 몇 개인지, 이벤트 구간과 평소 구간 사이 간격이 얼마인지는 매번 센다.
+        tops = d["top"]; drv_top_n = len(tops)
+        ev_flags = [session_event(r, events) != "평소" for r in tops]
+        drv_ev_n = int(sum(ev_flags))
+        lead = 0
+        while lead < len(ev_flags) and ev_flags[lead]:
+            lead += 1
+        if 0 < lead < len(tops):
+            gap = float(tops[lead - 1]["peak_ccu"]) / float(tops[lead]["peak_ccu"])
+            drv_ev_line = (f"관측 구간의 상위 {drv_top_n}개 중 **1~{lead}위가 전부 이벤트 방송**이고, "
+                           f"{lead}위와 {lead + 1}위 사이에 {gap:.1f}배 차이가 난다.")
+        elif lead == len(tops):
+            drv_ev_line = f"관측 구간의 상위 {drv_top_n}개가 **전부 이벤트 방송**이다."
+        else:
+            drv_ev_line = f"관측 구간의 상위 {drv_top_n}개 중 {drv_ev_n}개가 이벤트 방송이다."
         cat_lo, cat_hi = d["cat_lo"], d["cat_hi"]
         hour_lo, hour_hi = d["hour_lo"], d["hour_hi"]
         dow_lo, dow_hi = d["dow_lo"], d["dow_hi"]
         cat_ratio = cat_hi / cat_lo if cat_lo else 0
         hour_ratio = hour_hi / hour_lo if hour_lo else 0
         dow_ratio = dow_hi / dow_lo if dow_lo else 0
+        usual_ratio = max(cat_ratio, hour_ratio, dow_ratio)
+        cat_top_name = str(d["cat_top"][0]["category"]) if d.get("cat_top") else "—"
         drv_intro = (
             f"관측된 방송 세션 {d['n']}건의 피크 분포는 심하게 치우쳐 있다 — "
             f"중앙값 **{d['median']:,.0f}명**, 상위 5% {d['p95']:,.0f}명, "
@@ -1477,15 +1609,19 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
 
     # ── 오리지널곡 ──
     orig_tbl = "| — | 측정 가능한 오리지널곡이 없음 |"
-    o_lo = o_hi = oc_lo = oc_hi = riko_vc = 0.0
+    o_lo = o_hi = oc_lo = oc_hi = 0.0; o_n = o_rel_lo = o_rel_hi = 0; o_vc_name = o_vs_cover_txt = "—"
     if orig_eff is not None and not orig_eff.empty:
         oe = orig_eff.sort_values("vs_normal", ascending=False)
         o_lo, o_hi = float(oe["vs_normal"].min()), float(oe["vs_normal"].max())
         vc = oe["vs_cover"].dropna()
         if len(vc):
             oc_lo, oc_hi = float(vc.min()), float(vc.max())
-        r = oe[oe["name_ko"] == "유즈하 리코"]["vs_cover"]
-        riko_vc = float(r.iloc[0]) if len(r) and r.iloc[0] == r.iloc[0] else 0.0
+        o_n = int(len(oe)); o_rel_lo, o_rel_hi = int(oe["n_related"].min()), int(oe["n_related"].max())
+        # 커버 대비 배수가 가장 큰 곡 — 곡이 세서인지 그 멤버의 커버 중앙값이 낮아서인지는 커버 절에서 가린다.
+        ovc = oe.dropna(subset=["vs_cover"])
+        o_vc_name = str(ovc.loc[ovc["vs_cover"].idxmax(), "name_ko"]) if len(ovc) else "—"
+        o_vs_cover_txt = ("커버곡보다 확실히 높다" if oc_lo > 1 else
+                          "커버곡과 비슷하거나 낮다" if oc_hi >= 1 else "커버곡보다 낮다")
         orig_tbl = ("| 곡 | 멤버 | 공개일 | MV + 음원 조회수 | 일반 중앙 | 일반 대비 | 커버 대비 |\n"
                     "|---|---|---|---|---|---|---|\n" + "\n".join(
                         f"| {str(r.title).split('「')[-1].rstrip('」')} | {r.name_ko} | "
@@ -1497,12 +1633,28 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
                         for r in oe.itertuples()))
 
     # ── 커버곡 ──
-    cover_tbl, cov_med, riko = "| — | 데이터 없음 |", 0.0, 0.0
+    cover_tbl, cov_med = "| — | 데이터 없음 |", 0.0
+    cov_n = cov_above = cov_rest_n_lo = cov_rest_n_hi = 0
+    cov_lo = cov_hi = cov_freq_pm = cov_freq_mult = cov_rest_lo = cov_rest_hi = 0.0
+    cov_corr_all = cov_corr_rest = 0.0; cov_freq_name = cov_corr_txt = "—"
     if cov_eff is not None and not cov_eff.empty:
         ce = cov_eff.sort_values("views_multiple", ascending=False)
         cov_med = float(ce["views_multiple"].median())
-        r = ce[ce["name_ko"] == "유즈하 리코"]["views_multiple"]
-        riko = float(r.iloc[0]) if len(r) else 0.0
+        cov_n = int(len(ce)); cov_lo, cov_hi = _rng(ce, "views_multiple")
+        cov_above = int((ce["views_multiple"] > 1).sum())
+        # 커버를 가장 자주 올리는 멤버 — 빈도가 배수를 깎는지는 그 한 명을 빼고도 봐야 한다.
+        days = (pd.to_datetime(ce["window_to"]) - pd.to_datetime(ce["window_from"])).dt.days + 1
+        ce = ce.assign(per_month=ce["n_covers"] / days * 30)
+        fq = ce.loc[ce["per_month"].idxmax()]
+        cov_freq_name, cov_freq_pm, cov_freq_mult = str(fq["name_ko"]), float(fq["per_month"]), float(fq["views_multiple"])
+        rest = ce[ce["name_ko"] != cov_freq_name]
+        cov_rest_lo, cov_rest_hi = _rng(rest, "per_month")
+        cov_corr_all = float(ce["per_month"].corr(ce["views_multiple"])) if len(ce) >= 3 else 0.0
+        cov_corr_rest = float(rest["per_month"].corr(rest["views_multiple"])) if len(rest) >= 3 else 0.0
+        cov_rest_n_lo, cov_rest_n_hi = int(rest["n_covers"].min()), int(rest["n_covers"].max())
+        cov_corr_txt = ("표본 한 명에 끌려다니는 상관이라"
+                        if (cov_corr_all * cov_corr_rest < 0 or abs(cov_corr_all - cov_corr_rest) >= 0.3)
+                        else f"한 명을 빼도 크게 달라지지 않지만 n={cov_n}이라")
         cover_tbl = ("| 멤버 | 커버 | 커버 중앙 조회수 | 일반 중앙 조회수 | 배수 |\n"
                      "|---|---|---|---|---|\n" + "\n".join(
                          f"| {r.name_ko} | {r.n_covers}곡 | {r.cover_median_views:,} | "
@@ -1519,6 +1671,8 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
             collab_med = int(g.get(True, 0))
 
     arc_tbl, solo_mult, solo_yt, grp_lo, grp_hi = "| — | 데이터 없음 |", 0.0, 0, 0.0, 0.0
+    solo_name = solo_date = grp_date = concert_dates = "—"; grp_n = 0
+    solo_yt_txt = solo_yt_line = ""
     if arc is not None and not arc.empty:
         a = arc.sort_values(["date", "arc_multiple"], ascending=[False, False])
         arc_tbl = ("| 콘서트 | 멤버 | 관련 방송 | 최고 조회수 | 평소 | 배수 |\n"
@@ -1528,11 +1682,17 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
                        f"**{r.arc_multiple:.2f}배** |" for r in a.itertuples()))
         solo = a[a["solo"]] if "solo" in a.columns else a.iloc[0:0]
         if len(solo):
-            solo_mult = float(solo["arc_multiple"].max())
-            solo_yt = int(solo["yt_top_views"].max())
+            sb = solo.loc[solo["arc_multiple"].idxmax()]
+            solo_mult, solo_yt = float(sb["arc_multiple"]), int(solo["yt_top_views"].max())
+            solo_name, solo_date = str(sb["name_ko"]), str(sb["date"])
+            solo_yt_txt = f"(안내 쇼츠 {solo_yt:,}회)" if solo_yt else ""
+            solo_yt_line = (f", 콘서트 안내 쇼츠는 **{solo_yt:,}회**로 그 채널 최상위권이다" if solo_yt
+                            else " (안내 영상은 유튜브 최근 목록 창 밖이라 잴 수 없다)")
         grp = a[~a["solo"]] if "solo" in a.columns else a.iloc[0:0]
         if len(grp):
             grp_lo, grp_hi = float(grp["arc_multiple"].min()), float(grp["arc_multiple"].max())
+            grp_date, grp_n = str(grp["date"].max()), int(grp["name_ko"].nunique())
+        concert_dates = "·".join(sorted(set(a["date"].astype(str))))
 
     cos_top_txt = ""
     if not ct.empty and (ct["type"] == "신의상").any():
@@ -1605,37 +1765,36 @@ append-only 로 남긴다.
 - **대규모 컨텐츠 {len(collabs)}건**을 자동 감지했다 — 4명 이상이 **연속 {MIN_CONSECUTIVE_DAYS}일 이상**
   함께한 기획만 이벤트로 본다. 마인크래프트 서버·봉켓몬·봉봉팜·팰월드처럼 며칠에 걸친
   기획이 그대로 잡힌다.
-- 그 {len(collabs)}건 중 **{big}건이 평소 방송 대비 {BIG_MULTIPLE}배 이상**의 조회수를 냈다.
-  하루짜리를 섞었을 때는 이 비율이 절반 수준이었다 — **연속 기획만 남기면 효과가 선명해진다.**
-  단발 합방과 며칠짜리 기획은 성격이 다른 이벤트다.
-- **가장 크게 터지는 이벤트는 합방이 아니라 신의상 공개다.** 조회수는 평소의
-  **{cos_lo:.1f}~{cos_hi:.1f}배**(합방은 {col_lo:.1f}~{col_hi:.1f}배), 동시시청자 피크는
-  **{ccu_lo:.1f}~{ccu_hi:.1f}배**(같은 기간 나란히 돌던 10인 마인크래프트 합방은
-  {mc_lo:.1f}~{mc_hi:.1f}배)였다.{cos_top_txt}
-- **천장이 가장 높은 건 오리지널곡이다.** MV 가 일반 영상의 {o_lo:.1f}~{o_hi:.1f}배,
-  같은 멤버의 커버곡과 비교해도 {oc_lo:.1f}~{oc_hi:.1f}배다. 다만 잴 수 있는 곡이
-  한 앨범(4곡)뿐이라 **경향이 아니라 사례**로 읽어야 한다.
+- {collab_meas_txt} **{big}건이 평소 방송 대비 {BIG_MULTIPLE}배 이상**의 조회수를 냈다. 단발 합방과 며칠짜리
+  기획은 성격이 다른 이벤트라 **연속 기획만 이벤트로 센다.**
+- **동시시청자를 가장 크게 끌어올리는 유형은 {top_ccu_type}**(평소 피크의 최대 {top_ccu_hi:.1f}배)다.
+  신의상 공개는 조회수 **{cos_lo:.1f}~{cos_hi:.1f}배**(합방은 {col_lo:.1f}~{col_hi:.1f}배),
+  동시시청자 피크 **{ccu_lo:.1f}~{ccu_hi:.1f}배**(같은 기간의 대규모 합방은
+  {mc_lo:.1f}~{mc_hi:.1f}배)다.{cos_top_txt} 유형별 범위는 아래 표에 있다.
+- **오리지널곡 MV 는 일반 영상의 {o_lo:.1f}~{o_hi:.1f}배 본다.** 같은 멤버의 커버곡과
+  비교하면 {oc_lo:.1f}~{oc_hi:.1f}배로 {o_vs_cover_txt}. 잴 수 있는 곡이 {o_n}곡뿐이라
+  **경향이 아니라 사례**로 읽어야 한다.
 - **커버곡은 평소 영상의 {cov_med:.1f}배 본다**(같은 기간·성숙 영상만 비교). 콜라보 커버가
-  더 잘 되지는 않는다 — 2026년 기준 솔로와 콜라보의 조회수 중앙값이 같다.
-- **콘서트는 단독이냐 합동이냐로 갈린다.** 본인 첫 단독 콘서트의 후기 방송은 평소의
-  {solo_mult:.1f}배(안내 쇼츠 {solo_yt:,}회)였지만, 같은 멤버가 참여한 그룹 페스티벌은
-  {grp_lo:.1f}~{grp_hi:.1f}배였다. 합동은 관심이 10명에게 나뉜다.
+  더 잘 되지는 않는다 — 최근 연도 기준 솔로 {solo_med:,}회 · 콜라보 {collab_med:,}회다.
+- **콘서트는 단독이냐 합동이냐로 갈린다.** {solo_name}의 단독 콘서트 후기 방송은 평소의
+  {solo_mult:.1f}배{solo_yt_txt}였지만, 그룹 페스티벌 참여 멤버 {grp_n}명은
+  {grp_lo:.1f}~{grp_hi:.1f}배였다. 합동은 관심이 여러 명에게 나뉜다.
 - **게임사의 공식 푸시는 유저 언급을 만들지 못한다**(상관 {hy_corr_push:+.2f}). 희귀도(5성)는
   효과가 있지만 푸시 순서는 없고, 인기는 구작 5성에 쌓여 있다. 스텔라이브 접점은 방송의
   {hy_share:.1%}뿐이며, 게임이 시청자를 끄는 게 아니라 그 멤버의 주력일 때만 평소를 넘는다.
-- **같은 {cp_days}일에 스텔라이브만 전원이 올랐다.** 구독자 {cp_stel_gain:+,}명으로 11분의 1 규모의
-  홀로라이브({cp_holo_gain:+,}명)와 같은 수를 더했고, 이세계아이돌은 전원 감소했다. 커버가 내는
-  배수는 그룹이 같은데 스텔라이브가 커버 비중이 가장 높다 — 레버가 아니라 당기는 빈도가 다르다.
-  다만 참여율은 셋 중 가장 낮다: 도달은 넓고 참여는 얕다.
+- **같은 {cp_days}일, {cp_headline}.** 구독자 증감은 스텔라이브 {cp_stel_gain:+,}명 ·
+  홀로라이브 {cp_holo_gain:+,}명(스텔라이브의 {cp_scale}배 규모)이다. 커버가 내는 배수는
+  {cp_cover_line}. {cp_mix_line} {cp_reach_line}
 - **팬덤의 돈은 플랫폼에 쌓이고 IP 회사엔 남지 않는다.** 스텔라이브는 DART 에 없어
-  못 재지만, 같은 돈이 흐르는 양 끝단은 보인다 — 플랫폼(NAVER·SOOP)은 10년 연속 흑자에
+  못 재지만, 같은 돈이 흐르는 양 끝단은 보인다 — 플랫폼(NAVER·SOOP)은 {dart_plat_streak}년 연속 흑자에
   이익률 {dart_plat_margin}, IP 회사는 {dart_ip_streak}.
 - **팬은 돈을 쓴다, 자발적으로.** 팬 제작 광고 펀딩 {com_fan_n}건이 목표의
   {com_fan_ach_lo:.0f}~{com_fan_ach_hi:.0f}%를 모았다(1인당 {com_fan_pb_lo:,}~{com_fan_pb_hi:,}원).
   지출은 정기 구독 만원 미만 → 팬 광고 수만원 → 공식 굿즈 수십만원으로 목적에 따라
   자릿수가 바뀐다. 그런데 동종업계 감사 재무는 연속 영업적자다 — 회사엔 남지 않는다.
 - **댓글 여론은 긍정/부정으로 가를 수 없다.** 긍정 {c_pos:.0%}·부정 {c_neg:.1%}이고 부정
-  {c_nneg}건은 전부 야구팀 얘기라 멤버를 향한 부정은 0건이다. 신호는 주제에 있다 —
+  {c_nneg}건 중 {c_neg_off}건은 영상 소재(야구팀) 얘기라 멤버를 향한 부정은 많아야 {c_neg_on}건이다.
+  신호는 주제에 있다 —
   **{c_top_name}** 댓글이 가장 많고 가장 긍정적이고 좋아요도 방송내용·게임의
   {c_like_ratio:.1f}배다. 팬은 콘텐츠가 아니라 사람에 반응한다.
 - **키리누키는 유일하게 기획할 수 없는 이벤트다.** 클립 표본의 {kiri_unmatched:.0%}가 어떤
@@ -1643,8 +1802,8 @@ append-only 로 남긴다.
   개별 클립은 본인 영상의 {kiri_ratio:.0%} 수준이지만 공식 채널 밖 도달이고,
   상위 3개 채널이 조회수의 {top3:.0%}를 가져간다.
 - **동시시청자는 '무엇을 하느냐'보다 '이벤트냐 아니냐'로 갈린다.** 카테고리·시간대·요일을
-  바꿔서 얻는 건 최대 {cat_ratio:.1f}배(카테고리)지만, 신의상 공개는 7~19배를 만든다. 관측된
-  세션 상위 4개가 전부 신의상이고 4위와 5위 사이에만 2.4배 차이가 난다.
+  바꿔서 얻는 건 최대 {usual_ratio:.1f}배지만, {top_ccu_type}은 평소 피크의 최대 {top_ccu_hi:.1f}배를
+  만든다. {drv_ev_line}
 - 전후 비교(팔로워·구독자·동시시청자)는 **일일 수집이 시작된 2026-08-12 이후 이벤트만**
   가능하다. 그 이전은 기준선이 없어 계산하지 않는다 — 0%가 아니라 측정 불가다.
 - 최근 {pending}건은 **관측 중**이다. 이벤트 후 {MIN_POST_DAYS}일이 지나야 전후 비교를 낸다 —
@@ -1656,24 +1815,24 @@ append-only 로 남긴다.
 
 | 렌즈 | 무엇을 움직이나 | 얼마나 | 기획 가능 | 한계 |
 |---|---|---|---|---|
-| 오리지널곡 MV | 유튜브 조회수 | 일반 영상의 {o_lo:.0f}~{o_hi:.0f}배 | ✅ | 잴 수 있는 곡이 한 앨범 4곡 |
+| 오리지널곡 MV | 유튜브 조회수 | 일반 영상의 {o_lo:.1f}~{o_hi:.1f}배 | ✅ | 잴 수 있는 곡이 {o_n}곡 |
 | 신의상 공개 | 치지직 동시시청자 | 평소 피크의 {ccu_lo:.0f}~{ccu_hi:.0f}배 (조회수 {cos_lo:.1f}~{cos_hi:.1f}배) | ✅ | 연 몇 회짜리 희소 이벤트 |
 | 단독 콘서트 | 주변 방송 조회수 | {solo_mult:.1f}배 (합동 페스티벌 {grp_lo:.1f}~{grp_hi:.1f}배) | ✅ | 구독자 전후 비교 불가(수집 이전) |
-| 커버곡 | 유튜브 조회수 | 일반 영상의 {cov_med:.1f}배 · 콜라보와 솔로 차이 없음 | ✅ | 멤버별 순위는 표본 1~2곡 |
+| 커버곡 | 유튜브 조회수 | 일반 영상의 {cov_med:.1f}배 · 콜라보와 솔로 차이 없음 | ✅ | 멤버별 순위는 표본 {cov_rest_n_lo}~{cov_rest_n_hi}곡 |
 | 대규모 합방 | 조회수(분량으로) | {col_lo:.1f}~{col_hi:.1f}배 · 동시시청자 {mc_lo:.1f}~{mc_hi:.1f}배 | ✅ | 연속 2일 이상만 이벤트로 인정 |
 | 키리누키 | 공식 채널 밖 도달 | 클립당 본인 영상의 {kiri_ratio:.0%} | ❌ 순간이 만든다 | 검색 표본, 비율은 상한 |
-| 동시시청자 | — | 평소 요인은 최대 {cat_ratio:.1f}배, 이벤트는 7~19배 | — | 2026-08-12 이후만 |
+| 동시시청자 | — | 평소 요인은 최대 {usual_ratio:.1f}배, 이벤트는 최대 {top_ccu_hi:.0f}배 | — | 2026-08-12 이후만 |
 | 댓글 여론 | — | 부정 {c_neg:.1%}, 신호는 주제(사람 > 콘텐츠) | — | 이벤트별 비교 불가 |
 | 팬 커머스 | 팬 지출 | 구독 만원 미만 → 팬 광고 수만원 → 굿즈 수십만원 | — | 회사 매출 비공개 |
 | DART 재무 | 돈이 남는 곳 | 플랫폼 이익률 {dart_plat_margin} vs IP 회사 적자 | — | 스텔라이브 DART 미등록 |
-| 경쟁사 비교 | 같은 기간 성장 | 스텔라이브 {cp_stel_gain:+,} vs 홀로 {cp_holo_gain:+,} (11분의 1 규모) | — | 21일 · 1,000 반올림 |
+| 경쟁사 비교 | 같은 기간 성장 | 스텔라이브 {cp_stel_gain:+,} vs 홀로 {cp_holo_gain:+,} ({cp_scale}배 규모) | — | {cp_days}일 · 1,000 반올림 |
 | 호요버스 | 공식 푸시 → 언급 | 상관 {hy_corr_push:+.2f} (없음) | — | 언급은 인기가 아니라 화제성 |
-| 채널 성과 | 유튜브 조회수·성장 | 업로드 빈도 → 조회수 {ch_up_v:+.2f} · 규모 → 성장 {ch_sub_g:+.2f} | ✅ | n=10 상관 |
-| 방송 패턴 | 치지직 VOD·성장 | 시간·심야 → VOD +0.7, 성장은 규모에 딸림 | ✅ | n=10 상관 |
-| 시장 | 배경 속도 | 시장 연 {mk_cagr_lo:.0%}~{mk_cagr_hi:.0%} vs 스텔라이브 {mk_days}일 {mk_growth:+.1%} | — | 한 달 연환산은 거칠다 |
+| 채널 성과 | 유튜브 조회수·성장 | 업로드 빈도 → 조회수 {ch_up_v:+.2f} · 규모 → 성장 {ch_sub_g:+.2f} | ✅ | n={ch_n} 상관 |
+| 방송 패턴 | 치지직 VOD·성장 | 주당 시간 → VOD {sp_hours_vod:+.2f}, 성장은 규모에 딸림 | ✅ | n={sp_n} 상관 |
+| 시장 | 배경 속도 | 시장 연 {mk_cagr_lo:.0%}~{mk_cagr_hi:.0%} vs 스텔라이브 {mk_days}일 {mk_growth:+.1%} | — | {mk_days}일 연환산은 거칠다 |
 
-**읽는 법.** 유튜브를 움직이는 것(오리지널곡·커버곡)과 치지직을 움직이는 것(신의상)이
-갈린다. 평소 요인(카테고리·시간대·업로드 빈도)은 상관은 있지만 배수는 2배 안쪽이고,
+**읽는 법.** 유튜브를 움직이는 것(오리지널곡·커버곡)과 치지직을 움직이는 것(신의상·데뷔)이
+갈린다. 평소 요인(카테고리·시간대·업로드 빈도)은 상관은 있지만 배수는 {usual_ratio:.1f}배 안쪽이고,
 이벤트는 자릿수가 다르다. 기획할 수 있는 레버가 대부분이고 키리누키만 예외다.
 수익은 어떤 방법으로도 못 재고, 전후 비교는 2026-08-12 이후 이벤트만 가능하다.
 
@@ -1683,14 +1842,13 @@ append-only 로 남긴다.
 |---|---|---|
 {top or '| — | 데이터 부족 | — |'}
 
-## 신의상 효과 — 가장 크게 터지는 이벤트
+## 이벤트 유형별 효과 — 어느 유형이 가장 크게 터지나
 
-같은 기간에 나란히 돌아도 신의상 공개가 합방을 두 지표 모두에서 앞선다.
+{type_tbl}
 
-| 지표 | 신의상 공개 | 대규모 합방 |
-|---|---|---|
-| VOD 조회수 배수 | **{cos_lo:.1f}~{cos_hi:.1f}배** | {col_lo:.1f}~{col_hi:.1f}배 |
-| 동시시청자 피크 배수 | **{ccu_lo:.1f}~{ccu_hi:.1f}배** | {mc_lo:.1f}~{mc_hi:.1f}배 |
+동시시청자를 가장 크게 끌어올린 유형은 **{top_ccu_type}**(최대 {top_ccu_hi:.1f}배)이다. 신의상 공개는
+같은 기간에 나란히 돌던 대규모 합방보다 두 지표 모두에서 앞선다 — 조회수 {cos_lo:.1f}~{cos_hi:.1f}배
+대 {col_lo:.1f}~{col_hi:.1f}배, 동시시청자 {ccu_lo:.1f}~{ccu_hi:.1f}배 대 {mc_lo:.1f}~{mc_hi:.1f}배.
 
 {costume_tbl}
 
@@ -1698,25 +1856,22 @@ append-only 로 남긴다.
 끌어올리는 반면, 신의상은 하루 몇 시간에 평소의 몇 배가 몰린다. 성격이 다른 두
 레버로 봐야 한다 — 합방은 **분량**, 신의상은 **순간 최대치**다.
 
-{bday_sec}## 오리지널곡 효과 — 가장 높은 천장
+{bday_sec}## 오리지널곡 효과 — 일반 영상의 {o_lo:.1f}~{o_hi:.1f}배
 
 {orig_tbl}
 
 오리지널곡 MV 는 그 멤버의 일반 영상보다 **{o_lo:.1f}~{o_hi:.1f}배** 본다. 같은 멤버의
-커버곡과 비교해도 **{oc_lo:.1f}~{oc_hi:.1f}배**다. 지금까지 잰 이벤트 중 단일 콘텐츠로는
-천장이 가장 높다.
+커버곡과 비교하면 **{oc_lo:.1f}~{oc_hi:.1f}배**로 {o_vs_cover_txt}.
 
-발매는 한 편이 아니라 **묶음으로 굴러간다.** 곡마다 관련 영상이 7~11편 붙는다 —
-티저(2~3일 전) → MV → 홍보 쇼츠 5~6편. 유즈하 리코의 「악당주의보」는 발매 한 달
-뒤에도 댄스 챌린지 쇼츠(8/27·9/1)로 다시 20만 회씩 나왔다.
+발매는 한 편이 아니라 **묶음으로 굴러간다.** 곡마다 관련 영상(티저·MV·홍보 쇼츠)이
+{o_rel_lo}~{o_rel_hi}편 붙는다.
 
-⚠ **표본은 한 앨범뿐이다.** 잴 수 있는 오리지널곡은 cliché 1st EP 「Colorful Strokes」
-수록곡 4개가 전부다. 나머지 오리지널곡(2023~2026)은 일반 영상 목록이 멤버당 최근
-50개뿐이라 데이터에 없다. **"오리지널곡은 커버의 2배"가 아니라 "이 앨범은 그랬다"**로
-읽어야 한다. 유즈하 리코의 커버 대비 배수({riko_vc:.1f}배)가 유독 큰 것도 곡이 세서가
-아니라 그의 커버 중앙값이 낮은 탓이다(아래 커버곡 절 참고).
+⚠ **표본이 {o_n}곡뿐이다.** 일반 영상 목록이 멤버당 최근 50개뿐이라 그 창 안에 MV 가 있는
+곡만 잴 수 있고, 더 오래된 오리지널곡은 데이터에 없다. **"오리지널곡은 커버의 몇 배"가 아니라
+"이 곡들은 그랬다"**로 읽어야 한다. 커버 대비 배수가 가장 큰 {o_vc_name}의 곡도 곡이 세서라기보다
+그 멤버의 커버 중앙값이 낮은 탓일 수 있다(아래 커버곡 절 참고).
 
-## 커버곡 효과 — 평소 영상의 4배
+## 커버곡 효과 — 평소 영상의 {cov_med:.1f}배
 
 커버는 2017년부터 있고 일반 영상 목록은 멤버당 최근 50개뿐이다. 그냥 비교하면
 오래 쌓인 커버가 최근 일반 영상을 이기는 게 당연해진다 — 효과가 아니라 **누적 시간**을
@@ -1725,24 +1880,23 @@ append-only 로 남긴다.
 
 {cover_tbl}
 
-커버곡은 그 멤버의 일반 영상보다 **중앙값 {cov_med:.1f}배** 본다. 10명 중 9명이 2.8~7.4배에
-들어간다.
+커버곡은 그 멤버의 일반 영상보다 **중앙값 {cov_med:.1f}배** 본다. 잴 수 있는 {cov_n}명 중
+{cov_above}명이 1배를 넘고, 범위는 {cov_lo:.1f}~{cov_hi:.1f}배다.
 
-**콜라보 커버가 더 잘 되지는 않는다.** 2026년 커버만 놓고 보면 솔로 {solo_med:,}회 ·
-콜라보 {collab_med:,}회로 차이가 없다. 전체 기간으로는 콜라보가 높아 보이는데, 콜라보 커버가
+**콜라보 커버가 더 잘 되지는 않는다.** 최근 연도 커버만 놓고 보면 솔로 {solo_med:,}회 ·
+콜라보 {collab_med:,}회다. 전체 기간으로는 콜라보가 높아 보이는데, 콜라보 커버가
 **2024년부터만 존재해서** 생기는 착시다(그 이전 카탈로그는 전부 솔로).
 
 ### 읽을 때 주의
 
-유즈하 리코만 {riko:.2f}배로 유일하게 1배 미만이고, 동시에 커버를 가장 자주 올린다
-(월 4.5곡 · 다른 멤버는 0.3~1.2곡). "자주 올리면 효과가 희석된다"로 읽고 싶어지고
-실제로 빈도와 배수의 상관은 -0.53이다. **그런데 리코 한 명을 빼면 +0.32로 뒤집힌다.**
-표본 하나가 만든 상관이라 인과로 말할 수 없다.
+커버를 가장 자주 올리는 멤버는 {cov_freq_name}(창 안에서 월 {cov_freq_pm:.1f}곡 · 다른 멤버는
+{cov_rest_lo:.1f}~{cov_rest_hi:.1f}곡)이고 배수는 {cov_freq_mult:.2f}배다. 빈도와 배수의 상관은
+{cov_corr_all:+.2f}이고 **그 한 명을 빼면 {cov_corr_rest:+.2f}**다. {cov_corr_txt}
+"자주 올리면 효과가 희석된다"를 인과로 말할 수 없다.
 
-더 그럴듯한 설명은 표본 수다. 다른 멤버는 창 안에 커버가 1~2곡뿐이라 그 중앙값이
-"잘 된 한 곡"일 수 있는 반면, 리코는 7곡이라 평범한 곡까지 포함된 중앙값이다.
-멤버별 배수 **순위**는 이 이유로 신뢰하지 말고, "커버는 일반 영상보다 몇 배 본다"는
-**전체 경향**만 읽는 편이 안전하다.
+더 그럴듯한 설명은 표본 수다. 다른 멤버는 창 안에 커버가 {cov_rest_n_lo}~{cov_rest_n_hi}곡이라
+그 중앙값이 "잘 된 한 곡"일 수 있다. 멤버별 배수 **순위**는 이 이유로 신뢰하지 말고,
+"커버는 일반 영상보다 몇 배 본다"는 **전체 경향**만 읽는 편이 안전하다.
 
 ## 콘서트 효과 — 단독과 합동은 다르다
 
@@ -1752,14 +1906,13 @@ append-only 로 남긴다.
 
 {arc_tbl}
 
-**본인 단독 콘서트가 그룹 합동보다 훨씬 크게 남는다.** 아카네 리제의 첫 단독 콘서트
-후기 방송은 평소의 {solo_mult:.1f}배였고, 콘서트 안내 쇼츠는 **{solo_yt:,}회**로 그 채널
-최상위권이다. 반면 같은 멤버가 참여한 그룹 페스티벌(2025-12-20)의 후기 방송은
-{grp_lo:.1f}~{grp_hi:.1f}배에 그쳤다. 합동 무대는 관심이 10명에게 나뉘지만 단독 콘서트는
+**본인 단독 콘서트가 그룹 합동보다 훨씬 크게 남는다.** {solo_name}의 단독 콘서트({solo_date})
+후기 방송은 평소의 {solo_mult:.1f}배였고{solo_yt_line}. 반면 그룹 페스티벌({grp_date})에 참여한 {grp_n}명의 후기 방송은
+{grp_lo:.1f}~{grp_hi:.1f}배에 그쳤다. 합동 무대는 관심이 여러 명에게 나뉘지만 단독 콘서트는
 그 멤버에게 몰린다.
 
-⚠ **구독자·팔로워 전후 비교는 두 콘서트 모두 불가능하다.** 일일 축적이 2026-08-12에
-시작됐는데 콘서트는 2025-12-20과 2026-07-11이라 기준선이 존재하지 않는다. 위 숫자는
+⚠ **구독자·팔로워 전후 비교는 이 콘서트들에서 불가능하다.** 일일 축적이 2026-08-12에
+시작됐는데 콘서트는 {concert_dates}이라 기준선이 존재하지 않는다. 위 숫자는
 **방송 조회수로 잰 간접 지표**이고, "콘서트로 구독자가 몇 % 늘었다"는 아직 말할 수 없다.
 다음 콘서트부터는 전후 비교가 자동으로 붙는다.
 
@@ -1776,8 +1929,8 @@ append-only 로 남긴다.
 {ch_sub_g:+.2f}** — 이미 큰 채널일수록 느리게 큰다. 참여율은 조회수와 음(−), 성장과 양(+)이라
 "팬이 반응하는 채널"과 "많이 보는 채널"이 다른 채널이다.
 
-⚠ n=10 상관이다. 성장 상위 3명(리코·후야·나나) 중 둘이 7/27 cliché EP 발매 멤버라
-업로드 효과와 발매 효과가 섞여 있다. 방향만 읽고 크기는 믿지 말 것.
+⚠ n={ch_n} 상관이다. 성장 상위 3명({ch_top3}) 중 {ch_top3_orig}명이 같은 창에 오리지널곡을 낸
+멤버라 업로드 효과와 발매 효과가 섞여 있다. 방향만 읽고 크기는 믿지 말 것.
 
 ## 방송 패턴 효과 — 길게·늦게 하면 VOD는 더 보지만, 팔로워 성장은 규모에 딸려간다
 
@@ -1787,20 +1940,20 @@ append-only 로 남긴다.
 |---|---|---|
 {sp_corr_tbl}
 
-**주당 방송 시간·평균 길이·심야 비중은 VOD 조회수와 +0.7대**로 붙는다 — 길게, 늦게 하는
-방송이 다시보기로 더 소비된다. 그런데 같은 요인이 **팔로워 성장과는 음수**다. 이건
-방송을 많이 해서 덜 크는 게 아니라, **팔로워 규모 → 성장 상관이 {sp_fol_g:+.2f}**로 압도적이라
-큰 채널이 방송도 많이 하고 성장률도 낮은 것이 겹쳐 보이는 것이다. n=10으로는 둘을
-가를 수 없다. 게임 비중은 어느 쪽과도 상관이 없다 — 게임이냐 잡담이냐는 지표를
-안 움직인다.
+**주당 방송 시간·평균 길이·심야 비중은 VOD 조회수와 {sp_hours_vod:+.2f}·{sp_len_vod:+.2f}·{sp_night_vod:+.2f}**로
+붙는다 — 길게, 늦게 하는 방송이 다시보기로 더 소비된다. 그런데 주당 방송 시간이 **팔로워
+성장과는 {sp_hours_g:+.2f}**다. 이건 방송을 많이 해서 덜 크는 게 아니라, **팔로워 규모 → 성장
+상관이 {sp_fol_g:+.2f}**로 커서 큰 채널이 방송도 많이 하고 성장률도 낮은 것이 겹쳐 보이는
+것이다. n={sp_n}으로는 둘을 가를 수 없다. 게임 비중은 VOD {sp_game_vod:+.2f}·성장 {sp_game_g:+.2f}로
+어느 쪽에도 뚜렷하지 않다 — 게임이냐 잡담이냐는 지표를 거의 안 움직인다.
 
 ## 시장 효과 — 배경이 자라는 속도
 
 {mk_cagr_tbl}
 
-스텔라이브 탤런트 10명의 유튜브 구독자 합계는 {mk_from} {mk_subs_from:,} → {mk_to} {mk_subs_to:,}
+스텔라이브 탤런트 {mk_n}명의 유튜브 구독자 합계는 {mk_from} {mk_subs_from:,} → {mk_to} {mk_subs_to:,}
 (**{mk_growth:+.2%}**, {mk_days}일)이다. 단순 연환산하면 {mk_annual:+.0%}로 시장 성장률의 몇 배지만,
-**한 달을 연환산한 숫자**이고 그 달에 cliché EP 발매가 있었다. 시장보다 빠르게 크고
+**{mk_days}일을 연환산한 숫자**라 그 사이 이벤트 하나에도 크게 흔들린다. 시장보다 빠르게 크고
 있다는 방향까지만 읽어야 한다.
 
 {mk_facts_tbl}
@@ -1812,7 +1965,7 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 
 {mk_ms_tbl}
 
-## 호요버스 캐릭터 인기도 효과 — 공식 푸시는 효과가 없고, 스텔라이브 접점은 한 명이다
+## 호요버스 캐릭터 인기도 효과 — 공식 푸시는 효과가 없고, 스텔라이브 접점은 주력 멤버뿐이다
 
 10은 원래 스텔라이브와 다른 도메인(가챠 게임)이다. 두 가지만 묻는다 — 게임사가 미는
 캐릭터가 실제로 이야기되는가, 그리고 스텔라이브 멤버가 이 게임을 방송하면 더 보는가.
@@ -1849,7 +2002,7 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 매 호출 429 로 실패해 설계에서 뺐다(10 참고). 멤버별 배수는 {HOYO_MIN_STREAMS}회 미만이면
 내지 않았고, [광고] 표시 방송은 따로 셌다.
 
-## 경쟁사 비교 효과 — 같은 21일, 스텔라이브만 전원이 올랐다
+## 경쟁사 비교 효과 — 같은 {cp_days}일, {cp_headline}
 
 경쟁사는 치지직 데이터가 없어 합방·신의상은 볼 수 없다. 볼 수 있는 건 유튜브다 —
 같은 기간의 구독자 성장, 최근 업로드 중 커버 비중, 커버가 일반 영상 대비 몇 배인지.
@@ -1863,29 +2016,28 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 
 성장률 상위 4명은 {cp_top_groups}, 하위 4명은 {cp_bot_groups}이다. 그룹이 섞이지 않는다.
 
-### 이벤트 밀도 — 커버는 스텔라이브가 가장 많이, 효과는 똑같이
+### 이벤트 밀도 — 커버라는 레버는 그룹을 가리지 않는다
 
 {cp_mix_tbl}
 
-스텔라이브는 세 그룹 중 **업로드는 가장 적게 하면서 커버 비중은 가장 높다.** 그리고
-커버가 일반 영상 대비 내는 배수는 {cp_cover_line} — **커버라는 레버 자체는 그룹을 가리지
-않는다.** 차이는 레버의 세기가 아니라 **얼마나 자주 당기느냐**다.
+{cp_mix_line} 커버가 일반 영상 대비 내는 배수는 {cp_cover_line} — **커버라는 레버 자체는
+그룹을 가리지 않는다.** 차이가 있다면 레버의 세기가 아니라 **얼마나 자주 당기느냐**다.
 
-### 도달은 넓고 참여는 얕다
+### 도달과 참여
 
 | 그룹 | 구독자 중앙값 | 도달 효율 | 참여율 |
 |---|---|---|---|
 {cp_reach_tbl}
 
-스텔라이브는 도달 효율(평균 조회수/구독자)이 압도적으로 높지만 **참여율은 셋 중 가장
-낮다.** 조회수가 깊은 팬의 반복 시청이 아니라 넓은 도달에서 온다는 뜻이다. 앞 절의
-"팬은 사람에 반응한다"(댓글)와 "신의상이 동시시청자를 10배 만든다"(치지직)는 이 얕은
-유튜브 참여를 치지직 쪽 깊이가 보완하는 그림으로 읽힌다.
+{cp_reach_line} {cp_reach_read} 앞 절의 "팬은 사람에 반응한다"(댓글)와
+"이벤트가 동시시청자를 자릿수가 다르게 만든다"(치지직)는 유튜브 참여를 치지직 쪽 깊이가
+보완하는 그림으로 읽힌다.
 
-⚠ **{cp_days}일·그룹당 6명·1,000 단위 반올림**이다. 홀로라이브 270만 채널은 +999명이
-늘어도 0으로 보이므로 상대 성장률 비교는 스텔라이브에 유리하다. 절대 증가로는
-스텔라이브 {cp_stel_gain:+,}명 · 홀로라이브 {cp_holo_gain:+,}명으로 **11분의 1 규모에서 같은
-수를 더했다**가 정확한 진술이다.
+⚠ **{cp_days}일·{cp_members}·1,000 단위 반올림**이다. 구독자 수백만 채널은 +999명이
+늘어도 0으로 보이므로 상대 성장률 비교는 작은 그룹에 유리하다. 절대 증가로는
+스텔라이브 {cp_stel_gain:+,}명 · 홀로라이브 {cp_holo_gain:+,}명(**스텔라이브의 {cp_scale}배 규모**)이
+정확한 진술이다. 창은 세 그룹의 지금 로스터 전원이 있는 첫날부터 잰다 — 멤버가 늘어난
+그룹을 수집 첫날부터 재면 새 멤버의 구독자 전부가 성장으로 잡힌다.
 
 ## DART 재무 효과 — 팬덤의 돈은 플랫폼에 쌓이고 IP 회사엔 남지 않는다
 
@@ -1894,7 +2046,7 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 같은 팬 지출이 흘러가는 **양 끝단**을 감사 재무로 본다: 후원·구독 수수료를 받는
 **플랫폼**과 굿즈·콘텐츠를 파는 **IP 회사**.
 
-### 플랫폼 — 10년 연속 흑자, 이익률 20%대
+### 플랫폼 — {dart_plat_streak}년 연속 흑자, 이익률 {dart_plat_margin}
 
 {dart_plat_tbl}
 
@@ -1907,16 +2059,14 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 앞 절(팬 커머스)이 보여준 팬 지출은 이 두 표 사이 어딘가로 흐른다. 치지직 후원·구독의
 수수료는 NAVER 로, 굿즈·앨범·콘서트는 IP 회사로. 그리고 **플랫폼은 {dart_plat_margin}의
 영업이익률로 매년 남기고, IP 회사는 {dart_ip_streak}이다.** SOOP 은 매출이
-{dart_soop_x}배로 커지는 동안 이익률이 더 올라갔고, 샌드박스는 매출이 정점의 절반으로
-줄어도 적자가 이어진다.
+{dart_soop_x}배로 커지는 동안 이익률 {dart_soop_margin}를 지켰고, {dart_sand_line}.
 
 이건 스텔라이브에 대한 진술이 아니라 **스텔라이브가 놓인 구조**에 대한 진술이다. 같은
 구조 안에서 스텔라이브만 다르다고 볼 근거는 (비공개라) 없고, 다르지 않다고 볼 근거도 없다.
 
 ⚠ **치지직의 기여는 NAVER 재무에서 분리되지 않는다.** NAVER 매출 {dart_naver_rev}억 중
 치지직 몫은 공시되지 않는다. 스트리밍 전업인 SOOP 이 플랫폼 경제의 더 나은 대리 지표다.
-⚠ 샌드박스의 2023년 매출 급감(-54%)은 사업 구조조정이지 팬덤 축소가 아니고, 패러블은
-공시가 2년치뿐이라 추세를 말할 수 없다.
+⚠ 샌드박스의 2023년 매출 급감은 사업 구조조정이지 팬덤 축소가 아니고, {dart_par_line}.
 
 ## 팬 커머스 효과 — 팬은 돈을 쓴다, 자발적으로, 그런데 회사엔 남지 않는다
 
@@ -1930,24 +2080,25 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 이 {com_fan_n}건은 **회사가 판 게 아니다.** 팬들이 텀블벅에서 스스로 돈을 모아 멤버 생일·
 기념일 광고를 낸 것이다. 합계 **{com_fan_raised:,}원 · {com_fan_backers:,}명**, 1인당
 {com_fan_pb_lo:,}~{com_fan_pb_hi:,}원, 목표 대비 **{com_fan_ach_lo:.0f}~{com_fan_ach_hi:.0f}%** 달성.
-굿즈처럼 손에 남는 것도 없이 오직 "내 멤버를 알리는 데" 3~4만원을 내는 사람이
-한 건당 500~1,000명이다. 이건 매출이 아니라 **팬덤 결속력의 직접 측정치**다.
+굿즈처럼 손에 남는 것도 없이 오직 "내 멤버를 알리는 데" {com_fan_pb_lo/1e4:.0f}~{com_fan_pb_hi/1e4:.0f}만원을
+내는 사람이 한 건당 {com_fan_bk_lo:,}~{com_fan_bk_hi:,}명이다. 이건 매출이 아니라 **팬덤 결속력의 직접 측정치**다.
 
 ### ② 지출은 목적에 따라 자릿수가 달라진다
 
 | 지출 유형 | 1인당 | 출처 |
 |---|---|---|
 | 정기 구독 (팬딩, 월) | 중앙값 **{com_tier_med:,.0f}원** · 상위 25% {com_tier_p75:,.0f}원 | 버튜버 크리에이터 {com_tier_n}개 티어 |
-| 팬 제작 광고 펀딩 | **{com_fan_pb_lo:,}~{com_fan_pb_hi:,}원** | 스텔라이브 4건 |
-| 공식 굿즈 펀딩 | **{com_off_pb_lo:,}~{com_off_pb_hi:,}원** | 이세계아이돌 2건 (최대 {com_off_raised_hi:,}원) |
+| 팬 제작 광고 펀딩 | **{com_fan_pb_lo:,}~{com_fan_pb_hi:,}원** | 스텔라이브 {com_fan_n}건 |
+| 공식 굿즈 펀딩 | **{com_off_pb_lo:,}~{com_off_pb_hi:,}원** | 이세계아이돌 {com_off_n}건 (최대 {com_off_raised_hi:,}원) |
 
-같은 팬덤 안에서 정기 구독에는 만원 미만, 자발적 광고에는 수만원, 한정 굿즈에는
-수십만원을 낸다. **정기 지출과 이벤트성 지출 사이에 10~30배 차이**가 있다. 팬 커머스는
+같은 팬덤 안에서 정기 구독, 자발적 광고, 한정 굿즈로 갈수록 1인당 지출의 자릿수가 바뀐다.
+**정기 구독(월 중앙값) 대비 한정 굿즈 1인당은 {com_gap_lo:.0f}~{com_gap_hi:.0f}배**다. 팬 커머스는
 "매달 얼마"가 아니라 "이벤트에 얼마"로 움직인다 — 앞 절들이 보여준 이벤트 중심
 구조와 같은 모양이다.
 
-⚠ 이세계아이돌 펀딩은 공식, 스텔라이브 4건은 비공식 팬 제작이라 **규모를 직접 비교하면
-안 된다.** 88억 대 3.8천만의 차이는 팬덤 크기가 아니라 공식/비공식의 차이다.
+⚠ 이세계아이돌 펀딩은 공식, 스텔라이브 {com_fan_n}건은 비공식 팬 제작이라 **규모를 직접 비교하면
+안 된다.** {com_off_raised_hi/1e8:,.0f}억 대 {com_fan_raised_hi/1e4:,.0f}만원의 차이는 팬덤 크기가 아니라
+공식/비공식의 차이다.
 
 ### ③ 매진은 확인되지만 금액은 알 수 없다
 
@@ -1966,11 +2117,11 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 
 ## 댓글 여론 효과 — 긍정/부정은 변별력이 없고, 신호는 '무엇에 반응하나'에 있다
 
-라벨링한 댓글 {c_n}건(멤버 {c_members}명 × 30건, 영상 {c_videos}편)의 감성은
+라벨링한 댓글 {c_n}건(05 의 비교 표본 — 멤버 {c_members}명 × {c_per}, 영상 {c_videos}편)의 감성은
 긍정 **{c_pos:.0%}** · 중립 {c_neu:.0%} · 부정 **{c_neg:.1%}**다. 부정은 {c_nneg}건뿐이고,
-**전부 {c_neg_members}의 영상 {c_neg_videos}편에 몰려 있다** — 내용은 야구팀 얘기
-("롯데 추천한 놈…")지 멤버에 대한 것이 아니다. 즉 **멤버를 향한 부정 댓글은 표본에
-0건**이다. 팬 채널 댓글에서 긍정/부정 비율은 아무것도 가르지 못한다.
+**전부 {c_neg_members}의 영상 {c_neg_videos}편에 몰려 있다**. 그중 {c_neg_off}건은 영상 소재인
+야구팀 얘기지 멤버에 대한 것이 아니다. 즉 **멤버를 향한 부정 댓글은 표본에 많아야
+{c_neg_on}건**이다. 팬 채널 댓글에서 긍정/부정 비율은 아무것도 가르지 못한다.
 
 ### 팬은 콘텐츠가 아니라 사람에 반응한다
 
@@ -1987,7 +2138,7 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 
 ### 이벤트별 여론 비교는 못 한다
 
-댓글 표본이 걸린 영상 {c_videos}편 중 커버곡 2편·오리지널곡 1편·합방 1편뿐이라,
+댓글 표본이 걸린 영상 {c_videos}편은 멤버별 인기 영상이지 이벤트별로 고른 것이 아니라,
 "신의상 댓글이 더 긍정적인가" 같은 질문은 이 데이터로 답할 수 없다. 이벤트별 여론을
 보려면 05 수집을 이벤트 영상 중심으로 넓혀야 한다.
 
@@ -1996,19 +2147,17 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 {kiri_tbl}
 
 **클립 하나는 작지만 수가 많고, 공식 채널 밖에 있다.** 클립 조회수 중앙값은 그 멤버
-영상의 **{kiri_ratio:.0%}** 수준이다(멤버별로 2%~67%로 편차가 크다 — 사키하네 후야가
-0.02배로 최저인 건 2025-09 데뷔라 클립 생태계가 아직 얇기 때문이고, 텐코 시부키가
-0.67배로 최고인 건 역대 1위 클립을 포함한 소수의 큰 클립이 끌어올린 결과다). 대신 멤버당 {kiri_lo}~{kiri_hi}편이 {kiri_ch}개 채널에서
-나오고, 이건 전부 **본인이 올리지 않은 도달**이다.
+영상의 **{kiri_ratio:.0%}** 수준이다(멤버별로 {kiri_min_txt}~{kiri_max_txt}로 편차가 크다 —
+클립 수가 적은 멤버는 큰 클립 한두 개가 비율을 흔든다). 대신 멤버당 {kiri_lo}~{kiri_hi}편이
+{kiri_ch}개 채널에서 나오고, 이건 전부 **본인이 올리지 않은 도달**이다.
 
 ### 무엇이 클립이 되나 — 이벤트가 아니라 순간이다
 
 {topic_tbl}
 
 여기가 다른 이벤트와 갈리는 지점이다. 표본 {kiri_n}건 중 **{kiri_unmatched:.0%}가 어떤
-이벤트 키워드에도 걸리지 않는다.** 상위 클립 제목이 「말 실수한 유니」·「하이요 얼굴
-공개 ㄷㄷ」·「힘드신군뇨」처럼 **방송 중 우연한 순간**이다. 커버·노래만 예외적으로
-{cover_clip_share:.0%}를 차지하고, 실제로 역대 1위 클립도 커버 라이브다.
+이벤트 키워드에도 걸리지 않는다.** 조회수 상위 클립 제목은 {kiri_top_titles}이다. 커버·노래가
+{cover_clip_share:.0%}를 차지하고, 역대 1위 클립의 주제는 {kiri_top1_topic}이다.
 
 오리지널곡·신의상·콘서트는 **기획해서 만들 수 있다.** 키리누키는 그럴 수 없다 —
 날짜를 잡을 수도, 무엇이 클립이 될지 고를 수도 없다. 지금까지 정리한 이벤트 중
@@ -2034,18 +2183,17 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 
 | 요인 | 중앙값 범위 | 최대/최소 |
 |---|---|---|
-| 카테고리 | {cat_lo:,.0f} ~ {cat_hi:,.0f}명 (음악/노래가 최고) | {cat_ratio:.1f}배 |
+| 카테고리 | {cat_lo:,.0f} ~ {cat_hi:,.0f}명 (최고: {cat_top_name}) | {cat_ratio:.1f}배 |
 | 시작 시간대 | {hour_lo:,.0f} ~ {hour_hi:,.0f}명 | {hour_ratio:.1f}배 |
 | 요일 | {dow_lo:,.0f} ~ {dow_hi:,.0f}명 | {dow_ratio:.1f}배 |
 
-가장 큰 카테고리조차 {cat_ratio:.1f}배다. 반면 신의상 공개는 같은 멤버의 평소 피크 대비
-**7~19배**를 찍는다. 자릿수가 다르다.
+평소 요인 중 가장 큰 것도 {usual_ratio:.1f}배다. 반면 {top_ccu_type}은 같은 멤버의 평소 피크 대비
+최대 **{top_ccu_hi:.1f}배**를 찍는다. 자릿수가 다르다.
 
 즉 동시시청자는 **무엇을 하느냐보다 이벤트냐 아니냐**로 결정된다. 게임 선택이나
-방송 시간을 바꿔서 얻는 건 잘해야 수십 %지만, 이벤트 하나가 하루에 10배를 만든다.
+방송 시간을 바꿔서 얻는 건 {usual_ratio:.1f}배 안쪽이지만, 이벤트 하나가 하루에 그 몇 배를 만든다.
 
-관측 구간의 상위 5개 중 **1~4위가 전부 신의상 공개**이고, 4위와 5위 사이에만
-2.4배 차이가 난다. 상위권은 평소 방송과 아예 다른 구간이다.
+{drv_ev_line} 상위권은 평소 방송과 아예 다른 구간이다.
 
 ## 동시시청자 피크 (2026-08-12 이후)
 

@@ -291,7 +291,7 @@ def build_outputs(vids, members, cohort_summary):
     comparable = comparable_cohorts(cohort_summary)
     lonely = sorted(set(cohort_summary["cohort"]) - set(comparable))
 
-    md = [f"# 프로젝트 6 · 경쟁사 비교 (데뷔 코호트 매칭)", "",
+    md = ["# 프로젝트 6 · 경쟁사 비교 (데뷔 코호트 매칭)", "",
           f"- 대상 {meta['n_channels']}채널 · 채널당 최근 {meta['recent_per_channel']}개 영상. "
           f"수집 {meta['fetched_at'][:10]}",
           "- 표본은 **기수 전원**이다. 개인 인지도로 고르지 않는다 — 유명한 사람만 "

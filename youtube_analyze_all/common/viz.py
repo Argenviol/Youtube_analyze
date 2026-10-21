@@ -87,9 +87,3 @@ def apply_style():
     return font
 
 
-def barlabels(ax, bars, fmt="{:,.0f}", pad=3):
-    for b in bars:
-        h = b.get_height()
-        ax.annotate(fmt.format(h), (b.get_x() + b.get_width() / 2, h),
-                    ha="center", va="bottom", fontsize=9, color=TEXT,
-                    xytext=(0, pad), textcoords="offset points")

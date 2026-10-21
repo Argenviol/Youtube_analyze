@@ -22,6 +22,9 @@ type TableProps<T> = {
   caption?: string;
   /** 행 클릭 핸들러 — 드릴다운(FR-2) 등에 쓴다. 넘기면 행이 클릭 가능한 버튼처럼 동작한다. */
   onRowClick?: (row: T) => void;
+  /** 처음에 보여 줄 행 수. 수백 행짜리 표를 한 번에 그리면 느린 기기에서 스크롤이 끊긴다 —
+   *  이만큼만 그리고 "더 보기"로 늘린다. 정렬은 전체 행을 대상으로 한다. */
+  pageSize?: number;
 };
 
 /**
@@ -38,9 +41,11 @@ export default function Table<T>({
   initialSortDir = "desc",
   caption,
   onRowClick,
+  pageSize,
 }: TableProps<T>) {
   const [sortKey, setSortKey] = useState<string | undefined>(initialSortKey ?? columns[0]?.key);
   const [sortDir, setSortDir] = useState<SortDirection>(initialSortDir);
+  const [limit, setLimit] = useState<number>(pageSize ?? Number.POSITIVE_INFINITY);
 
   const sortedRows = useMemo(() => {
     const col = columns.find((c) => c.key === sortKey);
@@ -98,7 +103,7 @@ export default function Table<T>({
           </tr>
         </thead>
         <tbody>
-          {sortedRows.map((row) => (
+          {sortedRows.slice(0, limit).map((row) => (
             <tr
               key={getRowKey(row)}
               className={onRowClick ? styles.clickableRow : undefined}
@@ -130,6 +135,17 @@ export default function Table<T>({
           ))}
         </tbody>
       </table>
+      {pageSize && sortedRows.length > limit ? (
+        <div className={styles.moreBar}>
+          <button
+            type="button"
+            className={styles.moreButton}
+            onClick={() => setLimit((prev) => prev + pageSize)}
+          >
+            더 보기 ({Math.min(limit, sortedRows.length)}/{sortedRows.length})
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }

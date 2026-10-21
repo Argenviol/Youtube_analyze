@@ -41,3 +41,17 @@
 .navLink:hover {
   color: var(--label);
 }
+
+/* 폰 폭(390px)에서 브랜드·방법론·테마 토글이 한 줄에 안 들어가 줄바꿈되던 것 — 간격만 줄인다. */
+@media (max-width: 480px) {
+  .nav {
+    gap: var(--space-6);
+    padding: var(--space-5) var(--space-7);
+  }
+  .brand {
+    font-size: 0.875rem;
+  }
+  .navLinks {
+    gap: var(--space-6);
+  }
+}

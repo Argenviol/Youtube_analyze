@@ -1,7 +1,8 @@
 # 리포트 PDF
 
 `scripts/build_unified.py` 가 만든 HTML 을 헤드리스 크로미움으로 뽑은 PDF 입니다. 페이지는
-휴대폰 화면에 맞춘 150×210mm 이고 한글 폰트가 파일 안에 들어 있습니다.
+휴대폰 화면에 맞춘 150×210mm 이고, 서체는 Noto Sans KR 한 가족(OFL, `youtube_analyze_all/common/fonts/`)을
+HTML 에 직접 넣어 어디서 열어도 같은 글자로 보입니다(외부 폰트 링크 없음).
 
 | 파일 | 내용 |
 |---|---|
@@ -19,8 +20,11 @@
 ```bash
 python youtube_analyze_all/scripts/build_unified.py            # 전체판 HTML
 python youtube_analyze_all/scripts/build_unified.py --digest   # 요약판 HTML
-chromium --headless=new --no-pdf-header-footer \
+chromium --headless=new --no-pdf-header-footer --virtual-time-budget=8000 \
   --print-to-pdf=결과물/리포트/StelLive-요약.pdf file://$PWD/결과물/_build/StelLive-요약-print.html
 ```
+
+네 파일(`StelLive-리포트`·`StelLive-요약`·`게임-리포트`·`게임-요약`)을 같은 명령으로 뽑고 `pdffonts` 로
+서체가 내장(emb = yes)됐는지 확인합니다.
 
 기준일은 각 PDF 첫 장의 "생성" 날짜와 절마다 붙은 "기준" 배지에 있습니다.

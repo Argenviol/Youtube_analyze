@@ -30,3 +30,10 @@
   color: var(--label-strong);
   box-shadow: var(--shadow-xsmall);
 }
+
+@media (max-width: 480px) {
+  .option {
+    padding: var(--space-3) var(--space-5);
+    font-size: 0.75rem;
+  }
+}

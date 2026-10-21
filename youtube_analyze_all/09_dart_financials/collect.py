@@ -21,7 +21,6 @@ import io
 import json
 import os
 import re
-import sys
 import time
 import warnings
 import zipfile
@@ -529,7 +528,7 @@ def collect(years: range) -> None:
             # XBRL(정기보고서)이 비어 있으면 감사보고서 경로로 대체 시도한다. corp_code가
             # 있어도 필링 자체가 없는 법인(예: 팬딩)은 여기서도 그대로 0건으로 끝난다 —
             # "없다"는 것 자체가 정직한 결과다.
-            print(f"  -> 감사보고서(document.xml) 경로 시도...")
+            print("  -> 감사보고서(document.xml) 경로 시도...")
             aslog, arows = fetch_audit_report_financials(key, cc, name)
             audit_status_rows.extend(aslog)
             audit_financial_rows.extend(arows)

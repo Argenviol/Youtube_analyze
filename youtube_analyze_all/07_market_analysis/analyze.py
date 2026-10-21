@@ -54,7 +54,7 @@ def build_sql(facts, milestones, metrics, groups):
     for title, q in NAMED_QUERIES:
         try:
             res = db.run_query(SQL / "market.db", q)
-        except Exception as e:
+        except Exception:
             continue
         md.append(f"## {title}\n\n```sql\n{q.strip()}\n```\n"); md.append(res.to_markdown(index=False)); md.append("\n")
     (SQL / "query_results.md").write_text("\n".join(md), encoding="utf-8")

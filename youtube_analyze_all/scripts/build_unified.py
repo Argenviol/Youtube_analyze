@@ -32,8 +32,6 @@ PDF 는 헤드리스 크로미움으로 뽑는다:
 import base64
 import hashlib
 import importlib.util
-import io
-import re
 import sys
 from pathlib import Path
 
@@ -53,7 +51,14 @@ spec.loader.exec_module(bd)
 
 MD = md_lib.Markdown(extensions=["tables"])
 
-GROUP_LABEL = {True: "날짜별 축적", False: "고정 리포트"}
+# 서체는 한 가족만, 파일 안에 넣는다. 외부 폰트 링크는 PDF 렌더러가 네트워크를 못 쓰면 기다리다
+# 시스템 서체로 떨어져 화면과 종이가 달라진다. Noto Sans KR 가변 서체(OFL, common/fonts/)를
+# base64 로 인라인하면 어디서 열어도 같은 글자로 보인다.
+_FONT = ROOT / "common" / "fonts" / "noto-sans-kr-v1.woff2"
+FONT_FACE = ("@font-face { font-family:'Noto Sans KR'; font-style:normal; font-weight:100 900; "
+             "font-display:swap; src:url(data:font/woff2;base64,"
+             + base64.b64encode(_FONT.read_bytes()).decode() + ") format('woff2'); }")
+
 CADENCE = {
     "01_member_channel_performance": "daily",
     "02_cover_song_ranking": "daily",
@@ -245,8 +250,8 @@ GAME_FINDINGS = [
      "다섯 게임은 출시 주기·캐릭터 풀·표본이 달라 순위와 격차를 게임 안에서만 매긴다. "
      "대신 수집 기간은 같은 창(최근 1년)으로 맞춰, 게임마다 다른 건수는 그 게임의 사실로 남긴다."),
     ("언급량은 인기가 아니라<br>화제성이다",
-     "매칭 가능한 캐릭터의 3분의 1 이상이 수집된 리뷰에 한 번도 등장하지 않는다. "
-     "언급 0을 비인기로 읽으면 안 된다 — 표본이 닿지 않은 것이다."),
+     "어떤 소스에서도 한 번도 언급되지 않는 캐릭터가 게임마다 있고, 그 비율은 게임에 따라 "
+     "크게 다르다. 언급 0을 비인기로 읽으면 안 된다 — 표본이 닿지 않은 것이다."),
     ("못 쓴 지표도<br>기록한다",
      "원래 쓰려던 검색 관심도(Google Trends)는 아직 분석에 없다. 실행마다 실제로 호출해 "
      "성공·실패를 상태 파일로 남기고, 붕괴3rd 한글 이름이 수동 표라는 것도 리포트에 그대로 적는다."),
@@ -320,9 +325,8 @@ def build_report(cfg: dict, digest: bool = False) -> None:
         "  스냅샷이며, 데이터가 부족한 구간은 추정하지 않고 측정 불가로 남겨 뒀습니다.\n</footer>")
 
     html = f"""<title>{cfg['title']}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@800;900&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
+{FONT_FACE}
 :root {{
   --bg:#ffffff; --bg-alt:#F7F7F8; --surface:#ffffff; --ink:#171719; --ink-strong:#000;
   --muted:#70737C; --faint:#989BA2; --line:#E1E2E4; --line-soft:#EAEBEC;
@@ -345,8 +349,7 @@ html {{ scroll-behavior:smooth; scroll-padding-top:72px; }}
 @media (prefers-reduced-motion: reduce) {{ html {{ scroll-behavior:auto; }} }}
 body {{
   margin:0; background:var(--bg); color:var(--ink);
-  font-family:"Noto Sans KR",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",
-              "NanumSquareRound","Nanum Gothic","Noto Sans CJK KR",sans-serif;
+  font-family:"Noto Sans KR",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   font-size:15px; line-height:1.75; -webkit-font-smoothing:antialiased;
   word-break:keep-all; overflow-wrap:break-word;
 }}
@@ -373,18 +376,17 @@ body {{
   text-transform:uppercase; margin:0 0 14px;
 }}
 .hero h1 {{
-  font-family:"Gothic A1","Noto Sans KR","NanumSquareRound","Nanum Gothic",sans-serif; font-weight:900;
-  font-size:clamp(30px,5.4vw,46px); line-height:1.22; margin:0 0 12px;
-  color:var(--ink-strong); text-wrap:balance; letter-spacing:-.015em;
+  font-weight:800; font-size:clamp(28px,5vw,42px); line-height:1.25; margin:0 0 12px;
+  color:var(--ink-strong); text-wrap:balance; letter-spacing:-.02em;
 }}
 .hero .sub {{ color:var(--muted); max-width:62ch; margin:0 0 32px; }}
 .findings {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; }}
 .finding {{
-  border:1px solid var(--line); border-radius:10px; padding:18px 20px; background:var(--surface);
+  border:1px solid var(--line); border-radius:12px; padding:18px 20px; background:var(--surface);
 }}
 .finding h3 {{
-  font-family:"Gothic A1","NanumSquareRound","Nanum Gothic",sans-serif; font-weight:800; font-size:16px;
-  margin:0 0 8px; line-height:1.4; color:var(--ink-strong);
+  font-weight:700; font-size:16px; margin:0 0 8px; line-height:1.4; color:var(--ink-strong);
+  letter-spacing:-.01em;
 }}
 .finding p {{ margin:0; font-size:13.5px; color:var(--muted); line-height:1.7; }}
 .hero .stamp {{ margin-top:26px; font-size:12.5px; color:var(--faint); }}
@@ -394,13 +396,12 @@ body {{
 section {{ padding:56px 0 40px; border-bottom:1px solid var(--line); }}
 .sec-head {{ display:flex; gap:16px; align-items:flex-start; margin-bottom:22px; }}
 .sec-head .num {{
-  font-family:"Gothic A1","NanumSquareRound","Nanum Gothic",sans-serif; font-weight:900; font-size:34px;
-  color:var(--primary); line-height:1; padding-top:4px;
-  font-variant-numeric:tabular-nums;
+  font-weight:800; font-size:32px; color:var(--primary); line-height:1; padding-top:4px;
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em;
 }}
 .sec-head h2 {{
-  font-family:"Gothic A1","Noto Sans KR","NanumSquareRound","Nanum Gothic",sans-serif; font-weight:800;
-  font-size:24px; margin:0 0 6px; line-height:1.3; color:var(--ink-strong);
+  font-weight:700; font-size:23px; margin:0 0 6px; line-height:1.3; color:var(--ink-strong);
+  letter-spacing:-.015em;
 }}
 .badges {{ display:flex; flex-wrap:wrap; gap:6px; }}
 .badge {{
@@ -411,7 +412,7 @@ section {{ padding:56px 0 40px; border-bottom:1px solid var(--line); }}
 
 .verdict {{
   border-left:3px solid var(--primary); background:var(--primary-soft);
-  border-radius:0 10px 10px 0; padding:16px 22px; margin:0 0 24px;
+  border-radius:0 12px 12px 0; padding:16px 22px; margin:0 0 24px;
 }}
 .verdict-label {{
   margin:0 0 4px; font-size:11.5px; font-weight:700; letter-spacing:.12em;
@@ -427,14 +428,16 @@ section {{ padding:56px 0 40px; border-bottom:1px solid var(--line); }}
 .glance ul {{ padding-left:20px; margin:0 0 8px; }}
 .glance li {{ margin:5px 0; }}
 
-/* tables */
-.tblwrap {{ overflow-x:auto; }}
-table {{ border-collapse:collapse; width:100%; font-size:13.5px; margin:10px 0 6px; }}
+/* tables — 머리글은 옅은 바탕, 행은 가는 선. 숫자 열은 오른쪽 정렬·고정폭 숫자. */
+.tblwrap {{ overflow-x:auto; border:1px solid var(--line); border-radius:12px; margin:10px 0 6px; }}
+table {{ border-collapse:collapse; width:100%; font-size:13.5px; }}
+.tblwrap table {{ margin:0; }}
 th, td {{
-  padding:7px 12px; border-bottom:1px solid var(--line-soft); text-align:left;
+  padding:8px 12px; border-bottom:1px solid var(--line-soft); text-align:left;
   font-variant-numeric:tabular-nums;
 }}
-th {{ color:var(--muted); font-weight:500; font-size:12.5px; border-bottom:1px solid var(--line); }}
+th {{ color:var(--muted); font-weight:500; font-size:12.5px; background:var(--bg-alt); }}
+tr:last-child td {{ border-bottom:none; }}
 td:not(:first-child), th:not(:first-child) {{ text-align:right; }}
 .trend h4 {{ margin:22px 0 4px; font-size:15px; }}
 .trend .nm {{ font-weight:500; }}
@@ -449,14 +452,14 @@ td:not(:first-child), th:not(:first-child) {{ text-align:right; }}
 }}
 
 /* details */
-details.more {{ margin:20px 0 4px; border:1px solid var(--line); border-radius:10px; }}
+details.more {{ margin:20px 0 4px; border:1px solid var(--line); border-radius:12px; }}
 details.more summary {{
   cursor:pointer; padding:11px 18px; font-weight:700; font-size:13.5px;
   color:var(--muted); list-style:none; display:flex; align-items:center; gap:8px;
 }}
 details.more summary::before {{ content:"▸"; color:var(--primary); transition:transform .15s; }}
 details.more[open] summary::before {{ transform:rotate(90deg); }}
-details.more summary:focus-visible {{ outline:2px solid var(--primary); border-radius:10px; }}
+details.more summary:focus-visible {{ outline:2px solid var(--primary); border-radius:12px; }}
 details.more > *:not(summary) {{ padding:0 20px; }}
 details.more h4 {{ margin:14px 0 6px; font-size:14.5px; }}
 details.more[open] {{ padding-bottom:16px; background:var(--bg-alt); }}
@@ -471,7 +474,7 @@ blockquote {{
   gap:14px; margin-top:26px;
 }}
 .charts figure {{
-  margin:0; border:1px solid var(--line); border-radius:10px; overflow:hidden;
+  margin:0; border:1px solid var(--line); border-radius:12px; overflow:hidden;
   background:#fff;
 }}
 .charts img {{ display:block; width:100%; height:auto; }}
@@ -479,8 +482,6 @@ blockquote {{
 a {{ color:var(--primary); }}
 strong {{ color:var(--ink-strong); }}
 footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.9; }}
-.tblwrap.txt td {{ text-align:left; vertical-align:top; }}
-.tblwrap.txt td.nm {{ white-space:nowrap; font-weight:700; }}
 @media (max-width:600px) {{
   .wrap {{ padding:0 16px 72px; }}
   .hero {{ padding:40px 0 32px; }}
@@ -489,16 +490,6 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
   .sec-head h2 {{ font-size:20px; }}
   .verdict {{ padding:14px 16px; }}
   details.more > *:not(summary) {{ padding:0 14px; }}
-  /* 산문이 들어간 표(고친 것)는 좁은 화면에서 3열을 유지하면 한 칸에 두세 글자씩
-     떨어져 읽을 수가 없다. 행 단위 카드로 세운다. */
-  .tblwrap.txt thead {{ display:none; }}
-  .tblwrap.txt table, .tblwrap.txt tbody, .tblwrap.txt tr, .tblwrap.txt td {{ display:block; }}
-  .tblwrap.txt tr {{ border-bottom:1px solid var(--line); padding:12px 0 14px; }}
-  .tblwrap.txt tr:last-child {{ border-bottom:none; }}
-  .tblwrap.txt td {{ border:none; padding:0; }}
-  .tblwrap.txt td.nm {{ white-space:normal; font-size:15px; margin-bottom:4px; color:var(--ink-strong); }}
-  .tblwrap.txt td:nth-child(2) {{ color:var(--dn); font-size:13px; margin-bottom:6px; }}
-  .tblwrap.txt td:nth-child(2)::before {{ content:"증상 · "; color:var(--faint); }}
 }}
 
 /* ── print / PDF ──────────────────────────────
@@ -528,9 +519,6 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
   section {{ break-before:page; padding:0; border-bottom:none; }}
   /* 섹션 끝의 여백이 다음 장으로 넘쳐 빈 페이지를 만들지 않게 */
   section > :last-child, .charts > :last-child, details.more > :last-child {{ margin-bottom:0 !important; padding-bottom:0 !important; }}
-  #fixes table {{ font-size:8.2pt; }}
-  #fixes th, #fixes td {{ padding:3px 6px; }}
-  #fixes .note {{ break-before:avoid; margin-top:6px; }}
   .sec-head {{ margin-bottom:12px; break-after:avoid; }}
   .sec-head .num {{ font-size:20pt; }}
   .sec-head h2 {{ font-size:15pt; }}
@@ -543,7 +531,7 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
   /* 추세표는 11행이라 통째로 피하면 앞 장이 비어 넘어간다. 행 단위로만 피하고 머리글은 반복한다. */
   .trend {{ break-inside:auto; }}
   thead {{ display:table-header-group; }}
-  .tblwrap {{ overflow:visible; }}
+  .tblwrap {{ overflow:visible; break-inside:auto; }}
 
   /* 화면에선 접혀 있던 상세 분석 — 인쇄본은 넘길 수 없으니 펼쳐 둔다 */
   details.more {{ break-inside:auto; background:none; border-color:var(--line); }}
@@ -583,14 +571,12 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
     standalone = BUILD / f"{cfg['key']}.html"
     standalone.write_text(document(html), encoding="utf-8")
 
-    # PDF 소스 — 화면판과 세 군데가 다르다.
+    # PDF 소스 — 화면판과 두 군데가 다르다.
     #   1) <details> 를 열어 둔다: 종이는 클릭이 안 된다.
     #   2) loading=lazy 제거: 인쇄 시점에 아직 안 불러온 이미지가 빈칸으로 나갈 수 있다.
-    #   3) 웹폰트 링크 제거: 렌더러가 네트워크를 못 쓰면 폰트 대기로 시간만 쓴다.
     print_body = (html
                   .replace("<details class='more'>", "<details class='more' open>")
                   .replace(" loading='lazy'", ""))
-    print_body = re.sub(r'<link rel="(preconnect|stylesheet)"[^>]*>\n?', "", print_body)
     printed = BUILD / f"{cfg['key']}-print.html"
     printed.write_text(document(print_body), encoding="utf-8")
 
@@ -598,7 +584,6 @@ footer {{ padding-top:40px; font-size:12.5px; color:var(--faint); line-height:1.
         print(f"생성: {f.name}  ({f.stat().st_size/1e6:.1f} MB)  프로젝트 {len(projects)}개")
 
 
-import sys as _sys
-_digest = "--digest" in _sys.argv
+_digest = "--digest" in sys.argv
 for _cfg in REPORTS:
     build_report(_cfg, digest=_digest)

@@ -326,6 +326,7 @@ export default function Page() {
         initialSortKey="mention_count"
         initialSortDir="desc"
         caption={`프로젝트 10 · 캐릭터 전체 (${filteredCharacters.length}명)`}
+        pageSize={60}
       />
     </div>
   );

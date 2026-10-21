@@ -85,6 +85,9 @@ powershell -File scripts/register_tasks.ps1        # dry-run
 powershell -File scripts/register_tasks.ps1 -Apply # 작업 스케줄러 등록
 ```
 
+Windows 에서는 `수집시작.cmd` 를 두 번 눌러도 된다 — 창이 열려 있는 동안 `live` 그룹(08)을 10분마다
+돌리고, 창을 닫으면 멈춘다(08 은 소급 수집이 안 되니 꺼진 시간은 비어 있게 된다).
+
 | 그룹 | 주기 | 프로젝트 |
 |---|---|---|
 | `live` | 10분 | 08 (소급 수집 불가 — 놓치면 영구 공백) |

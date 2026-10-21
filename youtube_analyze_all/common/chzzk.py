@@ -30,10 +30,6 @@ class Chzzk:
             raise RuntimeError(f"{path} 실패 {r.status_code}: {r.text[:200]}")
         raise RuntimeError(f"{path} 재시도 초과")
 
-    def search_channel(self, keyword: str) -> list[dict]:
-        c = self._get("/service/v1/search/channels", {"keyword": keyword, "size": 5})
-        return [it["channel"] for it in c.get("data", [])]
-
     def channel(self, channel_id: str) -> dict:
         return self._get(f"/service/v1/channels/{channel_id}")
 

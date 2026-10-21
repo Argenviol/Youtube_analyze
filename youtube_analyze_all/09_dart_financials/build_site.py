@@ -19,8 +19,6 @@ HERE = Path(__file__).resolve().parent
 SITE = HERE / "site"
 
 PAL = config.PALETTE["series"]
-C_NAVER, C_SOOP = PAL[0], PAL[1]
-C_FOUND, C_MISSING = PAL[2], PAL[7]
 _COMPANY_ORDER = ["NAVER", "SOOP", "샌드박스네트워크", "패러블엔터테인먼트"]
 _AUDIT_PATH_COMPANIES = {"샌드박스네트워크", "패러블엔터테인먼트"}
 

@@ -20,12 +20,8 @@ HERE = Path(__file__).resolve().parent
 SITE = HERE / "site"
 
 PAL = config.PALETTE["series"]
-C_OFFICIAL, C_FANMADE = PAL[2], PAL[4]
 C_PARABLE, C_SANDBOX = PAL[3], PAL[6]
 
-
-def _fmt_won(v) -> str:
-    return f"{v:,.0f}원" if v is not None else "—"
 
 
 def _fmt_eok(v) -> str:
@@ -126,8 +122,6 @@ def build():
 
     stats = fanding["stats"]
     top_creators = sorted(fanding["creator_summary"], key=lambda r: -r["avg_price"])[:12]
-    official = [r for r in cf if r["category"] == "공식 굿즈 펀딩"]
-    fanmade = [r for r in cf if r["category"] == "팬메이드 광고 펀딩"]
 
     parable_latest = max([r for r in fin if r["corp_name"] == "패러블엔터테인먼트"],
                           key=lambda r: r["bsns_year"], default=None)
