@@ -1,28 +1,28 @@
 {
   "meta": {
-    "fetched_at": "2026-10-21T17:50:27.453202+00:00",
-    "n_snapshots": 86417,
+    "fetched_at": "2026-10-21T17:51:29.769538+00:00",
+    "n_snapshots": 86433,
     "n_members": 15,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-21T17:50:27.453202+00:00"
+      "2026-10-21T17:51:29.769538+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 78441,
-    "n_timepoints": 7462,
-    "span_hours": 1691.91,
-    "observed_hours": 1274.34,
+    "n_snapshots": 78455,
+    "n_timepoints": 7463,
+    "span_hours": 1691.93,
+    "observed_hours": 1274.51,
     "coverage_ratio": 0.753,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 19016,
+    "n_live_rows": 19018,
     "members": 14,
     "members_tracked": 14,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-21T17:50:27.453202+00:00"
+    "last": "2026-10-21T17:51:29.769538+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -31,27 +31,27 @@
       "name_ko": "토키노 메리",
       "name_en": "Tokino Mary",
       "unit": "ABYSS",
-      "followers": 149294,
-      "follower_delta": 108086,
-      "follower_per_day": 14180.4,
+      "followers": 149296,
+      "follower_delta": 108088,
+      "follower_per_day": 14179.3,
       "n_sessions": 4,
       "n_live_points": 134,
       "peak_ccu": 79149,
       "avg_ccu": 22123,
-      "ccu_per_1k_followers": 530.16
+      "ccu_per_1k_followers": 530.15
     },
     {
       "rank": 2,
       "name_ko": "코가네 랑",
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
-      "followers": 122016,
-      "follower_delta": 81848,
-      "follower_per_day": 10738.1,
+      "followers": 122017,
+      "follower_delta": 81849,
+      "follower_per_day": 10737.2,
       "n_sessions": 4,
-      "n_live_points": 161,
+      "n_live_points": 162,
       "peak_ccu": 67950,
-      "avg_ccu": 9653,
+      "avg_ccu": 9655,
       "ccu_per_1k_followers": 556.89
     },
     {
@@ -59,23 +59,23 @@
       "name_ko": "시즈키 토아",
       "name_en": "Shizuki Toa",
       "unit": "ABYSS",
-      "followers": 120438,
-      "follower_delta": 80321,
-      "follower_per_day": 10537.7,
+      "followers": 120440,
+      "follower_delta": 80323,
+      "follower_per_day": 10537.0,
       "n_sessions": 4,
       "n_live_points": 138,
       "peak_ccu": 62637,
       "avg_ccu": 9966,
-      "ccu_per_1k_followers": 520.08
+      "ccu_per_1k_followers": 520.07
     },
     {
       "rank": 4,
       "name_ko": "하나요 히요리",
       "name_en": "Hanayo Hiyori",
       "unit": "ABYSS",
-      "followers": 123868,
-      "follower_delta": 84710,
-      "follower_per_day": 11113.6,
+      "followers": 123870,
+      "follower_delta": 84712,
+      "follower_per_day": 11112.8,
       "n_sessions": 4,
       "n_live_points": 124,
       "peak_ccu": 60712,
@@ -143,8 +143,8 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 272031,
-      "follower_delta": 19129,
+      "followers": 272030,
+      "follower_delta": 19128,
       "follower_per_day": 271.3,
       "n_sessions": 100,
       "n_live_points": 1438,
@@ -171,11 +171,11 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 317408,
-      "follower_delta": 15488,
+      "followers": 317409,
+      "follower_delta": 15489,
       "follower_per_day": 219.7,
       "n_sessions": 130,
-      "n_live_points": 2280,
+      "n_live_points": 2281,
       "peak_ccu": 12362,
       "avg_ccu": 3378,
       "ccu_per_1k_followers": 38.95
@@ -517,10 +517,10 @@
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
       "start_kst": "2026-10-21 14:03",
-      "observed_min": 766.6,
-      "n_points": 77,
+      "observed_min": 767.6,
+      "n_points": 78,
       "peak_ccu": 13004,
-      "avg_ccu": 8798,
+      "avg_ccu": 8813,
       "title": "벌을 달게 받겠습니다.",
       "category": "talk"
     },
@@ -649,10 +649,10 @@
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
       "start_kst": "2026-10-21 17:41",
-      "observed_min": 549.2,
-      "n_points": 55,
+      "observed_min": 550.3,
+      "n_points": 56,
       "peak_ccu": 11119,
-      "avg_ccu": 5597,
+      "avg_ccu": 5569,
       "title": " [러너리그 시즌5] 🚨잠깐🖐️아야츠노유니🦄선수에게🦾예쁘고✨고운말💘그리고😮응원의 말🎉부탁 드립니다🙏따뜻한❤️‍🔥채팅💬언제나👀감사합니다🍎유니 화이팅🤩\n",
       "category": "오버워치"
     },
@@ -45531,6 +45531,10 @@
         [
           "2026-10-22 02:50",
           4111
+        ],
+        [
+          "2026-10-22 02:51",
+          4068
         ]
       ]
     },
@@ -46180,6 +46184,10 @@
         [
           "2026-10-22 02:50",
           9975
+        ],
+        [
+          "2026-10-22 02:51",
+          9915
         ]
       ]
     },
