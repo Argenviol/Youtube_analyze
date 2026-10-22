@@ -1,5 +1,5 @@
 /**
- * 프로젝트별 예상 갱신 주기 (PRD §4 "앱에 포함" 표). FR-4 신선도 배지가
+ * 프로젝트별 예상 갱신 주기 (PRD §4 표). FR-4 신선도 배지가
  * `meta.fetched_at`과 이 값을 비교해 경고 여부를 판단한다.
  */
 import type { ProjectId } from "./types";
@@ -12,16 +12,8 @@ import type { ProjectId } from "./types";
  */
 export type ExtendedProjectId = ProjectId | "09" | "10" | "11";
 
-// ⚠ 01~06·08 값은 youtube_analyze_all/scripts/refresh.py 의 GROUPS 와 반드시
-//   일치해야 한다. 그쪽이 실제 수집 스케줄이고 여기는 표시용이다. 한쪽만
-//   고치면 화면이 거짓말을 한다.
-//   02는 2026-08-12 수집 방식을 search.list(3,300 units)에서 업로드 재생목록 전량 열거
-//   (~173 units)로 바꾸면서 weekly → daily 로 옮겼다.
-//
-//   09·10·11은 아직 scripts/refresh.py의 GROUPS에 없다(Phase 2 구현 세션에서
-//   추가됨, refresh.py 자체는 이 세션의 스코프 밖) — 값은 PRD Phase 2 편입
-//   지시(09 분기·10/11 주 1회)를 그대로 반영해뒀고, refresh.py에 그룹이
-//   추가되는 대로 이 주석을 지운다.
+// ⚠ 이 값은 youtube_analyze_all/scripts/refresh.py 의 GROUPS(live 10분 · daily · weekly · monthly)와
+//   반드시 일치해야 한다. 그쪽이 실제 수집 스케줄이고 여기는 표시용이다. 한쪽만 고치면 화면이 거짓말을 한다.
 export const REFRESH_INTERVAL_MIN: Record<ExtendedProjectId, number> = {
   "01": 24 * 60, // daily
   "02": 24 * 60, // daily (전량 열거로 전환 후 비용이 낮아짐)
@@ -30,7 +22,7 @@ export const REFRESH_INTERVAL_MIN: Record<ExtendedProjectId, number> = {
   "05": 7 * 24 * 60, // weekly
   "06": 24 * 60, // daily
   "08": 10, // live
-  "09": 90 * 24 * 60, // quarterly — DART 공시(감사보고서·정기보고서) 주기
+  "09": 35 * 24 * 60, // monthly — DART 공시 주기가 분기·연간이라 월 1회면 충분하다(며칠 여유)
   "10": 7 * 24 * 60, // weekly
   "11": 7 * 24 * 60, // weekly
 };
@@ -43,7 +35,7 @@ export const REFRESH_LABEL: Record<ExtendedProjectId, string> = {
   "05": "주 1회",
   "06": "일 1회",
   "08": "10분",
-  "09": "분기 1회",
+  "09": "월 1회",
   "10": "주 1회",
   "11": "주 1회",
 };
