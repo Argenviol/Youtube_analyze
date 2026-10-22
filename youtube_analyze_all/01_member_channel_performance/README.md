@@ -1,55 +1,46 @@
-# 프로젝트 1 · StelLive 멤버별 유튜브 채널 성과 분석
+# 01 · 멤버별 유튜브 채널 성과
 
-스텔라이브(StelLive) 멤버 **15명**(창립자 강지 포함, 탤런트 14명)의 YouTube 채널을
-Data API로 수집해 **구독자·조회수·업로드 빈도·참여율·도달 효율**을 비교 분석합니다.
-분석 대상은 최근 영상이 5개 이상이고 구독자 수가 공개된 탤런트뿐입니다 — 데뷔 직후 4기 ABYSS 는 영상이 쌓인 뒤부터 들어옵니다.
-이후 커버곡/경쟁사 분석에 그대로 재사용할 수 있는 **수집 → 정제 → SQL → 시각화 → 사이트**
-파이프라인의 기준 프로젝트입니다.
+**질문** — 멤버별 유튜브 채널은 규모·참여·도달 중 무엇이 강한가. 구독자가 많은 채널과 팬이 반응하는
+채널은 같은 채널인가.
 
-## 실행 방법
+- 데이터: YouTube Data API v3 — 채널 지표 + 채널당 최근 50개 영상
+- 대상: 탤런트 중 최근 영상 5개 이상·구독자 공개 채널(`MIN_RECENT_VIDEOS`). 데뷔 직후 멤버는 영상이 쌓이면 자동 편입
+- 갱신: daily. 다른 프로젝트가 재사용하는 **파이프라인 기준 프로젝트**(02·06·12 가 `videos.csv`·`channel_metrics.csv` 를 읽음)
+
+## 실행
 
 ```bash
-pip install -r ../requirements.txt
-export YOUTUBE_API_KEY="발급받은_키"          # 코드에 키를 넣지 않습니다
-
-python collect.py --recent 50                  # 1) 수집  -> data/
-python analyze.py                              # 2) 분석  -> sql/, charts/, REPORT.md, site/data.json
-python build_site.py                           # 3) 사이트 -> site/index.html
+export YOUTUBE_API_KEY=...
+python collect.py --recent 50     # → data/
+python analyze.py                 # → sql/ charts/ REPORT.md site/data.json
+python build_site.py              # → site/index.html
 ```
-
-## 산출물 구조
-
-| 경로 | 내용 |
-|------|------|
-| `data/channels.csv` · `channels.json` | 채널 단위 원천 지표(구독자·총조회수·영상수·개설일 등) |
-| `data/videos.csv` | 채널당 최근 50개 영상 지표(조회·좋아요·댓글·길이) |
-| `data/channel_metrics.csv` | 파생지표(평균조회수·참여율·업로드빈도·도달효율 등) |
-| `sql/schema.sql` | `channels` / `videos` / `channel_metrics` 테이블 스키마 |
-| `sql/*.sql` | 각 테이블 INSERT 문 |
-| `sql/analysis_queries.sql` | 랭킹·유닛요약·참여율 등 분석 쿼리 모음 |
-| `sql/query_results.md` | 위 쿼리 **실행 결과**(표) |
-| `sql/stellive.db` | 바로 질의 가능한 SQLite DB |
-| `charts/*.png` | 차트 8종(구독자·조회수·참여율·업로드주기·도달효율·산점도·유닛비교·시간대 히트맵) |
-| `site/index.html` | 자체완결 인터랙티브 대시보드(파일 하나로 열람) |
-| `REPORT.md` | 핵심 요약 + 상관관계 해설 |
 
 ## 지표 정의
 
-- **도달 효율(reach ratio)** = 최근 영상 평균 조회수 ÷ 구독자. 구독자 대비 실제 도달을 봄. 100%↑면 구독자보다 많은 조회수.
-- **참여율(engagement rate)** = (좋아요 + 댓글) ÷ 조회수, 최근 영상 평균.
-- **업로드 빈도** = 최근 영상들의 게시 간격으로 환산한 주간 업로드 수.
-- **쇼츠 비중** = 최근 영상 중 60초 이하 비율.
+| 지표 | 정의 |
+|---|---|
+| 도달 효율 (reach ratio) | 최근 영상 평균 조회수 ÷ 구독자 — 100% 넘으면 구독자보다 많은 사람이 본다 |
+| 참여율 (engagement rate) | (좋아요 + 댓글) ÷ 조회수, 최근 영상 평균 |
+| 업로드 빈도 | 최근 영상의 게시 간격으로 환산한 주당 업로드 수 |
+| 쇼츠 비중 | 최근 영상 중 60초 이하 비율 |
 
-## 주요 결과 (수집 시점 스냅샷)
+창립자 강지는 콘텐츠 성격(합방·대형 기획)이 달라 집계·상관에서 분리한다(`common/config.py`).
 
-- 구독자 상위와 참여율·도달 효율 상위는 대체로 다른 멤버다 — 겹치는 인원과 상관계수는 `REPORT.md` 핵심 요약에 매일 갱신된다.
-- 멤버별 수치는 `REPORT.md`·차트에 있다. 요약에는 멤버 이름을 붙인 순위를 쓰지 않는다.
-- 구독자가 많을수록 구독자 대비 조회수(도달 효율)와 참여율은 낮다 — 규모와 밀도가 반대로 간다.
+## 산출물
 
-> 창립자 강지는 콘텐츠 성격(합방·대형 기획)이 달라 탤런트 집계/상관 계산에서는 분리했습니다.
-> `common/config.py`의 `INCLUDE_FOUNDER=False`로 완전히 제외할 수 있습니다.
+| 경로 | 내용 |
+|---|---|
+| `data/channels.csv` · `videos.csv` · `channel_metrics.csv` | 채널 원천 · 영상 원천 · 파생 지표 |
+| `data/history.csv` | 날짜별 축적(`scripts/history.py`) |
+| `sql/` | 스키마·INSERT·분석 쿼리·실행 결과·`stellive.db` |
+| `charts/` | 8종 — 구독자·조회수·참여율·업로드 주기·도달 효율·산점도·유닛 비교·시간대 히트맵 |
+| `site/index.html` · `data.json` | 대시보드 · 통합 앱 입력 |
+| `REPORT.md` | 핵심 요약(매 실행 재생성) |
 
-## 대상 채널
+## 읽는 법 · 한계
 
-`common/config.py`의 `MEMBERS`에 채널 ID가 하드코딩되어 있으며, 모두 YouTube API로
-검증한 값입니다(핸들 추측 아님).
+- 구독자 상위와 참여율·도달 효율 상위는 대체로 다른 멤버다. 규모가 클수록 구독자 대비 조회수와 참여율은
+  낮다 — 겹치는 인원·상관계수는 `REPORT.md` 에 매일 갱신된다. 요약에는 멤버 이름을 붙인 순위를 쓰지 않는다.
+- 유튜브 구독자는 API 가 1,000 단위로 반올림해 준다. 짧은 창의 변화율은 계단처럼 튄다.
+- 채널 ID 는 `common/config.py` 의 `MEMBERS` 에 있고 전부 API 로 검증한 값이다(핸들 추측 아님).
