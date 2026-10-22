@@ -128,7 +128,7 @@
 
 | 날짜 | 달라진 것 |
 |---|---|
-| 2026-10-22 | 문서 전체를 같은 틀로 정리 — 루트·`youtube_analyze_all/`·`app/` README, `PRD.md`, 프로젝트 README 12개, `결과물/README.md`(생성기 `_index_md`), `결과물/리포트/README.md`, 이 문서. 낡은 서술(PDF `fonts-nanum`, ABYSS 데뷔 전, git 미사용·M1, 02 검색 수집, 08 25분 고정 간격)과 실행마다 바뀌는 수치 제거. 앱 신선도의 09 주기를 분기→월 1회로 |
+| 2026-10-22 | 문서 전체를 같은 틀로 정리 — 루트·`youtube_analyze_all/`·`app/` README, `PRD.md`, 프로젝트 README 12개, `결과물/README.md`(생성기 `_index_md`), `결과물/리포트/README.md`, 이 문서, `CLAUDE.md`(최적화 기준을 표로, 문서·데이터 규칙 절 추가). 낡은 서술(PDF `fonts-nanum`, ABYSS 데뷔 전, git 미사용·M1, 02 검색 수집, 08 25분 고정 간격)과 실행마다 바뀌는 수치 제거. 앱 신선도의 09 주기를 분기→월 1회로 |
 | 2026-10-21 | 저장소 전체 최적화 — pyflakes·vulture 0건(`barlabels`·`UNIT_COLORS`·`SPACING`·`chzzk.search_channel`·`apply_montage_tokens.py`·루트 PDF 3개 제거). 12 리포트 산문의 손글씨 수치 20여 곳을 계산값으로, 이벤트 유형별 배수 표, 댓글 표본을 05 비교 표본으로, 경쟁사 창을 현 로스터 기준(9/18~)으로. PDF 재설계(Noto Sans KR base64 내장, Gothic A1·구글 폰트 링크·유령 CSS 제거) 후 4종 재생성. 앱 폰 내비 줄바꿈 수정, 10 캐릭터 표 60행씩(스크롤 long task 10개→1개) |
 | 2026-10-19 | 치지직 다시보기 게시 시각은 방송 **종료** 시각(08 관측 460회 중 80% 가 ±20분) — 시작 = 게시 − 길이(`common/chzzk.vod_start`)로 바꿔 03 심야 비율 22~81% → 1~9%, 12 이벤트 11건 날짜 하루 앞당김. `events_seen.csv` 는 옛 ID → 새 ID 로 옮겨 first_seen 보존. 03 `MIN_STREAMS` = 10. 03 `history.csv` 의 `night_share` 는 이날 이전과 정의가 다르다 |
 | 2026-10-18 | 4기 데뷔 2일차 — 히요리(피크 60,712)·메리(79,149, 기록상 최고)·첫 단체 합방(56,056) 등록, `DEBUTS` 를 `exact` 로. 12 의 고정 수치(38,402·"19배")를 계산값으로. 05 ABYSS 댓글 120개 라벨링(리포트에 따로). 앱 빌드 오류 2건 수정(10 `is_limited` 배열 문자열, 출시일 null). **멤버 순위 문구 금지** — 리포트·사이트·앱·README 의 "○○ 1위"를 분포·겹침 문장으로, 지난 리포트 296개를 `결과물/_이전/` 으로 |
