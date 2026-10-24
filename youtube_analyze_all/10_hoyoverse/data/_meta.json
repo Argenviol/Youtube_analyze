@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-10-17T22:38:08.655863+00:00",
+  "fetched_at": "2026-10-24T22:46:51.347063+00:00",
   "source": "yatta.moe(Project Amber 후신, 캐릭터 마스터) + google-play-scraper(앱스토어 리뷰) + pytrends(Google Trends, 실패)",
-  "n_characters": 600,
+  "n_characters": 603,
   "n_playable_avatars_excluded": 26,
-  "n_reviews": 3897,
+  "n_reviews": 3819,
   "games": [
     "genshin",
     "starrail",
@@ -29,20 +29,20 @@
       "release": "fandom",
       "ok": true,
       "error": null,
-      "n": 60,
-      "n_release": 60
+      "n": 62,
+      "n_release": 61
     },
     "hi3": {
       "names": "manual(data/hi3_names_ko.csv)",
       "release": "fandom",
       "ok": true,
       "error": null,
-      "n": 39,
+      "n": 40,
       "n_release": 24,
-      "n_battlesuits": 110,
+      "n_battlesuits": 111,
       "n_named": 39,
       "names_note": "data/hi3_names_ko.csv (41행, 수동 입력)",
-      "n_filled_from_categories": 21,
+      "n_filled_from_categories": 22,
       "n_manual_suits": 1,
       "unresolved_battlesuits": [],
       "n_versions_dated": 66
@@ -67,22 +67,22 @@
   "google_trends_ok": true,
   "google_trends_error": null,
   "review_window_days": 365,
-  "review_since": "2025-10-17T22:30:57.021719+00:00",
+  "review_since": "2025-10-24T22:38:28.269694+00:00",
   "reviews_by_game": {
     "genshin": {
-      "n": 1289,
+      "n": 1245,
       "pages": 7,
       "complete": true,
       "note": ""
     },
     "starrail": {
-      "n": 970,
+      "n": 961,
       "pages": 5,
       "complete": true,
       "note": ""
     },
     "zzz": {
-      "n": 1137,
+      "n": 1131,
       "pages": 6,
       "complete": true,
       "note": ""
@@ -94,7 +94,7 @@
       "note": ""
     },
     "ba": {
-      "n": 433,
+      "n": 414,
       "pages": 3,
       "complete": true,
       "note": ""
@@ -106,37 +106,37 @@
     "by_game": {
       "genshin": {
         "channel": "@GenshinImpact_KR",
-        "videos": 584,
-        "fetched_videos": 21,
-        "comments": 2529,
+        "videos": 582,
+        "fetched_videos": 20,
+        "comments": 1725,
         "window_complete": true
       },
       "starrail": {
         "channel": "@HonkaiStarRail_KR",
-        "videos": 231,
-        "fetched_videos": 10,
-        "comments": 537,
+        "videos": 228,
+        "fetched_videos": 5,
+        "comments": 89,
         "window_complete": true
       },
       "zzz": {
         "channel": "@ZZZ_KO",
-        "videos": 252,
-        "fetched_videos": 7,
-        "comments": 689,
+        "videos": 266,
+        "fetched_videos": 18,
+        "comments": 2781,
         "window_complete": true
       },
       "hi3": {
         "channel": "@HonkaiImpact3rd_KR",
-        "videos": 56,
-        "fetched_videos": 5,
-        "comments": 233,
+        "videos": 57,
+        "fetched_videos": 10,
+        "comments": 380,
         "window_complete": true
       },
       "ba": {
         "channel": "@bluearchive_kr",
-        "videos": 312,
-        "fetched_videos": 12,
-        "comments": 1007,
+        "videos": 309,
+        "fetched_videos": 14,
+        "comments": 1006,
         "window_complete": true
       }
     }
@@ -144,20 +144,20 @@
   "apple_reviews": {
     "genshin": {
       "app_id": 1517783697,
-      "n": 415,
-      "pages": 9,
+      "n": 399,
+      "pages": 8,
       "window_complete": true
     },
     "starrail": {
       "app_id": 1599719154,
-      "n": 186,
+      "n": 185,
       "pages": 4,
       "window_complete": true
     },
     "zzz": {
       "app_id": 1606356401,
-      "n": 149,
-      "pages": 3,
+      "n": 154,
+      "pages": 4,
       "window_complete": true
     },
     "hi3": {
@@ -168,37 +168,37 @@
     },
     "ba": {
       "app_id": 1571873795,
-      "n": 78,
+      "n": 77,
       "pages": 2,
       "window_complete": true
     },
-    "merged_total": 1687
+    "merged_total": 1659
   },
   "hoyolab": {
     "genshin": {
       "gid": 2,
-      "posts": 35,
-      "replies": 5567
+      "posts": 29,
+      "replies": 4779
     },
     "starrail": {
       "gid": 6,
       "posts": 60,
-      "replies": 4243
+      "replies": 3975
     },
     "zzz": {
       "gid": 8,
       "posts": 60,
-      "replies": 2075
+      "replies": 1888
     },
     "hi3": {
       "gid": 1,
-      "posts": 10,
-      "replies": 100
+      "posts": 9,
+      "replies": 64
     },
     "ba": {
       "note": "HoYoLAB 에 없는 게임"
     },
-    "merged_total": 25844
+    "merged_total": 23811
   },
   "review_sampling": "공통 기간 — 수집 시점부터 review_window_days 일 안의 리뷰 전부(게임마다 건수는 다르고 기간은 같다)",
   "method_changed_at": "2026-09-18",
