@@ -1,28 +1,28 @@
 {
   "meta": {
-    "fetched_at": "2026-10-25T16:54:14.625337+00:00",
-    "n_snapshots": 95095,
+    "fetched_at": "2026-10-25T17:04:31.943595+00:00",
+    "n_snapshots": 95110,
     "n_members": 15,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-25T16:54:14.625337+00:00"
+      "2026-10-25T17:04:31.943595+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 86393,
-    "n_timepoints": 8030,
-    "span_hours": 1786.98,
-    "observed_hours": 1371.75,
+    "n_snapshots": 86407,
+    "n_timepoints": 8031,
+    "span_hours": 1787.15,
+    "observed_hours": 1371.92,
     "coverage_ratio": 0.768,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 20920,
+    "n_live_rows": 20925,
     "members": 14,
     "members_tracked": 14,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-25T16:54:14.625337+00:00"
+    "last": "2026-10-25T17:04:31.943595+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -31,64 +31,64 @@
       "name_ko": "토키노 메리",
       "name_en": "Tokino Mary",
       "unit": "ABYSS",
-      "followers": 162552,
-      "follower_delta": 121344,
-      "follower_per_day": 10475.9,
+      "followers": 162574,
+      "follower_delta": 121366,
+      "follower_per_day": 10471.3,
       "n_sessions": 7,
       "n_live_points": 214,
       "peak_ccu": 79149,
       "avg_ccu": 19297,
-      "ccu_per_1k_followers": 486.91
+      "ccu_per_1k_followers": 486.85
     },
     {
       "rank": 2,
       "name_ko": "코가네 랑",
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
-      "followers": 130747,
-      "follower_delta": 90579,
-      "follower_per_day": 7819.9,
+      "followers": 130770,
+      "follower_delta": 90602,
+      "follower_per_day": 7817.0,
       "n_sessions": 7,
-      "n_live_points": 373,
+      "n_live_points": 374,
       "peak_ccu": 67950,
-      "avg_ccu": 7309,
-      "ccu_per_1k_followers": 519.71
+      "avg_ccu": 7299,
+      "ccu_per_1k_followers": 519.61
     },
     {
       "rank": 3,
       "name_ko": "시즈키 토아",
       "name_en": "Shizuki Toa",
       "unit": "ABYSS",
-      "followers": 130145,
-      "follower_delta": 90028,
-      "follower_per_day": 7772.3,
+      "followers": 130180,
+      "follower_delta": 90063,
+      "follower_per_day": 7770.5,
       "n_sessions": 9,
-      "n_live_points": 294,
+      "n_live_points": 295,
       "peak_ccu": 62637,
-      "avg_ccu": 9205,
-      "ccu_per_1k_followers": 481.29
+      "avg_ccu": 9203,
+      "ccu_per_1k_followers": 481.16
     },
     {
       "rank": 4,
       "name_ko": "하나요 히요리",
       "name_en": "Hanayo Hiyori",
       "unit": "ABYSS",
-      "followers": 138875,
-      "follower_delta": 99717,
-      "follower_per_day": 8608.8,
+      "followers": 138912,
+      "follower_delta": 99754,
+      "follower_per_day": 8606.7,
       "n_sessions": 8,
-      "n_live_points": 292,
+      "n_live_points": 293,
       "peak_ccu": 60712,
-      "avg_ccu": 19821,
-      "ccu_per_1k_followers": 437.17
+      "avg_ccu": 19806,
+      "ccu_per_1k_followers": 437.05
     },
     {
       "rank": 5,
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 177663,
-      "follower_delta": 20922,
+      "followers": 177665,
+      "follower_delta": 20924,
       "follower_per_day": 281.0,
       "n_sessions": 83,
       "n_live_points": 1368,
@@ -101,8 +101,8 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 275966,
-      "follower_delta": 20640,
+      "followers": 275965,
+      "follower_delta": 20639,
       "follower_per_day": 277.2,
       "n_sessions": 141,
       "n_live_points": 2312,
@@ -115,8 +115,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 226717,
-      "follower_delta": 16898,
+      "followers": 226715,
+      "follower_delta": 16896,
       "follower_per_day": 226.9,
       "n_sessions": 128,
       "n_live_points": 1383,
@@ -143,11 +143,11 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 274156,
-      "follower_delta": 21254,
-      "follower_per_day": 285.5,
+      "followers": 274157,
+      "follower_delta": 21255,
+      "follower_per_day": 285.4,
       "n_sessions": 103,
-      "n_live_points": 1548,
+      "n_live_points": 1549,
       "peak_ccu": 18587,
       "avg_ccu": 3602,
       "ccu_per_1k_followers": 67.8
@@ -157,8 +157,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 259619,
-      "follower_delta": 18502,
+      "followers": 259618,
+      "follower_delta": 18501,
       "follower_per_day": 248.5,
       "n_sessions": 125,
       "n_live_points": 2213,
@@ -185,9 +185,9 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "followers": 319394,
-      "follower_delta": 17474,
-      "follower_per_day": 234.7,
+      "followers": 319392,
+      "follower_delta": 17472,
+      "follower_per_day": 234.6,
       "n_sessions": 134,
       "n_live_points": 2453,
       "peak_ccu": 12362,
@@ -199,8 +199,8 @@
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
-      "followers": 230258,
-      "follower_delta": 20923,
+      "followers": 230257,
+      "follower_delta": 20922,
       "follower_per_day": 281.0,
       "n_sessions": 147,
       "n_live_points": 2414,
@@ -213,11 +213,11 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 239515,
-      "follower_delta": 20415,
+      "followers": 239517,
+      "follower_delta": 20417,
       "follower_per_day": 274.2,
       "n_sessions": 120,
-      "n_live_points": 1754,
+      "n_live_points": 1755,
       "peak_ccu": 9414,
       "avg_ccu": 3091,
       "ccu_per_1k_followers": 39.3
@@ -469,10 +469,10 @@
       "name_en": "Hanayo Hiyori",
       "unit": "ABYSS",
       "start_kst": "2026-10-25 21:05",
-      "observed_min": 288.7,
-      "n_points": 30,
+      "observed_min": 299.0,
+      "n_points": 31,
       "peak_ccu": 19804,
-      "avg_ccu": 16867,
+      "avg_ccu": 16818,
       "title": "히요리 하요링 입니다 ! !",
       "category": "talk"
     },
@@ -541,10 +541,10 @@
       "name_en": "Shizuki Toa",
       "unit": "ABYSS",
       "start_kst": "2026-10-25 16:06",
-      "observed_min": 588.2,
-      "n_points": 60,
+      "observed_min": 598.5,
+      "n_points": 61,
       "peak_ccu": 15711,
-      "avg_ccu": 9988,
+      "avg_ccu": 9966,
       "title": "벌칙",
       "category": "talk"
     },
@@ -1621,10 +1621,10 @@
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-25 19:01",
-      "observed_min": 412.9,
-      "n_points": 43,
+      "observed_min": 423.2,
+      "n_points": 44,
       "peak_ccu": 7625,
-      "avg_ccu": 4933,
+      "avg_ccu": 4906,
       "title": "젠장 이 조이는 뭐냐!!!!!!!!!!!!!!!",
       "category": "리그 오브 레전드"
     },
@@ -2425,10 +2425,10 @@
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
       "start_kst": "2026-10-25 16:36",
-      "observed_min": 557.3,
-      "n_points": 57,
+      "observed_min": 567.6,
+      "n_points": 58,
       "peak_ccu": 6743,
-      "avg_ccu": 4478,
+      "avg_ccu": 4461,
       "title": "똑똑한 호랑이 (스포 금지)",
       "category": "talk"
     },
@@ -3085,10 +3085,10 @@
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
       "start_kst": "2026-10-25 19:43",
-      "observed_min": 370.8,
-      "n_points": 38,
+      "observed_min": 381.1,
+      "n_points": 39,
       "peak_ccu": 5987,
-      "avg_ccu": 3682,
+      "avg_ccu": 3651,
       "title": "봄바나나봄봄바나나봄바나나봄봄바나나",
       "category": "talk"
     },
@@ -21900,6 +21900,10 @@
         [
           "2026-10-26 01:54",
           3779
+        ],
+        [
+          "2026-10-26 02:04",
+          3733
         ]
       ]
     },
@@ -28921,6 +28925,10 @@
         [
           "2026-10-26 01:54",
           2498
+        ],
+        [
+          "2026-10-26 02:04",
+          2479
         ]
       ]
     },
@@ -49488,6 +49496,10 @@
         [
           "2026-10-26 01:54",
           3734
+        ],
+        [
+          "2026-10-26 02:04",
+          3509
         ]
       ]
     },
@@ -58398,6 +58410,10 @@
         [
           "2026-10-26 01:54",
           16224
+        ],
+        [
+          "2026-10-26 02:04",
+          15333
         ]
       ]
     },
@@ -80074,6 +80090,10 @@
         [
           "2026-10-26 01:54",
           9261
+        ],
+        [
+          "2026-10-26 02:04",
+          8669
         ]
       ]
     },
