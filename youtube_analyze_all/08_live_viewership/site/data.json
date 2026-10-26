@@ -1,28 +1,28 @@
 {
   "meta": {
-    "fetched_at": "2026-10-26T15:29:41.586912+00:00",
-    "n_snapshots": 97120,
+    "fetched_at": "2026-10-26T15:40:01.801300+00:00",
+    "n_snapshots": 97135,
     "n_members": 15,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-26T15:29:41.586912+00:00"
+      "2026-10-26T15:40:01.801300+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 88283,
-    "n_timepoints": 8165,
-    "span_hours": 1809.57,
-    "observed_hours": 1394.93,
+    "n_snapshots": 88297,
+    "n_timepoints": 8166,
+    "span_hours": 1809.74,
+    "observed_hours": 1395.1,
     "coverage_ratio": 0.771,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 21313,
+    "n_live_rows": 21318,
     "members": 14,
     "members_tracked": 14,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-26T15:29:41.586912+00:00"
+    "last": "2026-10-26T15:40:01.801300+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -31,65 +31,65 @@
       "name_ko": "토키노 메리",
       "name_en": "Tokino Mary",
       "unit": "ABYSS",
-      "followers": 164532,
-      "follower_delta": 123324,
-      "follower_per_day": 9846.7,
+      "followers": 164548,
+      "follower_delta": 123340,
+      "follower_per_day": 9842.3,
       "n_sessions": 8,
       "n_live_points": 250,
       "peak_ccu": 79149,
       "avg_ccu": 18400,
-      "ccu_per_1k_followers": 481.06
+      "ccu_per_1k_followers": 481.01
     },
     {
       "rank": 2,
       "name_ko": "코가네 랑",
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
-      "followers": 131564,
-      "follower_delta": 91396,
-      "follower_per_day": 7297.4,
+      "followers": 131575,
+      "follower_delta": 91407,
+      "follower_per_day": 7294.1,
       "n_sessions": 7,
       "n_live_points": 376,
       "peak_ccu": 67950,
       "avg_ccu": 7277,
-      "ccu_per_1k_followers": 516.48
+      "ccu_per_1k_followers": 516.44
     },
     {
       "rank": 3,
       "name_ko": "시즈키 토아",
       "name_en": "Shizuki Toa",
       "unit": "ABYSS",
-      "followers": 131713,
-      "follower_delta": 91596,
-      "follower_per_day": 7313.4,
+      "followers": 131744,
+      "follower_delta": 91627,
+      "follower_per_day": 7311.7,
       "n_sessions": 10,
-      "n_live_points": 349,
+      "n_live_points": 350,
       "peak_ccu": 62637,
-      "avg_ccu": 9234,
-      "ccu_per_1k_followers": 475.56
+      "avg_ccu": 9242,
+      "ccu_per_1k_followers": 475.44
     },
     {
       "rank": 4,
       "name_ko": "하나요 히요리",
       "name_en": "Hanayo Hiyori",
       "unit": "ABYSS",
-      "followers": 140640,
-      "follower_delta": 101482,
-      "follower_per_day": 8102.7,
+      "followers": 140669,
+      "follower_delta": 101511,
+      "follower_per_day": 8100.4,
       "n_sessions": 9,
-      "n_live_points": 325,
+      "n_live_points": 326,
       "peak_ccu": 60712,
-      "avg_ccu": 19300,
-      "ccu_per_1k_followers": 431.68
+      "avg_ccu": 19293,
+      "ccu_per_1k_followers": 431.59
     },
     {
       "rank": 5,
       "name_ko": "사키하네 후야",
       "name_en": "Sakihane Huya",
       "unit": "EVERYS",
-      "followers": 177960,
-      "follower_delta": 21219,
-      "follower_per_day": 281.4,
+      "followers": 177963,
+      "follower_delta": 21222,
+      "follower_per_day": 281.5,
       "n_sessions": 84,
       "n_live_points": 1400,
       "peak_ccu": 38402,
@@ -101,13 +101,13 @@
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
-      "followers": 276318,
-      "follower_delta": 20992,
-      "follower_per_day": 278.4,
+      "followers": 276324,
+      "follower_delta": 20998,
+      "follower_per_day": 278.5,
       "n_sessions": 142,
-      "n_live_points": 2348,
+      "n_live_points": 2349,
       "peak_ccu": 38237,
-      "avg_ccu": 5380,
+      "avg_ccu": 5381,
       "ccu_per_1k_followers": 138.38
     },
     {
@@ -115,22 +115,22 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 227193,
-      "follower_delta": 17374,
+      "followers": 227196,
+      "follower_delta": 17377,
       "follower_per_day": 230.4,
       "n_sessions": 129,
       "n_live_points": 1432,
       "peak_ccu": 28071,
       "avg_ccu": 3080,
-      "ccu_per_1k_followers": 123.56
+      "ccu_per_1k_followers": 123.55
     },
     {
       "rank": 8,
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 231965,
-      "follower_delta": 24539,
+      "followers": 231967,
+      "follower_delta": 24541,
       "follower_per_day": 325.5,
       "n_sessions": 120,
       "n_live_points": 1963,
@@ -143,11 +143,11 @@
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 274498,
-      "follower_delta": 21596,
-      "follower_per_day": 286.4,
+      "followers": 274506,
+      "follower_delta": 21604,
+      "follower_per_day": 286.5,
       "n_sessions": 104,
-      "n_live_points": 1588,
+      "n_live_points": 1589,
       "peak_ccu": 18587,
       "avg_ccu": 3583,
       "ccu_per_1k_followers": 67.71
@@ -157,8 +157,8 @@
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
-      "followers": 259836,
-      "follower_delta": 18719,
+      "followers": 259839,
+      "follower_delta": 18722,
       "follower_per_day": 248.3,
       "n_sessions": 125,
       "n_live_points": 2213,
@@ -173,7 +173,7 @@
       "unit": "UNIVERSE",
       "followers": 250552,
       "follower_delta": 13704,
-      "follower_per_day": 181.8,
+      "follower_per_day": 181.7,
       "n_sessions": 159,
       "n_live_points": 2369,
       "peak_ccu": 13185,
@@ -201,9 +201,9 @@
       "unit": "CLICHE",
       "followers": 230654,
       "follower_delta": 21319,
-      "follower_per_day": 282.8,
+      "follower_per_day": 282.7,
       "n_sessions": 148,
-      "n_live_points": 2459,
+      "n_live_points": 2460,
       "peak_ccu": 11004,
       "avg_ccu": 3121,
       "ccu_per_1k_followers": 47.71
@@ -213,8 +213,8 @@
       "name_ko": "아오쿠모 린",
       "name_en": "Aokumo Rin",
       "unit": "CLICHE",
-      "followers": 239829,
-      "follower_delta": 20729,
+      "followers": 239831,
+      "follower_delta": 20731,
       "follower_per_day": 274.9,
       "n_sessions": 121,
       "n_live_points": 1788,
@@ -505,10 +505,10 @@
       "name_en": "Hanayo Hiyori",
       "unit": "ABYSS",
       "start_kst": "2026-10-26 21:02",
-      "observed_min": 207.7,
-      "n_points": 22,
+      "observed_min": 218.0,
+      "n_points": 23,
       "peak_ccu": 17663,
-      "avg_ccu": 15040,
+      "avg_ccu": 15119,
       "title": "하 요 링 ! !",
       "category": "talk"
     },
@@ -589,10 +589,10 @@
       "name_en": "Shizuki Toa",
       "unit": "ABYSS",
       "start_kst": "2026-10-26 17:03",
-      "observed_min": 446.2,
-      "n_points": 46,
+      "observed_min": 456.5,
+      "n_points": 47,
       "peak_ccu": 14987,
-      "avg_ccu": 9746,
+      "avg_ccu": 9795,
       "title": "벌칙",
       "category": "겟팅 오버 잇 위드 베넷 포디"
     },
@@ -1093,10 +1093,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-26 18:37",
-      "observed_min": 352.2,
-      "n_points": 36,
+      "observed_min": 362.5,
+      "n_points": 37,
       "peak_ccu": 9309,
-      "avg_ccu": 6222,
+      "avg_ccu": 6224,
       "title": "으앙앙앙앙ㅇ앙앙ㅇ앙앙아아앙ㅇ",
       "category": "talk"
     },
@@ -3349,10 +3349,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-10-26 17:13",
-      "observed_min": 435.9,
-      "n_points": 45,
+      "observed_min": 446.2,
+      "n_points": 46,
       "peak_ccu": 5839,
-      "avg_ccu": 4064,
+      "avg_ccu": 4056,
       "title": "용사 오늘 참전합니다",
       "category": "talk"
     },
@@ -8697,6 +8697,18 @@
       "category": "Grand Theft Auto V"
     },
     {
+      "name_ko": "아카네 리제",
+      "name_en": "Akane Lize",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-10-26 20:10",
+      "observed_min": 269.6,
+      "n_points": 28,
+      "peak_ccu": 3659,
+      "avg_ccu": 2720,
+      "title": "참고로 난 고수임",
+      "category": "talk"
+    },
+    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -8832,18 +8844,6 @@
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
-      "start_kst": "2026-08-23 18:13",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3615,
-      "avg_ccu": 3615,
-      "title": "바하 2 처음 헤보기 2 !!!!!",
-      "category": "바이오하자드 RE:2"
-    },
-    {
-      "name_ko": "아야츠노 유니",
-      "name_en": "Ayatsuno Yuni",
-      "unit": "EVERYS",
       "start_kst": "2026-10-09 17:41",
       "observed_min": 266.4,
       "n_points": 27,
@@ -8851,6 +8851,18 @@
       "avg_ccu": 2699,
       "title": "6시 커버곡 공개 !!!  ",
       "category": "talk"
+    },
+    {
+      "name_ko": "아야츠노 유니",
+      "name_en": "Ayatsuno Yuni",
+      "unit": "EVERYS",
+      "start_kst": "2026-08-23 18:13",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3615,
+      "avg_ccu": 3615,
+      "title": "바하 2 처음 헤보기 2 !!!!!",
+      "category": "바이오하자드 RE:2"
     },
     {
       "name_ko": "아카네 리제",
@@ -9261,6 +9273,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "텐코 시부키",
+      "name_en": "Tenko Shibuki",
+      "unit": "CLICHE",
+      "start_kst": "2026-08-22 19:40",
+      "observed_min": 23.2,
+      "n_points": 2,
+      "peak_ccu": 3503,
+      "avg_ccu": 3476,
+      "title": "뽑기고수부키왔다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",
+      "category": "talk"
+    },
+    {
       "name_ko": "유즈하 리코",
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
@@ -9282,18 +9306,6 @@
       "peak_ccu": 3503,
       "avg_ccu": 3503,
       "title": "유니버스 하빵날 저희 싸우는거 맞습니다 (w. 타비, 시로, 히나)",
-      "category": "talk"
-    },
-    {
-      "name_ko": "텐코 시부키",
-      "name_en": "Tenko Shibuki",
-      "unit": "CLICHE",
-      "start_kst": "2026-08-22 19:40",
-      "observed_min": 23.2,
-      "n_points": 2,
-      "peak_ccu": 3503,
-      "avg_ccu": 3476,
-      "title": "뽑기고수부키왔다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",
       "category": "talk"
     },
     {
@@ -9513,18 +9525,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "시라유키 히나",
-      "name_en": "Shirayuki Hina",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-08-24 22:11",
-      "observed_min": 0.0,
-      "n_points": 1,
-      "peak_ccu": 3459,
-      "avg_ccu": 3459,
-      "title": "히 잼 민",
-      "category": "로블록스"
-    },
-    {
       "name_ko": "아야츠노 유니",
       "name_en": "Ayatsuno Yuni",
       "unit": "EVERYS",
@@ -9535,6 +9535,18 @@
       "avg_ccu": 3237,
       "title": "끝끝끝 ",
       "category": "talk"
+    },
+    {
+      "name_ko": "시라유키 히나",
+      "name_en": "Shirayuki Hina",
+      "unit": "UNIVERSE",
+      "start_kst": "2026-08-24 22:11",
+      "observed_min": 0.0,
+      "n_points": 1,
+      "peak_ccu": 3459,
+      "avg_ccu": 3459,
+      "title": "히 잼 민",
+      "category": "로블록스"
     },
     {
       "name_ko": "시라유키 히나",
@@ -9585,18 +9597,6 @@
       "category": "Grand Theft Auto V"
     },
     {
-      "name_ko": "하나코 나나",
-      "name_en": "Hanako Nana",
-      "unit": "CLICHE",
-      "start_kst": "2026-09-15 18:14",
-      "observed_min": 535.1,
-      "n_points": 55,
-      "peak_ccu": 3450,
-      "avg_ccu": 2725,
-      "title": "[봉누도2] 부산 억척 아지매 한세월인데예",
-      "category": "Grand Theft Auto V"
-    },
-    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -9607,6 +9607,18 @@
       "avg_ccu": 3450,
       "title": "큰 거 온 댔 찌",
       "category": "talk"
+    },
+    {
+      "name_ko": "하나코 나나",
+      "name_en": "Hanako Nana",
+      "unit": "CLICHE",
+      "start_kst": "2026-09-15 18:14",
+      "observed_min": 535.1,
+      "n_points": 55,
+      "peak_ccu": 3450,
+      "avg_ccu": 2725,
+      "title": "[봉누도2] 부산 억척 아지매 한세월인데예",
+      "category": "Grand Theft Auto V"
     },
     {
       "name_ko": "사키하네 후야",
@@ -9822,18 +9834,6 @@
       "peak_ccu": 3406,
       "avg_ccu": 2706,
       "title": "두근두근ㄴ 다들 너무 예뿌거든요",
-      "category": "talk"
-    },
-    {
-      "name_ko": "아카네 리제",
-      "name_en": "Akane Lize",
-      "unit": "UNIVERSE",
-      "start_kst": "2026-10-26 20:10",
-      "observed_min": 259.3,
-      "n_points": 27,
-      "peak_ccu": 3405,
-      "avg_ccu": 2685,
-      "title": "참고로 난 고수임",
       "category": "talk"
     },
     {
@@ -22180,6 +22180,10 @@
         [
           "2026-10-27 00:29",
           3405
+        ],
+        [
+          "2026-10-27 00:40",
+          3659
         ]
       ]
     },
@@ -38734,6 +38738,10 @@
         [
           "2026-10-27 00:29",
           8662
+        ],
+        [
+          "2026-10-27 00:40",
+          6308
         ]
       ]
     },
@@ -59222,6 +59230,10 @@
         [
           "2026-10-27 00:29",
           15369
+        ],
+        [
+          "2026-10-27 00:40",
+          16868
         ]
       ]
     },
@@ -81442,6 +81454,10 @@
         [
           "2026-10-27 00:29",
           14987
+        ],
+        [
+          "2026-10-27 00:40",
+          12043
         ]
       ]
     },
@@ -101145,6 +101161,10 @@
         [
           "2026-10-27 00:29",
           3706
+        ],
+        [
+          "2026-10-27 00:40",
+          3674
         ]
       ]
     }
