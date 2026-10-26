@@ -1,28 +1,28 @@
 {
   "meta": {
-    "fetched_at": "2026-10-26T20:20:27.499654+00:00",
-    "n_snapshots": 97555,
+    "fetched_at": "2026-10-26T20:30:48.690675+00:00",
+    "n_snapshots": 97570,
     "n_members": 15,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-26T20:20:27.499654+00:00"
+      "2026-10-26T20:30:48.690675+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 88689,
-    "n_timepoints": 8194,
-    "span_hours": 1814.41,
-    "observed_hours": 1399.91,
+    "n_snapshots": 88703,
+    "n_timepoints": 8195,
+    "span_hours": 1814.59,
+    "observed_hours": 1400.08,
     "coverage_ratio": 0.772,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 21381,
+    "n_live_rows": 21382,
     "members": 14,
     "members_tracked": 14,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-26T20:20:27.499654+00:00"
+    "last": "2026-10-26T20:30:48.690675+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -31,56 +31,56 @@
       "name_ko": "토키노 메리",
       "name_en": "Tokino Mary",
       "unit": "ABYSS",
-      "followers": 164718,
-      "follower_delta": 123510,
-      "follower_per_day": 9705.0,
+      "followers": 164722,
+      "follower_delta": 123514,
+      "follower_per_day": 9699.9,
       "n_sessions": 8,
       "n_live_points": 250,
       "peak_ccu": 79149,
       "avg_ccu": 18400,
-      "ccu_per_1k_followers": 480.51
+      "ccu_per_1k_followers": 480.5
     },
     {
       "rank": 2,
       "name_ko": "코가네 랑",
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
-      "followers": 131687,
-      "follower_delta": 91519,
-      "follower_per_day": 7191.3,
+      "followers": 131689,
+      "follower_delta": 91521,
+      "follower_per_day": 7187.4,
       "n_sessions": 7,
       "n_live_points": 376,
       "peak_ccu": 67950,
       "avg_ccu": 7277,
-      "ccu_per_1k_followers": 516.0
+      "ccu_per_1k_followers": 515.99
     },
     {
       "rank": 3,
       "name_ko": "시즈키 토아",
       "name_en": "Shizuki Toa",
       "unit": "ABYSS",
-      "followers": 131986,
-      "follower_delta": 91869,
-      "follower_per_day": 7218.8,
+      "followers": 131989,
+      "follower_delta": 91872,
+      "follower_per_day": 7214.9,
       "n_sessions": 10,
       "n_live_points": 357,
       "peak_ccu": 62637,
       "avg_ccu": 9233,
-      "ccu_per_1k_followers": 474.57
+      "ccu_per_1k_followers": 474.56
     },
     {
       "rank": 4,
       "name_ko": "하나요 히요리",
       "name_en": "Hanayo Hiyori",
       "unit": "ABYSS",
-      "followers": 141142,
-      "follower_delta": 101984,
-      "follower_per_day": 8013.6,
+      "followers": 141155,
+      "follower_delta": 101997,
+      "follower_per_day": 8010.1,
       "n_sessions": 9,
-      "n_live_points": 354,
+      "n_live_points": 355,
       "peak_ccu": 60712,
-      "avg_ccu": 18844,
-      "ccu_per_1k_followers": 430.15
+      "avg_ccu": 18821,
+      "ccu_per_1k_followers": 430.11
     },
     {
       "rank": 5,
@@ -115,8 +115,8 @@
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
-      "followers": 227237,
-      "follower_delta": 17418,
+      "followers": 227238,
+      "follower_delta": 17419,
       "follower_per_day": 230.4,
       "n_sessions": 129,
       "n_live_points": 1432,
@@ -129,22 +129,22 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 232006,
-      "follower_delta": 24580,
+      "followers": 232007,
+      "follower_delta": 24581,
       "follower_per_day": 325.1,
       "n_sessions": 120,
       "n_live_points": 1963,
       "peak_ccu": 24385,
       "avg_ccu": 3619,
-      "ccu_per_1k_followers": 105.11
+      "ccu_per_1k_followers": 105.1
     },
     {
       "rank": 9,
       "name_ko": "아카네 리제",
       "name_en": "Akane Lize",
       "unit": "UNIVERSE",
-      "followers": 274583,
-      "follower_delta": 21681,
+      "followers": 274584,
+      "follower_delta": 21682,
       "follower_per_day": 286.8,
       "n_sessions": 104,
       "n_live_points": 1601,
@@ -201,7 +201,7 @@
       "unit": "CLICHE",
       "followers": 230713,
       "follower_delta": 21378,
-      "follower_per_day": 282.8,
+      "follower_per_day": 282.7,
       "n_sessions": 148,
       "n_live_points": 2473,
       "peak_ccu": 11004,
@@ -505,10 +505,10 @@
       "name_en": "Hanayo Hiyori",
       "unit": "ABYSS",
       "start_kst": "2026-10-26 21:02",
-      "observed_min": 498.4,
-      "n_points": 51,
+      "observed_min": 508.8,
+      "n_points": 52,
       "peak_ccu": 17967,
-      "avg_ccu": 14296,
+      "avg_ccu": 14227,
       "title": "하 요 링 ! !",
       "category": "talk"
     },
@@ -59406,6 +59406,10 @@
         [
           "2026-10-27 05:20",
           10651
+        ],
+        [
+          "2026-10-27 05:30",
+          10689
         ]
       ]
     },
