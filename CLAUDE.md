@@ -11,6 +11,12 @@
 | 수집 그룹·쿼터 실측 | `youtube_analyze_all/scripts/refresh.py` 머리말, 장부 `youtube_analyze_all/_state/youtube_quota.json` |
 | 실행 방법 | 각 폴더의 `README.md` |
 
+## 진행 중인 작업 (세션 시작 때 자동으로 읽힌다)
+
+아래 문서는 `@` 가져오기로 이 파일과 함께 읽힌다. 작업이 끝나면 줄을 지우고, 새 작업을 `dev/active/<이름>/` 에 만들면 여기에 더한다.
+
+- 멤버별 유튜브·노래 조회수: @dev/active/member-views/context.md @dev/active/member-views/tasks.md
+
 ## "최적화"의 뜻
 
 "최적화"라고 하면 아래를 모두 만족하는 상태를 뜻한다. 하나라도 빠지면 최적화가 끝난 것이 아니다.
