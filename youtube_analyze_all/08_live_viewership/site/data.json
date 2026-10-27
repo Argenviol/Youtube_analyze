@@ -1,28 +1,28 @@
 {
   "meta": {
-    "fetched_at": "2026-10-27T17:36:56.189544+00:00",
-    "n_snapshots": 99445,
+    "fetched_at": "2026-10-27T17:38:02.858367+00:00",
+    "n_snapshots": 99460,
     "n_members": 15,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-27T17:36:56.189544+00:00"
+      "2026-10-27T17:38:02.858367+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 90453,
-    "n_timepoints": 8320,
-    "span_hours": 1835.69,
-    "observed_hours": 1421.55,
+    "n_snapshots": 90467,
+    "n_timepoints": 8321,
+    "span_hours": 1835.71,
+    "observed_hours": 1421.72,
     "coverage_ratio": 0.774,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 21616,
+    "n_live_rows": 21618,
     "members": 14,
     "members_tracked": 14,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-27T17:36:56.189544+00:00"
+    "last": "2026-10-27T17:38:02.858367+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -33,7 +33,7 @@
       "unit": "ABYSS",
       "followers": 166322,
       "follower_delta": 125114,
-      "follower_per_day": 9190.9,
+      "follower_per_day": 9190.4,
       "n_sessions": 9,
       "n_live_points": 302,
       "peak_ccu": 79149,
@@ -45,14 +45,14 @@
       "name_ko": "코가네 랑",
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
-      "followers": 132941,
-      "follower_delta": 92773,
-      "follower_per_day": 6815.1,
+      "followers": 132944,
+      "follower_delta": 92776,
+      "follower_per_day": 6815.0,
       "n_sessions": 8,
-      "n_live_points": 451,
+      "n_live_points": 452,
       "peak_ccu": 67950,
-      "avg_ccu": 7391,
-      "ccu_per_1k_followers": 511.13
+      "avg_ccu": 7394,
+      "ccu_per_1k_followers": 511.12
     },
     {
       "rank": 3,
@@ -61,7 +61,7 @@
       "unit": "ABYSS",
       "followers": 132538,
       "follower_delta": 92421,
-      "follower_per_day": 6789.3,
+      "follower_per_day": 6788.9,
       "n_sessions": 10,
       "n_live_points": 357,
       "peak_ccu": 62637,
@@ -75,7 +75,7 @@
       "unit": "ABYSS",
       "followers": 141830,
       "follower_delta": 102672,
-      "follower_per_day": 7542.3,
+      "follower_per_day": 7541.9,
       "n_sessions": 9,
       "n_live_points": 356,
       "peak_ccu": 60712,
@@ -145,7 +145,7 @@
       "unit": "UNIVERSE",
       "followers": 274766,
       "follower_delta": 21864,
-      "follower_per_day": 285.9,
+      "follower_per_day": 285.8,
       "n_sessions": 104,
       "n_live_points": 1601,
       "peak_ccu": 18587,
@@ -203,7 +203,7 @@
       "follower_delta": 21730,
       "follower_per_day": 284.1,
       "n_sessions": 149,
-      "n_live_points": 2540,
+      "n_live_points": 2541,
       "peak_ccu": 11004,
       "avg_ccu": 3146,
       "ccu_per_1k_followers": 47.62
@@ -925,10 +925,10 @@
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
       "start_kst": "2026-10-27 14:09",
-      "observed_min": 747.5,
-      "n_points": 75,
+      "observed_min": 748.6,
+      "n_points": 76,
       "peak_ccu": 10290,
-      "avg_ccu": 7963,
+      "avg_ccu": 7973,
       "title": "점프왕이 될래요!",
       "category": "talk"
     },
@@ -3673,10 +3673,10 @@
       "name_en": "Yuzuha Riko",
       "unit": "CLICHE",
       "start_kst": "2026-10-27 15:32",
-      "observed_min": 664.6,
-      "n_points": 67,
+      "observed_min": 665.7,
+      "n_points": 68,
       "peak_ccu": 5656,
-      "avg_ccu": 4070,
+      "avg_ccu": 4063,
       "title": "오후 욘사 등장",
       "category": "talk"
     },
@@ -50476,6 +50476,10 @@
         [
           "2026-10-28 02:36",
           8834
+        ],
+        [
+          "2026-10-28 02:38",
+          8732
         ]
       ]
     },
@@ -102405,6 +102409,10 @@
         [
           "2026-10-28 02:36",
           3653
+        ],
+        [
+          "2026-10-28 02:38",
+          3618
         ]
       ]
     }
