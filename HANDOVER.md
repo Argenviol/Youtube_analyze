@@ -13,6 +13,7 @@
 | 자동 수집이 돌고 있나 | GitHub Actions → `collect-scheduled`(daily·weekly·monthly), `collect-live`(08). 빨간색이면 로그의 `[refresh] 실패:` 줄 |
 | YouTube 쿼터를 얼마나 썼나 | `youtube_analyze_all/_state/youtube_quota.json` — 날짜별 units·검색 횟수. `exhausted` 가 있으면 그날 한도가 찼다 |
 | 마지막 수집 시각 | 각 프로젝트 `data/_meta.json` 의 `fetched_at` |
+| 멤버별 조회수 정리 (10/25 기준, 수동) | 루트 `멤버별_조회수_2026-10-25.md` — README 맨 위에서 링크 |
 | 할 일 | 아래 "다음 할 일" |
 | 무엇을 어디서 고치나 | 아래 "어디를 고치나" |
 
@@ -33,6 +34,7 @@
 | 3 | 06 에 ABYSS 코호트 추가 — 지금은 짝지을 경쟁 기수가 없어 빠져 있다 | 같은 시기 데뷔한 경쟁 그룹을 `config.COMPETITOR_ROSTER`·`COHORT_BINS` 에 넣으면 저절로 들어온다. 구독자가 쌓인 뒤에 |
 | 4 | 3D 데뷔 수동 등록 보강 — 지금은 사키하네 후야(2026-09-18) 1건 | 클리셰 3D 데뷔(2025-09, 린 9/17·나나 9/19 방송 제목만 확인)·유니 새 3D(2025-11-12)의 날짜·참여 멤버를 확인해 `12_event_impact/data/events_manual.csv` 에 `3D 데뷔` 로 |
 | 5 | Actions Node.js 20 경고 정리 | `actions/checkout`·`actions/setup-python` 을 Node 24 지원 버전으로. 지금은 강제 실행돼 동작엔 문제없음 |
+| 6 | `멤버별_조회수_2026-10-25.md` 를 다시 만들 수 있게 하기 — 지금은 숫자가 손으로 적혀 있고 계산 스크립트가 저장소에 없다 | 만든 방법: 업로드 재생목록(`UU…`)을 유튜브 웹 `youtubei/v1/browse`(continuation)로 전부 나열 → 영상마다 `youtubei/v1/next` 의 `videoViewCountRenderer`(정확한 조회수)·`dateText` → `youtube.com/shorts/{id}` 가 200이면 쇼츠. API 쿼터를 쓰지 않는다. 노래 목록은 `Argenviol/stel-database` `app.js` `SONG_DATA`(키 `rize` = 리제), 영상에서 뺀 것은 노래 + 제목에 cover·커버·MV·Playlist·메들리. 이걸 `youtube_analyze_all/scripts/` 에 넣고 문서를 생성하게 하면 완료. 특징 칸은 해석이라 손으로 둔다 |
 
 ## 지금 상태
 
@@ -115,6 +117,7 @@
 | `결과물/` 생성 · 그 README | `youtube_analyze_all/scripts/build_deliverables.py` (`PROJECTS` 결론, `_index_md`) |
 | 종합 리포트 HTML·PDF 디자인 | `youtube_analyze_all/scripts/build_unified.py` (CSS·`FONT_FACE`, `--digest`) |
 | 통합 대시보드 | `app/`, 방법론 `app/src/app/methodology/page.tsx`, 신선도 주기 `app/src/data/refresh.ts` |
+| 멤버별 조회수 정리 문서 | 루트 `멤버별_조회수_2026-10-25.md` (손으로 쓴 문서, 생성 스크립트 없음 — 다음 할 일 6) |
 
 ## 작업 규칙
 
