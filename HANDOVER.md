@@ -34,7 +34,7 @@
 | 3 | 06 에 ABYSS 코호트 추가 — 지금은 짝지을 경쟁 기수가 없어 빠져 있다 | 같은 시기 데뷔한 경쟁 그룹을 `config.COMPETITOR_ROSTER`·`COHORT_BINS` 에 넣으면 저절로 들어온다. 구독자가 쌓인 뒤에 |
 | 4 | 3D 데뷔 수동 등록 보강 — 지금은 사키하네 후야(2026-09-18) 1건 | 클리셰 3D 데뷔(2025-09, 린 9/17·나나 9/19 방송 제목만 확인)·유니 새 3D(2025-11-12)의 날짜·참여 멤버를 확인해 `12_event_impact/data/events_manual.csv` 에 `3D 데뷔` 로 |
 | 5 | Actions Node.js 20 경고 정리 | `actions/checkout`·`actions/setup-python` 을 Node 24 지원 버전으로. 지금은 강제 실행돼 동작엔 문제없음 |
-| 6 | `멤버별_조회수_2026-10-25.md` 를 다시 만들 수 있게 하기 — 지금은 숫자가 손으로 적혀 있고 계산 스크립트가 저장소에 없다 | 만든 방법: 업로드 재생목록(`UU…`)을 유튜브 웹 `youtubei/v1/browse`(continuation)로 전부 나열 → 영상마다 `youtubei/v1/next` 의 `videoViewCountRenderer`(정확한 조회수)·`dateText` → `youtube.com/shorts/{id}` 가 200이면 쇼츠. API 쿼터를 쓰지 않는다. 노래 목록은 `Argenviol/stel-database` `app.js` `SONG_DATA`(키 `rize` = 리제), 영상에서 뺀 것은 노래 + 제목에 cover·커버·MV·Playlist·메들리. 이걸 `youtube_analyze_all/scripts/` 에 넣고 문서를 생성하게 하면 완료. 특징 칸은 해석이라 손으로 둔다 |
+| 6 | (선택) 멤버별 조회수 후속 — 진행 기록은 `dev/active/member-views/`(plan·context·tasks) | 계산은 `youtube_analyze_all/member_views/member_views.py`(API 키 불필요, 원본 데이터 `data/`). `summary` 출력이 루트 `멤버별_조회수_2026-10-25.md` 표와 같다. 남은 일은 `tasks.md` |
 
 ## 지금 상태
 
@@ -117,7 +117,7 @@
 | `결과물/` 생성 · 그 README | `youtube_analyze_all/scripts/build_deliverables.py` (`PROJECTS` 결론, `_index_md`) |
 | 종합 리포트 HTML·PDF 디자인 | `youtube_analyze_all/scripts/build_unified.py` (CSS·`FONT_FACE`, `--digest`) |
 | 통합 대시보드 | `app/`, 방법론 `app/src/app/methodology/page.tsx`, 신선도 주기 `app/src/data/refresh.ts` |
-| 멤버별 조회수 정리 문서 | 루트 `멤버별_조회수_2026-10-25.md` (손으로 쓴 문서, 생성 스크립트 없음 — 다음 할 일 6) |
+| 멤버별 조회수 정리 문서 | 루트 `멤버별_조회수_2026-10-25.md` — 숫자는 `youtube_analyze_all/member_views/member_views.py summary`, 이어서 할 것은 `dev/active/member-views/` |
 
 ## 작업 규칙
 
@@ -131,7 +131,7 @@
 
 | 날짜 | 달라진 것 |
 |---|---|
-| 2026-10-27 | 루트에 `멤버별_조회수_2026-10-25.md`(멤버 10명 영상·쇼츠·노래 조회수, 한 번 수집한 정리본 — 자동 갱신 안 됨) 추가, README 맨 위에 링크. 순위표를 README 본문 대신 별도 문서로 둔 건 "멤버 이름 순위는 README에 쓰지 않는다" 규칙 때문 |
+| 2026-10-27 | 루트에 `멤버별_조회수_2026-10-25.md`(멤버 10명 영상·쇼츠·노래 조회수, 한 번 수집한 정리본 — 자동 갱신 안 됨) 추가, README 맨 위에 링크, 계산 스크립트·데이터 `youtube_analyze_all/member_views/`, 진행 기록 `dev/active/member-views/`. 순위표를 README 본문 대신 별도 문서로 둔 건 "멤버 이름 순위는 README에 쓰지 않는다" 규칙 때문 |
 | 2026-10-23 | 상태 확인만 — daily #95 정상(10/22 수집). 02 Topic 재확인이 4명씩 두 묶음·7일 주기로 자리잡아 쿼터 표에 다음 날짜를 적음 |
 | 2026-10-22 | 문서 전체를 같은 틀로 정리 — 루트·`youtube_analyze_all/`·`app/` README, `PRD.md`, 프로젝트 README 12개, `결과물/README.md`(생성기 `_index_md`), `결과물/리포트/README.md`, 이 문서, `CLAUDE.md`(최적화 기준을 표로, 문서·데이터 규칙 절 추가), `SETUP_KEYS.md`(키 2개 표·발급·넣는 법, Actions 시크릿 추가), `app/src/data/contract.md`(실제 `data.json` 스키마 기준으로 재작성 — 09·10·11 추가, M2 감사 서술은 이력 한 줄로). 낡은 서술(Holodex·pytrends·`.env` 파일·'PC 켜두기'·일회성 요청 목록(PDF `fonts-nanum`, ABYSS 데뷔 전, git 미사용·M1, 02 검색 수집, 08 25분 고정 간격)과 실행마다 바뀌는 수치 제거. 앱 신선도의 09 주기를 분기→월 1회로 |
 | 2026-10-21 | 저장소 전체 최적화 — pyflakes·vulture 0건(`barlabels`·`UNIT_COLORS`·`SPACING`·`chzzk.search_channel`·`apply_montage_tokens.py`·루트 PDF 3개 제거). 12 리포트 산문의 손글씨 수치 20여 곳을 계산값으로, 이벤트 유형별 배수 표, 댓글 표본을 05 비교 표본으로, 경쟁사 창을 현 로스터 기준(9/18~)으로. PDF 재설계(Noto Sans KR base64 내장, Gothic A1·구글 폰트 링크·유령 CSS 제거) 후 4종 재생성. 앱 폰 내비 줄바꿈 수정, 10 캐릭터 표 60행씩(스크롤 long task 10개→1개) |
