@@ -1,28 +1,28 @@
 {
   "meta": {
-    "fetched_at": "2026-10-28T10:11:40.769432+00:00",
-    "n_snapshots": 100930,
+    "fetched_at": "2026-10-28T10:12:49.518639+00:00",
+    "n_snapshots": 100945,
     "n_members": 15,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-28T10:11:40.769432+00:00"
+      "2026-10-28T10:12:49.518639+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 91839,
-    "n_timepoints": 8419,
-    "span_hours": 1852.27,
-    "observed_hours": 1438.55,
+    "n_snapshots": 91853,
+    "n_timepoints": 8420,
+    "span_hours": 1852.29,
+    "observed_hours": 1438.72,
     "coverage_ratio": 0.777,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 21694,
+    "n_live_rows": 21700,
     "members": 14,
     "members_tracked": 14,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-28T10:11:40.769432+00:00"
+    "last": "2026-10-28T10:12:49.518639+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -31,9 +31,9 @@
       "name_ko": "토키노 메리",
       "name_en": "Tokino Mary",
       "unit": "ABYSS",
-      "followers": 166745,
-      "follower_delta": 125537,
-      "follower_per_day": 8776.6,
+      "followers": 166746,
+      "follower_delta": 125538,
+      "follower_per_day": 8776.2,
       "n_sessions": 9,
       "n_live_points": 302,
       "peak_ccu": 79149,
@@ -45,28 +45,28 @@
       "name_ko": "코가네 랑",
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
-      "followers": 133418,
-      "follower_delta": 93250,
-      "follower_per_day": 6519.3,
+      "followers": 133422,
+      "follower_delta": 93254,
+      "follower_per_day": 6519.2,
       "n_sessions": 9,
-      "n_live_points": 473,
+      "n_live_points": 474,
       "peak_ccu": 67950,
-      "avg_ccu": 7369,
-      "ccu_per_1k_followers": 509.3
+      "avg_ccu": 7365,
+      "ccu_per_1k_followers": 509.29
     },
     {
       "rank": 3,
       "name_ko": "시즈키 토아",
       "name_en": "Shizuki Toa",
       "unit": "ABYSS",
-      "followers": 132962,
-      "follower_delta": 92845,
+      "followers": 132967,
+      "follower_delta": 92850,
       "follower_per_day": 6491.0,
       "n_sessions": 11,
-      "n_live_points": 366,
+      "n_live_points": 367,
       "peak_ccu": 62637,
-      "avg_ccu": 9224,
-      "ccu_per_1k_followers": 471.09
+      "avg_ccu": 9227,
+      "ccu_per_1k_followers": 471.07
     },
     {
       "rank": 4,
@@ -75,7 +75,7 @@
       "unit": "ABYSS",
       "followers": 142150,
       "follower_delta": 102992,
-      "follower_per_day": 7200.4,
+      "follower_per_day": 7200.0,
       "n_sessions": 9,
       "n_live_points": 356,
       "peak_ccu": 60712,
@@ -105,9 +105,9 @@
       "follower_delta": 21412,
       "follower_per_day": 277.4,
       "n_sessions": 143,
-      "n_live_points": 2370,
+      "n_live_points": 2371,
       "peak_ccu": 38237,
-      "avg_ccu": 5388,
+      "avg_ccu": 5389,
       "ccu_per_1k_followers": 138.17
     },
     {
@@ -119,9 +119,9 @@
       "follower_delta": 17788,
       "follower_per_day": 230.5,
       "n_sessions": 130,
-      "n_live_points": 1448,
+      "n_live_points": 1449,
       "peak_ccu": 28071,
-      "avg_ccu": 3088,
+      "avg_ccu": 3089,
       "ccu_per_1k_followers": 123.33
     },
     {
@@ -129,13 +129,13 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 232318,
-      "follower_delta": 24892,
+      "followers": 232319,
+      "follower_delta": 24893,
       "follower_per_day": 322.5,
       "n_sessions": 121,
-      "n_live_points": 1965,
+      "n_live_points": 1966,
       "peak_ccu": 24385,
-      "avg_ccu": 3616,
+      "avg_ccu": 3615,
       "ccu_per_1k_followers": 104.96
     },
     {
@@ -161,7 +161,7 @@
       "follower_delta": 19151,
       "follower_per_day": 248.1,
       "n_sessions": 127,
-      "n_live_points": 2259,
+      "n_live_points": 2260,
       "peak_ccu": 15159,
       "avg_ccu": 5366,
       "ccu_per_1k_followers": 58.24
@@ -889,10 +889,10 @@
       "name_en": "Shizuki Toa",
       "unit": "ABYSS",
       "start_kst": "2026-10-28 17:49",
-      "observed_min": 82.6,
-      "n_points": 9,
+      "observed_min": 83.8,
+      "n_points": 10,
       "peak_ccu": 10753,
-      "avg_ccu": 8891,
+      "avg_ccu": 9011,
       "title": "기습의 호흡 제1형 20분 빨리오기",
       "category": "talk"
     },
@@ -1405,10 +1405,10 @@
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-28 16:16",
-      "observed_min": 175.6,
-      "n_points": 18,
-      "peak_ccu": 8423,
-      "avg_ccu": 6414,
+      "observed_min": 176.7,
+      "n_points": 19,
+      "peak_ccu": 8428,
+      "avg_ccu": 6520,
       "title": "우왕 나 너 됴와행",
       "category": "talk"
     },
@@ -3585,6 +3585,18 @@
       "category": "이터널 리턴"
     },
     {
+      "name_ko": "텐코 시부키",
+      "name_en": "Tenko Shibuki",
+      "unit": "CLICHE",
+      "start_kst": "2026-10-28 18:09",
+      "observed_min": 63.1,
+      "n_points": 8,
+      "peak_ccu": 5719,
+      "avg_ccu": 4166,
+      "title": "아 코간지러워라",
+      "category": "talk"
+    },
+    {
       "name_ko": "아라하시 타비",
       "name_en": "Arahashi Tabi",
       "unit": "UNIVERSE",
@@ -3753,18 +3765,6 @@
       "category": "talk"
     },
     {
-      "name_ko": "텐코 시부키",
-      "name_en": "Tenko Shibuki",
-      "unit": "CLICHE",
-      "start_kst": "2026-10-07 18:08",
-      "observed_min": 443.6,
-      "n_points": 44,
-      "peak_ccu": 5624,
-      "avg_ccu": 4490,
-      "title": "부키왔다!!!!!!!!!!!!!!!!",
-      "category": "talk"
-    },
-    {
       "name_ko": "시라유키 히나",
       "name_en": "Shirayuki Hina",
       "unit": "UNIVERSE",
@@ -3774,6 +3774,18 @@
       "peak_ccu": 5624,
       "avg_ccu": 5205,
       "title": "8시 봉누도 설명회 보기",
+      "category": "talk"
+    },
+    {
+      "name_ko": "텐코 시부키",
+      "name_en": "Tenko Shibuki",
+      "unit": "CLICHE",
+      "start_kst": "2026-10-07 18:08",
+      "observed_min": 443.6,
+      "n_points": 44,
+      "peak_ccu": 5624,
+      "avg_ccu": 4490,
+      "title": "부키왔다!!!!!!!!!!!!!!!!",
       "category": "talk"
     },
     {
@@ -3907,18 +3919,6 @@
       "avg_ccu": 5542,
       "title": "정나나가 돌아왔다요~!! [8시 이리 치지직컵 드래프트]",
       "category": "이터널 리턴"
-    },
-    {
-      "name_ko": "텐코 시부키",
-      "name_en": "Tenko Shibuki",
-      "unit": "CLICHE",
-      "start_kst": "2026-10-28 18:09",
-      "observed_min": 62.0,
-      "n_points": 7,
-      "peak_ccu": 5534,
-      "avg_ccu": 3944,
-      "title": "아 코간지러워라",
-      "category": "talk"
     },
     {
       "name_ko": "아라하시 타비",
@@ -4153,10 +4153,10 @@
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
       "start_kst": "2026-10-28 18:09",
-      "observed_min": 62.0,
-      "n_points": 7,
+      "observed_min": 63.1,
+      "n_points": 8,
       "peak_ccu": 5376,
-      "avg_ccu": 4370,
+      "avg_ccu": 4490,
       "title": "점프왕이 될래요!",
       "category": "점프 킹"
     },
@@ -5065,10 +5065,10 @@
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
       "start_kst": "2026-10-28 16:36",
-      "observed_min": 154.9,
-      "n_points": 16,
+      "observed_min": 156.1,
+      "n_points": 17,
       "peak_ccu": 4901,
-      "avg_ccu": 3776,
+      "avg_ccu": 3791,
       "title": "안넝하세욧!",
       "category": "talk"
     },
@@ -15189,6 +15189,18 @@
       "category": "로블록스"
     },
     {
+      "name_ko": "하나코 나나",
+      "name_en": "Hanako Nana",
+      "unit": "CLICHE",
+      "start_kst": "2026-10-28 19:01",
+      "observed_min": 11.5,
+      "n_points": 3,
+      "peak_ccu": 1869,
+      "avg_ccu": 1286,
+      "title": "7시 씨드머니&로동당 합방 두가자",
+      "category": "talk"
+    },
+    {
       "name_ko": "네네코 마시로",
       "name_en": "Neneko Mashiro",
       "unit": "UNIVERSE",
@@ -15247,18 +15259,6 @@
       "avg_ccu": 1824,
       "title": "새벽 노래연습이다",
       "category": "음악/노래"
-    },
-    {
-      "name_ko": "하나코 나나",
-      "name_en": "Hanako Nana",
-      "unit": "CLICHE",
-      "start_kst": "2026-10-28 19:01",
-      "observed_min": 10.3,
-      "n_points": 2,
-      "peak_ccu": 1820,
-      "avg_ccu": 995,
-      "title": "7시 씨드머니&로동당 합방 두가자",
-      "category": "talk"
     },
     {
       "name_ko": "사키하네 후야",
@@ -38994,6 +38994,10 @@
         [
           "2026-10-28 19:11",
           8423
+        ],
+        [
+          "2026-10-28 19:12",
+          8428
         ]
       ]
     },
@@ -50708,6 +50712,10 @@
         [
           "2026-10-28 19:11",
           5366
+        ],
+        [
+          "2026-10-28 19:12",
+          5334
         ]
       ]
     },
@@ -58573,6 +58581,10 @@
         [
           "2026-10-28 19:11",
           1820
+        ],
+        [
+          "2026-10-28 19:12",
+          1869
         ]
       ]
     },
@@ -65799,6 +65811,10 @@
         [
           "2026-10-28 19:11",
           4028
+        ],
+        [
+          "2026-10-28 19:12",
+          4041
         ]
       ]
     },
@@ -82354,6 +82370,10 @@
         [
           "2026-10-28 19:11",
           10020
+        ],
+        [
+          "2026-10-28 19:12",
+          10090
         ]
       ]
     },
@@ -91395,6 +91415,10 @@
         [
           "2026-10-28 19:11",
           5534
+        ],
+        [
+          "2026-10-28 19:12",
+          5719
         ]
       ]
     },
