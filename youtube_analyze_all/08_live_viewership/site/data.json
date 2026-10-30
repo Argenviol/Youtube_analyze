@@ -1,28 +1,28 @@
 {
   "meta": {
-    "fetched_at": "2026-10-30T06:30:17.769998+00:00",
-    "n_snapshots": 104890,
+    "fetched_at": "2026-10-30T06:31:13.958787+00:00",
+    "n_snapshots": 104905,
     "n_members": 15,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-10-30T06:30:17.769998+00:00"
+      "2026-10-30T06:31:13.958787+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 95535,
-    "n_timepoints": 8683,
-    "span_hours": 1896.58,
-    "observed_hours": 1483.95,
-    "coverage_ratio": 0.782,
+    "n_snapshots": 95549,
+    "n_timepoints": 8684,
+    "span_hours": 1896.59,
+    "observed_hours": 1484.12,
+    "coverage_ratio": 0.783,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 22401,
+    "n_live_rows": 22402,
     "members": 14,
     "members_tracked": 14,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-10-30T06:30:17.769998+00:00"
+    "last": "2026-10-30T06:31:13.958787+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -31,9 +31,9 @@
       "name_ko": "토키노 메리",
       "name_en": "Tokino Mary",
       "unit": "ABYSS",
-      "followers": 168459,
-      "follower_delta": 127251,
-      "follower_per_day": 7879.4,
+      "followers": 168460,
+      "follower_delta": 127252,
+      "follower_per_day": 7879.1,
       "n_sessions": 9,
       "n_live_points": 302,
       "peak_ccu": 79149,
@@ -45,28 +45,28 @@
       "name_ko": "코가네 랑",
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
-      "followers": 134720,
-      "follower_delta": 94552,
-      "follower_per_day": 5854.7,
+      "followers": 134723,
+      "follower_delta": 94555,
+      "follower_per_day": 5854.6,
       "n_sessions": 11,
-      "n_live_points": 565,
+      "n_live_points": 566,
       "peak_ccu": 67950,
       "avg_ccu": 6967,
-      "ccu_per_1k_followers": 504.38
+      "ccu_per_1k_followers": 504.37
     },
     {
       "rank": 3,
       "name_ko": "시즈키 토아",
       "name_en": "Shizuki Toa",
       "unit": "ABYSS",
-      "followers": 134594,
-      "follower_delta": 94477,
-      "follower_per_day": 5850.0,
+      "followers": 134595,
+      "follower_delta": 94478,
+      "follower_per_day": 5849.8,
       "n_sessions": 12,
       "n_live_points": 458,
       "peak_ccu": 62637,
       "avg_ccu": 8820,
-      "ccu_per_1k_followers": 465.38
+      "ccu_per_1k_followers": 465.37
     },
     {
       "rank": 4,
@@ -75,7 +75,7 @@
       "unit": "ABYSS",
       "followers": 144367,
       "follower_delta": 105209,
-      "follower_per_day": 6514.5,
+      "follower_per_day": 6514.3,
       "n_sessions": 11,
       "n_live_points": 440,
       "peak_ccu": 60712,
@@ -2301,6 +2301,18 @@
       "category": "talk"
     },
     {
+      "name_ko": "코가네 랑",
+      "name_en": "Cogane Rang",
+      "unit": "ABYSS",
+      "start_kst": "2026-10-30 14:49",
+      "observed_min": 42.2,
+      "n_points": 6,
+      "peak_ccu": 7022,
+      "avg_ccu": 5765,
+      "title": "랑이와찌",
+      "category": "talk"
+    },
+    {
       "name_ko": "텐코 시부키",
       "name_en": "Tenko Shibuki",
       "unit": "CLICHE",
@@ -2394,18 +2406,6 @@
       "peak_ccu": 6933,
       "avg_ccu": 4481,
       "title": "안녕하쪠용 여러분 찌로애요",
-      "category": "talk"
-    },
-    {
-      "name_ko": "코가네 랑",
-      "name_en": "Cogane Rang",
-      "unit": "ABYSS",
-      "start_kst": "2026-10-30 14:49",
-      "observed_min": 41.3,
-      "n_points": 5,
-      "peak_ccu": 6929,
-      "avg_ccu": 5514,
-      "title": "랑이와찌",
       "category": "talk"
     },
     {
@@ -51776,6 +51776,10 @@
         [
           "2026-10-30 15:30",
           6929
+        ],
+        [
+          "2026-10-30 15:31",
+          7022
         ]
       ]
     },
