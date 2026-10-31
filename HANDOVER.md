@@ -1,7 +1,7 @@
 # 인수인계서
 
 작업을 이어받는 사람(또는 다음 세션)을 위한 운영 문서입니다. 포트폴리오 소개는 [`README.md`](README.md),
-요구사항은 [`PRD.md`](PRD.md), 작업 기준은 [`CLAUDE.md`](CLAUDE.md). **최종 갱신 2026-10-27.**
+요구사항은 [`PRD.md`](PRD.md), 작업 기준은 [`CLAUDE.md`](CLAUDE.md). **최종 갱신 2026-10-31.**
 
 이 문서만 읽고 이어서 할 수 있게 쓴다. 상태 절은 **현재 기준으로 고쳐 쓰고**(덧붙이지 않음), 맨 아래
 변경 이력에는 **그날 달라진 것만** 한 줄 더한다.
@@ -14,6 +14,7 @@
 | YouTube 쿼터를 얼마나 썼나 | `youtube_analyze_all/_state/youtube_quota.json` — 날짜별 units·검색 횟수. `exhausted` 가 있으면 그날 한도가 찼다 |
 | 마지막 수집 시각 | 각 프로젝트 `data/_meta.json` 의 `fetched_at` |
 | 멤버별 조회수 정리 (10/25 기준, 수동) | 루트 `멤버별_조회수_2026-10-25.md` — README 맨 위에서 링크 |
+| 4기 데뷔의 영향력 (10/30 기준, 수동) | 루트 `4기_데뷔의_영향력.md` — README 맨 위에서 링크, 숫자는 `youtube_analyze_all/abyss_impact/abyss_impact.py` |
 | 할 일 | 아래 "다음 할 일" |
 | 무엇을 어디서 고치나 | 아래 "어디를 고치나" |
 
@@ -118,6 +119,7 @@
 | 종합 리포트 HTML·PDF 디자인 | `youtube_analyze_all/scripts/build_unified.py` (CSS·`FONT_FACE`, `--digest`) |
 | 통합 대시보드 | `app/`, 방법론 `app/src/app/methodology/page.tsx`, 신선도 주기 `app/src/data/refresh.ts` |
 | 멤버별 조회수 정리 문서 | 루트 `멤버별_조회수_2026-10-25.md` — 숫자는 `youtube_analyze_all/member_views/member_views.py summary`, 이어서 할 것은 `dev/active/member-views/` |
+| 4기 데뷔의 영향력 문서 | 루트 `4기_데뷔의_영향력.md` — 숫자는 `youtube_analyze_all/abyss_impact/abyss_impact.py`(08 `snapshots.csv`를 읽는다, 다시 돌리면 표를 그대로 출력) |
 
 ## 작업 규칙
 
@@ -131,6 +133,7 @@
 
 | 날짜 | 달라진 것 |
 |---|---|
+| 2026-10-31 | 루트에 `4기_데뷔의_영향력.md`(4기 데뷔 전·뒤 치지직 시청자 합계 비교 — 데뷔 전은 수집이 10분 간격으로 자리잡은 9/9부터) 추가, README 맨 위에서 링크, 계산 `youtube_analyze_all/abyss_impact/abyss_impact.py`. 08 수집은 8/12~9/8 한 시간에 한 장 안팎, 9/9부터 하루 144장 거의 다 — 그 앞 구간은 전후 비교에 쓰지 않는다 |
 | 2026-10-27 | 루트에 `멤버별_조회수_2026-10-25.md`(멤버 10명 영상·쇼츠·노래 조회수, 한 번 수집한 정리본 — 자동 갱신 안 됨) 추가, README 맨 위에 링크, 계산 스크립트·데이터 `youtube_analyze_all/member_views/`, 진행 기록 `dev/active/member-views/`. 순위표를 README 본문 대신 별도 문서로 둔 건 "멤버 이름 순위는 README에 쓰지 않는다" 규칙 때문 |
 | 2026-10-23 | 상태 확인만 — daily #95 정상(10/22 수집). 02 Topic 재확인이 4명씩 두 묶음·7일 주기로 자리잡아 쿼터 표에 다음 날짜를 적음 |
 | 2026-10-22 | 문서 전체를 같은 틀로 정리 — 루트·`youtube_analyze_all/`·`app/` README, `PRD.md`, 프로젝트 README 12개, `결과물/README.md`(생성기 `_index_md`), `결과물/리포트/README.md`, 이 문서, `CLAUDE.md`(최적화 기준을 표로, 문서·데이터 규칙 절 추가), `SETUP_KEYS.md`(키 2개 표·발급·넣는 법, Actions 시크릿 추가), `app/src/data/contract.md`(실제 `data.json` 스키마 기준으로 재작성 — 09·10·11 추가, M2 감사 서술은 이력 한 줄로). 낡은 서술(Holodex·pytrends·`.env` 파일·'PC 켜두기'·일회성 요청 목록(PDF `fonts-nanum`, ABYSS 데뷔 전, git 미사용·M1, 02 검색 수집, 08 25분 고정 간격)과 실행마다 바뀌는 수치 제거. 앱 신선도의 09 주기를 분기→월 1회로 |
