@@ -1,28 +1,28 @@
 {
   "meta": {
-    "fetched_at": "2026-11-01T21:09:47.345971+00:00",
-    "n_snapshots": 110335,
+    "fetched_at": "2026-11-01T21:10:46.172873+00:00",
+    "n_snapshots": 110350,
     "n_members": 15,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-11-01T21:09:47.345971+00:00"
+      "2026-11-01T21:10:46.172873+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 100617,
-    "n_timepoints": 9046,
-    "span_hours": 1959.24,
-    "observed_hours": 1546.38,
+    "n_snapshots": 100631,
+    "n_timepoints": 9047,
+    "span_hours": 1959.25,
+    "observed_hours": 1546.55,
     "coverage_ratio": 0.789,
     "largest_gap_hours": 11.3,
     "n_live_rows": 23775,
     "members": 14,
     "members_tracked": 14,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-11-01T21:09:47.345971+00:00"
+    "last": "2026-11-01T21:10:46.172873+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -33,7 +33,7 @@
       "unit": "ABYSS",
       "followers": 173187,
       "follower_delta": 131979,
-      "follower_per_day": 7034.9,
+      "follower_per_day": 7034.6,
       "n_sessions": 13,
       "n_live_points": 393,
       "peak_ccu": 79149,
@@ -47,7 +47,7 @@
       "unit": "ABYSS",
       "followers": 136902,
       "follower_delta": 96734,
-      "follower_per_day": 5156.2,
+      "follower_per_day": 5156.0,
       "n_sessions": 14,
       "n_live_points": 657,
       "peak_ccu": 67950,
@@ -61,7 +61,7 @@
       "unit": "ABYSS",
       "followers": 137160,
       "follower_delta": 97043,
-      "follower_per_day": 5172.7,
+      "follower_per_day": 5172.5,
       "n_sessions": 15,
       "n_live_points": 569,
       "peak_ccu": 62637,
@@ -75,7 +75,7 @@
       "unit": "ABYSS",
       "followers": 148574,
       "follower_delta": 109416,
-      "follower_per_day": 5832.2,
+      "follower_per_day": 5832.0,
       "n_sessions": 15,
       "n_live_points": 587,
       "peak_ccu": 60712,
