@@ -113,7 +113,7 @@ INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points,
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('텐코 시부키', 'Tenko Shibuki', 'CLICHE', '2026-10-10 18:30', 379.8, 39, 9091, 6078, '나 후배 선배!!!', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시즈키 토아', 'Shizuki Toa', 'ABYSS', '2026-10-31 16:30', 497.9, 51, 9033, 4312, '어비쯔 할로윈 합방 전에 읏쨔', 'talk');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('시즈키 토아', 'Shizuki Toa', 'ABYSS', '2026-10-20 15:46', 695.0, 70, 9032, 6752, '오늘두 놀 준비 댔나 !!!!!!!!!', 'talk');
-INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('코가네 랑', 'Cogane Rang', 'ABYSS', '2026-11-07 04:47', 216.6, 22, 9019, 8178, '[랑이TV] 안녕하세요 여러분 오늘은요~!', '마인크래프트');
+INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('코가네 랑', 'Cogane Rang', 'ABYSS', '2026-11-07 04:47', 226.9, 23, 9019, 8161, '[랑이TV] 안녕하세요 여러분 오늘은요~!', '마인크래프트');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('하나코 나나', 'Hanako Nana', 'CLICHE', '2026-09-27 17:55', 560.5, 57, 8940, 4945, '[봉누도2] 씨드머니 진짜 엄마가 된 한세월', 'Grand Theft Auto V');
 INSERT INTO sessions (name_ko, name_en, unit, start_kst, observed_min, n_points, peak_ccu, avg_ccu, title, category) VALUES ('아야츠노 유니', 'Ayatsuno Yuni', 'EVERYS', '2026-10-16 17:35', 672.4, 68, 8877, 5651, '러너리그 팀 뽑기날  유니ntr안댄다,,!!!!! 
 ', 'talk');
