@@ -21,7 +21,11 @@ class Chzzk:
 
     def _get(self, path: str, params: dict | None = None) -> dict:
         for attempt in range(4):
-            r = self.s.get(f"{BASE}{path}", params=params or {}, timeout=30)
+            try:
+                r = self.s.get(f"{BASE}{path}", params=params or {}, timeout=30)
+            except (requests.ConnectionError, requests.Timeout, requests.exceptions.ChunkedEncodingError):
+                time.sleep(2 ** attempt)      # 연결이 중간에 끊긴 경우 — 일시 오류라 재시도한다
+                continue
             if r.status_code == 200:
                 return r.json().get("content", {}) or {}
             if r.status_code in (429, 500, 502, 503):
