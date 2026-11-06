@@ -1,28 +1,28 @@
 {
   "meta": {
-    "fetched_at": "2026-11-06T20:07:49.882889+00:00",
-    "n_snapshots": 119275,
+    "fetched_at": "2026-11-06T20:18:08.412064+00:00",
+    "n_snapshots": 119290,
     "n_members": 15,
     "span": [
       "2026-08-12T05:55:39.176Z",
-      "2026-11-06T20:07:49.882889+00:00"
+      "2026-11-06T20:18:08.412064+00:00"
     ],
     "interval_min": 10,
     "source": "Chzzk 비공식 API (channels + polling live-status)",
     "note": "동시시청자는 소급 수집 불가. 이 파일은 계속 자라는 시계열이다."
   },
   "coverage": {
-    "n_snapshots": 108961,
-    "n_timepoints": 9642,
-    "span_hours": 2078.2,
-    "observed_hours": 1649.02,
-    "coverage_ratio": 0.793,
+    "n_snapshots": 108975,
+    "n_timepoints": 9643,
+    "span_hours": 2078.37,
+    "observed_hours": 1649.19,
+    "coverage_ratio": 0.794,
     "largest_gap_hours": 11.3,
-    "n_live_rows": 25076,
+    "n_live_rows": 25077,
     "members": 14,
     "members_tracked": 14,
     "first": "2026-08-12T05:55:39.176000+00:00",
-    "last": "2026-11-06T20:07:49.882889+00:00"
+    "last": "2026-11-06T20:18:08.412064+00:00"
   },
   "enough_coverage": true,
   "members": [
@@ -33,7 +33,7 @@
       "unit": "ABYSS",
       "followers": 177321,
       "follower_delta": 136113,
-      "follower_per_day": 5738.9,
+      "follower_per_day": 5737.2,
       "n_sessions": 18,
       "n_live_points": 478,
       "peak_ccu": 79149,
@@ -45,14 +45,14 @@
       "name_ko": "코가네 랑",
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
-      "followers": 140009,
-      "follower_delta": 99841,
-      "follower_per_day": 4209.6,
+      "followers": 140014,
+      "follower_delta": 99846,
+      "follower_per_day": 4208.5,
       "n_sessions": 20,
-      "n_live_points": 776,
+      "n_live_points": 777,
       "peak_ccu": 67950,
-      "avg_ccu": 6914,
-      "ccu_per_1k_followers": 485.33
+      "avg_ccu": 6916,
+      "ccu_per_1k_followers": 485.31
     },
     {
       "rank": 3,
@@ -61,7 +61,7 @@
       "unit": "ABYSS",
       "followers": 139550,
       "follower_delta": 99433,
-      "follower_per_day": 4192.4,
+      "follower_per_day": 4191.1,
       "n_sessions": 18,
       "n_live_points": 603,
       "peak_ccu": 62637,
@@ -75,7 +75,7 @@
       "unit": "ABYSS",
       "followers": 152817,
       "follower_delta": 113659,
-      "follower_per_day": 4792.2,
+      "follower_per_day": 4790.7,
       "n_sessions": 21,
       "n_live_points": 690,
       "peak_ccu": 60712,
@@ -129,8 +129,8 @@
       "name_ko": "하나코 나나",
       "name_en": "Hanako Nana",
       "unit": "CLICHE",
-      "followers": 235507,
-      "follower_delta": 28081,
+      "followers": 235508,
+      "follower_delta": 28082,
       "follower_per_day": 324.3,
       "n_sessions": 129,
       "n_live_points": 2234,
@@ -145,7 +145,7 @@
       "unit": "UNIVERSE",
       "followers": 277716,
       "follower_delta": 24814,
-      "follower_per_day": 286.6,
+      "follower_per_day": 286.5,
       "n_sessions": 114,
       "n_live_points": 1783,
       "peak_ccu": 18587,
@@ -1561,10 +1561,10 @@
       "name_en": "Cogane Rang",
       "unit": "ABYSS",
       "start_kst": "2026-11-07 04:47",
-      "observed_min": 20.6,
-      "n_points": 3,
+      "observed_min": 30.9,
+      "n_points": 4,
       "peak_ccu": 9019,
-      "avg_ccu": 8932,
+      "avg_ccu": 8873,
       "title": "[랑이TV] 안녕하세요 여러분 오늘은요~!",
       "category": "마인크래프트"
     },
@@ -56188,6 +56188,10 @@
         [
           "2026-11-07 05:07",
           8853
+        ],
+        [
+          "2026-11-07 05:18",
+          8694
         ]
       ]
     },
