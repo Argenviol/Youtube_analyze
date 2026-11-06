@@ -7,10 +7,9 @@
 
 | 키 | 환경변수 | 쓰는 프로젝트 | 없으면 | 발급 |
 |---|---|---|---|---|
-| YouTube Data API v3 | `YOUTUBE_API_KEY` | 01·02·04·05·06, 10(공식 채널 댓글) | 그 프로젝트의 수집이 멈춘다(분석·사이트 재생성은 `--skip-collect` 로 가능) | Google Cloud, 3~5분 |
-| Open DART | `DART_API_KEY` | 09 | 09 수집이 즉시 중단 | opendart.fss.or.kr 개인 회원, 3분 |
+| YouTube Data API v3 | `YOUTUBE_API_KEY` | 01·02·04·05·06 | 그 프로젝트의 수집이 멈춘다(분석·사이트 재생성은 `--skip-collect` 로 가능) | Google Cloud, 3~5분 |
 
-03·07·08·11·12 는 키가 필요 없습니다(치지직 공개 API·공개 페이지·재사용 데이터).
+03·07·08·12 는 키가 필요 없습니다(치지직 공개 API·공개 페이지·재사용 데이터).
 
 ## YouTube Data API v3
 
@@ -23,20 +22,13 @@
 태평양 시간 자정(KST 16~17시)에 초기화. `common/youtube.py` 가 모든 호출을 `_state/youtube_quota.json` 에
 적고 자체 예산(8,000 units·검색 90회) 안에서만 호출하므로 한도를 넘기지 않는다. 그룹별 실측은 `scripts/refresh.py` 머리말.
 
-## Open DART
-
-1. <https://opendart.fss.or.kr/> → `인증키 신청/관리` → `인증키 신청`.
-2. **개인 회원**으로 신청(법인은 사업자등록증 + 1~2 영업일 심사). API 사용 환경 `웹`, 목적은 "개인 포트폴리오용 기업
-   재무데이터 분석" 정도, 확인 URL 은 저장소 주소(없으면 `http://localhost` 도 통과).
-3. 이메일 인증 뒤 즉시 발급. 40자 인증키는 `오픈API 이용현황`에서 언제든 다시 볼 수 있다.
-
 ## 키 넣는 법
 
 | 어디서 | 방법 |
 |---|---|
-| Windows (로컬) | PowerShell 에서 `setx YOUTUBE_API_KEY "…"`, `setx DART_API_KEY "…"` — **새로 여는 터미널부터** 적용. 확인은 `echo $env:YOUTUBE_API_KEY` |
+| Windows (로컬) | PowerShell 에서 `setx YOUTUBE_API_KEY "…"` — **새로 여는 터미널부터** 적용. 확인은 `echo $env:YOUTUBE_API_KEY` |
 | macOS · Linux (로컬) | `export YOUTUBE_API_KEY=…` (셸 프로필에 넣으면 영구) |
-| GitHub Actions | 저장소 `Settings → Secrets and variables → Actions` 에 같은 이름으로 등록. `collect-scheduled.yml` 이 `secrets.YOUTUBE_API_KEY`·`secrets.DART_API_KEY` 로 읽는다 |
+| GitHub Actions | 저장소 `Settings → Secrets and variables → Actions` 에 같은 이름으로 등록. `collect-scheduled.yml` 이 `secrets.YOUTUBE_API_KEY` 로 읽는다 |
 
 스크립트는 `os.environ` 만 읽습니다 — `.env` 파일은 읽지 않으므로 환경변수로 넣어야 합니다. 키가 노출됐으면 즉시
 재발급(회전)하고 옛 키를 지웁니다.

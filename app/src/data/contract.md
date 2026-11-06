@@ -31,13 +31,10 @@
 - 08 은 `enough_coverage` 가 `false` 면(관측 24시간 미만 또는 세션 5건 미만) 결론성 차트 대신 "수집 중"을 보여 준다(FR-5).
   관측 시간은 span 이 아니라 실제 시점 수 × 실측 간격이다.
 
-## 회사·게임·커머스 단위 (`members[]` 없음 — 멤버 필터 대상 아님)
+## 멤버 단위가 아닌 것
 
 | id | 갱신 | 배열·객체 | 비고 |
 |---|---|---|---|
-| 09 | monthly | `target_search[]`(대상 법인 검색 결과, `matched`·`note`) · `companies[]`(회사 × 연도 × `fs_div`: `revenue`·`operating_income`·`operating_margin`·`asset_turnover`·`equity_ratio`·`revenue_yoy` …) · `status_summary{}` · `audit_status_summary{}` · `fandom_context{}` | `meta.n_matched`·`n_with_financials`·`years`. 스텔라이브·Brave group 은 `matched: false` 가 정상 |
-| 10 | weekly | `app_summary[]` · `characters[]`(574, `game`·`rank`·`release_date`·`is_limited`·`matchable`·`name_ambiguous`) · `push_top[]`·`audience_top[]`·`gap_overpushed[]`·`gap_sleeper[]`(같은 스키마) · `monthly_sentiment[]` · `by_game{genshin,starrail,zzz,hi3,ba}` · `trends_status{}` | `meta.ranking_scope = "per_game"` — 순위·격차는 게임 안에서만. `release_date` 는 `null` 일 수 있다(앱이 처리) |
-| 11 | weekly | `fanding{stats,creator_summary,tiers}` · `crowdfunding[]`(`goal_estimated`·`source_url`·`source_type`·`achievement_pct`·`per_backer_krw`) · `financials[]`(09 재사용) | `meta.tumblbug_blocked_by_robots` — 크라우드펀딩은 정적 큐레이션이라 재실행해도 안 바뀐다 |
 | 07 | — | 앱 미포함(정적 링크). `facts[]`·`milestones[]`·`groups[]`(06 재사용). `facts[].unit` 은 측정 단위라 멤버의 `unit` 과 뜻이 다르다 | `meta.fetched_at` 은 `built_at` 과 같은 값 |
 
 ## 바뀐 이력

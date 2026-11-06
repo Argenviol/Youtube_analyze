@@ -9,11 +9,7 @@ import data04 from "@/data/04.json";
 import data05 from "@/data/05.json";
 import data06 from "@/data/06.json";
 import data08 from "@/data/08.json";
-import data09 from "@/data/09.json";
-import data10 from "@/data/10.json";
-import data11 from "@/data/11.json";
-import type { Data01, Data02, Data03, Data04, Data05, Data06, Data08, Data09, Data10, Data11 } from "@/data/types";
-import { isData11Ready } from "@/data/types";
+import type { Data01, Data02, Data03, Data04, Data05, Data06, Data08 } from "@/data/types";
 import { overlapLine } from "@/lib/overlap";
 import styles from "./page.module.css";
 
@@ -27,14 +23,6 @@ const project04 = data04 as Data04;
 const project05 = data05 as Data05;
 const project06 = data06 as Data06;
 const project08 = data08 as Data08;
-// Phase 2 — 09(DART 재무)·10(호요버스)는 sync-data.mjs가 필수 프로젝트로
-// 취급해 항상 존재한다. 11(팬 커머스)은 옵셔널이다 — 이 세션 도중 다른
-// 세션이 만든 소스가 실제로 도착했지만, 혹시 다시 지워지거나 재현 환경에서
-// 아직 안 만들어졌다면 sync-data.mjs가 `{ available: false }` 플레이스홀더를
-// 대신 써두므로 import 자체는 항상 안전하다(`isData11Ready()`로 분기).
-const project09 = data09 as Data09;
-const project10 = data10 as Data10;
-const project11 = data11 as Data11;
 
 const project01TotalSubscribers = project01.members.reduce((sum, m) => sum + m.subscribers, 0);
 
@@ -46,9 +34,6 @@ const ALL_FETCHED_AT = [
   project05.meta.fetched_at,
   project06.meta.fetched_at,
   project08.meta.fetched_at,
-  project09.meta.fetched_at,
-  project10.meta.fetched_at,
-  ...(isData11Ready(project11) ? [project11.meta.fetched_at] : []),
 ];
 const oldestFetchedAt = ALL_FETCHED_AT.reduce((oldest, cur) => (new Date(cur) < new Date(oldest) ? cur : oldest));
 
@@ -91,7 +76,7 @@ const INSIGHTS: Insight[] = [
   },
 ];
 
-type ProjectCadence = "10min" | "daily" | "weekly" | "quarterly" | "static" | "pending";
+type ProjectCadence = "10min" | "daily" | "weekly" | "quarterly" | "static";
 
 const CADENCE_LABEL: Record<ProjectCadence, string> = {
   "10min": "10분마다 갱신",
@@ -99,7 +84,6 @@ const CADENCE_LABEL: Record<ProjectCadence, string> = {
   weekly: "주 1회 갱신",
   quarterly: "분기 1회 갱신",
   static: "정적 · 외부 페이지",
-  pending: "준비 중",
 };
 
 const CADENCE_TONE: Record<ProjectCadence, "primary" | "positive" | "neutral" | "cautionary"> = {
@@ -108,7 +92,6 @@ const CADENCE_TONE: Record<ProjectCadence, "primary" | "positive" | "neutral" | 
   weekly: "neutral",
   quarterly: "neutral",
   static: "cautionary",
-  pending: "cautionary",
 };
 
 type Project = {
@@ -122,8 +105,6 @@ type Project = {
   highlight?: boolean;
   /** 07처럼 Next.js 앱 라우트 밖(기존 정적 HTML)으로 나가는 카드. */
   external?: boolean;
-  /** 11처럼 소스 데이터가 아직 없어 페이지 자체가 없는 카드 — href 없이 "준비 중"만 보여준다. */
-  pending?: boolean;
 };
 
 const PROJECTS: Project[] = [
@@ -200,59 +181,16 @@ const PROJECTS: Project[] = [
     statUnit: maxPeakCcu !== null ? "명" : undefined,
     highlight: true,
   },
-  {
-    no: "09",
-    title: "DART 재무",
-    href: "/projects/09-dart",
-    cadence: "quarterly",
-    statLabel: "확보한 재무 데이터",
-    statValue: project09.companies.length.toLocaleString("ko-KR"),
-    statUnit: "행(회사×연도)",
-  },
-  {
-    no: "10",
-    title: "호요버스",
-    href: "/projects/10-hoyoverse",
-    cadence: "weekly",
-    statLabel: "캐릭터 수",
-    statValue: project10.meta.n_characters.toLocaleString("ko-KR"),
-    statUnit: "명",
-  },
-  isData11Ready(project11)
-    ? {
-        no: "11",
-        title: "팬 커머스",
-        href: "/projects/11-commerce",
-        cadence: "weekly",
-        statLabel: "팬딩 크리에이터",
-        statValue: project11.meta.n_fanding_creators.toLocaleString("ko-KR"),
-        statUnit: "명",
-      }
-    : {
-        no: "11",
-        title: "팬 커머스",
-        href: "",
-        cadence: "pending",
-        statLabel: "상태",
-        statValue: "준비 중",
-        pending: true,
-      },
 ];
 
-// 아래 두 문구는 PROJECTS 에서 파생시킨다. 하드코딩해두면 프로젝트가 늘거나
-// 11이 "준비 중"에서 "연결됨"으로 바뀔 때 소제목만 남아 거짓말을 한다
-// (실제로 한 번 그랬다 — 카드는 실데이터인데 소제목은 "준비 중인 1개"였다).
-const LIVE_PROJECT_NOS = PROJECTS.filter((p) => !p.external && !p.pending).map((p) => p.no);
-const PENDING_PROJECT_NOS = PROJECTS.filter((p) => p.pending).map((p) => p.no);
+// 아래 문구는 PROJECTS 에서 파생시킨다. 하드코딩해두면 프로젝트가 늘 때 소제목만 남아 거짓말을 한다.
+const LIVE_PROJECT_NOS = PROJECTS.filter((p) => !p.external).map((p) => p.no);
 const EXTERNAL_PROJECT_NOS = PROJECTS.filter((p) => p.external).map((p) => p.no);
 
 const PROJECTS_SUMMARY = [
   `갱신되는 ${LIVE_PROJECT_NOS.length}개 프로젝트`,
   EXTERNAL_PROJECT_NOS.length > 0
     ? `정적 유지되는 시장 분석 ${EXTERNAL_PROJECT_NOS.length}개(${EXTERNAL_PROJECT_NOS.join("·")}, 외부 링크)`
-    : null,
-  PENDING_PROJECT_NOS.length > 0
-    ? `준비 중인 ${PENDING_PROJECT_NOS.length}개(${PENDING_PROJECT_NOS.join("·")})`
     : null,
 ]
   .filter(Boolean)
@@ -292,10 +230,10 @@ export default function Home() {
           {PROJECTS.map((project) => (
             <Card
               key={project.no}
-              href={project.pending ? undefined : project.href}
+              href={project.href}
               external={project.external}
               padding="md"
-              className={project.highlight ? styles.highlightCard : project.pending ? styles.pendingCard : undefined}
+              className={project.highlight ? styles.highlightCard : undefined}
             >
               <div className={styles.cardTop}>
                 <span className={styles.cardNo}>{project.no}</span>
@@ -306,9 +244,6 @@ export default function Home() {
                 {project.external ? <span className={styles.externalMark}> ↗</span> : null}
               </h3>
               <StatTile label={project.statLabel} value={project.statValue} unit={project.statUnit} />
-              {project.pending ? (
-                <p className={styles.pendingNote}>다른 세션에서 만드는 중 — 소스 데이터가 도착하면 자동으로 연결된다.</p>
-              ) : null}
             </Card>
           ))}
         </div>
@@ -320,7 +255,6 @@ export default function Home() {
           {LIVE_PROJECT_NOS.join(" · ")} 총 {LIVE_PROJECT_NOS.length}개 프로젝트가 실데이터에 연결됐다 —
           가장 오래된 수집 시각 {new Date(oldestFetchedAt).toLocaleString("ko-KR")} · 07 시장 분석은 외부
           정적 페이지(갱신 없음)
-          {PENDING_PROJECT_NOS.length > 0 ? ` · ${PENDING_PROJECT_NOS.join("·")} 준비 중` : ""}
         </span>
       </footer>
     </div>

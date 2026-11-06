@@ -4,8 +4,7 @@
 
   python scripts/refresh.py --group live      # 08 동시시청자 (10분)
   python scripts/refresh.py --group daily     # 01·02·03·06
-  python scripts/refresh.py --group weekly    # 04·05·10·11
-  python scripts/refresh.py --group monthly   # 09 DART (공시 주기가 분기·연간)
+  python scripts/refresh.py --group weekly    # 04·05
   python scripts/refresh.py --group all       # 전부
   python scripts/refresh.py --group daily --skip-collect   # 수집 없이 재분석만
 
@@ -13,7 +12,6 @@
 한도: 10,000 units/일 + search.list 별도 100회/일(태평양 자정에 풀림). 실측은 _state/youtube_quota.json.
 
   04 키리누키  search 45회 = 4,500 units   ← 유일하게 비싼 프로젝트(weekly). 멤버 15명 × 3쿼리
-  10 호요버스  search  0회 =   ~300 units   (최근 21일 영상 + 처음 보는 영상만. 전량이면 ~3,000)
   02 커버곡    search  0회 =   ~210 units   (Topic 채널 없는 멤버 8명 재확인은 7일에 한 번 search 16회 = +1,600)
   06 경쟁사    search  0회 =    ~85 units
   05 댓글      search  0회 =    ~50 units
@@ -55,14 +53,9 @@ GROUPS = {
     "daily":    ["01_member_channel_performance", "02_cover_song_ranking",
                  "03_chzzk_stream_pattern", "06_competitor_comparison",
                  "07_market_analysis", "12_event_impact"],
-    "weekly":   ["04_kirinuki_ecosystem", "05_comment_sentiment",
-                 "10_hoyoverse", "11_fan_commerce"],
-    # 09는 DART 공시 주기를 따른다. 재무제표는 분기·연간 단위로만 갱신되므로
-    # 자주 돌려봐야 같은 숫자를 다시 받을 뿐이고, 감사보고서 원문(ZIP) 파싱이
-    # 무거워서 월 1회로 충분하다.
-    "monthly":  ["09_dart_financials"],
+    "weekly":   ["04_kirinuki_ecosystem", "05_comment_sentiment"],
 }
-GROUPS["all"] = GROUPS["daily"] + GROUPS["weekly"] + GROUPS["monthly"] + GROUPS["live"]
+GROUPS["all"] = GROUPS["daily"] + GROUPS["weekly"] + GROUPS["live"]
 
 # 08은 --once 로 스냅샷 1회만 찍는다. 나머지는 인자 없이 전량 수집.
 COLLECT_ARGS = {"08_live_viewership": ["--once"]}

@@ -85,18 +85,6 @@
   box-shadow: var(--shadow-small);
 }
 
-.pendingCard {
-  opacity: 0.72;
-  border-style: dashed;
-}
-
-.pendingNote {
-  margin-top: var(--space-6);
-  font-size: 0.75rem;
-  color: var(--label-assistive);
-  line-height: 1.5;
-}
-
 .cardTop {
   display: flex;
   align-items: center;

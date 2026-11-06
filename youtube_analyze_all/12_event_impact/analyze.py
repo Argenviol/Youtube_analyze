@@ -18,7 +18,7 @@
   영구 불가 — 수익
       치지직 후원·구독 수익도, 유튜브 광고 수익도 공개되지 않는다. 추정치를 지어내는
       대신 플랫폼이 실제로 수익을 매기는 축인 **노출량(시청시간·조회수)** 을 대리
-      지표로 낸다. 회사 단위 실제 수익성은 09(DART 감사보고서)가 연 단위로 답한다.
+      지표로 낸다.
 
 ## 유튜브 구독자를 짧은 창으로 보면 안 되는 이유
 API 가 1,000 단위로 반올림해 준다. 13만 채널은 하루에 0 아니면 +1,000 으로만 움직여서
@@ -547,104 +547,6 @@ def comment_effect(labeled: pd.DataFrame, metrics: pd.DataFrame,
     return by, stats
 
 
-def commerce_effect(cf: pd.DataFrame, tiers: pd.DataFrame, fin: pd.DataFrame,
-                    streams: pd.DataFrame) -> tuple:
-    """팬이 실제로 돈을 쓰는가, 얼마나, 그리고 그게 회사에 남는가.
-
-    스텔라이브 회사 재무는 비공개(DART 미등록)라 직접 잴 수 없다. 대신 세 겹의
-    간접 지표를 쓴다 — 팬이 자발적으로 모은 광고 펀딩(스텔라이브 특정), 동종업계
-    공식 굿즈 펀딩·구독 가격(지출 규모의 자), 동종업계 감사 재무(회사에 남는가).
-    """
-    stats: dict = {}
-    proj = pd.DataFrame()
-    if not cf.empty:
-        fan = cf[cf["org"].astype(str).str.contains("스텔라이브")].copy()
-        off = cf[~cf["org"].astype(str).str.contains("스텔라이브")].copy()
-        proj = fan[["project_name", "period_start", "raised_krw", "backers",
-                    "per_backer_krw", "achievement_pct"]].sort_values("period_start")
-        stats.update({
-            "fan_n": int(len(fan)), "fan_raised": int(fan["raised_krw"].sum()),
-            "fan_backers": int(fan["backers"].sum()),
-            "fan_backers_lo": int(fan["backers"].min()) if len(fan) else 0,
-            "fan_backers_hi": int(fan["backers"].max()) if len(fan) else 0,
-            "fan_raised_hi": int(fan["raised_krw"].max()) if len(fan) else 0,
-            "off_n": int(len(off)),
-            "fan_pb_lo": int(fan["per_backer_krw"].min()) if len(fan) else 0,
-            "fan_pb_hi": int(fan["per_backer_krw"].max()) if len(fan) else 0,
-            "fan_ach_lo": float(fan["achievement_pct"].min()) if len(fan) else 0,
-            "fan_ach_hi": float(fan["achievement_pct"].max()) if len(fan) else 0,
-            "off_pb_lo": int(off["per_backer_krw"].min()) if len(off) else 0,
-            "off_pb_hi": int(off["per_backer_krw"].max()) if len(off) else 0,
-            "off_raised_hi": int(off["raised_krw"].max()) if len(off) else 0,
-        })
-    if not tiers.empty:
-        stats["tier_n"] = int(len(tiers))
-        stats["tier_med"] = float(tiers["price_krw"].median())
-        stats["tier_p75"] = float(tiers["price_krw"].quantile(.75))
-    if not fin.empty:
-        last = fin.sort_values("bsns_year").groupby("corp_name").tail(1)
-        stats["fin"] = last[["corp_name", "bsns_year", "revenue",
-                             "operating_income", "operating_margin"]].to_dict("records")
-    # 매진 인증 — 방송 제목에 남는 유일한 판매 신호
-    if not streams.empty:
-        st = streams.copy(); st["date"] = vod_start(st).dt.date
-        so = st[st["title"].astype(str).str.contains("매진", na=False)]
-        stats["soldout"] = so[["date", "name_ko", "title"]].sort_values("date") \
-            .drop_duplicates(["date", "name_ko"]).to_dict("records")
-    return proj, stats
-
-
-# DART 에 있는 회사를 팬 돈이 흐르는 위치로 나눈다.
-PLATFORMS = {"NAVER", "SOOP"}          # 후원·구독 수수료를 받는 쪽 (치지직은 NAVER 소속)
-IP_COMPANIES = {"샌드박스네트워크", "패러블엔터테인먼트"}   # 크리에이터 IP 를 운영하는 쪽
-
-
-def dart_effect(metrics: pd.DataFrame, search: pd.DataFrame) -> tuple:
-    """팬덤이 만드는 돈이 어디에 쌓이는가 — 플랫폼과 IP 회사의 감사 재무를 나란히 놓는다.
-
-    스텔라이브 운영법인은 DART 에 없다(corp_search). 그래서 회사 자체는 못 재고,
-    같은 팬 지출이 흘러가는 양 끝단 — 플랫폼(수수료)과 IP 회사(굿즈·콘텐츠) — 를
-    동종업계로 본다.
-    """
-    if metrics.empty:
-        return pd.DataFrame(), {}
-    m = metrics.copy().sort_values(["corp_name", "bsns_year"])
-    rows = []
-    for name, g in m.groupby("corp_name"):
-        g = g.dropna(subset=["revenue", "operating_income"])
-        if g.empty:
-            continue
-        first, last = g.iloc[0], g.iloc[-1]
-        years = int(last["bsns_year"] - first["bsns_year"])
-        cagr = ((last["revenue"] / first["revenue"]) ** (1 / years) - 1) if years and first["revenue"] else None
-        # 최근 연도부터 거슬러 세는 연속 적자/흑자 햇수
-        streak, sign = 0, 1 if last["operating_income"] > 0 else -1
-        for oi in g["operating_income"][::-1]:
-            if (oi > 0) == (sign > 0):
-                streak += 1
-            else:
-                break
-        rows.append({
-            "corp_name": name,
-            "side": "플랫폼" if name in PLATFORMS else ("IP 회사" if name in IP_COMPANIES else "기타"),
-            "first_year": int(first["bsns_year"]), "last_year": int(last["bsns_year"]),
-            "n_years": int(len(g)),
-            "revenue_last_b": round(last["revenue"] / 1e8), "op_last_b": round(last["operating_income"] / 1e8),
-            "op_margin_last": float(last["operating_margin"]),
-            "op_margin_min": float(g["operating_margin"].min()),
-            "op_margin_max": float(g["operating_margin"].max()),
-            "revenue_x": round(last["revenue"] / first["revenue"], 2) if first["revenue"] else None,
-            "revenue_cagr": round(cagr, 4) if cagr is not None else None,
-            "streak": streak * sign,     # +n = n년 연속 흑자, -n = n년 연속 적자
-            "loss_years": int((g["operating_income"] < 0).sum()),
-        })
-    df = pd.DataFrame(rows)
-    stats = {"missing": []}
-    if not search.empty:
-        stats["missing"] = search.loc[search["matched"] == False, "query"].tolist()  # noqa: E712
-    return df, stats
-
-
 COVER_RE = r"cover|커버|歌ってみた|うたってみた"
 
 
@@ -703,85 +605,6 @@ def competitor_effect(hist: pd.DataFrame, videos: pd.DataFrame,
              "bottom": j.sort_values("growth").head(4)
                      .reset_index()[["name_ko", "group", "growth"]].to_dict("records")}
     return df, stats
-
-
-HOYO_RE = r"원신|스타레일|젠레스|젠존제|붕괴|Genshin|Star Rail|Zenless|HoYo"
-HOYO_MIN_STREAMS = 3      # 이보다 적으면 멤버별 배수를 내지 않는다
-
-
-def hoyo_effect(chars: pd.DataFrame, streams: pd.DataFrame) -> tuple:
-    """두 질문. (1) 게임사의 공식 푸시가 유저 언급으로 이어지는가.
-    (2) 스텔라이브 멤버가 호요버스 게임을 방송하면 평소보다 더 보나.
-
-    10은 원래 스텔라이브와 다른 도메인이다. 접점은 방송 카테고리뿐이라 그것만 잰다.
-    """
-    stats: dict = {}
-    # ── (1) 공식 푸시 vs 언급 ──
-    if not chars.empty:
-        m = chars[chars["matchable"] == True].copy()  # noqa: E712
-        stats["n_chars"] = int(len(m))
-        stats["mentioned_share"] = float((m["mention_count"] > 0).mean())
-        # 10 의 push_rank 는 게임 안에서만 매긴 순위다(2026-09-18). 게임을 섞어 상관을 내면
-        # 두 게임의 순위 눈금이 다른데 한 축에 올리는 꼴이라, 게임별로 내고 그 평균을 대표값으로 쓴다.
-        by_game = {}
-        for game, g in m.groupby("name_ko_game"):
-            by_game[str(game)] = {
-                "n": int(len(g)),
-                "corr_push": float(g["push_rank"].corr(g["mention_rate_per_10k"])),
-                "corr_recency": float(pd.Series(g["release_unix"]).corr(g["mention_rate_per_10k"])),
-            }
-        stats["by_game"] = by_game
-        _vals = [v["corr_push"] for v in by_game.values() if v["corr_push"] == v["corr_push"]]
-        _rec = [v["corr_recency"] for v in by_game.values() if v["corr_recency"] == v["corr_recency"]]
-        stats["corr_push"] = float(sum(_vals) / len(_vals)) if _vals else float("nan")
-        stats["corr_recency"] = float(sum(_rec) / len(_rec)) if _rec else float("nan")
-        r = m.groupby("rank")["mention_count"].agg(["size", "median", "mean"])
-        stats["rarity"] = {int(k): {"n": int(v["size"]), "med": float(v["median"]), "mean": float(v["mean"])}
-                           for k, v in r.iterrows()}
-        top = m.nlargest(8, "mention_count")
-        stats["top"] = [{"game": t["name_ko_game"], "name": t["name_ko"], "rank": int(t["rank"]),
-                         "release": str(t["release_date"])[:10], "mentions": int(t["mention_count"]),
-                         "push": int(t["push_rank"]) if t["push_rank"] == t["push_rank"] else None,
-                         "sent": float(t["sentiment_vs_baseline"]) if t["sentiment_vs_baseline"] == t["sentiment_vs_baseline"] else None}
-                        for _, t in top.iterrows()]
-        pushed = m.nsmallest(5, "push_rank")
-        stats["pushed"] = [{"name": t["name_ko"], "push": int(t["push_rank"]), "mentions": int(t["mention_count"]),
-                            "sent": float(t["sentiment_vs_baseline"]) if t["sentiment_vs_baseline"] == t["sentiment_vs_baseline"] else None}
-                           for _, t in pushed.iterrows()]
-        stats["top_median_push"] = float(top["push_rank"].median())
-        stats["pushed_median_mentions"] = float(pushed["mention_count"].median())
-        stats["top_median_mentions"] = float(top["mention_count"].median())
-
-    # ── (2) 스텔라이브 접점 ──
-    rows = []
-    if not streams.empty:
-        st = streams.copy(); st["date"] = vod_start(st).dt.date
-        is_h = (st["category"].astype(str).str.contains(HOYO_RE, case=False, na=False)
-                | st["title"].astype(str).str.contains(HOYO_RE, case=False, na=False))
-        st["is_hoyo"] = is_h
-        st["is_ad"] = st["title"].astype(str).str.contains(r"\[광고\]|광고", na=False)
-        stats["hoyo_streams"] = int(is_h.sum()); stats["all_streams"] = int(len(st))
-        for name, g in st.groupby("name_ko"):
-            hs = g[g["is_hoyo"]]
-            if len(hs) < HOYO_MIN_STREAMS:
-                continue
-            lo = hs["date"].min() - timedelta(days=BASELINE_DAYS)
-            hi = hs["date"].max() + timedelta(days=BASELINE_DAYS)
-            base = g[(~g["is_hoyo"]) & (g["date"] >= lo) & (g["date"] <= hi)]
-            if len(base) < 5:
-                continue
-            bm = base["read_count"].median()
-            ad, org = hs[hs["is_ad"]], hs[~hs["is_ad"]]
-            rows.append({
-                "name_ko": name, "n_hoyo": int(len(hs)),
-                "games": "·".join(sorted({c for c in hs["category"].astype(str) if c != "talk"})) or "talk",
-                "hoyo_median": int(hs["read_count"].median()), "base_median": int(bm),
-                "multiple": round(hs["read_count"].median() / bm, 2),
-                "n_ad": int(len(ad)),
-                "ad_multiple": round(ad["read_count"].median() / bm, 2) if len(ad) else None,
-                "organic_multiple": round(org["read_count"].median() / bm, 2) if len(org) else None,
-            })
-    return pd.DataFrame(rows), stats
 
 
 def _growth(hist: pd.DataFrame, col: str) -> tuple:
@@ -1093,22 +916,10 @@ def main() -> int:
         _read(ROOT / "07_market_analysis" / "data" / "market_facts.csv"),
         _read(ROOT / "07_market_analysis" / "data" / "stellive_milestones.csv"),
         _read(arch), m01, "2026-08-03")
-    hoyo, hoyo_stats = hoyo_effect(
-        _read(ROOT / "10_hoyoverse" / "data" / "character_metrics.csv"),
-        config.drop_founder(streams))
     comp, comp_stats = competitor_effect(
         _read(ROOT / "06_competitor_comparison" / "data" / "history.csv"),
         _read(ROOT / "06_competitor_comparison" / "data" / "videos.csv"),
         _read(ROOT / "06_competitor_comparison" / "data" / "member_metrics.csv"))
-    dart, dart_stats = dart_effect(
-        _read(ROOT / "09_dart_financials" / "data" / "company_metrics.csv"),
-        _read(ROOT / "09_dart_financials" / "data" / "corp_search.csv"))
-    com, com_stats = commerce_effect(
-        _read(ROOT / "11_fan_commerce" / "data" / "crowdfunding_projects.csv"),
-        _read(ROOT / "11_fan_commerce" / "data" / "fanding_tiers.csv"),
-        _read(ROOT / "11_fan_commerce" / "data" / "company_financials.csv"),
-        config.drop_founder(streams))
-
     # 리포트·차트에서는 창립자를 뺀다(수집·감지는 전 로스터 그대로).
     vod, foll, subs, ccu, arc = (config.drop_founder(x)
                                  for x in (vod, foll, subs, ccu, arc))
@@ -1119,8 +930,7 @@ def main() -> int:
                      ("event_ccu", ccu), ("concert_arc", arc),
                      ("cover_effect", cov_eff), ("original_effect", orig_eff),
                      ("kirinuki_effect", kiri), ("comment_effect", cmt),
-                     ("commerce_effect", com), ("dart_effect", dart),
-                     ("competitor_effect", comp), ("hoyo_effect", hoyo),
+                     ("competitor_effect", comp),
                      ("channel_effect", chan), ("stream_pattern_effect", spat)):
         df.to_csv(DATA / f"{name}.csv", index=False, encoding="utf-8-sig")
 
@@ -1161,8 +971,7 @@ def main() -> int:
     }, ensure_ascii=False, indent=2), encoding="utf-8")
 
     write_report(events, vod, impact, ccu, arc, cov_eff, covers, orig_eff,
-                 drivers, kiri, kiri_stats, cmt, cmt_stats, com, com_stats,
-                 dart, dart_stats, comp, comp_stats, hoyo, hoyo_stats,
+                 drivers, kiri, kiri_stats, cmt, cmt_stats, comp, comp_stats,
                  chan, chan_stats, spat, spat_stats, mkt_stats)
     print(f"  이벤트 {len(events)}건 · 소급 측정 {vod['event_id'].nunique() if not vod.empty else 0}건 "
           f"· 전후 비교 {measurable}건 · CCU {ccu['event_id'].nunique() if not ccu.empty else 0}건"
@@ -1172,9 +981,8 @@ def main() -> int:
 
 def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
                  covers=None, orig_eff=None, drivers=None, kiri=None,
-                 kiri_stats=None, cmt=None, cmt_stats=None, com=None,
-                 com_stats=None, dart=None, dart_stats=None, comp=None,
-                 comp_stats=None, hoyo=None, hoyo_stats=None, chan=None,
+                 kiri_stats=None, cmt=None, cmt_stats=None, comp=None,
+                 comp_stats=None, chan=None,
                  chan_stats=None, spat=None, spat_stats=None, mkt_stats=None) -> None:
     today = pd.Timestamp.now().strftime("%Y-%m-%d")
     span = f"{events['date'].min()} ~ {events['date'].max()}"
@@ -1313,54 +1121,6 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
     if mk.get("milestones"):
         mk_ms_tbl = ("**스텔라이브 연표** — " + " · ".join(f"{m['date']} {m['event']}" for m in mk["milestones"]))
 
-    # ── 호요버스 ──
-    hs_ = hoyo_stats or {}
-    hy_n = hs_.get("n_chars", 0); hy_mentioned = hs_.get("mentioned_share", 0.0)
-    hy_corr_push = hs_.get("corr_push", 0.0); hy_corr_recency = hs_.get("corr_recency", 0.0)
-    hy_by_game = " · ".join(f"{g} {v['corr_push']:+.2f}" for g, v in (hs_.get("by_game") or {}).items())
-    hy_top_push = hs_.get("top_median_push", 0.0)
-    hy_pushed_mentions = hs_.get("pushed_median_mentions", 0.0)
-    hy_top_mentions = hs_.get("top_median_mentions", 0.0)
-    hy_streams = hs_.get("hoyo_streams", 0); hy_all = hs_.get("all_streams", 0)
-    hy_share = hy_streams / hy_all if hy_all else 0.0
-    hy_rarity_tbl = "\n".join(
-        f"| {k}성 | {v['n']}명 | {v['med']:.0f} | {v['mean']:.1f} |"
-        for k, v in sorted((hs_.get("rarity") or {}).items(), reverse=True)) or "| — | | | |"
-    hy_top_tbl = ""
-    if hs_.get("top"):
-        hy_top_tbl = ("| 게임 | 캐릭터 | 출시 | 언급 | 푸시 순위 | 감성(게임 평균 대비) |\n|---|---|---|---|---|---|\n"
-                      + "\n".join(
-                          f"| {t['game']} | {t['name']} | {t['release']} | **{t['mentions']}** | "
-                          f"{t['push'] if t['push'] is not None else '—'}위 | "
-                          f"{(f'{t[chr(115)+chr(101)+chr(110)+chr(116)]:+.2f}' if t['sent'] is not None else '—')} |"
-                          for t in hs_["top"]))
-    hy_member_tbl = hy_member_line = ""
-    if hoyo is not None and not hoyo.empty:
-        h = hoyo.sort_values("multiple", ascending=False)
-        hy_member_tbl = ("| 멤버 | 게임 | 방송 | 호요 방송 중앙 | 평소 중앙 | 배수 | [광고] | 광고 배수 | 비광고 배수 |\n"
-                         "|---|---|---|---|---|---|---|---|---|\n" + "\n".join(
-                             f"| {r.name_ko} | {r.games} | {r.n_hoyo}회 | {r.hoyo_median:,} | {r.base_median:,} | "
-                             f"**{r.multiple:.2f}배** | {r.n_ad}회 | "
-                             f"{(f'{r.ad_multiple:.2f}배' if r.ad_multiple == r.ad_multiple and r.ad_multiple is not None else '—')} | "
-                             f"{(f'{r.organic_multiple:.2f}배' if r.organic_multiple == r.organic_multiple and r.organic_multiple is not None else '—')} |"
-                             for r in h.itertuples()))
-        best = h.iloc[0]
-        others = h.iloc[1:]
-        hy_member_line = (
-            f"방송 {HOYO_MIN_STREAMS}회 이상인 멤버 {len(h)}명 중 **{best['name_ko']}만 평소보다 확실히 더 본다**"
-            f"({best['multiple']:.2f}배, {best['games']} {best['n_hoyo']}회). 나머지는 "
-            + ("·".join(f"{r.name_ko} {r.multiple:.2f}배" for r in others.itertuples()) if len(others) else "없음")
-            + "로 평소와 같거나 낮다. 게임 자체가 시청자를 끌지는 않고, 그 멤버의 주력 콘텐츠일 때만 세다.")
-        # [광고] 방송이 같은 게임의 비광고 방송보다 덜 보이는지 — 둘 다 있는 멤버만
-        both = h[h["ad_multiple"].notna() & h["organic_multiple"].notna() & (h["n_ad"] >= 2)]
-        if len(both):
-            lower = both[both["ad_multiple"] < both["organic_multiple"]]
-            hy_member_line += (
-                f" 또 하나 — **[광고] 방송은 같은 게임의 비광고 방송보다 덜 본다.** 광고 2회 이상인 "
-                f"{len(both)}명 중 {len(lower)}명이 그렇고("
-                + "·".join(f"{r.name_ko} {r.ad_multiple:.2f}배 vs {r.organic_multiple:.2f}배" for r in lower.itertuples())
-                + "), 광고 방송은 게임을 '하는' 게 아니라 '보여주는' 방송이라 시청자가 덜 붙는 것으로 읽힌다.")
-
     # ── 경쟁사 비교 ──
     cs2 = comp_stats or {}
     cp_from = cs2.get("from", "—"); cp_to = cs2.get("to", "—"); cp_days = cs2.get("days", 0)
@@ -1419,85 +1179,6 @@ def write_report(events, vod, impact, ccu, arc=None, cov_eff=None,
         tg = sorted({r["group"] for r in cs2.get("top", [])}); bg = sorted({r["group"] for r in cs2.get("bottom", [])})
         cp_top_groups = "전부 " + tg[0] if len(tg) == 1 else "·".join(tg)
         cp_bot_groups = "전부 " + bg[0] if len(bg) == 1 else "·".join(bg)
-
-    # ── DART 재무 ──
-    dart_missing = "스텔라이브"
-    dart_plat_tbl = dart_ip_tbl = ""
-    dart_plat_margin = dart_ip_streak = dart_soop_x = dart_naver_rev = "—"
-    dart_plat_streak = 0; dart_soop_margin = dart_sand_line = dart_par_line = ""
-    if dart is not None and not dart.empty:
-        ds = dart_stats or {}
-        if ds.get("missing"):
-            dart_missing = "·".join(ds["missing"])
-        def _tbl(d):
-            return ("| 회사 | 기간 | 최근 매출 | 최근 영업이익 | 영업이익률 | 이익률 범위 | 매출 성장 | 연속 |\n"
-                    "|---|---|---|---|---|---|---|---|\n" + "\n".join(
-                        f"| {r.corp_name} | {r.first_year}~{r.last_year} | {r.revenue_last_b:,.0f}억 | "
-                        f"**{r.op_last_b:+,.0f}억** | {r.op_margin_last:+.1%} | "
-                        f"{r.op_margin_min:+.0%}~{r.op_margin_max:+.0%} | "
-                        f"{(f'{r.revenue_x:.1f}배' if r.revenue_x else '—')} | "
-                        f"{('흑자 ' if r.streak > 0 else '적자 ')}{abs(r.streak)}년 |"
-                        for r in d.itertuples()))
-        plat = dart[dart["side"] == "플랫폼"]; ip = dart[dart["side"] == "IP 회사"]
-        dart_plat_tbl, dart_ip_tbl = _tbl(plat), _tbl(ip)
-        if len(plat):
-            dart_plat_margin = f"{plat['op_margin_last'].min():.0%}~{plat['op_margin_last'].max():.0%}"
-            dart_plat_streak = int(plat["streak"].min())
-        if len(ip):
-            worst = ip.loc[ip["streak"].idxmin()]
-            dart_ip_streak = f"{worst['corp_name']} {abs(int(worst['streak']))}년 연속 적자"
-        soop = dart[dart["corp_name"] == "SOOP"]
-        if len(soop) and soop["revenue_x"].iloc[0]:
-            dart_soop_x = f"{soop['revenue_x'].iloc[0]:.1f}"
-            dart_soop_margin = f"{soop['op_margin_min'].iloc[0]:.0%}~{soop['op_margin_max'].iloc[0]:.0%}"
-        sand = dart[dart["corp_name"] == "샌드박스네트워크"]
-        if len(sand):
-            dart_sand_line = f"샌드박스는 {abs(int(sand['streak'].iloc[0]))}년 연속 적자다"
-        par = dart[dart["corp_name"] == "패러블엔터테인먼트"]
-        if len(par):
-            dart_par_line = f"패러블은 공시가 {int(par['n_years'].iloc[0])}년치뿐이라 추세를 말할 수 없다"
-        nav = dart[dart["corp_name"] == "NAVER"]
-        if len(nav):
-            dart_naver_rev = f"{nav['revenue_last_b'].iloc[0]:,.0f}"
-
-    # ── 팬 커머스 ──
-    cst = com_stats or {}
-    com_tbl = com_soldout = com_fin_tbl = ""
-    com_fan_n = com_fan_raised = com_fan_backers = com_fan_pb_lo = com_fan_pb_hi = 0
-    com_fan_ach_lo = com_fan_ach_hi = com_tier_med = com_tier_p75 = 0.0
-    com_off_pb_lo = com_off_pb_hi = com_off_raised_hi = com_tier_n = com_off_n = 0
-    com_fan_bk_lo = com_fan_bk_hi = com_fan_raised_hi = 0; com_gap_lo = com_gap_hi = 0.0
-    if cst:
-        com_fan_n, com_fan_raised = cst.get("fan_n", 0), cst.get("fan_raised", 0)
-        com_fan_backers = cst.get("fan_backers", 0)
-        com_fan_pb_lo, com_fan_pb_hi = cst.get("fan_pb_lo", 0), cst.get("fan_pb_hi", 0)
-        com_fan_ach_lo, com_fan_ach_hi = cst.get("fan_ach_lo", 0), cst.get("fan_ach_hi", 0)
-        com_off_pb_lo, com_off_pb_hi = cst.get("off_pb_lo", 0), cst.get("off_pb_hi", 0)
-        com_off_raised_hi = cst.get("off_raised_hi", 0)
-        com_tier_med, com_tier_p75 = cst.get("tier_med", 0), cst.get("tier_p75", 0)
-        com_tier_n = cst.get("tier_n", 0); com_off_n = cst.get("off_n", 0)
-        com_fan_bk_lo, com_fan_bk_hi = cst.get("fan_backers_lo", 0), cst.get("fan_backers_hi", 0)
-        com_fan_raised_hi = cst.get("fan_raised_hi", 0)
-        # 정기 구독(월) 중앙값 대비 한정 굿즈 1인당 — 정기 지출과 이벤트성 지출의 간격
-        com_gap_lo = com_off_pb_lo / com_tier_med if com_tier_med else 0.0
-        com_gap_hi = com_off_pb_hi / com_tier_med if com_tier_med else 0.0
-        if com is not None and not com.empty:
-            com_tbl = ("| 프로젝트 | 시작 | 모금액 | 후원자 | 1인당 | 달성률 |\n|---|---|---|---|---|---|\n"
-                       + "\n".join(
-                           f"| {str(r.project_name)[:26]} | {r.period_start} | "
-                           f"{int(r.raised_krw):,}원 | {int(r.backers):,}명 | "
-                           f"{int(r.per_backer_krw):,}원 | **{r.achievement_pct:.0f}%** |"
-                           for r in com.itertuples()))
-        so = cst.get("soldout") or []
-        com_soldout = ("\n".join(f"- {r['date']} {r['name_ko']} — 「{str(r['title'])[:40]}」"
-                                  for r in so)
-                       or "- 관측 구간에 매진 인증 방송 없음")
-        fin = cst.get("fin") or []
-        com_fin_tbl = ("| 회사 | 연도 | 매출 | 영업이익 | 영업이익률 |\n|---|---|---|---|---|\n"
-                       + "\n".join(
-                           f"| {f['corp_name']} | FY{int(f['bsns_year'])} | "
-                           f"{f['revenue']/1e8:,.0f}억 | **{f['operating_income']/1e8:+,.0f}억** | "
-                           f"{f['operating_margin']:+.1%} |" for f in fin))
 
     # ── 댓글 여론 ──
     cs = cmt_stats or {}
@@ -1779,19 +1460,9 @@ append-only 로 남긴다.
 - **콘서트는 단독이냐 합동이냐로 갈린다.** {solo_name}의 단독 콘서트 후기 방송은 평소의
   {solo_mult:.1f}배{solo_yt_txt}였지만, 그룹 페스티벌 참여 멤버 {grp_n}명은
   {grp_lo:.1f}~{grp_hi:.1f}배였다. 합동은 관심이 여러 명에게 나뉜다.
-- **게임사의 공식 푸시는 유저 언급을 만들지 못한다**(상관 {hy_corr_push:+.2f}). 희귀도(5성)는
-  효과가 있지만 푸시 순서는 없고, 인기는 구작 5성에 쌓여 있다. 스텔라이브 접점은 방송의
-  {hy_share:.1%}뿐이며, 게임이 시청자를 끄는 게 아니라 그 멤버의 주력일 때만 평소를 넘는다.
 - **같은 {cp_days}일, {cp_headline}.** 구독자 증감은 스텔라이브 {cp_stel_gain:+,}명 ·
   홀로라이브 {cp_holo_gain:+,}명(스텔라이브의 {cp_scale}배 규모)이다. 커버가 내는 배수는
   {cp_cover_line}. {cp_mix_line} {cp_reach_line}
-- **팬덤의 돈은 플랫폼에 쌓이고 IP 회사엔 남지 않는다.** 스텔라이브는 DART 에 없어
-  못 재지만, 같은 돈이 흐르는 양 끝단은 보인다 — 플랫폼(NAVER·SOOP)은 {dart_plat_streak}년 연속 흑자에
-  이익률 {dart_plat_margin}, IP 회사는 {dart_ip_streak}.
-- **팬은 돈을 쓴다, 자발적으로.** 팬 제작 광고 펀딩 {com_fan_n}건이 목표의
-  {com_fan_ach_lo:.0f}~{com_fan_ach_hi:.0f}%를 모았다(1인당 {com_fan_pb_lo:,}~{com_fan_pb_hi:,}원).
-  지출은 정기 구독 만원 미만 → 팬 광고 수만원 → 공식 굿즈 수십만원으로 목적에 따라
-  자릿수가 바뀐다. 그런데 동종업계 감사 재무는 연속 영업적자다 — 회사엔 남지 않는다.
 - **댓글 여론은 긍정/부정으로 가를 수 없다.** 긍정 {c_pos:.0%}·부정 {c_neg:.1%}이고 부정
   {c_nneg}건 중 {c_neg_off}건은 영상 소재(야구팀) 얘기라 멤버를 향한 부정은 많아야 {c_neg_on}건이다.
   신호는 주제에 있다 —
@@ -1811,7 +1482,7 @@ append-only 로 남긴다.
 - **수익은 어떤 방법으로도 잴 수 없다.** 치지직 후원·구독 수익도 유튜브 광고 수익도
   공개되지 않는다. 대리 지표로 노출량(동시시청자 피크·조회수)만 낸다.
 
-## 한눈에 — 15개 렌즈 종합
+## 한눈에 — 12개 렌즈 종합
 
 | 렌즈 | 무엇을 움직이나 | 얼마나 | 기획 가능 | 한계 |
 |---|---|---|---|---|
@@ -1823,10 +1494,7 @@ append-only 로 남긴다.
 | 키리누키 | 공식 채널 밖 도달 | 클립당 본인 영상의 {kiri_ratio:.0%} | ❌ 순간이 만든다 | 검색 표본, 비율은 상한 |
 | 동시시청자 | — | 평소 요인은 최대 {usual_ratio:.1f}배, 이벤트는 최대 {top_ccu_hi:.0f}배 | — | 2026-08-12 이후만 |
 | 댓글 여론 | — | 부정 {c_neg:.1%}, 신호는 주제(사람 > 콘텐츠) | — | 이벤트별 비교 불가 |
-| 팬 커머스 | 팬 지출 | 구독 만원 미만 → 팬 광고 수만원 → 굿즈 수십만원 | — | 회사 매출 비공개 |
-| DART 재무 | 돈이 남는 곳 | 플랫폼 이익률 {dart_plat_margin} vs IP 회사 적자 | — | 스텔라이브 DART 미등록 |
 | 경쟁사 비교 | 같은 기간 성장 | 스텔라이브 {cp_stel_gain:+,} vs 홀로 {cp_holo_gain:+,} ({cp_scale}배 규모) | — | {cp_days}일 · 1,000 반올림 |
-| 호요버스 | 공식 푸시 → 언급 | 상관 {hy_corr_push:+.2f} (없음) | — | 언급은 인기가 아니라 화제성 |
 | 채널 성과 | 유튜브 조회수·성장 | 업로드 빈도 → 조회수 {ch_up_v:+.2f} · 규모 → 성장 {ch_sub_g:+.2f} | ✅ | n={ch_n} 상관 |
 | 방송 패턴 | 치지직 VOD·성장 | 주당 시간 → VOD {sp_hours_vod:+.2f}, 성장은 규모에 딸림 | ✅ | n={sp_n} 상관 |
 | 시장 | 배경 속도 | 시장 연 {mk_cagr_lo:.0%}~{mk_cagr_hi:.0%} vs 스텔라이브 {mk_days}일 {mk_growth:+.1%} | — | {mk_days}일 연환산은 거칠다 |
@@ -1965,43 +1633,6 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 
 {mk_ms_tbl}
 
-## 호요버스 캐릭터 인기도 효과 — 공식 푸시는 효과가 없고, 스텔라이브 접점은 주력 멤버뿐이다
-
-10은 원래 스텔라이브와 다른 도메인(가챠 게임)이다. 두 가지만 묻는다 — 게임사가 미는
-캐릭터가 실제로 이야기되는가, 그리고 스텔라이브 멤버가 이 게임을 방송하면 더 보는가.
-
-### ① 공식 푸시 → 유저 언급: 상관 {hy_corr_push:+.2f}
-
-매칭 가능한 캐릭터 {hy_n}명 중 {hy_mentioned:.0%}만 리뷰에 한 번이라도 언급된다.
-공식 푸시 순위(5성·최신순)와 언급률의 상관은 게임별로 **{hy_by_game}** (평균 {hy_corr_push:+.2f}) — 없다.
-출시 최신순과의 상관도 평균 {hy_corr_recency:+.2f}로 약하다. 순위는 게임 안에서만 매긴 값이라
-상관도 게임별로 내고, 두 게임을 한 축에 섞지 않는다.
-
-| 구분 | 캐릭터 수 | 언급 중앙값 | 언급 평균 |
-|---|---|---|---|
-{hy_rarity_tbl}
-
-**희귀도는 효과가 있고, 푸시 순서는 없다.** 5성은 4성보다 확실히 더 이야기되지만,
-5성 안에서 "얼마나 최근에 밀었나"는 언급을 만들지 못한다.
-
-{hy_top_tbl}
-
-언급 상위 8명의 푸시 순위 중앙값은 **{hy_top_push:.0f}위**(낮을수록 강한 푸시)이고 출시는
-대부분 1~2년 전이다. 반대로 지금 가장 세게 미는 5명의 언급 중앙값은 **{hy_pushed_mentions:.0f}건**
-(상위 8명은 {hy_top_mentions:.0f}건)이며 감성은 게임 평균보다 낮은 쪽이 많다. **인기는 구작
-5성에 쌓여 있고, 신작 푸시는 언급을 만들지 못한 채 불만만 만든다.**
-
-### ② 스텔라이브 접점 — 방송 {hy_streams}건 / {hy_all}건 ({hy_share:.1%})
-
-{hy_member_tbl}
-
-{hy_member_line}
-
-⚠ **언급량은 인기가 아니라 화제성이다.** 리뷰는 불만을 쓰러 오는 곳이라 언급이 많은
-캐릭터가 사랑받는 캐릭터가 아닐 수 있다(감성 열이 그걸 보여준다). Google Trends 는
-매 호출 429 로 실패해 설계에서 뺐다(10 참고). 멤버별 배수는 {HOYO_MIN_STREAMS}회 미만이면
-내지 않았고, [광고] 표시 방송은 따로 셌다.
-
 ## 경쟁사 비교 효과 — 같은 {cp_days}일, {cp_headline}
 
 경쟁사는 치지직 데이터가 없어 합방·신의상은 볼 수 없다. 볼 수 있는 건 유튜브다 —
@@ -2038,82 +1669,6 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 스텔라이브 {cp_stel_gain:+,}명 · 홀로라이브 {cp_holo_gain:+,}명(**스텔라이브의 {cp_scale}배 규모**)이
 정확한 진술이다. 창은 세 그룹의 지금 로스터 전원이 있는 첫날부터 잰다 — 멤버가 늘어난
 그룹을 수집 첫날부터 재면 새 멤버의 구독자 전부가 성장으로 잡힌다.
-
-## DART 재무 효과 — 팬덤의 돈은 플랫폼에 쌓이고 IP 회사엔 남지 않는다
-
-**스텔라이브는 잴 수 없다.** {dart_missing}이(가) DART 기업코드 마스터에 없다 — 비상장·
-소규모라 외부감사 대상이 아니거나 국내 법인이 아닐 수 있다. 그래서 회사 자체 대신,
-같은 팬 지출이 흘러가는 **양 끝단**을 감사 재무로 본다: 후원·구독 수수료를 받는
-**플랫폼**과 굿즈·콘텐츠를 파는 **IP 회사**.
-
-### 플랫폼 — {dart_plat_streak}년 연속 흑자, 이익률 {dart_plat_margin}
-
-{dart_plat_tbl}
-
-### IP 회사 — 적자가 구조다
-
-{dart_ip_tbl}
-
-### 같은 돈의 두 얼굴
-
-앞 절(팬 커머스)이 보여준 팬 지출은 이 두 표 사이 어딘가로 흐른다. 치지직 후원·구독의
-수수료는 NAVER 로, 굿즈·앨범·콘서트는 IP 회사로. 그리고 **플랫폼은 {dart_plat_margin}의
-영업이익률로 매년 남기고, IP 회사는 {dart_ip_streak}이다.** SOOP 은 매출이
-{dart_soop_x}배로 커지는 동안 이익률 {dart_soop_margin}를 지켰고, {dart_sand_line}.
-
-이건 스텔라이브에 대한 진술이 아니라 **스텔라이브가 놓인 구조**에 대한 진술이다. 같은
-구조 안에서 스텔라이브만 다르다고 볼 근거는 (비공개라) 없고, 다르지 않다고 볼 근거도 없다.
-
-⚠ **치지직의 기여는 NAVER 재무에서 분리되지 않는다.** NAVER 매출 {dart_naver_rev}억 중
-치지직 몫은 공시되지 않는다. 스트리밍 전업인 SOOP 이 플랫폼 경제의 더 나은 대리 지표다.
-⚠ 샌드박스의 2023년 매출 급감은 사업 구조조정이지 팬덤 축소가 아니고, {dart_par_line}.
-
-## 팬 커머스 효과 — 팬은 돈을 쓴다, 자발적으로, 그런데 회사엔 남지 않는다
-
-스텔라이브 회사 재무는 **비공개**(DART 미등록)라 매출·굿즈 판매를 직접 잴 수 없다.
-대신 세 겹의 간접 지표를 쓴다.
-
-### ① 팬이 자기 돈으로 광고를 낸다 — 스텔라이브에 특정된 유일한 커머스 데이터
-
-{com_tbl}
-
-이 {com_fan_n}건은 **회사가 판 게 아니다.** 팬들이 텀블벅에서 스스로 돈을 모아 멤버 생일·
-기념일 광고를 낸 것이다. 합계 **{com_fan_raised:,}원 · {com_fan_backers:,}명**, 1인당
-{com_fan_pb_lo:,}~{com_fan_pb_hi:,}원, 목표 대비 **{com_fan_ach_lo:.0f}~{com_fan_ach_hi:.0f}%** 달성.
-굿즈처럼 손에 남는 것도 없이 오직 "내 멤버를 알리는 데" {com_fan_pb_lo/1e4:.0f}~{com_fan_pb_hi/1e4:.0f}만원을
-내는 사람이 한 건당 {com_fan_bk_lo:,}~{com_fan_bk_hi:,}명이다. 이건 매출이 아니라 **팬덤 결속력의 직접 측정치**다.
-
-### ② 지출은 목적에 따라 자릿수가 달라진다
-
-| 지출 유형 | 1인당 | 출처 |
-|---|---|---|
-| 정기 구독 (팬딩, 월) | 중앙값 **{com_tier_med:,.0f}원** · 상위 25% {com_tier_p75:,.0f}원 | 버튜버 크리에이터 {com_tier_n}개 티어 |
-| 팬 제작 광고 펀딩 | **{com_fan_pb_lo:,}~{com_fan_pb_hi:,}원** | 스텔라이브 {com_fan_n}건 |
-| 공식 굿즈 펀딩 | **{com_off_pb_lo:,}~{com_off_pb_hi:,}원** | 이세계아이돌 {com_off_n}건 (최대 {com_off_raised_hi:,}원) |
-
-같은 팬덤 안에서 정기 구독, 자발적 광고, 한정 굿즈로 갈수록 1인당 지출의 자릿수가 바뀐다.
-**정기 구독(월 중앙값) 대비 한정 굿즈 1인당은 {com_gap_lo:.0f}~{com_gap_hi:.0f}배**다. 팬 커머스는
-"매달 얼마"가 아니라 "이벤트에 얼마"로 움직인다 — 앞 절들이 보여준 이벤트 중심
-구조와 같은 모양이다.
-
-⚠ 이세계아이돌 펀딩은 공식, 스텔라이브 {com_fan_n}건은 비공식 팬 제작이라 **규모를 직접 비교하면
-안 된다.** {com_off_raised_hi/1e8:,.0f}억 대 {com_fan_raised_hi/1e4:,.0f}만원의 차이는 팬덤 크기가 아니라
-공식/비공식의 차이다.
-
-### ③ 매진은 확인되지만 금액은 알 수 없다
-
-{com_soldout}
-
-티켓·굿즈 판매액은 어디에도 공개되지 않는다. 방송 제목에 남는 "매진"이 판매 신호의
-전부다.
-
-### ④ 그런데 회사에는 남지 않는다
-
-{com_fin_tbl}
-
-같은 IP 구조로 운영되는 동종업계의 감사받은 재무다. 팬이 이만큼 쓰는데도 영업이익은
-연속 적자다. **팬 지출과 회사 수익성 사이에 구조적 간극**이 있고, 스텔라이브가 다르다고
-말할 근거는 (비공개라) 없다.
 
 ## 댓글 여론 효과 — 긍정/부정은 변별력이 없고, 신호는 '무엇에 반응하나'에 있다
 
@@ -2231,8 +1786,8 @@ MAU {mk_mau:,.0f}명 기준으로 관측 최고 피크({mk_peak_who}, {mk_peak:,
 - `data/events_manual.csv` — 손으로 등록하는 이벤트 (콘서트·오리지널곡·오프라인)
 - `data/event_vod_multiple.csv` · `event_impact.csv` · `event_ccu.csv` ·
   `concert_arc.csv` · `cover_effect.csv` · `original_effect.csv` · `kirinuki_effect.csv` ·
-  `comment_effect.csv` · `commerce_effect.csv` · `dart_effect.csv` · `competitor_effect.csv` ·
-  `hoyo_effect.csv` · `channel_effect.csv` · `stream_pattern_effect.csv`
+  `comment_effect.csv` · `competitor_effect.csv` ·
+  `channel_effect.csv` · `stream_pattern_effect.csv`
 - `charts/` · `sql/events.db` · `site/index.html`
 """, encoding="utf-8")
 
