@@ -24,7 +24,6 @@ npm run lint
 |---|---|
 | `/` | 허브 — 핵심 발견 카드, 프로젝트 카드, 갱신 시각 |
 | `/projects/01-channel` · `02-cover` · `03-stream` · `04-kirinuki` · `05-sentiment` · `06-competitor` · `08-live` | 멤버 단위 프로젝트 — 전역 필터(멤버·유닛·기간)와 멤버 상세 패널이 걸림 |
-| `/projects/09-dart` · `10-hoyoverse` · `11-commerce` | 회사·게임·커머스 단위 프로젝트 — 멤버 필터 없음 |
 | `/methodology` | 수집 방법과 실제로 만난 데이터 함정 |
 
 07 시장 분석은 외부 리서치 기반이라 앱에 넣지 않고 기존 정적 페이지로 링크만 겁니다. 12 이벤트

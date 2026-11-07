@@ -1,18 +1,15 @@
 # 리포트 PDF
 
-12개 프로젝트를 **두 권**(스텔라이브 팬덤 / 게임 캐릭터 인기도)으로 묶은 종합 리포트입니다. 소재가 다르면
-문서를 나눕니다 — 한 권에 섞으면 읽는 사람이 중간에 맥락을 갈아타야 합니다. 각 권은 전체판과 요약판이 있습니다.
+9개 프로젝트를 묶은 종합 리포트입니다(전체판·요약판). ⚠ 지금 PDF 는 2026-10-21 기준이라 삭제한 09·10·11 내용이 들어 있습니다 — `build_unified.py` 로 다시 만들 때까지 옛 자료입니다.
 
 ## 바로 보기
 
 | 파일 | 내용 | 이런 분께 |
 |---|---|---|
-| [`StelLive-요약.pdf`](StelLive-요약.pdf) | 스텔라이브 11개 프로젝트(01~09·11·12) — 수집 데이터에서 계산된 숫자·표·차트만 | 결론 서술 없이 숫자만 보고 싶을 때 |
-| [`StelLive-리포트.pdf`](StelLive-리포트.pdf) | 같은 11개 — 결론 서술·상세 분석·데이터 함정 포함 | 무엇을 발견했고 어떻게 검증했는지 읽을 때 |
-| [`게임-요약.pdf`](게임-요약.pdf) | 다섯 게임(호요버스 4 + 블루 아카이브) 캐릭터 인기도 — 같은 규칙의 요약판 | |
-| [`게임-리포트.pdf`](게임-리포트.pdf) | 게임 전체판 | |
+| [`StelLive-요약.pdf`](StelLive-요약.pdf) | 스텔라이브 프로젝트 — 수집 데이터에서 계산된 숫자·표·차트만 | 결론 서술 없이 숫자만 보고 싶을 때 |
+| [`StelLive-리포트.pdf`](StelLive-리포트.pdf) | 같은 프로젝트 — 결론 서술·상세 분석·데이터 함정 포함 | 무엇을 발견했고 어떻게 검증했는지 읽을 때 |
 
-요약판에서 뺀 것은 결론 문단과 상세 해석뿐입니다. 출처가 붙은 공개 자료 수치(07 시장 규모, 09 DART 재무)는
+요약판에서 뺀 것은 결론 문단과 상세 해석뿐입니다. 출처가 붙은 공개 자료 수치(07 시장 규모)는
 그대로 둡니다. 측정하지 못한 항목은 "측정 불가"로 남기고 추정치로 채우지 않습니다.
 
 ## 규격
@@ -29,7 +26,7 @@
 ```bash
 python youtube_analyze_all/scripts/build_unified.py            # 전체판 HTML → 결과물/_build/
 python youtube_analyze_all/scripts/build_unified.py --digest   # 요약판 HTML
-for k in StelLive-리포트 StelLive-요약 게임-리포트 게임-요약; do
+for k in StelLive-리포트 StelLive-요약; do
   chromium --headless=new --no-pdf-header-footer --virtual-time-budget=8000 \
     --print-to-pdf="결과물/리포트/$k.pdf" "file://$PWD/결과물/_build/$k-print.html"
 done

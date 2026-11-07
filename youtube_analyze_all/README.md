@@ -15,9 +15,6 @@
 | 06 | [`06_competitor_comparison/`](06_competitor_comparison/) | 경쟁사 비교 — 데뷔 코호트 매칭 | daily |
 | 07 | [`07_market_analysis/`](07_market_analysis/) | 버추얼 크리에이터 시장 (외부 리서치, 재분석만) | daily |
 | 08 | [`08_live_viewership/`](08_live_viewership/) | 동시시청자 시계열 — 소급 수집 불가 | live(10분) |
-| 09 | [`09_dart_financials/`](09_dart_financials/) | DART 재무 (플랫폼 vs IP 회사) | monthly |
-| 10 | [`10_hoyoverse/`](10_hoyoverse/) | 게임 캐릭터 인기도 (호요버스 4 + 블루 아카이브) | weekly |
-| 11 | [`11_fan_commerce/`](11_fan_commerce/) | 팬 커머스 (크라우드펀딩·구독 가격·매진) | weekly |
 | 12 | [`12_event_impact/`](12_event_impact/) | 이벤트 임팩트 — 01·02·03·08 데이터 재사용 | daily |
 
 프로젝트 폴더는 같은 모양입니다.
@@ -37,7 +34,6 @@ NN_project/
 ```bash
 pip install -r requirements.txt
 setx YOUTUBE_API_KEY "..."      # Windows. 발급은 SETUP_KEYS.md. 키는 환경변수로만 쓴다
-setx DART_API_KEY "..."
 
 python scripts/refresh.py --group daily          # 그룹 단위: 수집 → 분석 → 축적 → 결과물/
 python 01_member_channel_performance/collect.py  # 프로젝트 하나만: collect → analyze → build_site
@@ -48,8 +44,7 @@ python scripts/refresh.py --group daily --skip-collect   # 키 없이 분석·�
 |---|---|---|---|
 | `live` | 10분 | 08 | 놓치면 영구 공백. Windows 는 `수집시작.cmd` 를 열어 두면 됨 |
 | `daily` | 일 1회 | 01·02·03·06·07·12 | 07 은 수집 없이 재분석만(`NO_COLLECT`) |
-| `weekly` | 주 1회 | 04·05·10·11 | YouTube 검색 쿼터를 가장 많이 씀 |
-| `monthly` | 월 1회 | 09 | DART 공시 주기가 분기·연간 |
+| `weekly` | 주 1회 | 04·05 | YouTube 검색 쿼터를 가장 많이 씀 |
 
 GitHub Actions(`.github/workflows/`)가 같은 그룹을 자동으로 돌립니다. 로컬 작업 스케줄러는
 `scripts/register_tasks.ps1`(`-Apply` 없이 dry-run). `refresh.py` 는 프로젝트별로 실패를 격리합니다.
@@ -57,7 +52,7 @@ GitHub Actions(`.github/workflows/`)가 같은 그룹을 자동으로 돌립니�
 ### 종합 리포트 (HTML · PDF)
 
 ```bash
-python scripts/build_unified.py            # 결과물/_build/ — 스텔라이브·게임 전체판
+python scripts/build_unified.py            # 결과물/_build/ — 스텔라이브 전체판
 python scripts/build_unified.py --digest   # 요약판: 계산된 숫자·표·차트만
 ```
 

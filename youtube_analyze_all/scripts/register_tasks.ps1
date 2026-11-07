@@ -41,12 +41,10 @@ $Prefix = 'StelLiveAnalytics'
 #   live    — 10분. 소급 불가라 가장 중요하다.
 #   daily   — 01·02·03·06. search.list 를 쓰지 않아 쿼터가 가볍다(~250 units).
 #   weekly  — 04·05. search.list 33회 = 3,300 units 라 주 1회로 묶었다.
-#   monthly — 09. DART 공시가 분기·연간 단위라 더 자주 돌 이유가 없다.
 $Tasks = @(
     @{ Name = "$Prefix-Live";    Group = 'live';    Kind = 'Minutes'; Every = 10 }
     @{ Name = "$Prefix-Daily";   Group = 'daily';   Kind = 'Daily';   At = '05:00' }
     @{ Name = "$Prefix-Weekly";  Group = 'weekly';  Kind = 'Weekly';  At = '05:30'; Day = 'Sunday' }
-    @{ Name = "$Prefix-Monthly"; Group = 'monthly'; Kind = 'Monthly'; At = '06:00'; DayOfMonth = 5 }
 )
 
 function Test-Prerequisites {
