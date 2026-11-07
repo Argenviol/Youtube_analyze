@@ -74,7 +74,7 @@ def main() -> int:
         b = (me - a) & ctrl_users
         c = me - a - b
         n = max(len(me), 1)
-        rows.append({"name_ko": r.name_ko, "title": r.title, "chat_participants": len(me), "chats": r.chats,
+        rows.append({"name_ko": f"{r.name_ko} · {r.title[:14]}", "title": r.title, "chat_participants": len(me), "chats": r.chats,
                      "donations": r.donations, "from_other_abyss": len(a), "existing_fans": len(b), "not_seen_elsewhere": len(c),
                      "share_other_abyss": len(a) / n, "share_existing": len(b) / n, "share_new": len(c) / n})
     res = pd.DataFrame(rows)
@@ -106,6 +106,15 @@ def main() -> int:
         L.append(f"| {r.name_ko} | {r.chat_participants:,} | {r.chats:,} | {r.donations:,} | "
                  f"{r.from_other_abyss:,} ({r.share_other_abyss:.0%}) | {r.existing_fans:,} ({r.share_existing:.0%}) | "
                  f"**{r.not_seen_elsewhere:,} ({r.share_new:.0%})** |")
+    solo = res[~res["title"].str.contains("단체")]
+    gr = ft.assign(x=lambda d: d["debut_start"] / d["first_seen"])
+    L += ["", "## 3. 숫자가 말하는 것", "",
+          f"- 데뷔 방송 {len(solo)}개의 채팅 참여자 중 **{solo['share_other_abyss'].min():.0%}~{solo['share_other_abyss'].max():.0%}** 가 "
+          "다른 4기 데뷔 방송에도 채팅했다 — 4기 네 명을 같이 보러 온 하나의 관객층이다.",
+          f"- 기존 스텔라이브 방송(비교군)에서도 보인 사람은 **{solo['share_existing'].min():.0%}~{solo['share_existing'].max():.0%}** 뿐이다"
+          "(하한 — 비교군이 표본이라 실제는 더 클 수 있다).",
+          f"- 4기 방송에만 보이는 사람은 {solo['share_new'].min():.0%}~{solo['share_new'].max():.0%} 이다.",
+          f"- 데뷔 방송이 시작될 때 이미 팔로워가 수집 첫 시점의 {gr['x'].min():.1f}~{gr['x'].max():.1f}배였다 — 방송 전 티저 단계에서 쌓였다."]
     L += ["", "## 읽는 법과 한계", "",
           "- 참여자는 채팅·후원한 사람만이다. 눈팅 시청자는 이 자료로 못 잰다.",
           "- 비교군은 멤버당 방송 일부라 '기존 팬'은 하한, '처음 보임'은 상한이다.",
