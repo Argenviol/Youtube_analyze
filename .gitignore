@@ -7,6 +7,8 @@
 node_modules/
 .next/
 out/
+# 분석 결과(analysis/out)는 커밋한다 — 위 out/ 은 Next.js 정적 빌드 폴더용이다
+!youtube_analyze_all/analysis/out/
 next-env.d.ts
 tsconfig.tsbuildinfo
 
