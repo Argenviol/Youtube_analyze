@@ -40,7 +40,7 @@ jobs:
       - name: 분석
         run: |
           rc=0
-          for s in origin_of_viewers dc_reaction hypotheses shorts_formats cover_reaction; do
+          for s in origin_of_viewers dc_reaction hypotheses shorts_formats shorts_first_movers cover_reaction cover_watch; do
             python analysis/$s.py > /dev/null || { echo "::error::$s 실패"; rc=1; }
           done
           exit $rc

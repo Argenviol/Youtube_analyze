@@ -158,7 +158,31 @@ def h4() -> list[str]:
           md_table(show.rename(columns={"name_ko": "멤버", "title": "방송", "views": "조회수", "chats_per_min": "분당 채팅",
                                         "donations_per_1k_chats": "채팅 1천건당 후원", "saturated": "비고"})), "",
           "- 한계: 표본은 4기 데뷔·비교군 선택 방송이라 전체 방송의 대표값이 아니다. 조회수는 누적이라 최근 방송이 낮다.", ""]
-    return L
+    return L + h4_live()
+
+
+def h4_live() -> list[str]:
+    """생방 집계(collect/chzzk_live_chat.py) — 후원 **금액**과 시청자(고유 id)별 한 시간 채팅 수. 수집을 시작한 뒤 구간만 있다."""
+    mp, hp = CHAT / "live_chat_minutes.csv", CHAT / "live_chat_user_hours.csv"
+    L = ["### 생방 기준 (후원 금액 · 시청자별 한 시간 채팅)", ""]
+    if not mp.exists():
+        return L + ["아직 쌓이지 않았다 — `collect-live-chat` 이 돌기 시작하면 채워진다.", ""]
+    m = pd.read_csv(mp)
+    m = m[~m["name_ko"].isin(FOUNDER)]
+    span = f"{m['minute_utc'].min()} ~ {m['minute_utc'].max()} (UTC)"
+    g = m.groupby("name_ko").agg(minutes=("chats", "size"), chats=("chats", "sum"), donations=("donations", "sum"),
+                                 krw=("donation_krw", "sum"), viewers_max=("chat_members_max", "max"))
+    g["chats_per_min"] = (g["chats"] / g["minutes"]).round(1)
+    g["krw_per_1k_chats"] = (g["krw"] / g["chats"] * 1000).round(0)
+    L += [f"수집 구간 {span} · 방송 중인 분 {int(g['minutes'].sum()):,}개. 후원 금액은 생방 채팅의 후원 메시지(원).", "",
+          md_table(g.reset_index().rename(columns={"name_ko": "멤버", "minutes": "측정 분", "chats": "채팅", "donations": "후원 건수", "krw": "후원 금액(원)",
+                                                   "viewers_max": "채팅방 인원 최대", "chats_per_min": "분당 채팅", "krw_per_1k_chats": "채팅 1천건당 후원(원)"})), ""]
+    if hp.exists():
+        u = pd.read_csv(hp)
+        u = u[~u["name_ko"].isin(FOUNDER)]
+        L += [f"- 시청자(고유 id)별 한 시간 채팅 수: 중앙값 **{u['chats'].median():.0f}건**, 상위 10% 경계 {u['chats'].quantile(.9):.0f}건 "
+              f"(시청자-시간 {len(u):,}개). 한 시간에 10건 이상 친 비율 {(u['chats'] >= 10).mean():.1%}.", ""]
+    return L + ["- 한계: 수집을 시작한 뒤의 방송만 있다(과거 소급 불가). 짧은 구간이면 멤버별 값은 그 시간대 방송 내용에 좌우된다.", ""]
 
 
 # ── H5 ────────────────────────────────────────────────────────────────────────

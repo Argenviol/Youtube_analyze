@@ -6,9 +6,11 @@
 
 | 스크립트 | 모으는 것 | 산출(`data/`) | 어디서 도나 |
 |---|---|---|---|
-| `chzzk_chat.py` | 치지직 다시보기 채팅 — 분당 채팅·후원 **건수**·구독 메시지·참여자 해시 | `chat_minutes.csv` · `chat_videos.csv` · `chatters/` | `collect-community` (매주 일요일 + 수동) |
+| `chzzk_chat.py` | 치지직 다시보기 채팅 — 분당 채팅·후원 **건수**·구독 메시지, **시청자(고유 id)별 한 시간 채팅 수** | `chat_minutes.csv` · `chat_videos.csv` · `chat_user_hours.csv` · `chatters/` | `collect-community` (매주 일요일 + 수동) |
 | `dcinside.py` | 디시 갤러리 3곳(스텔라이브·버츄얼 스나·버츄얼 스트리머) 글 목록 | `dc_posts.csv` | `collect-community` (매주 + 수동, 기준일 입력) |
 | `chzzk_vtubers.py` | 치지직 상위 500개 방송 합계 + 버튜버 후보 + 명단 채널 시청자 | `chzzk_total.csv` · `vtuber_candidates.csv` · `vtuber_ccu.csv` | `collect-vtubers` (매시간) |
+| `chzzk_live_chat.py` | 치지직 **생방** 채팅 집계 — 분당 채팅·고유 시청자·후원 건수와 **후원 금액**, 시청자별 한 시간 채팅 수 | `live_chat_minutes.csv` · `live_chat_user_hours.csv` | `collect-live-chat` (6시간마다 약 5시간 40분) |
+| `cover_watch.py` | 보고 싶은 곡(`cover_watch.csv`)의 유튜브 검색 상위 영상(원곡·커버) 조회수 + 올린 채널의 평소 조회수 | `cover_watch_views.csv` · `cover_watch_baseline.csv` | `collect-shorts` (매일) |
 | `shorts_snapshot.py` | 멤버 채널 최근 업로드 30개의 조회수(매일 한 줄씩, 시점별 이력) | `shorts_views.csv` | `collect-shorts` (매일) |
 | `anime_season.py` | 다음 분기 TV 애니 일정(AniList) | `anime_season.csv` | `collect-community` 수동 |
 
@@ -18,8 +20,8 @@
 이세계아이돌·홀로라이브는 치지직이 아니라 숲·유튜브가 주 무대라 치지직 명단에서 확인되지 않았다.
 
 ## 못 모으는 것
-- 후원 **금액** — 다시보기 채팅의 `payAmount` 는 항상 0.
+- 다시보기의 후원 **금액** — `payAmount` 가 항상 0 이다. 금액은 생방(`chzzk_live_chat.py`)으로 받는다(일부는 금액 0 으로 온다).
 - 다시보기 채팅은 **초당 ~20건(분당 ~1,240)까지만** 저장된다 — 4기 데뷔 방송은 이 한도에 붙어 있어 채팅 수는 하한이다.
 - 눈팅 시청자, 시청자 유입 경로 — 치지직이 공개하지 않는다.
 - OP/ED 곡·버튜버 발매 일정 — 모아둔 공개 출처가 없다.
-- 닉네임·채팅 본문·디시 글쓴이는 일부러 저장하지 않는다.
+- 닉네임·채팅 본문·디시 글쓴이는 일부러 저장하지 않는다. 시청자는 익명 해시로만 두고 개수만 합한다.

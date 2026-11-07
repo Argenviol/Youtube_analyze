@@ -16,6 +16,7 @@
 아래 문서는 `@` 가져오기로 이 파일과 함께 읽힌다. 작업이 끝나면 줄을 지우고, 새 작업을 `dev/active/<이름>/` 에 만들면 여기에 더한다.
 
 - 멤버별 유튜브·노래 조회수: @dev/active/member-views/context.md @dev/active/member-views/tasks.md
+- 스텔라이브 시청자·반응 분석(수집·분석 분리, 가설 H1~H6): @dev/active/stellive-analysis/context.md @dev/active/stellive-analysis/tasks.md
 
 ## "최적화"의 뜻
 

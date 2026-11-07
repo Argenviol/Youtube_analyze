@@ -1,4 +1,4 @@
-# 멤버 채널 최근 업로드 30개의 조회수를 매일 기록한다 — 쇼츠가 업로드 뒤 며칠 동안 어떻게 크는지 쌓는 시계열(과거 소급 불가).
+# 멤버 채널 최근 업로드 30개의 조회수 + 커버곡 감시 곡(collect/cover_watch.csv)의 검색 상위 영상 조회수를 매일 기록한다 — 쇼츠가 업로드 뒤 며칠 동안 어떻게 크는지 쌓는 시계열(과거 소급 불가).
 # 유튜브 웹(innertube)을 쓰므로 API 키·쿼터가 필요 없다. 실패가 20%를 넘으면 잡이 빨갛게 된다.
 
 name: collect-shorts
@@ -35,6 +35,10 @@ jobs:
 
       - name: 측정
         run: python collect/shorts_snapshot.py --recent 30
+
+      - name: 커버곡 감시
+        if: always()
+        run: python collect/cover_watch.py --top 20
 
       - name: 변경분 커밋
         if: always()
