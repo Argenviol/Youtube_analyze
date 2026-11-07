@@ -1,0 +1,93 @@
+# 커뮤니티·채팅·애니 일정 수집 (collect/ 의 스크립트들). 이 세션 밖, GitHub 러너에서 끝까지 돈다.
+#
+#   dcinside  디시 갤러리 3곳 글 목록 — 수동은 기준일(since)을 입력, 매주 일요일은 최근 8일치만 이어 받는다.
+#   chat      치지직 다시보기 채팅 — abyss-debut(4기 데뷔 5개) / control(비교군 22개). 이미 받은 방송은 건너뛴다.
+#   anime     다음 분기 TV 애니 일정(AniList)
+#
+# 수집 단계에 자체 시간 제한(300분)을 둔다 — 잡 제한(360분)에 걸려 취소되면 '변경분 커밋' 단계까지 같이 죽어
+# 그때까지 받은 데이터가 사라진다. 단계가 먼저 끝나야 커밋이 돈다. 다 못 받았으면 같은 작업을 다시 실행하면 이어 받는다.
+# API 키는 필요 없다.
+
+name: collect-community
+
+on:
+  schedule:
+    - cron: "30 21 * * 6" # 매주 일요일 06:30 KST — 디시 증분
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "수집할 것"
+        required: true
+        default: dcinside
+        type: choice
+        options: [dcinside, chat-abyss-debut, chat-control, anime]
+      since:
+        description: "dcinside 기준일 (YYYY-MM-DD, 비우면 2026-10-14)"
+        required: false
+        default: "2026-10-14"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect-community
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    defaults:
+      run:
+        working-directory: youtube_analyze_all
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: youtube_analyze_all/requirements.txt
+
+      - run: pip install -r requirements.txt
+
+      - name: 수집
+        id: run
+        timeout-minutes: 300
+        env:
+          TASK: ${{ github.event_name == 'workflow_dispatch' && inputs.task || 'dcinside' }}
+          SINCE_INPUT: ${{ inputs.since }}
+        run: |
+          case "$TASK" in
+            dcinside)
+              if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+                SINCE="${SINCE_INPUT:-2026-10-14}"
+              else
+                SINCE="$(date -u -d '8 days ago' +%F)"
+              fi
+              # 형식을 확인한다 — 입력값을 셸에 그대로 넘기지 않는다.
+              echo "$SINCE" | grep -Eq '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' || { echo "since 형식 오류: $SINCE"; exit 1; }
+              for g in stellive vtubersnipe virtual_streamer; do
+                python collect/dcinside.py --gallery "$g" --since "$SINCE"
+              done
+              ;;
+            chat-abyss-debut) python collect/chzzk_chat.py --abyss-debut ;;
+            chat-control)     python collect/chzzk_chat.py --control 2026-10-17 --per-member 2 ;;
+            anime)            python collect/anime_season.py ;;
+            *) echo "알 수 없는 작업: $TASK"; exit 1 ;;
+          esac
+
+      # always() — 위 단계가 실패·시간 초과여도 그때까지 받은 데이터는 남긴다(collect-scheduled.yml 메모와 같은 이유).
+      - name: 변경분 커밋
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A collect/data
+          git diff --staged --quiet || git commit -m "chore: 커뮤니티 수집 $(date -u +%Y-%m-%d)"
+          for try in 1 2 3; do
+            git pull --rebase --autostash origin main && git push origin HEAD:main && break
+            echo "push 재시도 $try"
+            git rebase --abort 2>/dev/null || true
+            sleep 15
+          done
