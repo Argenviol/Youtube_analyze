@@ -2,6 +2,7 @@
 #
 #   dcinside  디시 갤러리 3곳 글 목록 — 수동은 기준일(since)을 입력, 매주 일요일은 최근 8일치만 이어 받는다.
 #   chat      치지직 다시보기 채팅 — abyss-debut(4기 데뷔 5개) / control(비교군 22개). 이미 받은 방송은 건너뛴다.
+#   chat-recent  최근 8일 4기 방송 중 아직 안 받은 것의 채팅(주간 자동에도 포함, 한 번에 최대 12개)
 #   anime     다음 분기 TV 애니 일정(AniList)
 #
 # 수집 단계에 자체 시간 제한(300분)을 둔다 — 잡 제한(360분)에 걸려 취소되면 '변경분 커밋' 단계까지 같이 죽어
@@ -12,7 +13,7 @@ name: collect-community
 
 on:
   schedule:
-    - cron: "30 21 * * 6" # 매주 일요일 06:30 KST — 디시 증분
+    - cron: "30 21 * * 6" # 매주 일요일 06:30 KST — 디시 증분 + 4기 새 방송 채팅
   workflow_dispatch:
     inputs:
       task:
@@ -20,7 +21,7 @@ on:
         required: true
         default: dcinside
         type: choice
-        options: [dcinside, chat-abyss-debut, chat-control, anime]
+        options: [dcinside, chat-abyss-debut, chat-control, chat-recent, anime]
       since:
         description: "dcinside 기준일 (YYYY-MM-DD, 비우면 2026-10-14)"
         required: false
@@ -55,16 +56,18 @@ jobs:
         id: run
         timeout-minutes: 300
         env:
-          TASK: ${{ github.event_name == 'workflow_dispatch' && inputs.task || 'dcinside' }}
+          TASK: ${{ github.event_name == 'workflow_dispatch' && inputs.task || 'weekly' }}
           SINCE_INPUT: ${{ inputs.since }}
         run: |
           case "$TASK" in
+            weekly)
+              python collect/dcinside.py --gallery stellive --since "$(date -u -d '8 days ago' +%F)"
+              python collect/dcinside.py --gallery vtubersnipe --since "$(date -u -d '8 days ago' +%F)"
+              python collect/dcinside.py --gallery virtual_streamer --since "$(date -u -d '8 days ago' +%F)"
+              python collect/chzzk_chat.py --recent 8 --unit ABYSS --max 12
+              ;;
             dcinside)
-              if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-                SINCE="${SINCE_INPUT:-2026-10-14}"
-              else
-                SINCE="$(date -u -d '8 days ago' +%F)"
-              fi
+              SINCE="${SINCE_INPUT:-2026-10-14}"
               # 형식을 확인한다 — 입력값을 셸에 그대로 넘기지 않는다.
               echo "$SINCE" | grep -Eq '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' || { echo "since 형식 오류: $SINCE"; exit 1; }
               for g in stellive vtubersnipe virtual_streamer; do
@@ -73,6 +76,7 @@ jobs:
               ;;
             chat-abyss-debut) python collect/chzzk_chat.py --abyss-debut ;;
             chat-control)     python collect/chzzk_chat.py --control 2026-10-17 --per-member 2 ;;
+            chat-recent)      python collect/chzzk_chat.py --recent 8 --unit ABYSS --max 12 ;;
             anime)            python collect/anime_season.py ;;
             *) echo "알 수 없는 작업: $TASK"; exit 1 ;;
           esac

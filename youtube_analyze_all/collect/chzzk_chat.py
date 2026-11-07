@@ -6,6 +6,8 @@
   - messageTypeCode: 1 일반 채팅 · 10 후원 · 11 구독 · 그 외(30 모드 안내 등)는 기타.
   - 후원 금액(payAmount)은 다시보기에서 **항상 0** 으로 온다(2026-11-06 Mary 데뷔 VOD 885건 전부 0).
     그래서 금액은 구할 수 없고 건수만 센다. weeklyRankList 의 donationAmount 는 주간 누적이라 한 건의 금액이 아니다.
+  - ⚠ 포화: 다시보기에는 채팅이 **초당 약 20건(분당 ~1,240)까지만** 저장된다. 4기 데뷔 방송 5개가 모두 분당 ~1,200건에 붙어 있다
+    (분의 91~97% 가 1,150 이상, 최대 1,244). 그런 방송의 채팅 수·참여자 수는 하한이다.
   - 닉네임·채팅 본문은 저장하지 않는다. 참여자는 userIdHash(익명 해시)만 남긴다.
 
 산출물(collect/data/):
@@ -18,6 +20,7 @@
   python collect/chzzk_chat.py --video 15741625
   python collect/chzzk_chat.py --member "토키노 메리" --first 20   # 그 멤버의 가장 오래된 N개
   python collect/chzzk_chat.py --control 2026-10-17 --per-member 2  # 비교군: 기존 멤버의 데뷔 전 한 달 인기 방송
+  python collect/chzzk_chat.py --recent 8 --unit ABYSS --max 12     # 최근 8일 4기 방송 중 아직 안 받은 것(주간 자동 실행)
 이미 받은 영상은 건너뛴다(--force 로 다시 받기).
 """
 from __future__ import annotations
@@ -83,6 +86,12 @@ def pick(streams: pd.DataFrame, a: argparse.Namespace) -> pd.DataFrame:
     if a.abyss_debut:
         ab = streams[(streams["unit"] == "ABYSS") & (streams["publish_date"] < "2026-10-19")]
         return ab.sort_values("publish_date")
+    if a.recent:
+        lo = (pd.Timestamp.now() - pd.Timedelta(days=a.recent)).strftime("%Y-%m-%d")
+        s = streams[(streams["publish_date"] >= lo) & (streams["duration_sec"] <= 8 * 3600)]
+        if a.unit:
+            s = s[s["unit"] == a.unit]
+        return s.sort_values("publish_date")
     if a.control:
         lo = (pd.Timestamp(a.control) - pd.Timedelta(days=30)).strftime("%Y-%m-%d")
         s = streams[(streams["unit"] != "ABYSS") & (streams["publish_date"] >= lo) & (streams["publish_date"] < a.control)
@@ -92,7 +101,7 @@ def pick(streams: pd.DataFrame, a: argparse.Namespace) -> pd.DataFrame:
     if a.member:
         s = streams[streams["name_ko"] == a.member].sort_values("publish_date")
         return s.head(a.first)
-    raise SystemExit("--video / --abyss-debut / --member / --control 중 하나가 필요하다")
+    raise SystemExit("--video / --abyss-debut / --member / --control / --recent 중 하나가 필요하다")
 
 
 def main() -> int:
@@ -103,6 +112,9 @@ def main() -> int:
     ap.add_argument("--first", type=int, default=10)
     ap.add_argument("--control", help="이 날짜(YYYY-MM-DD) 전 30일의 기존 멤버 방송 중 조회수 상위 --per-member 개")
     ap.add_argument("--per-member", type=int, default=2)
+    ap.add_argument("--recent", type=int, help="최근 N일에 게시된 방송")
+    ap.add_argument("--unit", help="--recent 와 함께: 소속(예: ABYSS)")
+    ap.add_argument("--max", type=int, help="이번 실행에서 새로 받을 최대 방송 수")
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args()
 
@@ -113,7 +125,11 @@ def main() -> int:
     done = pd.read_csv(VIDEOS) if VIDEOS.exists() else pd.DataFrame()
     minutes_all = pd.read_csv(MINUTES) if MINUTES.exists() else pd.DataFrame()
     api = Chzzk()
+    fetched = 0
     for r in todo.itertuples():
+        if a.max and fetched >= a.max:
+            print(f"  --max {a.max} 도달 — 나머지는 다음 실행에서")
+            break
         if not a.force and len(done) and r.video_no in set(done["video_no"]):
             print(f"  건너뜀 {r.video_no} (이미 있음)")
             continue
@@ -122,6 +138,7 @@ def main() -> int:
         except RuntimeError as e:        # 삭제·비공개 VOD 등 — 삼키지 않고 기록하고 다음으로
             print(f"  실패 {r.video_no} {r.name_ko}: {e}")
             continue
+        fetched += 1
         (DATA / "chatters" / f"{r.video_no}.txt").write_text("\n".join(sorted(users)) + "\n", encoding="utf-8")
         minutes_all = pd.concat([minutes_all[minutes_all["video_no"] != r.video_no] if len(minutes_all) else minutes_all, mdf],
                                 ignore_index=True)

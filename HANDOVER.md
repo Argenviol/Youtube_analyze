@@ -29,7 +29,7 @@
 
 | # | 할 일 | 방법 · 완료 기준 |
 |---|---|---|
-| 0 | **재편 작업** — 가설 H1~H6 은 `자료_점검_및_분석계획.md` 6절. 아래를 순서대로 | ① 03 에 다시보기 채팅·후원 수집(`api.chzzk.naver.com/service/v1/videos/{no}/chats`, 분당 채팅·후원 건수, 후원 금액은 `payAmount` 가 0 으로 오는 건이 있어 먼저 확인) ② 디시 스텔라이브·버츄얼 갤러리 글 수집(`gall.dcinside.com/mgallery/board/lists/?id=stellive`·`vtuber`, 작성시각·조회·추천) ③ 치지직 생방 목록(`/service/v1/lives`)을 공식 명단 기준으로 쌓는 전체 버튜버 수집 ④ H1~H6 분석 리포트. 아카라이브·펨코·X·인스타·스레드는 운영자가 직접 저장해 오면 받아 쓴다(막힌 곳은 우회하지 않는다) |
+| 0 | **재편 작업 마무리** — 구조·워크플로는 끝났다. 남은 것: ① 디시 수집이 끝난 뒤 `dc_reaction.md`·H3 갱신 확인 ② `collect/vtuber_roster.csv` 에 확인된 버튜버 채널 올리기(H5) ③ 4기 5주차(2026-11-22 이후) `hypotheses.md` H1 확인 ④ 아카라이브·펨코·X·인스타·스레드는 운영자가 저장해 오면 같은 틀로 합친다(막힌 곳은 우회하지 않는다) | 수집은 Actions `collect-community`(주간+수동)·`collect-vtubers`(매시간), 분석은 `analyze-community`. 설명은 `collect/README.md`·`analysis/README.md`. 알려진 한계: 다시보기 채팅은 초당 ~20건에서 잘려 4기 데뷔 방송 채팅 수는 하한 |
 | 1 | 유즈하 리코 Topic 채널 확인 — 주석엔 있다는데 검색 결과는 없음 | 실제 채널이 있으면 `02_cover_song_ranking/collect.py` 의 `TOPIC_SEED` 에 채널 ID 추가 |
 | 2 | ABYSS 를 01 분석·05 순위에 넣기 | 01: 최근 영상 5개(`MIN_RECENT_VIDEOS`)가 쌓이면 자동 편입 — 그 daily 뒤 리포트 "제외" 문구와 순위 확인. 05: 영상이 3개(`MIN_SAMPLE_VIDEOS`) 넘게 쌓이면 인기 영상 기준으로 다시 뽑아 라벨링하고 옛 120행(sid 331~450)을 바꾼다. 12 데뷔 이벤트의 배수는 데뷔 뒤 방송이 쌓이면 저절로 계산된다 |
 | 3 | 06 에 ABYSS 코호트 추가 — 지금은 짝지을 경쟁 기수가 없어 빠져 있다 | 같은 시기 데뷔한 경쟁 그룹을 `config.COMPETITOR_ROSTER`·`COHORT_BINS` 에 넣으면 저절로 들어온다. 구독자가 쌓인 뒤에 |
@@ -44,6 +44,10 @@
 | `collect-live` | 매시 깨어나 잡 안에서 10분 간격(최대 5.5시간) | 08 동시시청자 — 소급 불가, 놓치면 영구 공백 |
 | `collect-scheduled` daily | 매일 05:00 | 01·02·03·06·07·12 → 지표 축적 → `결과물/` 재생성 |
 | `collect-scheduled` weekly | 일요일 05:30 | 04·05 |
+| `collect-community` | 일요일 06:30 + 수동 | 디시 3곳 증분·4기 새 방송 채팅·(수동) 데뷔/비교군 채팅·애니 일정 |
+| `collect-shorts` | 매일 04:20 | 멤버 최근 업로드 30개 조회수 스냅샷(쇼츠 시점별 이력) |
+| `collect-vtubers` | 매시 7분 | 치지직 상위 500 합계·버튜버 후보·명단 시청자 |
+| `analyze-community` | `collect-community` 뒤 + 일요일 09:00 | `analysis/` 3종 재실행 → `analysis/out/` |
 | `probe-sources` | 수동 | 외부 소스 응답만 확인, 저장소는 안 바꿈 |
 
 - **CI** — `collect-scheduled` #87~#95(10/15~10/22) 전부 초록, 마지막 daily 10/23 08:08 KST. 수동 실행은 Actions → collect-scheduled → Run workflow 에서 그룹 선택.
@@ -121,6 +125,7 @@
 
 | 날짜 | 달라진 것 |
 |---|---|
+| 2026-11-07 | 수집·분석 분리(`collect/`·`analysis/`)와 워크플로 3개(`collect-community`·`collect-vtubers`·`analyze-community`), 디시·채팅·전체 버튜버·애니 수집기, 분석 5종(`origin_of_viewers`·`dc_reaction`·`hypotheses`·`shorts_formats`·`cover_reaction`), `collect-shorts` 추가. 다시보기 채팅 포화(초당 ~20건) 확인 |
 | 2026-11-07 | 삭제한 호요·DART·커머스 문구가 남은 12 날짜별 리포트 60개를 `결과물/_이전/12_event_impact/` 에서 지움(이 프로젝트만 예외 — 옛 문구가 그대로 남아 있어서). 이 날까지 12 리포트는 11/06 판 |
 | 2026-11-06 | 09 DART·10 게임·11 팬 커머스와 그 앱 페이지·monthly 그룹·`DART_API_KEY` 삭제, 12 이벤트 임팩트에서 호요·DART·커머스 렌즈 제거(15→12개 렌즈), 게임 리포트 폐지. `자료_점검_및_분석계획.md` 추가 |
 | 2026-10-27 | 루트에 `멤버별_조회수_2026-10-25.md`(멤버 10명 영상·쇼츠·노래 조회수, 한 번 수집한 정리본 — 자동 갱신 안 됨) 추가, README 맨 위에 링크, 계산 스크립트·데이터 `youtube_analyze_all/member_views/`, 진행 기록 `dev/active/member-views/`. 순위표를 README 본문 대신 별도 문서로 둔 건 "멤버 이름 순위는 README에 쓰지 않는다" 규칙 때문 |
