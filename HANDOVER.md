@@ -45,7 +45,8 @@
 | `collect-scheduled` daily | 매일 05:00 | 01·02·03·06·07·12 → 지표 축적 → `결과물/` 재생성 |
 | `collect-scheduled` weekly | 일요일 05:30 | 04·05 |
 | `collect-community` | 일요일 06:30 + 수동 | 디시 3곳 증분·4기 새 방송 채팅·(수동) 데뷔/비교군 채팅·애니 일정 |
-| `collect-shorts` | 매일 04:20 | 멤버 최근 업로드 30개 조회수 스냅샷(쇼츠 시점별 이력) |
+| `collect-shorts` | 매일 04:20 | 멤버 최근 업로드 30개 조회수 스냅샷(쇼츠 시점별 이력) + 커버곡 감시 곡 조회수 |
+| `collect-live-chat` | 6시간마다(약 5시간 40분) | 생방 채팅 집계 — 후원 금액·시청자별 한 시간 채팅 |
 | `collect-vtubers` | 매시 7분 | 치지직 상위 500 합계·버튜버 후보·명단 시청자 |
 | `analyze-community` | `collect-community` 뒤 + 일요일 09:00 | `analysis/` 3종 재실행 → `analysis/out/` |
 | `probe-sources` | 수동 | 외부 소스 응답만 확인, 저장소는 안 바꿈 |
@@ -125,7 +126,7 @@
 
 | 날짜 | 달라진 것 |
 |---|---|
-| 2026-11-07 | 수집·분석 분리(`collect/`·`analysis/`)와 워크플로 3개(`collect-community`·`collect-vtubers`·`analyze-community`), 디시·채팅·전체 버튜버·애니 수집기, 분석 5종(`origin_of_viewers`·`dc_reaction`·`hypotheses`·`shorts_formats`·`cover_reaction`), `collect-shorts` 추가. 다시보기 채팅 포화(초당 ~20건) 확인 |
+| 2026-11-07 | 수집·분석 분리(`collect/`·`analysis/`)와 워크플로 3개(`collect-community`·`collect-vtubers`·`analyze-community`), 디시·채팅·전체 버튜버·애니 수집기, 분석 7종(`origin_of_viewers`·`dc_reaction`·`hypotheses`·`shorts_formats`·`shorts_first_movers`·`cover_reaction`·`cover_watch`), `collect-shorts`·`collect-live-chat` 추가. 다시보기 채팅 포화(초당 ~20건) 확인 |
 | 2026-11-07 | 삭제한 호요·DART·커머스 문구가 남은 12 날짜별 리포트 60개를 `결과물/_이전/12_event_impact/` 에서 지움(이 프로젝트만 예외 — 옛 문구가 그대로 남아 있어서). 이 날까지 12 리포트는 11/06 판 |
 | 2026-11-06 | 09 DART·10 게임·11 팬 커머스와 그 앱 페이지·monthly 그룹·`DART_API_KEY` 삭제, 12 이벤트 임팩트에서 호요·DART·커머스 렌즈 제거(15→12개 렌즈), 게임 리포트 폐지. `자료_점검_및_분석계획.md` 추가 |
 | 2026-10-27 | 루트에 `멤버별_조회수_2026-10-25.md`(멤버 10명 영상·쇼츠·노래 조회수, 한 번 수집한 정리본 — 자동 갱신 안 됨) 추가, README 맨 위에 링크, 계산 스크립트·데이터 `youtube_analyze_all/member_views/`, 진행 기록 `dev/active/member-views/`. 순위표를 README 본문 대신 별도 문서로 둔 건 "멤버 이름 순위는 README에 쓰지 않는다" 규칙 때문 |
