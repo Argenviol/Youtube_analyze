@@ -1,0 +1,51 @@
+# 멤버 채널 최근 업로드 30개의 조회수를 매일 기록한다 — 쇼츠가 업로드 뒤 며칠 동안 어떻게 크는지 쌓는 시계열(과거 소급 불가).
+# 유튜브 웹(innertube)을 쓰므로 API 키·쿼터가 필요 없다. 실패가 20%를 넘으면 잡이 빨갛게 된다.
+
+name: collect-shorts
+
+on:
+  schedule:
+    - cron: "20 19 * * *" # 매일 04:20 KST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect-shorts
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: youtube_analyze_all
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: youtube_analyze_all/requirements.txt
+
+      - run: pip install -r requirements.txt
+
+      - name: 측정
+        run: python collect/shorts_snapshot.py --recent 30
+
+      - name: 변경분 커밋
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A collect/data
+          git diff --staged --quiet || git commit -m "chore: 쇼츠 조회수 스냅샷 $(date -u +%Y-%m-%d)"
+          for try in 1 2 3; do
+            git pull --rebase --autostash origin main && git push origin HEAD:main && break
+            echo "push 재시도 $try"
+            git rebase --abort 2>/dev/null || true
+            sleep 15
+          done
